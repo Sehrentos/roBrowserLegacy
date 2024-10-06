@@ -1,0 +1,48 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "checkJs": true,
+        "noEmit": false,
+        "baseUrl": "./src",
+        "outDir": "./dist",
+        "module": "AMD",
+        "target": "ES6",
+        "moduleResolution": "Node10",
+        "moduleDetection": "force",
+        "noImplicitAny": false,
+        "resolveJsonModule": false,
+        "lib": [
+            "DOM",
+            "WebWorker",
+            "ESNext",
+        ],
+        "paths": {
+            "*": [
+                "*",
+                "../types/*",
+                "../node_modules/@types/*",
+            ]
+        }
+    },
+    "exclude": [
+        "dist",
+        "doc",
+        "node_modules",
+        "**/*.spec.ts",
+        "Vendors",
+    ],
+    "include": [
+        "@types/**/*.d.ts",
+        "types/**/*.d.ts",
+        "src/**/*",
+    ],
+    "typeAcquisition": {
+        "enable": true,
+        "include": [
+            "jquery",
+            "requirejs",
+            "ROConfig",
+            "Online",
+        ],
+    }
+}

@@ -1,0 +1,49 @@
+{
+	"env": {
+		"browser": true,
+		"node": true,
+		"commonjs": true,
+		"es6": true,
+		"jquery": true
+	},
+	"parserOptions": {
+		"ecmaVersion": "latest",
+		"sourceType": "script",
+		"impliedStrict": true
+	},
+	"rules": {
+		"eqeqeq": "off",
+		"curly": "off",
+		"quotes": "off",
+		"camelcase": "off",
+		"array-callback-return": "warn",
+		"constructor-super": "warn",
+		"default-case": "off",
+		"default-param-last": "off",
+		"max-depth": [
+			"warn",
+			5
+		],
+		"max-nested-callbacks": [
+			"warn",
+			4
+		],
+		"no-alert": "warn",
+		"no-else-return": "warn",
+		"no-empty": "warn",
+		"no-empty-function": "warn",
+		"no-eval": "warn",
+		"no-invalid-this": "warn",
+		"no-inner-declarations": "warn",
+		"no-irregular-whitespace": "warn",
+		"no-lone-blocks": "warn",
+		"no-loop-func": "off",
+		"no-var": "warn",
+		"no-with": "error",
+		"no-shadow": "warn",
+		"spaced-comment": "off",
+		"vars-on-top": "warn",
+		"yoda": "warn"
+	},
+	"reportUnusedDisableDirectives": true
+}

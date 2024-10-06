@@ -21,6 +21,8 @@
 	"author": "Vincent Thibault",
 	"license": "GNU GPL V3",
 	"devDependencies": {
+		"@types/jquery": "^3.5.31",
+		"@types/requirejs": "^2.1.37",
 		"live-server": "^1.2.2",
 		"requirejs": "^2.3.6",
 		"terser": "^5.19.4"

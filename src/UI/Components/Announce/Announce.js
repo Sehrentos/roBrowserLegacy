@@ -15,10 +15,12 @@ define(function(require)
 	/**
 	 * Dependencies
 	 */
+	/** @type {JQueryStatic} */
 	var jQuery      = require('Utils/jquery');
 	var Events      = require('Core/Events');
 	var Renderer    = require('Renderer/Renderer');
 	var UIManager   = require('UI/UIManager');
+	/** @type {UIComponent} */
 	var UIComponent = require('UI/UIComponent');
 
 

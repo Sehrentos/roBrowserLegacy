@@ -16,7 +16,7 @@ define( ['jquery', 'DB/DBManager'], function( jQuery, DB )
 	/**
 	 * Overwrite text() to support npc code
 	 *
-	 * @param {string} value
+	 * @param {string} text
 	 */
 	jQuery.fn.text = function( text ) {
 		return jQuery.access( this, function( value ) {

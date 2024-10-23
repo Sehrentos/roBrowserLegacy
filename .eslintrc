@@ -38,7 +38,7 @@
 		"no-irregular-whitespace": "warn",
 		"no-lone-blocks": "warn",
 		"no-loop-func": "off",
-		"no-var": "warn",
+		"no-var": "off",
 		"no-with": "error",
 		"no-shadow": "warn",
 		"spaced-comment": "off",

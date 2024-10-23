@@ -1,3 +1,4 @@
+///<reference path="../../types/UIComponent.d.ts" />
 /**
  * UI/UIComponent.js
  *
@@ -13,7 +14,9 @@ define(function( require )
 
 
 	// Load dependencies
+	//@ts-ignore using text loader
 	var CommonCSS = require('text!./Common.css');
+	/** @type {JQueryStatic} */
 	var jQuery    = require('Utils/jquery');
 	var Cursor    = require('./CursorManager');
 	var DB        = require('DB/DBManager');
@@ -84,12 +87,40 @@ define(function( require )
 	 */
 	UIComponent.prototype.__active = false;
 
+	/**
+	 * optional. override this function to initialize the UI
+	 */
+	UIComponent.prototype.init = undefined;
+
+	/**
+	 * internal. is component visible
+	 */
+	UIComponent.prototype.__visible = false;
+
+	/**
+	 * optional. called when the component is appended
+	 */
+    UIComponent.prototype.onAppend = undefined;
+
+	/**
+	 * optional. called when the component is removed
+	 */
+	UIComponent.prototype.onRemove = undefined;
+
+	/**
+	 * optional. called when the keydown even is triggered on the component
+	 */
+	UIComponent.prototype.onKeyDown = undefined;
+
+	/**
+	 * internal. mouse stop block (MouseMode.STOP)
+	 */
+	UIComponent.prototype.__mouseStopBlock = undefined;
 
 	/**
 	 * @var {boolean} focus element zIndex ?
 	 */
 	UIComponent.prototype.needFocus = true;
-
 
 	/**
 	 * Prepare the component to be used

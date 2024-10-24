@@ -101,7 +101,7 @@ define(function( require )
 	/**
 	 * optional. called when the component is appended
 	 */
-    UIComponent.prototype.onAppend = undefined;
+	UIComponent.prototype.onAppend = undefined;
 
 	/**
 	 * optional. called when the component is removed

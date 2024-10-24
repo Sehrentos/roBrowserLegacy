@@ -1,3 +1,4 @@
+///<reference path="../../types/UI.d.ts" />
 /**
  * UI/Background.js
  *
@@ -16,6 +17,7 @@ define( function( require )
 	 * Load dependencies
 	 */
 	var DB     = require('DB/DBManager');
+	/** @type {JQueryStatic} */
 	var jQuery = require('Utils/jquery');
 	var Client = require('Core/Client');
 

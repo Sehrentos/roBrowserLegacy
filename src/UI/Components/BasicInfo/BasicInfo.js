@@ -13,13 +13,17 @@ define(function (require)
 	'use strict';
 	
 	var publicName = 'BasicInfo';
-	
+	/** @type {UIComponent} */
 	var BasicInfo = require('./BasicInfo/BasicInfo');
+	/** @type {UIComponent} */
 	var BasicInfoV0 = require('./BasicInfoV0/BasicInfoV0');
+	/** @type {UIComponent} */
 	var BasicInfoV3 = require('./BasicInfoV3/BasicInfoV3');
+	/** @type {UIComponent} */
 	var BasicInfoV4 = require('./BasicInfoV4/BasicInfoV4');
+	/** @type {UIComponent} */
 	var BasicInfoV5 = require('./BasicInfoV5/BasicInfoV5');
-	
+	/** @type {UIVersionManager} */
 	var UIVersionManager = require('UI/UIVersionManager');
 	
 	var versionInfo = {

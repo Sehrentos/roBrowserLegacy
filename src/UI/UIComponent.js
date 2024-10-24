@@ -1,4 +1,4 @@
-///<reference path="../../types/UIComponent.d.ts" />
+///<reference path="../../types/UI.d.ts" />
 /**
  * UI/UIComponent.js
  *
@@ -18,6 +18,7 @@ define(function( require )
 	var CommonCSS = require('text!./Common.css');
 	/** @type {JQueryStatic} */
 	var jQuery    = require('Utils/jquery');
+	/** @type {UI.CursorManager} */
 	var Cursor    = require('./CursorManager');
 	var DB        = require('DB/DBManager');
 	var Client    = require('Core/Client');
@@ -33,8 +34,8 @@ define(function( require )
 	 * Create a component
 	 *
 	 * @param {string} name
-	 * @param {string} htmlText content
-	 * @param {string} cssText content
+	 * @param {string?} htmlText content
+	 * @param {string?} cssText content
 	 */
 	function UIComponent( name, htmlText, cssText )
 	{
@@ -252,7 +253,7 @@ define(function( require )
 	/**
 	* Add the component to HTML
 	*
-	* @param {string|jQueryElement} [target] - Target element to append the UI to. If not provided, appends to body.
+	* @param {JQuery.Selector} [target] - Target element to append the UI to. If not provided, appends to body.
 	*/
 	UIComponent.prototype.append = function append(target)
 	{

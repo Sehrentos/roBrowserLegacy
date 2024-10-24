@@ -1,3 +1,4 @@
+///<reference path="../../types/UI.d.ts" />
 /**
  * UI/UIManager.js
  *
@@ -12,8 +13,11 @@ define(function( require )
 	'use strict';
 
 	// Load dependencies
+	/** @type {JQueryStatic} */
 	var jQuery      = require('Utils/jquery');
+	/** @type {UI.UIManager} */
 	var UIComponent = require('./UIComponent');
+	/** @type {UI.UIVersionManager} */
 	var UIVersionManager = require('./UIVersionManager');
 	var KEYS        = require('Controls/KeyEventHandler');
 	var Renderer    = require('Renderer/Renderer');
@@ -21,14 +25,16 @@ define(function( require )
 
 
 	/**
+	 * @module
 	 * User Interface Manager
+	 * @type {UI.UIManager}
 	 */
 	var UIManager = {};
 
 
 	/**
 	 * Components cache
-	 * @var {array} Components List
+	 * @var {Object} components List
 	 */
 	UIManager.components = {};
 
@@ -36,7 +42,7 @@ define(function( require )
 	/**
 	 * Store a component in the manager
 	 *
-	 * @param {UIComponent} component object
+	 * @param {UI.UIComponent} component object
 	 */
 	UIManager.addComponent = function addComponent( component )
 	{
@@ -53,8 +59,8 @@ define(function( require )
 	/**
 	 * Get component stored in manager
 	 *
-	 * @param {string} component name
-	 * @return {UIComponent} object
+	 * @param {string} name component name
+	 * @return {UI.UIComponent} object
 	 */
 	UIManager.getComponent = function getComponent( name )
 	{
@@ -89,8 +95,8 @@ define(function( require )
 	 * When resizing window, some components can be outside the screen size and
 	 * it sucks a lot. Try to correct the problem.
 	 *
-	 * @param {number} Game screen width
-	 * @param {number} Game screen height
+	 * @param {number} WIDTH Game screen width
+	 * @param {number} HEIGHT Game screen height
 	 */
 	UIManager.fixResizeOverflow = function fixResizeOverflow( WIDTH, HEIGHT)
 	{
@@ -143,7 +149,7 @@ define(function( require )
 	 * Display an error box component
 	 * Will reload the game once selected
 	 *
-	 * @param {string} error message
+	 * @param {string} text error message
 	 */
 	UIManager.showErrorBox = function showErrorBox( text )
 	{
@@ -205,9 +211,10 @@ define(function( require )
 	/**
 	 * Show a message box to the user
 	 *
-	 * @param {string} message to show
-	 * @param {string} button name
-	 * @param {function} callback once the button is pressed
+	 * @param {string} text message to show
+	 * @param {string} btn_name button name
+	 * @param {()=>void} callback once the button is pressed
+	 * @param {*} keydown 
 	 */
 	UIManager.showMessageBox = function showMessageBox( text, btn_name, callback, keydown )
 	{
@@ -275,11 +282,11 @@ define(function( require )
 	/**
 	 * Prompt a message to the user
 	 *
-	 * @param {string} message to show
-	 * @param {string} button ok
-	 * @param {string} button cancel
-	 * @param {function} callback when ok is pressed
-	 * @param {function} callback when cancel is pressed
+	 * @param {string} text message to show
+	 * @param {string} btn_yes button ok
+	 * @param {string} btn_no button cancel
+	 * @param {()=>void} onYes callback when ok is pressed
+	 * @param {()=>void} onNo callback when cancel is pressed
 	 */
 	UIManager.showPromptBox = function showPromptBox( text, btn_yes, btn_no, onYes, onNo )
 	{
@@ -332,7 +339,7 @@ define(function( require )
 
 
 	/**
-	 * Export
+	 * @exports UIManager
 	 */
 	return UIManager;
 });

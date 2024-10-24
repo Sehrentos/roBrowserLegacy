@@ -1,3 +1,4 @@
+///<reference path="../../types/Network.d.ts" />
 /**
  * NetWork/PacketCrypt.js
  *

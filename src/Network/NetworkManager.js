@@ -1,3 +1,4 @@
+///<reference path="../../types/Network.d.ts" />
 /**
  * Network/NetworkManager.js
  *
@@ -17,11 +18,16 @@ define(function( require )
 	// Load dependencies
 	var Configs        = require('Core/Configs');
 	var Context        = require('Core/Context');
+	/** @type {Utils.BinaryReader} */
 	var BinaryReader   = require('Utils/BinaryReader');
+	/** @type {Network.PacketVerManager} */
 	var PACKETVER      = require('./PacketVerManager');
 	var PacketVersions = require('./PacketVersions');
+	/** @type {Network.PacketRegister} */
 	var PacketRegister = require('./PacketRegister');
+	/** @type {Network.PacketCrypt} */
 	var PacketCrypt    = require('./PacketCrypt');
+	/** @type {Network.PacketLength} */
 	var PacketLength   = require('./PacketLength');
 	var ChromeSocket   = require('./SocketHelpers/ChromeSocket');
 	var JavaSocket     = require('./SocketHelpers/JavaSocket');
@@ -62,7 +68,7 @@ define(function( require )
 	 * Packets definition
 	 *
 	 * @param {string} name
-	 * @param {callback} struct - callback to parse the packet
+	 * @param {callback} Struct - callback to parse the packet
 	 * @param {number} size - packet size
 	 */
 	function Packets( name, Struct, size )
@@ -195,7 +201,7 @@ define(function( require )
 	 * Register a Packet
 	 *
 	 * @param {number} id - packet UID
-	 * @param {function} struct - packet structure callback
+	 * @param {function} Struct - packet structure callback
 	 */
 	function registerPacket( id, Struct ) {
 		Struct.id = id;
@@ -249,7 +255,7 @@ define(function( require )
 	/**
 	 * Received data from server
 	 *
-	 * @param {Uint8Array} buffer
+	 * @param {Uint8Array} buf buffer
 	 */
 	function receive( buf )
 	{

@@ -1,3 +1,4 @@
+///<reference path="../../types/Network.d.ts" />
 /**
  * NetWork/PacketRegister.js
  *
@@ -8,10 +9,10 @@
  * @author Vincent Thibault
  */
 
-define( ['./PacketStructure' ], function( PACKET )
+define( ['./PacketStructure' ], function( /** @type {Network.PacketStructure} */PACKET )
 {
 	'use strict';
-
+	/** @type {Network.PacketRegister} */
 	return {
 		0x69: PACKET.AC.ACCEPT_LOGIN, // ok
 		0x6a: PACKET.AC.REFUSE_LOGIN, // ok

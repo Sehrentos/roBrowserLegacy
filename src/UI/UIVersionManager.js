@@ -13,6 +13,7 @@ define(function (require)
 
 	var Configs = require('Core/Configs');
 	var PACKETVER = require('Network/PacketVerManager');
+	/** @type {UI.UIVersionManager} */
 	var UIVersionManager = {};
 	
 	var _UIAliases = {};
@@ -55,8 +56,10 @@ define(function (require)
 	}
 
 	UIVersionManager.getUIController = function(publicName, versionInfo){
+		/** @type {UI.UIComponent} */
 		var _selectedUI;
 	
+		/** @type {UI.UIController} */
 		var UIController = {};
 		
 		UIController.selectUIVersion = function(){

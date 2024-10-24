@@ -1,3 +1,4 @@
+///<reference path="../../types/Network.d.ts" />
 /**
  * Network/PacketLength.js
  *

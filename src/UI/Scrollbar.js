@@ -1,3 +1,4 @@
+///<reference path="../../types/UI.d.ts" />
 /**
  * UI/Scrollbar.js
  *
@@ -8,13 +9,14 @@
  * @author Vincent Thibault
  */
 define( ['Utils/jquery', 'Utils/Texture', 'DB/DBManager', 'Core/Client' ],
-function(       jQuery,         Texture,      DB,               Client )
+function(/** @type {JQueryStatic} */jQuery, Texture, DB, Client )
 {
 	'use strict';
 
 
 	/**
 	 * ScrollBar Namespace
+	 * @type {UI.ScrollBar}
 	 */
 	var ScrollBar = {};
 

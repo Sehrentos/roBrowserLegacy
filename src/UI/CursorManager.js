@@ -1,3 +1,4 @@
+///<reference path="../../types/UI.d.ts" />
 /**
  * UI/CursorManager.js
  *
@@ -13,6 +14,7 @@ define(function( require )
 	'use strict';
 
 	// Load dependencies
+	/** @type {JQueryStatic} */
 	var jQuery        = require('Utils/jquery');
 	var Client        = require('Core/Client');
 	var MemoryManager = require('Core/MemoryManager');
@@ -24,6 +26,7 @@ define(function( require )
 
 	/**
 	 * Cursor Constructor
+	 * @type {UI.CursorManager}
 	 */
 	var Cursor = {};
 

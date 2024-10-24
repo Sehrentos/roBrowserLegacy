@@ -1,3 +1,4 @@
+///<reference path="../../../../types/UIComponents/Announce.d.ts" />
 /**
  * UI/Components/Announce/Announce.js
  *
@@ -19,8 +20,9 @@ define(function(require)
 	var jQuery      = require('Utils/jquery');
 	var Events      = require('Core/Events');
 	var Renderer    = require('Renderer/Renderer');
+	/** @type {UI.UIManager} */
 	var UIManager   = require('UI/UIManager');
-	/** @type {UIComponent} */
+	/** @type {UIAnnounce} */
 	var UIComponent = require('UI/UIComponent');
 
 

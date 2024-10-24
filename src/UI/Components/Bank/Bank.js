@@ -1,3 +1,4 @@
+///<reference path="../../../../types/UIComponents/Bank.d.ts" />
 /**
  * UI/Components/Bank/Bank.js
  *
@@ -24,7 +25,7 @@ define(function(require)
 	var Session            = require('Engine/SessionStorage');
 	var Renderer           = require('Renderer/Renderer');
 	var UIManager          = require('UI/UIManager');
-	/** @type {UIComponent} */
+	/** @type {UIBank} */
 	var UIComponent        = require('UI/UIComponent');
 	var htmlText           = require('text!./Bank.html');
 	var cssText            = require('text!./Bank.css');

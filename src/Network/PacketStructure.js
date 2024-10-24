@@ -1,3 +1,4 @@
+///<reference path="../../types/Network.d.ts" />
 /**
  * Network/PacketStructures.js
  *
@@ -9,7 +10,7 @@
  * @author Vincent Thibault
  */
 
-define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Configs'], function (BinaryWriter, PACKETVER, Struct, Configs) {
+define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Configs'], function (/** @type {Utils.BinaryWriter} */BinaryWriter, PACKETVER, Struct, Configs) {
 	'use strict';
 
 
@@ -17,6 +18,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	var NAME_LENGTH = 24; // Must be equal to same name var in mmo.h
 	var MAP_NAME_LENGTH = (11 + 1);
 	var MAP_NAME_LENGTH_EXT = (MAP_NAME_LENGTH + 4);
+	/** @type {Network.PacketStructure} */
 	var PACKET = {};
 	var RENEWAL = Configs.get('renewal') || false;
 	var CLASSIC = !RENEWAL; // For ease of reading checks

@@ -90,14 +90,7 @@ define(['./Context', 'Preferences/PreferencesStorage'], function (Context, stora
 		delete data.save;
 
 		var store = {};
-		// store[key] = JSON.parse(JSON.stringify(data));
-		// store all data properties exept save method
-		var keys = Object.keys(data);
-		var i, count;
-
-		for (i = 0, count = keys.length; i < count; ++i) {
-			store[keys[i]] = data[keys[i]];
-		}
+		store[key] = JSON.parse(JSON.stringify(data));
 
 		Storage.set(store);
 

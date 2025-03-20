@@ -1,31 +1,33 @@
 /**
  * Core/Preferences.js
  *
- * Store informations in local storage (window position, noctrl, etc.)
+ * Store informations in device storage (window position, noctrl, etc.)
  *
  * This file is part of ROBrowser, (http://www.robrowser.com/).
  *
  * @author Vincent Thibault
  */
-define([ './Context' ], function( Context )
-{
+define(['./Context', 'Preferences/PreferencesStorage'], function (Context, storagePromise) {
 	'use strict';
 
-
-	var Storage = Context.Is.APP ?
+	const Storage = Context.Is.APP ?
 		window.chrome.storage.local :
 		{
-			get: function Get( key, fn ){
-				var out = {};
-				out[key] = localStorage.getItem(key);
-				fn( out );
+			get: async function Get(key, fn) {
+				const out = {};
+				const storage = await storagePromise;
+				const value = await storage.getItem(key);
+				out[key] = value;
+				fn(out);
 			},
-			set: function Set( obj, fn ) {
-				var keys = Object.keys( obj );
-				var i, count;
+			set: async function Set(obj, fn) {
+				const keys = Object.keys(obj);
+				let i, count;
+
+				const storage = await storagePromise;
 
 				for (i = 0, count = keys.length; i < count; ++i) {
-					localStorage.setItem( keys[i], obj[ keys[i] ] );
+					await storage.setItem(keys[i], obj[keys[i]]);
 				}
 
 				if (fn) {
@@ -42,36 +44,35 @@ define([ './Context' ], function( Context )
 	 * @param {mixed} default value
 	 * @param {number} optional version
 	 */
-	function get( key, def, version )
-	{
-		Storage.get( key, function( value ){
+	function get(key, def, version) {
+		Storage.get(key, function (value) {
 			var data, keys;
 			var i, count;
 
-			version   = version || 0.0;
+			version = version || 0.0;
 
 			// Not existing, storing it
-			if (!value[key] || JSON.parse(value[key])._version !== version) {
-				save( def );
+			if (!value[key] || value[key]._version !== version) {
+				save(def);
 				return;
 			}
 
-			data          = JSON.parse( value[key] );
-			data._key     = key;
+			data = value[key];
+			data._key = key;
 			data._version = version;
-			data.save     = selfSave;
+			data.save = selfSave;
 
-			keys          = Object.keys(data);
-			count         = keys.length;
+			keys = Object.keys(data);
+			count = keys.length;
 
 			for (i = 0; i < count; ++i) {
-				def[ keys[i] ] = data[ keys[i] ];
+				def[keys[i]] = data[keys[i]];
 			}
 		});
 
-		def._key     = key;
+		def._key = key;
 		def._version = version;
-		def.save     = selfSave;
+		def.save = selfSave;
 
 		return def;
 	}
@@ -83,28 +84,33 @@ define([ './Context' ], function( Context )
 	 * @param {string} key
 	 * @param {object} value to store
 	 */
-	function save( data )
-	{
+	function save(data) {
 		var key = data._key;
 		delete data._key;
 		delete data.save;
 
 		var store = {};
-		store[key] = JSON.stringify(data);
+		// store[key] = JSON.parse(JSON.stringify(data));
+		// store all data properties exept save method
+		var keys = Object.keys(data);
+		var i, count;
 
-		Storage.set( store );
+		for (i = 0, count = keys.length; i < count; ++i) {
+			store[keys[i]] = data[keys[i]];
+		}
 
-		data._key  = key;
-		data.save  = selfSave;
+		Storage.set(store);
+
+		data._key = key;
+		data.save = selfSave;
 	}
 
 
 	/**
 	 * Save from object
 	 */
-	function selfSave()
-	{
-		save( this );
+	function selfSave() {
+		save(this);
 	}
 
 
@@ -112,7 +118,7 @@ define([ './Context' ], function( Context )
 	 *
 	 */
 	return {
-		get:  get,
+		get: get,
 		save: save
 	};
 });

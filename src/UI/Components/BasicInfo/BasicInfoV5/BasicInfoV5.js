@@ -24,7 +24,7 @@ define(function(require)
 	var Renderer           = require('Renderer/Renderer');
 	var Session            = require('Engine/SessionStorage');
 	var UIManager          = require('UI/UIManager');
-	var UIComponent        = require('UI/UIComponent');
+	/** @type {UI.UIComponent<UI.Component.BasicInfo>} */var UIComponent = require('UI/UIComponent');
 	var Inventory          = require('UI/Components/Inventory/Inventory');
 	var Equipment          = require('UI/Components/Equipment/Equipment');
 	var PartyFriends       = require('UI/Components/PartyFriends/PartyFriends');
@@ -36,7 +36,7 @@ define(function(require)
 	var Rodex              = require('UI/Components/Rodex/Rodex');
 	var WinStats           = require('UI/Components/WinStats/WinStats');
 	var Navigation         = require('UI/Components/Navigation/Navigation');
-	
+
 	// Version Dependent UIs
 	var SkillList = require('UI/Components/SkillList/SkillList');
 	var Quest     = require('UI/Components/Quest/Quest');
@@ -362,7 +362,7 @@ define(function(require)
 					});
 				}.bind(this));
 				break;
-			
+
 			case 'ap':
 				var perc  = Math.floor(val1 * 100 / val2);
 				var color = perc === 100 ? 'red' : 'blue';

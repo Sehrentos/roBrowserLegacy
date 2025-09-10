@@ -9,7 +9,12 @@
  * @author Vincent Thibault
  */
 
-define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Configs'], function (BinaryWriter, PACKETVER, Struct, Configs) {
+define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Configs'], function (
+	/** @type {Utils.BinaryWriter} */BinaryWriter,
+	/** @type {Network.PacketVerManager} */PACKETVER,
+	/** @type {Utils.Struct} */Struct,
+	Configs
+) {
 	'use strict';
 
 
@@ -17,6 +22,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	var NAME_LENGTH = 24; // Must be equal to same name var in mmo.h
 	var MAP_NAME_LENGTH = (11 + 1);
 	var MAP_NAME_LENGTH_EXT = (MAP_NAME_LENGTH + 4);
+	/** @type {Network.PacketStructure} */
 	var PACKET = {};
 	var RENEWAL = Configs.get('renewal') || false;
 	var CLASSIC = !RENEWAL; // For ease of reading checks
@@ -2645,7 +2651,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		pkt_buf.writeULong(this.GID);
 		return pkt_buf;
 	};
-	
+
 	// 0x235
 	PACKET.ZC.HOSKILLINFO_LIST = function PACKET_ZC_HOSKILLINFO_LIST(fp, end) {
 		this.skillList = (function() {
@@ -2675,7 +2681,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		pkt_buf.writeShort(0x237);
 		return pkt_buf;
 	};
-	
+
 	// 0x239
 	PACKET.ZC.HOSKILLINFO_UPDATE = function PACKET_ZC_HOSKILLINFO_UPDATE(fp, end) {
 		this.SKID = fp.readUShort();

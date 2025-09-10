@@ -7,10 +7,12 @@
  *
  * @created MrUnzO
  */
-
-define(["./WeaponType"], function (WeaponType) {
+define(["./WeaponType"], function (
+	/** @type {DB.Items.WeaponType} */WeaponType
+) {
 	"use strict";
 
+	/** @type {DB.Items.WeaponTrailTable} */
 	var WeaponTrail = {};
 
 	WeaponTrail[WeaponType.NONE] = "";

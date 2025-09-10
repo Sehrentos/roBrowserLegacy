@@ -8,7 +8,7 @@
  * @author Vincent Thibault
  */
 
-define(["./PacketStructure"], function (PACKET) {
+define(["./PacketStructure"], function (/** @type {Network.PacketStructure} */PACKET) {
 	"use strict";
 
 	return {

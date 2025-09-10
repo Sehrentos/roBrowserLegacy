@@ -11,23 +11,19 @@ define(function(require)
 {
 	'use strict';
 
-
-	/**
-	 * Dependencies
-	 */
-	var DB                 = require('DB/DBManager');
-	var Network            = require('Network/NetworkManager');
-	var PACKET             = require('Network/PacketStructure');
-	var KEYS               = require('Controls/KeyEventHandler');
-	var jQuery      	   = require('Utils/jquery');
-	var Preferences        = require('Core/Preferences');
-	var Session            = require('Engine/SessionStorage');
-	var Renderer           = require('Renderer/Renderer');
-	var UIManager          = require('UI/UIManager');
-	var UIComponent        = require('UI/UIComponent');
-	var htmlText           = require('text!./Bank.html');
-	var cssText            = require('text!./Bank.css');
-	var ChatBox      	   = require('UI/Components/ChatBox/ChatBox');
+	/** @type {DB.DBManager} */var DB = require('DB/DBManager');
+	/** @type {Network.NetworkManager} */var Network = require('Network/NetworkManager');
+	/** @type {Network.PacketStructure} */var PACKET = require('Network/PacketStructure');
+	/** @type {Controls.KeyEventHandler} */var KEYS = require('Controls/KeyEventHandler');
+	/** @type {JQueryStatic} */var jQuery = require('Utils/jquery');
+	/** @type {Preferences.Preferences} */var Preferences = require('Core/Preferences');
+	/** @type {Engine.SessionStorage} */var Session = require('Engine/SessionStorage');
+	/** @type {Renderer.Renderer} */var Renderer = require('Renderer/Renderer');
+	/** @type {UI.UIManager} */var UIManager = require('UI/UIManager');
+	/** @type {UI.UIComponent<UI.Component.Bank>} */var UIComponent = require('UI/UIComponent');
+	/** @type {string} */var htmlText = require('text!./Bank.html');
+	/** @type {string} */var cssText = require('text!./Bank.css');
+	/** @type {UI.UIComponent<UI.Component.ChatBox>} */var ChatBox = require('UI/Components/ChatBox/ChatBox');
 
 
 	/**
@@ -301,7 +297,6 @@ define(function(require)
 	 * Key Handler
 	 *
 	 * @param {object} event
-	 * @return {boolean}
 	 */
 	Bank.onKeyDown = function onKeyDown( event )
 	{

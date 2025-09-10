@@ -11,7 +11,7 @@
 define(function()
 {
 	'use strict';
-
+	/** @type {DB.Effects.Weather} */
 	var Weather = {};
 
 

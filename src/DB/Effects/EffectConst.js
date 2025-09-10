@@ -11,8 +11,8 @@ define(function()
 {
 	"use strict";
 
-	return {
-	
+	/** @type {DB.Effects.Const} */
+	const EffectConst = {
 		EF_NONE:							-1,
 		EF_HIT1:							0,
 		EF_HIT2:							1,
@@ -1125,7 +1125,7 @@ define(function()
 		EF_MOVE_COORDINATE:					1150,
 
 		DROPEFFECT_PINK:					1186,
-		
+
 		DROPEFFECT_YELLOW:					1189,
 		DROPEFFECT_PURPLE:					1190,
 
@@ -1147,7 +1147,7 @@ define(function()
 		EF_CURSE_EXPLOSION:					1233,
 		EF_SOUL_REAPER:						1234,
 		EF_SOUL_EXPLOSION:					1242,
-		
+
 		DROPEFFECT_BLUE:					1869,
 		DROPEFFECT_GREEN:					1870,
 		DROPEFFECT_RED:						1871,
@@ -1155,6 +1155,7 @@ define(function()
 		EF_NEW_SUCCESS:						1872,
 		// ALWAYS UPDATE TO LARGEST ID + 1
 		EF_MAX:								1873,
-		
 	};
+
+	return EffectConst;
 });

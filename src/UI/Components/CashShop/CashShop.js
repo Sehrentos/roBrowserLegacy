@@ -7,32 +7,29 @@
  *
  * @author Stephen-A
  */
-define(function(require)
+define(function(/** @type {Require} */require)
 {
 	'use strict';
 
-	/**
-	 * Dependencies
-	 */
-	var DB                 = require('DB/DBManager');
-	var Client             = require('Core/Client');
-	var jQuery             = require('Utils/jquery');
-	var Network            = require('Network/NetworkManager');
-	var PACKETVER          = require('Network/PacketVerManager');
-	var PACKET             = require('Network/PacketStructure');
-	var KEYS               = require('Controls/KeyEventHandler');
-	var InputBox           = require('UI/Components/InputBox/InputBox');
-	var ChatBox      	   = require('UI/Components/ChatBox/ChatBox');
-	var Renderer           = require('Renderer/Renderer');
-	var Preferences        = require('Core/Preferences');
-	var UIManager          = require('UI/UIManager');
-	var UIComponent        = require('UI/UIComponent');
-	var htmlText           = require('text!./CashShop.html');
-	var cssText            = require('text!./CashShop.css');
-	var getModule          = require;
+	/** @type {DB.DBManager} */var DB = require('DB/DBManager');
+	/** @type {Core.Client} */var Client = require('Core/Client');
+	/** @type {JQueryStatic} */var jQuery = require('Utils/jquery');
+	/** @type {Network.NetworkManager} */var Network = require('Network/NetworkManager');
+	/** @type {Network.PacketVerManager} */var PACKETVER = require('Network/PacketVerManager');
+	/** @type {Network.PacketStructure} */var PACKET = require('Network/PacketStructure');
+	/** @type {Controls.KeyEventHandler} */var KEYS = require('Controls/KeyEventHandler');
+	/** @type {UI.UIManager} */var InputBox = require('UI/Components/InputBox/InputBox');
+	/** @type {UI.UIManager} */var ChatBox = require('UI/Components/ChatBox/ChatBox');
+	/** @type {Renderer.Renderer} */var Renderer  = require('Renderer/Renderer');
+	/** @type {Core.Preferences} */var Preferences = require('Core/Preferences');
+	/** @type {UI.UIManager} */var UIManager = require('UI/UIManager');
+	/** @type {UI.UIComponent<UI.Component.CashShop>} */var UIComponent = require('UI/UIComponent');
+	/** @type {string} */var htmlText = require('text!./CashShop.html');
+	/** @type {string} */var cssText= require('text!./CashShop.css');
+	var getModule = require;
 
 	// Version Dependent UIs
-	var MiniMap = require('UI/Components/MiniMap/MiniMap');
+	/** @type {UI.UIComponent<UI.Component.MiniMap>} */var MiniMap = require('UI/Components/MiniMap/MiniMap');
 
 	var CashShop = new UIComponent( 'CashShop', htmlText, cssText );
 

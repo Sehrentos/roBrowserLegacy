@@ -15,11 +15,11 @@ define(function(require)
 	/**
 	 * Dependencies
 	 */
-	var jQuery      = require('Utils/jquery');
-	var Events      = require('Core/Events');
-	var Renderer    = require('Renderer/Renderer');
-	var UIManager   = require('UI/UIManager');
-	var UIComponent = require('UI/UIComponent');
+	/** @type {JQueryStatic} */var jQuery      = require('Utils/jquery');
+	/** @type {Core.Events} */var Events      = require('Core/Events');
+	/** @type {Renderer.Renderer} */var Renderer    = require('Renderer/Renderer');
+	/** @type {UI.UIManager} */var UIManager   = require('UI/UIManager');
+	/** @type {UI.UIComponent<UI.Component.Announce>} */var UIComponent = require('UI/UIComponent');
 
 
 	/**
@@ -114,7 +114,7 @@ define(function(require)
 			text.split('\n').forEach((line) => {
 				const words = line.split(' ');
 				let currentLine = '';
-	
+
 				words.forEach((word) => {
 					const testLine = currentLine + word + ' ';
 					if (this.ctx.measureText(testLine).width > maxWidth) {
@@ -124,7 +124,7 @@ define(function(require)
 						currentLine = testLine;
 					}
 				});
-	
+
 				if (currentLine.trim()) {
 					lines.push(currentLine.trim());
 				}

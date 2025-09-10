@@ -7,24 +7,24 @@
  *
  * @author Vincent Thibault
  */
-define(function (require) {
+define(function (/** @type {Require} */require) {
 	"use strict";
 
 	// Load dependencies
-	const DB = require("DB/DBManager");
-	const Emotions = require("DB/Emotions");
-	const BGM = require("Audio/BGM");
-	const Sound = require("Audio/SoundManager");
-	const Session = require("Engine/SessionStorage");
-	const PACKET = require("Network/PacketStructure");
-	const PACKETVER = require("Network/PacketVerManager");
-	const Network = require("Network/NetworkManager");
-	const ControlPreferences = require("Preferences/Controls");
-	const AudioPreferences = require("Preferences/Audio");
-	const MapPreferences = require("Preferences/Map");
-	const CameraPreferences = require("Preferences/Camera");
-	const Renderer = require("Renderer/Renderer");
-	const getModule = require;
+	/** @type {DB.DBManager} */const DB = require("DB/DBManager");
+	/** @type {DB.Emotions} */const Emotions = require("DB/Emotions");
+	/** @type {BGM.BGMManager} */const BGM = require("Audio/BGM");
+	/** @type {Sound.SoundManager} */const Sound = require("Audio/SoundManager");
+	/** @type {Engine.SessionStorage} */const Session = require("Engine/SessionStorage");
+	/** @type {Network.PacketStructure} */const PACKET = require("Network/PacketStructure");
+	/** @type {Network.PacketVerManager} */const PACKETVER = require("Network/PacketVerManager");
+	/** @type {Network.NetworkManager} */const Network = require("Network/NetworkManager");
+	/** @type {Preferences.ShortCutControls} */const ControlPreferences = require("Preferences/Controls");
+	/** @type {Preferences.Audio} */const AudioPreferences = require("Preferences/Audio");
+	/** @type {Preferences.Map} */const MapPreferences = require("Preferences/Map");
+	/** @type {Preferences.Camera} */const CameraPreferences = require("Preferences/Camera");
+	/** @type {Renderer.Renderer} */const Renderer = require("Renderer/Renderer");
+	/** @type {Require} */const getModule = require;
 
 	let aliases = {};
 

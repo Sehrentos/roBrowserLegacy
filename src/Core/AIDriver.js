@@ -1,10 +1,15 @@
-define(['Renderer/EntityManager', 'Renderer/Renderer', 'Vendors/fengari-web', 'Renderer/Entity/Entity'], function (EntityManager, Renderer, fengari, Entity) {
+define(['Renderer/EntityManager', 'Renderer/Renderer', 'Vendors/fengari-web', 'Renderer/Entity/Entity'], function (
+	/** @type {Renderer.EntityManager} */EntityManager,
+	/** @type {Renderer.Renderer} */Renderer,
+	/** @type {Vendors.fengari} */fengari,
+	/** @type {Renderer.Entity} */Entity
+) {
     'use strict';
 
-    var Session = require('Engine/SessionStorage');
-    var Network = require('Network/NetworkManager');
-    var PACKET = require('Network/PacketStructure');
-    var Configs = require('Core/Configs');
+    /** @type {Engine.SessionStorage} */var Session = require('Engine/SessionStorage');
+    /** @type {Engine.NetworkManager} */var Network = require('Network/NetworkManager');
+    /** @type {Network.PacketStructure} */var PACKET = require('Network/PacketStructure');
+    /** @type {Core.Configs} */var Configs = require('Core/Configs');
 
     function AIDriver(type) {
         this.type = type; // 'homunculus' or 'mercenary'

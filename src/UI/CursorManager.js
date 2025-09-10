@@ -8,13 +8,13 @@
  * @author Vincent Thibault
  */
 
-define(function( require )
+define(function( /** @type {Require} */require )
 {
 	'use strict';
 
 	// Load dependencies
-	var jQuery        = require('Utils/jquery');
-	var Client        = require('Core/Client');
+	/** @type {JQueryStatic} */var jQuery = require('Utils/jquery');
+	/** @type {Core.Client} */var Client = require('Core/Client');
 	var MemoryManager = require('Core/MemoryManager');
 	var Graphics      = require('Preferences/Graphics');
 	var Sprite        = require('Loaders/Sprite');
@@ -24,6 +24,7 @@ define(function( require )
 
 	/**
 	 * Cursor Constructor
+	 * @type {UI.CursorManager}
 	 */
 	var Cursor = {};
 
@@ -70,7 +71,7 @@ define(function( require )
 	Cursor.blockMagnetism = false;
 
 	/**
-	 * @var {integer} Cursor.ACTION.* constant
+	 * @type {number} Cursor.ACTION.* constant
 	 */
 	var _type = Cursor.ACTION.DEFAULT;
 
@@ -299,7 +300,7 @@ function bindMouseEvents() {
 				animation.compiledStyleIndex = _compiledStyle.length;
 
 				dataURIList.push(dataURI);
-				
+
 				var blobURL = URL.createObjectURL(new Blob([data.buffer], { type: 'image/png' }));
 
 
@@ -311,7 +312,7 @@ function bindMouseEvents() {
 	/**
 	 * Creates a sprite sheet from a list of image URLs and appends it to the DOM.
 	 *
-	 * Creates a canvas, draws each sprite in a row, converts the canvas to a data URL, 
+	 * Creates a canvas, draws each sprite in a row, converts the canvas to a data URL,
 	 * and then creates a Blob URL to display the sprite sheet.
 	 */
 	function createSpriteSheet() {
@@ -319,15 +320,15 @@ function bindMouseEvents() {
 		var totalSprites = _compiledStyle.length;
 		var spriteSheetWidth = totalSprites * spriteWidth;
 		var spriteSheetHeight = spriteHeight;
-	
+
 		// Create a canvas to hold the sprite sheet
 		var spriteSheetCanvas = document.createElement('canvas');
 		spriteSheetCanvas.width = spriteSheetWidth;
 		spriteSheetCanvas.height = spriteSheetHeight;
 		var ctx = spriteSheetCanvas.getContext('2d');
-	
+
 		var imagesLoaded = 0;
-	
+
 		function drawSprite(n) {
 			var img = new Image();
 			img.onload = function() {
@@ -339,11 +340,11 @@ function bindMouseEvents() {
 			};
 			img.src = _compiledStyle[n];
 		}
-	
+
 		function finalizeSpriteSheet() {
 			// Convert the sprite sheet canvas to a data URL
 			var spriteSheetDataURL = spriteSheetCanvas.toDataURL('image/png');
-	
+
 			// Create a Blob from the sprite sheet data URL
 			var binary = atob(spriteSheetDataURL.split(',')[1]);
 			var array = [];
@@ -352,7 +353,7 @@ function bindMouseEvents() {
 			}
 			var blob = new Blob([new Uint8Array(array)], { type: 'image/png' });
 			var spriteSheetBlobURL = URL.createObjectURL(blob);
-	
+
 			// Append the sprite sheet to the DOM
 			var imageElem = jQuery('<img class="cursor__sprite" src="' + spriteSheetBlobURL + '">');
 			imageElem.one('load', function (e) {
@@ -360,7 +361,7 @@ function bindMouseEvents() {
 			})
 			jQuery('.cursor').append(imageElem);
 		}
-	
+
 		for (var i = 0; i < totalSprites; i++) {
 			drawSprite(i);
 		}
@@ -410,11 +411,11 @@ function bindMouseEvents() {
 		if (!Graphics.cursor || !_compiledStyle.length) {
 			if (_selector) _selector.style.display = 'hidden';
 			return;
-		} 
+		}
 		if (_selector.style.display !== 'show') {
 			if (_selector) _selector.style.display = 'show';
 		}
-	
+
 		let info = ActionInformations[_type] || ActionInformations[Cursor.ACTION.DEFAULT];
 		let action = _action.actions[_type] || _action.actions[Cursor.ACTION.DEFAULT];
 		let anim = _animation;
@@ -422,18 +423,18 @@ function bindMouseEvents() {
 		let x = info.startX;
 		let y = info.startY;
 		let animation;
-	
+
 		if (_play) {
 			let frame = Math.floor((tick - _tick) / delay);
 			anim = _norepeat ? Math.min(frame, action.animations.length - 1) : frame % action.animations.length;
 		}
-	
+
 		if (Graphics.cursor) document.body.classList.add('custom-cursor');
-	
+
 		animation = action.animations[anim];
-	
+
 		if (!animation) return;
-	
+
 		if (Cursor.magnetism && !Cursor.blockMagnetism) {
 			let entity = EntityManager.getOverEntity();
 			if (entity && ((['TYPE_MOB', 'TYPE_NPC_ABR', 'TYPE_NPC_BIONIC'].includes(entity.objecttype) && Preferences.snap) || (entity.objecttype === Entity.TYPE_ITEM && Preferences.itemsnap))) {
@@ -441,15 +442,15 @@ function bindMouseEvents() {
 				y += Math.floor(Mouse.screen.y - (entity.boundingRect.y1 + (entity.boundingRect.y2 - entity.boundingRect.y1) / 2));
 			}
 		}
-	
+
 		if (animation.compiledStyleIndex !== _lastStyleId || x !== _lastX || y !== _lastY) {
 			_lastStyleId = animation.compiledStyleIndex;
 			_lastX = x;
 			_lastY = y;
-	
+
 			let cursorSprite = document.querySelector('.cursor__sprite');
 			if (cursorSprite) cursorSprite.style.left = `${-_lastStyleId * 50}px`;
-	
+
 			let cursor = document.querySelector('.cursor');
 			if (cursor) cursor.style.transform = `translate(-${_lastX}px, -${_lastY}px)`;
 		}

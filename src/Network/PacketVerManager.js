@@ -8,7 +8,7 @@
  * @author Vincent Thibault
  */
 
-define(['Core/Configs', 'Network/PacketLength'], function( Configs, PacketLength )
+define(['Core/Configs', 'Network/PacketLength'], function( Configs, /** @type {Network.PacketLength} */PacketLength )
 {
 	"use strict";
 
@@ -114,7 +114,7 @@ define(['Core/Configs', 'Network/PacketLength'], function( Configs, PacketLength
 	/**
 	 * Parse char list
 	 *
-	 * @param {BinaryReader} fp
+	 * @param {Utils.BinaryReader} fp
 	 * @param {number} end of the reader
 	 */
 	function parseCharList(fp, end) {

@@ -5,13 +5,11 @@
  *
  * @author Vincent Thibault
  */
-
-define(function()
-{
+define(function () {
 	"use strict";
 
-
-	return {
+	/** @type {DB.Items.ItemTable} */
+	const ITEMS = {
 		501: { ClassNum: 0 },
 		502: { ClassNum: 0 },
 		503: { ClassNum: 0 },
@@ -8415,4 +8413,5 @@ define(function()
 		25007: { ClassNum: 0 },
 		25008: { ClassNum: 0 },
 	};
+	return ITEMS;
 });

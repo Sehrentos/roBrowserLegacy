@@ -8,13 +8,18 @@
  * @author Vincent Thibault
  */
 define( ['Utils/jquery', 'Utils/Texture', 'DB/DBManager', 'Core/Client' ],
-function(       jQuery,         Texture,      DB,               Client )
-{
+function(
+	/** @type {JQueryStatic} */jQuery,
+	/** @type {Utils.Texture} */Texture,
+	/** @type {DB.DBManager} */DB,
+	/** @type {Core.Client} */Client
+) {
 	'use strict';
 
 
 	/**
 	 * ScrollBar Namespace
+	 * @type {UI.ScrollBar}
 	 */
 	var ScrollBar = {};
 

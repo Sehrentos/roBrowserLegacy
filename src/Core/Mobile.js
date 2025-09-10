@@ -18,13 +18,13 @@ define(function( require )
 	/**
 	 * Import dependencies
 	 */
-	var jQuery    = require('Utils/jquery');
-	var Context   = require('Core/Context');
-	var Events    = require('Core/Events');
-	var Camera    = require('Renderer/Camera');
-	var Session   = require('Engine/SessionStorage');
-	var Mouse     = require('Controls/MouseEventHandler');
-	var KEYS      = require('Controls/KeyEventHandler');
+	/** @type {JQueryStatic} */var jQuery = require('Utils/jquery');
+	/** @type {Core.Context} */var Context = require('Core/Context');
+	/** @type {Core.Events} */var Events = require('Core/Events');
+	/** @type {Renderer.Camera} */var Camera = require('Renderer/Camera');
+	/** @type {Engine.SessionStorage} */var Session = require('Engine/SessionStorage');
+	/** @type {Controls.MouseEventHandler} */var Mouse = require('Controls/MouseEventHandler');
+	/** @type {Controls.KeyEventHandler} */var KEYS = require('Controls/KeyEventHandler');
 
 
 	/**
@@ -199,7 +199,7 @@ define(function( require )
 
 			Mouse.screen.x  = _touches[0].pageX;
 			Mouse.screen.y  = _touches[0].pageY;
-			
+
 			if(!Session.FreezeUI){
 				Mouse.intersect = true;
 				_intersect      = true;
@@ -284,13 +284,13 @@ define(function( require )
 			}
 		});
 	}
-	
+
 	//Add mobile UI on touch
 	jQuery(window).one('touchstart', touchDevice);
-	
+
 	function touchDevice(){
 		Session.isTouchDevice = true;
-		
+
 		if(Session.Playing){ //Already playing, don't wait for map change, just show it
 			var MobileUI = require('UI/Components/MobileUI/MobileUI');
 			MobileUI.show();

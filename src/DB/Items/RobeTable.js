@@ -4,13 +4,12 @@
 * This file is part of ROBrowser, (http://www.robrowser.com/).
 *
 * @author Vincent Thibault
-* (auto-generated)
 */
-
 define(function () {
 	"use strict";
 
-	return {
+	/** @type {DB.Items.RobeTable} */
+	const ROBES = {
 		1: "Ãµ»ç³¯°³",
 		2: "¸ðÇè°¡¹è³¶",
 		3: "Å¸¶ôÃµ»çÀÇ³¯°³",
@@ -215,5 +214,6 @@ define(function () {
 		203: "C_Leticia",
 		204: "GreatDevilWing2",
 		999: "LAST"
-	}
+	};
+	return ROBES;
 });

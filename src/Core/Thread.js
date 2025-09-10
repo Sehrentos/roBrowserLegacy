@@ -10,8 +10,10 @@
  */
 
 
-define(['require', 'Core/Configs'], function( require, Configs )
-{
+define(['require', 'Core/Configs'], function(
+	/** @type {Require} */require,
+	/** @type {Core.Configs} */Configs
+) {
 	'use strict';
 
 
@@ -36,7 +38,7 @@ define(['require', 'Core/Configs'], function( require, Configs )
 
 
 	/**
-	 * @var {mixed} origin for security
+	 * @type {any} mixed origin for security
 	 */
 	var _origin = [];
 
@@ -50,9 +52,7 @@ define(['require', 'Core/Configs'], function( require, Configs )
 	/**
 	 * Send data to thread
 	 *
-	 * @param {string} type
-	 * @param {mixed} data
-	 * @param {function} callback
+	 * @return {(type:any, data:any, callback:Function) => void}
 	 */
 	var Send = function SendClosure()
 	{

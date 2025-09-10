@@ -8,20 +8,20 @@
  * This file is part of ROBrowser, (http://www.robrowser.com/).
  *
  */
-define(function (require)
+define(function (/** @type {Require} */require)
 {
 	'use strict';
-	
+
 	var publicName = 'BasicInfo';
-	
-	var BasicInfo = require('./BasicInfo/BasicInfo');
-	var BasicInfoV0 = require('./BasicInfoV0/BasicInfoV0');
-	var BasicInfoV3 = require('./BasicInfoV3/BasicInfoV3');
-	var BasicInfoV4 = require('./BasicInfoV4/BasicInfoV4');
-	var BasicInfoV5 = require('./BasicInfoV5/BasicInfoV5');
-	
-	var UIVersionManager = require('UI/UIVersionManager');
-	
+
+	/** @type {UI.UIComponent<UI.Component.BasicInfo>} */var BasicInfo = require('./BasicInfo/BasicInfo');
+	/** @type {UI.UIComponent<UI.Component.BasicInfo>} */var BasicInfoV0 = require('./BasicInfoV0/BasicInfoV0');
+	/** @type {UI.UIComponent<UI.Component.BasicInfo>} */var BasicInfoV3 = require('./BasicInfoV3/BasicInfoV3');
+	/** @type {UI.UIComponent<UI.Component.BasicInfo>} */var BasicInfoV4 = require('./BasicInfoV4/BasicInfoV4');
+	/** @type {UI.UIComponent<UI.Component.BasicInfo>} */var BasicInfoV5 = require('./BasicInfoV5/BasicInfoV5');
+
+	/** @type {UI.UIVersionManager} */var UIVersionManager = require('UI/UIVersionManager');
+
 	var versionInfo = {
 		default: BasicInfoV0,
 		common: {
@@ -31,18 +31,18 @@ define(function (require)
 			20090601:	BasicInfo,
 		},
 		re: {
-			
+
 		},
 		prere:{
-			
+
 		},
 		job: {
 			Fourth_Class: BasicInfoV5,
 			default: BasicInfoV4
 		}
 	};
-	
+
 	var BasicInfoController = UIVersionManager.getUIController(publicName, versionInfo);
-	
+
 	return BasicInfoController;
 });

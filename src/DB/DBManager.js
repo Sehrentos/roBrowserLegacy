@@ -7,60 +7,56 @@
  *
  * @author Vincent Thibault
  */
-
-define(function (require) {
+define(function (/** @type {Require} */require) {
 	'use strict';
 
-
-	/**
-	 * Dependencies
-	 */
-	var Client = require('Core/Client');
-	var Configs = require('Core/Configs');
-	var TextEncoding = require('Vendors/text-encoding');
-	var CLua = require('Vendors/wasmoon-lua5.1');
-	var JobId = require('./Jobs/JobConst');
-	var ClassTable = require('./Jobs/JobNameTable');
-	var PaletteTable = require('./Jobs/PalNameTable');
-	var WeaponAction = require('./Jobs/WeaponAction');
-	var WeaponJobTable = require('./Jobs/WeaponJobTable');
-	var BabyTable = require('./Jobs/BabyTable');
-	var HairIndexTable = require('./Jobs/HairIndexTable');
-	var MonsterTable = require('./Monsters/MonsterTable');
-	var MonsterNameTable = require('./Monsters/MonsterNameTable');
-	var PetIllustration = require('./Pets/PetIllustration');
-	var PetAction = require('./Pets/PetAction');
-	var ItemTable = require('./Items/ItemTable');
-	var HatTable = require('./Items/HatTable');
-	var ShieldTable = require('./Items/ShieldTable');
-	var WeaponTable = require('./Items/WeaponTable');
-	var WeaponType = require('./Items/WeaponType');
-	var WeaponSoundTable = require('./Items/WeaponSoundTable');
-	var WeaponHitSoundTable = require('./Items/WeaponHitSoundTable');
-	var RobeTable = require('./Items/RobeTable');
-	var RandomOption = require('DB/Items/ItemRandomOptionTable');
-	var SKID = require('./Skills/SkillConst');
-	var SkillDescription = require('./Skills/SkillDescription');
-	var JobHitSoundTable = require('./Jobs/JobHitSoundTable');
-	var WeaponTrailTable = require('./Items/WeaponTrailTable');
-	var TownInfo = require('./TownInfo');
-	var XmlParse = require('Vendors/xmlparse');
+	/** @type {Core.Client} */var Client = require('Core/Client');
+	/** @type {Core.Configs} */var Configs = require('Core/Configs');
+	/** @type {Vendors.TextEncoding} */var TextEncoding = require('Vendors/text-encoding');
+	/** @type {Vendors.Wasmoon} */var CLua = require('Vendors/wasmoon-lua5.1');
+	/** @type {DB.Jobs.JobConst} */var JobId = require('./Jobs/JobConst');
+	/** @type {DB.Jobs.JobNameTable} */var ClassTable = require('./Jobs/JobNameTable');
+	/** @type {DB.Jobs.PalNameTable} */var PaletteTable = require('./Jobs/PalNameTable');
+	/** @type {DB.Jobs.WeaponAction} */var WeaponAction = require('./Jobs/WeaponAction');
+	/** @type {DB.Jobs.WeaponJobTable} */var WeaponJobTable = require('./Jobs/WeaponJobTable');
+	/** @type {DB.Jobs.BabyTable} */var BabyTable = require('./Jobs/BabyTable');
+	/** @type {DB.Jobs.HairIndexTable} */var HairIndexTable = require('./Jobs/HairIndexTable');
+	/** @type {DB.Mobs.MonsterTable} */var MonsterTable = require('./Monsters/MonsterTable');
+	/** @type {DB.Mobs.MonsterNameTable} */var MonsterNameTable = require('./Monsters/MonsterNameTable');
+	/** @type {DB.Pets.PetIllustration} */var PetIllustration = require('./Pets/PetIllustration');
+	/** @type {DB.Pets.PetAction} */var PetAction = require('./Pets/PetAction');
+	/** @type {DB.Items.ItemTable} */var ItemTable = require('./Items/ItemTable');
+	/** @type {DB.Items.Hats} */var HatTable = require('./Items/HatTable');
+	/** @type {DB.Items.ShieldTable} */var ShieldTable = require('./Items/ShieldTable');
+	/** @type {DB.Items.WeaponTable} */var WeaponTable = require('./Items/WeaponTable');
+	/** @type {DB.Items.WeaponType} */var WeaponType = require('./Items/WeaponType');
+	/** @type {DB.Items.WeaponSoundTable} */var WeaponSoundTable = require('./Items/WeaponSoundTable');
+	/** @type {DB.Items.WeaponHitSoundTable} */var WeaponHitSoundTable = require('./Items/WeaponHitSoundTable');
+	/** @type {DB.Items.RobeTable} */var RobeTable = require('./Items/RobeTable');
+	/** @type {DB.Items.ItemRandomOptionTable} */var RandomOption = require('DB/Items/ItemRandomOptionTable');
+	/** @type {DB.Skills.SkillConst} */var SKID = require('./Skills/SkillConst');
+	/** @type {DB.Skills.SkillDescription} */var SkillDescription = require('./Skills/SkillDescription');
+	/** @type {DB.Jobs.JobHitSoundTable} */var JobHitSoundTable = require('./Jobs/JobHitSoundTable');
+	/** @type {DB.Items.WeaponTrailTable} */var WeaponTrailTable = require('./Items/WeaponTrailTable');
+	/** @type {DB.Map.TownInfo} */var TownInfo = require('./TownInfo');
+	/** @type {Vendors.XMLParse} */var XmlParse = require('Vendors/xmlparse');
 
 	//Pet
-	var PetEmotionTable = require('./Pets/PetEmotionTable')
-	var PetHungryState = require('./Pets/PetHungryState')
-	var PetFriendlyState = require('./Pets/PetFriendlyState')
-	var PetMessageConst = require('./Pets/PetMessageConst')
+	/** @type {DB.Pets.PetEmotionTable} */var PetEmotionTable = require('./Pets/PetEmotionTable')
+	/** @type {DB.Pets.PetHungryState} */var PetHungryState = require('./Pets/PetHungryState')
+	/** @type {DB.Pets.PetFriendlyState} */var PetFriendlyState = require('./Pets/PetFriendlyState')
+	/** @type {DB.Pets.PetMessageConst} */var PetMessageConst = require('./Pets/PetMessageConst')
 
 	//MapName
-	var MapInfo = require('./Map/MapTable')
+	/** @type {DB.Map.MapTable} */var MapInfo = require('./Map/MapTable')
 
-	var Network = require('Network/NetworkManager');
-	var PACKET = require('Network/PacketStructure');
-	var PACKETVER = require('Network/PacketVerManager');
+	/** @type {Network.NetworkManager} */var Network = require('Network/NetworkManager');
+	/** @type {Network.PacketStructure} */var PACKET = require('Network/PacketStructure');
+	/** @type {Network.PacketVerManager} */var PACKETVER = require('Network/PacketVerManager');
 
 	/**
 	 * DB NameSpace
+	 * @type {DB.DBManager}
 	 */
 	var DB = {};
 
@@ -194,7 +190,7 @@ define(function (require) {
 	 * @var NaviNpcDistance Table
 	 */
 	var NaviNpcDistanceTable = {};
-	
+
 	/**
 	 * @var QuestInfo Table
 	 */
@@ -238,17 +234,17 @@ define(function (require) {
 			loadLuaTable([DB.LUA_PATH + 'datainfo/npcidentity.lub', DB.LUA_PATH + 'datainfo/jobname.lub'], 'JobNameTable', function (json) { MonsterTable = json; }, onLoad());
 			loadLuaTable([DB.LUA_PATH + 'datainfo/enumvar.lub', DB.LUA_PATH + 'datainfo/addrandomoptionnametable.lub'], 'NameTable_VAR', function (json) { RandomOption = json; }, onLoad());
 			loadItemDBTable(DB.LUA_PATH + 'ItemDBNameTbl.lub', null, onLoad());
-			
+
 			// Skill
 			loadLuaTable([DB.LUA_PATH + 'skillinfoz/skillid.lub', DB.LUA_PATH + 'skillinfoz/skilldescript.lub'], 'SKILL_DESCRIPT', function (json) { SkillDescription = json; }, onLoad());
 			// TODO: DB.LUA_PATH + skillinfoz/skillinfolist.lub	- Replaces part of DB/Skills/SkillInfo.js (if we can find a txt version, otherwise just overrides)
 			// TODO: DB.LUA_PATH + skillinfoz/skilltreeview.lub	- Replaces DB/Skills/SkillTreeView.js
-			
+
 			// Status
 			// TODO: DB.LUA_PATH + stateicon/stateiconinfo.lub
-	
+
 			// Legacy Navigation
-			if(PACKETVER.value >= 20111010){
+			if (PACKETVER.value >= 20111010) {
 				loadLuaValue(DB.LUA_PATH + 'navigation/navi_map_krpri.lub', 'Navi_Map', function (json) { NaviMapTable = json; }, onLoad());
 				loadLuaValue(DB.LUA_PATH + 'navigation/navi_mob_krpri.lub', 'Navi_Mob', function (json) { NaviMobTable = json; }, onLoad());
 				loadLuaValue(DB.LUA_PATH + 'navigation/navi_npc_krpri.lub', 'Navi_Npc', function (json) { NaviNpcTable = json; }, onLoad());
@@ -256,47 +252,47 @@ define(function (require) {
 				loadLuaValue(DB.LUA_PATH + 'navigation/navi_linkdistance_krpri.lub', 'Navi_Distance', function (json) { NaviLinkDistanceTable = json; }, onLoad());
 				loadLuaValue(DB.LUA_PATH + 'navigation/navi_npcdistance_krpri.lub', 'Navi_NpcDistance', function (json) { NaviNpcDistanceTable = json; }, onLoad());
 			}
-			
+
 			// LaphineSys
-			if(PACKETVER.value >= 20160601){
+			if (PACKETVER.value >= 20160601) {
 				loadLaphineSysFile(DB.LUA_PATH + 'datainfo/lapineddukddakbox.lub', null, onLoad());
 			}
-			
+
 			// LaphineUpg
-			if(PACKETVER.value >= 20170726){
+			if (PACKETVER.value >= 20170726) {
 				loadLaphineUpgFile(DB.LUA_PATH + 'datainfo/lapineupgradebox.lub', null, onLoad());
 			}
-			
+
 			// ItemReform
-			if(PACKETVER.value >= 20200916){
+			if (PACKETVER.value >= 20200916) {
 				loadItemReformFile(DB.LUA_PATH + 'ItemReform/ItemReformSystem.lub', null, onLoad());
 			}
-			
+
 			// MapName
-			if( Configs.get('enableMapName')  /*PACKETVER.value >= 20190605*/){ // We allow this feature to be enabled on any version due to popular demand
+			if (Configs.get('enableMapName')  /*PACKETVER.value >= 20190605*/) { // We allow this feature to be enabled on any version due to popular demand
 				loadMapTbl('System/mapInfo.lub', function (json) { for (const key in json) { if (json.hasOwnProperty(key)) { MapInfo[key] = json[key]; } } updateMapTable(); }, onLoad());
 			}
-			
+
 			// EntitySignBoard
 			loadSignBoardData('System/Sign_Data.lub', null, onLoad()); // this is not official, its a translation file
 			loadSignBoardList(DB.LUA_PATH + 'SignBoardList.lub', null, onLoad());
-			
+
 			// CheckAttendance
-			if(Configs.get('enableCheckAttendance') && PACKETVER.value >= 20180307) {
+			if (Configs.get('enableCheckAttendance') && PACKETVER.value >= 20180307) {
 				loadAttendanceFile('System/CheckAttendance.lub', null, onLoad());
 			}
-			
+
 			// Quest
 			loadQuestInfo('System/OngoingQuestInfoList.lub', null, onLoad());
 			// TODO: System/RecommendedQuests.lub
-			
+
 			// WoldMap
 			// TODO: DB.LUA_PATH + woldviewdata/worldviewdata_list.lub	- Replaces DB/Map/WorldMap.js
 			// TODO: DB.LUA_PATH + woldviewdata/worldviewdata_table.lub	- Replaces DB/Map/WorldMap.js
-			
+
 			// Achievements
 			// TODO: System/achievements.lub
-			
+
 			// Town Info
 			// TODO: System/Towninfo.lub	- Replaces DB/TownInfo.js
 		} else {
@@ -308,13 +304,13 @@ define(function (require) {
 			loadTable('data/idnum2itemresnametable.txt', '#', 2, function (index, key, val) { (ItemTable[key] || (ItemTable[key] = {})).identifiedResourceName = val; }, onLoad());
 			loadTable('data/idnum2itemdesctable.txt', '#', 2, function (index, key, val) { (ItemTable[key] || (ItemTable[key] = {})).identifiedDescriptionName = val.split("\n"); }, onLoad());
 			loadTable('data/itemslotcounttable.txt', '#', 2, function (index, key, val) { (ItemTable[key] || (ItemTable[key] = {})).slotCount = val; }, onLoad());
-			
+
 			// Skill
 			loadTable('data/skilldesctable.txt', '#', 2, function (index, key, val) { SkillDescription[SKID[key]] = val.replace("\r\n", "\n"); }, onLoad());
 			// TODO: data/skillnametable.txt	- ?
 			// TODO: data/skilltreeview.txt	- Replaces DB/Skills/SkillTreeView.js
 			// TODO: data/leveluseskillspamount.txt	- Replaces DB/Skills/SkillInfo.js -> SkillInfo.SpAmount
-			
+
 			// Quest
 			loadTable('data/questid2display.txt', '#', 6, parseQuestEntry, onLoad());
 		}
@@ -330,11 +326,11 @@ define(function (require) {
 		// EtcMapData
 		loadTable('data/fogparametertable.txt', '#', 5, parseFogEntry, onLoad());
 		loadTable('data/indoorrswtable.txt', '#', 1, parseIndoorEntry, onLoad());
-		
+
 		// Frost/Scream
 		loadTable('data/ba_frostjoke.txt', '\t', 1, function (index, val) { JokeTable[index] = val; }, onLoad());
 		loadTable('data/dc_scream.txt', '\t', 1, function (index, val) { ScreamTable[index] = val; }, onLoad());
-		
+
 		// Tips
 		// TODO: /tipoftheday.txt
 		// TODO: /GuildTip.txt
@@ -461,57 +457,57 @@ define(function (require) {
 				console.log('Loading file "' + filename + '"...');
 
 				try {
-				// check if file is ArrayBuffer and convert to Uint8Array if necessary
-				let buffer = (file instanceof ArrayBuffer) ? new Uint8Array(file) : file;
+					// check if file is ArrayBuffer and convert to Uint8Array if necessary
+					let buffer = (file instanceof ArrayBuffer) ? new Uint8Array(file) : file;
 
-				// create decoders
-				let iso88591Decoder = new TextEncoding.TextDecoder('iso-8859-1');
-				let userStringDecoder = new TextEncoding.TextDecoder('euc-kr'); // TODO: Add keys to config
+					// create decoders
+					let iso88591Decoder = new TextEncoding.TextDecoder('iso-8859-1');
+					let userStringDecoder = new TextEncoding.TextDecoder('euc-kr'); // TODO: Add keys to config
 
-				// get context, a proxy. It will be used to interact with lua conveniently
-				const ctx = lua.ctx;
+					// get context, a proxy. It will be used to interact with lua conveniently
+					const ctx = lua.ctx;
 
-				// create required functions in context
+					// create required functions in context
 
-				// add quest info
-				ctx.AddQuestInfo = (QuestID, Title, Summary, IconName, NpcSpr, NpcNavi, NpcPosX, NpcPosY, RewardEXP, RewardJEXP) => {
+					// add quest info
+					ctx.AddQuestInfo = (QuestID, Title, Summary, IconName, NpcSpr, NpcNavi, NpcPosX, NpcPosY, RewardEXP, RewardJEXP) => {
 
-					QuestInfo[QuestID] = { 
-						"Title": userStringDecoder.decode(Title),
-						"Summary": userStringDecoder.decode(Summary),
-						"IconName": userStringDecoder.decode(IconName),
-						"Description": [],
-						"NpcSpr": (NpcSpr instanceof Uint8Array) ? userStringDecoder.decode(NpcSpr) : null,
-						"NpcNavi": (NpcNavi instanceof Uint8Array) ? userStringDecoder.decode(NpcNavi) : null,
-						"NpcPosX": NpcPosX,
-						"NpcPosY": NpcPosY,
-						"RewardItemList": [],
-						"RewardEXP": RewardEXP,
-						"RewardJEXP": RewardJEXP
+						QuestInfo[QuestID] = {
+							"Title": userStringDecoder.decode(Title),
+							"Summary": userStringDecoder.decode(Summary),
+							"IconName": userStringDecoder.decode(IconName),
+							"Description": [],
+							"NpcSpr": (NpcSpr instanceof Uint8Array) ? userStringDecoder.decode(NpcSpr) : null,
+							"NpcNavi": (NpcNavi instanceof Uint8Array) ? userStringDecoder.decode(NpcNavi) : null,
+							"NpcPosX": NpcPosX,
+							"NpcPosY": NpcPosY,
+							"RewardItemList": [],
+							"RewardEXP": RewardEXP,
+							"RewardJEXP": RewardJEXP
+						};
+
+						return 1;
 					};
 
-					return 1;
-				};
+					// add quest description
+					ctx.AddQuestDescription = (QuestID, QuestDescription) => {
+						QuestInfo[QuestID].Description.push(userStringDecoder.decode(QuestDescription));
+						return 1;
+					};
 
-				// add quest description
-				ctx.AddQuestDescription = (QuestID, QuestDescription) => {
-					QuestInfo[QuestID].Description.push(userStringDecoder.decode(QuestDescription));
-					return 1;
-				};
+					// add quest reward item
+					ctx.AddQuestRewardItem = (QuestID, ItemID, ItemNum) => {
+						QuestInfo[QuestID].RewardItemList.push({ ItemID: ItemID, ItemNum: ItemNum });
+						return 1;
+					};
 
-				// add quest reward item
-				ctx.AddQuestRewardItem = (QuestID, ItemID, ItemNum) => {
-					QuestInfo[QuestID].RewardItemList.push({ItemID: ItemID, ItemNum: ItemNum});
-					return 1;
-				};
+					// mount file
+					lua.mountFile('OngoingQuestInfoList.lub', buffer);
+					// execute file
+					await lua.doFile('OngoingQuestInfoList.lub');
 
-				// mount file
-				lua.mountFile('OngoingQuestInfoList.lub', buffer);
-				// execute file
-				await lua.doFile('OngoingQuestInfoList.lub');
-
-				// create and execute our own main function
-				lua.doStringSync(`
+					// create and execute our own main function
+					lua.doStringSync(`
 					function main_quest()
 					-- Check if QuestInfoList is a table and not nil
 					if type(QuestInfoList) ~= "table" or QuestInfoList == nil then
@@ -538,9 +534,9 @@ define(function (require) {
 							Description = type(DESC.Description) == "table" and DESC.Description or {}
 						}
 
-						result, msg = AddQuestInfo(QuestID, questData.Title, questData.Summary, questData.IconName, 
-												questData.NpcSpr, questData.NpcNavi, questData.NpcPosX, 
-												questData.NpcPosY, questData.RewardEXP, 
+						result, msg = AddQuestInfo(QuestID, questData.Title, questData.Summary, questData.IconName,
+												questData.NpcSpr, questData.NpcNavi, questData.NpcPosX,
+												questData.NpcPosY, questData.RewardEXP,
 												questData.RewardJEXP)
 						if not result then
 							return false, msg
@@ -1727,7 +1723,7 @@ define(function (require) {
 		quest.Description = description;
 		quest.Summary = summary;
 	}
-	
+
 	/**
 	 * Actor Type checks
 	 *
@@ -2983,7 +2979,7 @@ define(function (require) {
 							if (!(cardList.includes(card))) {
 								cardList.push(card);
 							}
-	
+
 							//store details
 							if (cards[card]) {
 								cards[card].count++;
@@ -3114,7 +3110,7 @@ define(function (require) {
 
 	/**
 	 * Get back town information by mapname
-	 * @param {number} efst id
+	 * @param {string} mapname id
 	 */
 	DB.getTownInfo = function GetTownInfo(mapname) {
 		return TownInfo[mapname] || null;
@@ -3122,7 +3118,7 @@ define(function (require) {
 
 	/**
 	 * Get back map information by mapname
-	 * @param {number} efst id
+	 * @param {string} mapname id
 	 */
 	DB.getMapInfo = function GetMapInfo(mapname) {
 		return MapInfo[mapname] || null;
@@ -3587,7 +3583,7 @@ define(function (require) {
 	/**
 	 * Get Job Class Category
 	 *
-	 * @param {integer} JobId
+	 * @param {number} job
 	 *
 	 */
 	DB.getJobClass = function getJobClass(job) {
@@ -3772,14 +3768,14 @@ define(function (require) {
 	* @author alisonrag
 	*/
 	DB.loadGroupEmblem = function loadGroupEmblem(groupId, callback) {
-		let extension = [22,23,24,25].includes(groupId) ? 'gif' : 'bmp'; // for some reason 22 ~ 25 group emblem has .gif extension
+		let extension = [22, 23, 24, 25].includes(groupId) ? 'gif' : 'bmp'; // for some reason 22 ~ 25 group emblem has .gif extension
 
-		Client.loadFile( DB.INTERFACE_PATH + "group/group_" + groupId + "." + extension, function(dataURI) {
+		Client.loadFile(DB.INTERFACE_PATH + "group/group_" + groupId + "." + extension, function (dataURI) {
 			let img = new Image();
 			img.src = dataURI; // String Base64
 
 			// wait image load to call the callback
-			img.onload = function() {
+			img.onload = function () {
 				callback(img);
 			};
 		});
@@ -3859,7 +3855,7 @@ define(function (require) {
 		}
 
 		// Sort results by name
-		results.sort(function(a, b) {
+		results.sort(function (a, b) {
 			return a.name.localeCompare(b.name);
 		});
 

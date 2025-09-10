@@ -12,15 +12,12 @@ define(function(require)
 	'use strict';
 
 
-	/**
-	 * Dependencies
-	 */
-	var DB                 = require('DB/DBManager');
-	var Client             = require('Core/Client');
-	var UIManager          = require('UI/UIManager');
-	var UIComponent        = require('UI/UIComponent');
-	var htmlText           = require('text!./CardIllustration.html');
-	var cssText            = require('text!./CardIllustration.css');
+	/** @type {DB.DBManager} */var DB = require('DB/DBManager');
+	/** @type {Core.Client} */var Client = require('Core/Client');
+	/** @type {UI.UIManager} */var UIManager = require('UI/UIManager');
+	/** @type {UI.UIComponent<UI.Component.CardIllustration>} */var UIComponent = require('UI/UIComponent');
+	/** @type {string} */var htmlText = require('text!./CardIllustration.html');
+	/** @type {string} */var cssText = require('text!./CardIllustration.css');
 
 
 	/**

@@ -13,8 +13,8 @@ define(function( require )
 
 	// Load dependencies
 	var jQuery      = require('Utils/jquery');
-	var UIComponent = require('./UIComponent');
-	var UIVersionManager = require('./UIVersionManager');
+	/** @type {UI.TUIComponent} */var UIComponent = require('./UIComponent');
+	/** @type {UI.UIVersionManager} */var UIVersionManager = require('./UIVersionManager');
 	var KEYS        = require('Controls/KeyEventHandler');
 	var Renderer    = require('Renderer/Renderer');
 	var getModule   = require;
@@ -22,6 +22,7 @@ define(function( require )
 
 	/**
 	 * User Interface Manager
+	 * @type {UI.UIManager}
 	 */
 	var UIManager = {};
 
@@ -53,8 +54,8 @@ define(function( require )
 	/**
 	 * Get component stored in manager
 	 *
-	 * @param {string} component name
-	 * @return {UIComponent} object
+	 * @param {string} name component name
+	 * @return {UI.TUIComponent} object
 	 */
 	UIManager.getComponent = function getComponent( name )
 	{
@@ -62,7 +63,7 @@ define(function( require )
 		if (versionAlias) {
 			name = versionAlias;
 		}
-		
+
 		if (!(name in this.components)) {
 			throw new Error('UIManager.getComponent() - Component "' + name + '" not found');
 		}
@@ -130,11 +131,11 @@ define(function( require )
 				if(component.magnet.RIGHT){
 					ui.css('left', WIDTH - width);
 				}
-				
+
 				// Call custom resize function if has one
 				if(component.onResize){ component.onResize(); }
 			}
-			
+
 		}
 	};
 

@@ -10,7 +10,7 @@
  * @author Vincent Thibault
  */
 
-define( ['Core/MemoryItem'], function( MemoryItem )
+define( ['Core/MemoryItem'], function( /** @type {Core.MemoryItem} */MemoryItem )
 {
 	'use strict';
 
@@ -45,8 +45,8 @@ define( ['Core/MemoryItem'], function( MemoryItem )
 	 * Get back data from memory
 	 *
 	 * @param {string} filename
-	 * @param {function} onload - optional
-	 * @param {function} onerror - optional
+	 * @param {function} [onload] - optional
+	 * @param {function} [onerror] - optional
 	 * @return mixed data
 	 */
 	function get( filename, onload, onerror )

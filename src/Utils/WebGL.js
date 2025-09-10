@@ -10,15 +10,17 @@
  * @author Vincent Thibault
  */
 
-define( ['Utils/Texture', 'Core/Configs'], function( Texture, Configs )
-{
+define( ['Utils/Texture', 'Core/Configs'], function(
+	/** @type {Utils.Texture} */Texture,
+	/** @type {Core.Configs} */Configs
+) {
 	'use strict';
 
 
 	/**
 	 * Get WebGL Context
 	 *
-	 * @param {object} canvas element
+	 * @param {HTMLCanvasElement} canvas element
 	 * @param {object} parameters
 	 *
 	 * @return {object} webgl context
@@ -64,7 +66,7 @@ define( ['Utils/Texture', 'Core/Configs'], function( Texture, Configs )
 	/**
 	 * Compile Webgl shader (fragment and vertex)
 	 *
-	 * @param {object} gl context
+	 * @param {WebGL2RenderingContext} gl context
 	 * @param {string} source
 	 * @param {number} type (fragment or shader constant)
 	 */
@@ -92,7 +94,7 @@ define( ['Utils/Texture', 'Core/Configs'], function( Texture, Configs )
 	/**
 	 * Create a Program from a webgl shader
 	 *
-	 * @param {object} gl context
+	 * @param {WebGL2RenderingContext} gl context
 	 * @param {string} vertexShader
 	 * @param {string} fragmentShader
 	 */
@@ -160,7 +162,7 @@ define( ['Utils/Texture', 'Core/Configs'], function( Texture, Configs )
 	/**
 	 * Load an image and push it to GPU
 	 *
-	 * @param {object} gl context
+	 * @param {WebGL2RenderingContext} gl context
 	 * @param {string} url
 	 * @param {function} callback once the image is on gpu
 	 */
@@ -201,7 +203,7 @@ define( ['Utils/Texture', 'Core/Configs'], function( Texture, Configs )
 	/**
 	 * Check if the context is a WebGL2 context
 	 *
-	 * @param {object} gl context
+	 * @param {WebGL2RenderingContext} gl context
 	 * @return {boolean}
 	 */
 	function isWebGL2(gl)
@@ -211,6 +213,7 @@ define( ['Utils/Texture', 'Core/Configs'], function( Texture, Configs )
 
 	/**
 	 * Export
+	 * @type {Utils.WebGL}
 	 */
 	return {
 		getContext:          getContext,

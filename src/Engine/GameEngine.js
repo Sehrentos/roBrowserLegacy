@@ -9,32 +9,32 @@
  * @author Vincent Thibault
  */
 
-define(function( require )
+define(function(/** @type {Require} */require )
 {
 	'use strict';
 
 
 	// Load dependencies
-	var jQuery      = require('Utils/jquery');
-	var Queue       = require('Utils/Queue');
-	var Sound       = require('Audio/SoundManager');
-	var BGM         = require('Audio/BGM');
-	var DB          = require('DB/DBManager');
-	var Configs     = require('Core/Configs');
-	var Client      = require('Core/Client');
-	var Thread      = require('Core/Thread');
-	var Context     = require('Core/Context');
-	var LoginEngine = require('Engine/LoginEngine');
-	var Network     = require('Network/NetworkManager');
-	var Renderer    = require('Renderer/Renderer');
-	var MapRenderer = require('Renderer/MapRenderer');
-	var UIManager   = require('UI/UIManager');
-	var Cursor      = require('UI/CursorManager');
-	var Scrollbar   = require('UI/Scrollbar');
-	var Background  = require('UI/Background');
-	var Intro       = require('UI/Components/Intro/Intro');
-	var WinList     = require('UI/Components/WinList/WinList');
-	var ConsoleManager = require ('Utils/ConsoleManager');
+	/** @type {JQueryStatic} */var jQuery      = require('Utils/jquery');
+	/** @type {Utils.Queue} */var Queue       = require('Utils/Queue');
+	/** @type {Audio.AudioManager} */var Sound       = require('Audio/SoundManager');
+	/** @type {Audio.BGM} */var BGM         = require('Audio/BGM');
+	/** @type {DB.DBManager} */var DB          = require('DB/DBManager');
+	/** @type {Core.Configs} */var Configs     = require('Core/Configs');
+	/** @type {Core.Client} */var Client      = require('Core/Client');
+	/** @type {Core.Thread} */var Thread      = require('Core/Thread');
+	/** @type {Core.Context} */var Context     = require('Core/Context');
+	/** @type {Engine.LoginEngine} */var LoginEngine = require('Engine/LoginEngine');
+	/** @type {Network.NetworkManager} */var Network     = require('Network/NetworkManager');
+	/** @type {Renderer.Renderer} */var Renderer    = require('Renderer/Renderer');
+	/** @type {Renderer.MapRenderer} */var MapRenderer = require('Renderer/MapRenderer');
+	/** @type {UI.UIManager} */var UIManager   = require('UI/UIManager');
+	/** @type {UI.CursorManager} */var Cursor      = require('UI/CursorManager');
+	/** @type {UI.ScrollBar} */var Scrollbar   = require('UI/Scrollbar');
+	/** @type {UI.Background} */var Background  = require('UI/Background');
+	/** @type {UI.TUIComponent<TIntro>} */var Intro       = require('UI/Components/Intro/Intro');
+	/** @type {UI.TUIComponent<TWinList>} */var WinList     = require('UI/Components/WinList/WinList');
+	/** @type {Utils.ConsoleManager} */var ConsoleManager = require ('Utils/ConsoleManager');
 
 
 	/**
@@ -126,11 +126,11 @@ define(function( require )
 	 */
 	function init()
 	{
-		
+
 		// Enable/Disable console based on settings
 		ConsoleManager.init();
 		ConsoleManager.toggle();
-		
+
 		var q = new Queue();
 
 		// Waiting for the Thread to be ready

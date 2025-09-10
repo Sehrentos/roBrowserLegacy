@@ -14,8 +14,11 @@ requirejs.config({
 });
 
 requirejs(['Core/FileManager', 'Core/FileSystem', 'Loaders/MapLoader'],
-function(      FileManager,        FileSystem,           MapLoader )
-{
+function(
+	/** @type {Core.FileManager} */ FileManager,
+	/** @type {Core.FileSystem} */ FileSystem,
+	/** @type {Loaders.MapLoader} */ MapLoader
+) {
 	'use strict';
 
 

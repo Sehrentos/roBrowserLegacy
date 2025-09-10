@@ -73,7 +73,7 @@ define(function()
 	 * Alias for clearTimeout
 	 * Remove an event pre-registered
 	 *
-	 * @param {?} event unique id
+	 * @param {number} uid event unique id
 	 */
 	Events.clearTimeout = function clearTimeout( uid )
 	{
@@ -92,7 +92,7 @@ define(function()
 	/**
 	 * Process at each rendering loop
 	 *
-	 * @param {number} game tick
+	 * @param {number} tick game tick
 	 */
 	Events.process = function process( tick )
 	{

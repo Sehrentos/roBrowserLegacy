@@ -7,7 +7,7 @@
  *
  * @author Vincent Thibault
  */
-define(function(require)
+define(function(/** @type {Require} */require)
 {
 	'use strict';
 
@@ -15,27 +15,27 @@ define(function(require)
 	/**
 	 * Dependencies
 	 */
-	var KEYS        = require('Controls/KeyEventHandler');
-	var Preferences = require('Preferences/ShortCutControls');
-	var UIManager   = require('UI/UIManager');
+	/** @type {Controls.KeyEventHandler} */var KEYS = require('Controls/KeyEventHandler');
+	/** @type {Preferences.ShortCutControls} */var Preferences = require('Preferences/ShortCutControls');
+	/** @type {UI.UIManager} */var UIManager = require('UI/UIManager');
 
 	/**
 	 * Create Namespace
 	 */
 	var BattleMode  = {};
-	
+
 	var KeyTable = getKeyTable();
-	
+
 	/**
 	 * Update key table if setting changes
 	 */
 	BattleMode.reload = function(){
 		KeyTable = getKeyTable();
 	}
-	
+
 	BattleMode.getKeyName = function( keyId ){
 		var keyName = keyId;
-		
+
 		if(KEYS.SHIFT){
 			keyName = "SHIFT-" + keyName;
 		}
@@ -45,10 +45,10 @@ define(function(require)
 		if(KEYS.CTRL){
 			keyName = "CTRL-" + keyName;
 		}
-		
+
 		return keyName;
 	}
-	
+
 	BattleMode.match = function( keyId ){
 		return KeyTable[BattleMode.getKeyName(keyId)];
 	}
@@ -63,7 +63,7 @@ define(function(require)
 	{
 
 		var keyName = BattleMode.getKeyName( keyId );
-		
+
 		var key = KeyTable[keyName];
 		if (key){
 			var component = UIManager.getComponent(key.component);
@@ -127,18 +127,18 @@ define(function(require)
 	 */
 	function getKeyTable(){
 		var keySettings = {};
-		
+
 		var ShortCuts = Preferences.ShortCuts;
-		
+
 		if(ShortCuts){
 			Object.keys(ShortCuts).forEach(SC => {
-				
+
 				// Get initial settings
 				var key =	ShortCuts[SC].init.key;
 				var shift =	ShortCuts[SC].init.shift;
 				var alt =	ShortCuts[SC].init.alt;
 				var ctrl =	ShortCuts[SC].init.ctrl;
-				
+
 				// Get custom settings
 				if(ShortCuts[SC].cust){
 					key =	ShortCuts[SC].cust.key;
@@ -146,11 +146,11 @@ define(function(require)
 					alt =	ShortCuts[SC].cust.alt;
 					ctrl =	ShortCuts[SC].cust.ctrl;
 				}
-				
+
 				// Only add if key is defined
 				if(key){
 					var keyName = key;
-					
+
 					if(shift){
 						keyName = "SHIFT-" + keyName;
 					}
@@ -160,10 +160,10 @@ define(function(require)
 					if(ctrl){
 						keyName = "CTRL-" + keyName;
 					}
-					
+
 					keySettings[keyName] = { component: ShortCuts[SC].component, cmd: ShortCuts[SC].cmd };
 				}
-				
+
 			});
 		}
 		return keySettings;

@@ -13,18 +13,20 @@ define(function (require)
 
 	var Configs = require('Core/Configs');
 	var PACKETVER = require('Network/PacketVerManager');
+
+	/** @type {UI.UIVersionManager} */
 	var UIVersionManager = {};
-	
+
 	var _UIAliases = {};
-	
+
 	UIVersionManager.getUIAlias = function( name ){
 		return name in _UIAliases ? _UIAliases[name] : false;
 	};
-	
+
 	UIVersionManager.selectUIVersion = function( publicName, versionInfo ){
 		var SelectedUI = versionInfo.default;
 		var _maxDate = 0;
-		
+
 		function getUIbyGameMode(gameMode){
 			if(typeof gameMode === 'object' && Object.keys(gameMode).length > 0){
 				for (const [keydate, UI] of Object.entries(gameMode)) {
@@ -36,10 +38,10 @@ define(function (require)
 				}
 			}
 		}
-		
+
 		// Common UI
 		getUIbyGameMode(versionInfo.common);
-		
+
 		if(Configs.get('renewal')){
 			// Renewal only UI
 			getUIbyGameMode(versionInfo.re);
@@ -47,7 +49,7 @@ define(function (require)
 			// Classic only UI
 			getUIbyGameMode(versionInfo.prere);
 		}
-		
+
 		// Store selected UI name
 		_UIAliases[publicName] = SelectedUI.name;
 		console.log( "%c[UIVersion] "+publicName+": ", "color:#007000", SelectedUI.name );
@@ -55,10 +57,11 @@ define(function (require)
 	}
 
 	UIVersionManager.getUIController = function(publicName, versionInfo){
+		/** @type {UI.TUIComponent} */
 		var _selectedUI;
-	
+		/** @type {UI.UIController} */
 		var UIController = {};
-		
+
 		UIController.selectUIVersion = function(){
 			_selectedUI = UIVersionManager.selectUIVersion(publicName, versionInfo);
 		};
@@ -78,12 +81,12 @@ define(function (require)
 		UIController.getUI = function(){
 			return _selectedUI;
 		}
-		
+
 		return UIController;
 	}
-	
-	
-	
+
+
+
 	/// DEPRECATED
 	/// WILL BE REMOVED AFTER REFACTORING
 	UIVersionManager.getEquipmentVersion = function () {

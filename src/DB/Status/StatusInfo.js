@@ -7,29 +7,25 @@
  *
  * @author Vincent Thibault
  */
-
-define(['./StatusConst'], function( SC )
-{
+define(['./StatusConst'], function (
+	/* @type {DB.Status.StatusConst} */SC
+) {
 	"use strict";
 
-
 	// Hardcoded color
-	var COLOR_TITLE_BUFF   = 'rgb(155, 202, 155)';
+	var COLOR_TITLE_BUFF = 'rgb(155, 202, 155)';
 	var COLOR_TITLE_DEBUFF = 'rgb(250, 100, 100)';
 	var COLOR_TITLE_TOGGLE = 'rgb(190, 190, 250)';
-	var COLOR_SYSTEM       = 'rgb(255, 255,   0)';
-	var COLOR_TIME         = 'rgb(255, 176,  98)';
+	var COLOR_SYSTEM = 'rgb(255, 255,   0)';
+	var COLOR_TIME = 'rgb(255, 176,  98)';
 
 	// TODO: find icon status: 40-49 | 60 | 63-64 | 66-67 | 70-86 | 88-89 | 64-621 | ???
+	/** @type {DB.Status.StatusInfo} */
+	var S = {};
 
-
-
-	var StatusInfo = {};
-
-
-	StatusInfo[SC.OVERTHRUSTMAX] = {
+	S[SC.OVERTHRUSTMAX] = {
 		icon: "\x69\x5f\xbf\xc0\xb9\xf6\xb8\xc6\xbd\xba.tga",
-		haveTimeLimit:   1,
+		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
 		descript: [
 			["Maximum Over Thrust", COLOR_TITLE_BUFF],
@@ -39,9 +35,9 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.SUFFRAGIUM] = {
+	S[SC.SUFFRAGIUM] = {
 		icon: "\xbc\xf6\xc1\xdd\xc0\xba\xc7\xcf\xb7\xe7\xc0\xc7\xbf\xec\xbf\xef.tga",
-		haveTimeLimit:   1,
+		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
 		descript: [
 			["Suffragium", COLOR_TITLE_BUFF],
@@ -50,7 +46,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.OVERTHRUST] = {
+	S[SC.OVERTHRUST] = {
 		icon: "\xbf\xc0\xb9\xf6\xc6\xae\xb7\xaf\xbd\xba\xc6\xae.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -62,7 +58,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.AUTOBERSERK] = {
+	S[SC.AUTOBERSERK] = {
 		icon: "\xb1\xdd\xb0\xad\xba\xd2\xb1\xab.tga",
 		descript: [
 			["Auto Berserk", COLOR_TITLE_BUFF],
@@ -70,7 +66,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.BEYOND_OF_WARCRY] = {
+	S[SC.BEYOND_OF_WARCRY] = {
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
 		descript: [
@@ -81,7 +77,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.SWORDREJECT] = {
+	S[SC.SWORDREJECT] = {
 		icon: "icon04.tga",
 		descript: [
 			["Sword Reject", COLOR_TITLE_BUFF],
@@ -92,7 +88,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.MANU_DEF] = {
+	S[SC.MANU_DEF] = {
 		icon: "efst_def.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -104,7 +100,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.CONCENTRATION] = {
+	S[SC.CONCENTRATION] = {
 		icon: "\xc1\xfd\xc1\xdf\xb7\xc2\xc7\xe2\xbb\xf3.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -116,14 +112,14 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.GRIFFON] = {
+	S[SC.GRIFFON] = {
 		icon: "\xb6\xf3\xc0\xcc\xb5\xf9.tga",
 		descript: [
 			["Riding Griffon", COLOR_TITLE_TOGGLE]
 		]
 	};
 
-	StatusInfo[SC.GS_MADNESSCANCEL] = {
+	S[SC.GS_MADNESSCANCEL] = {
 		icon: "i_madness.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -136,7 +132,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.GS_ACCURACY] = {
+	S[SC.GS_ACCURACY] = {
 		icon: "i_accuracy",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -149,7 +145,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.FOOD_STR] = {
+	S[SC.FOOD_STR] = {
 		icon: "str_gogi.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -159,7 +155,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.HALLUCINATIONWALK] = {
+	S[SC.HALLUCINATIONWALK] = {
 		icon: "\xc7\xd2\xb7\xe7\xbd\xc3\xb3\xd7\xc0\xcc\xbc\xc7\xbf\xf6\xc5\xa9.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -171,7 +167,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.STORMKICK_ON] = {
+	S[SC.STORMKICK_ON] = {
 		icon: "i_stormkick.tga",
 		descript: [
 			["Whirlwind Kick (Tornado Kick)", COLOR_TITLE_BUFF],
@@ -180,7 +176,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.KAUPE] = {
+	S[SC.KAUPE] = {
 		icon: "i_kaupe.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -191,7 +187,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.SHIELDSPELL_DEF] = {
+	S[SC.SHIELDSPELL_DEF] = {
 		icon: "lg_shieldspell_¹æ.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -202,7 +198,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.WARMER] = {
+	S[SC.WARMER] = {
 		icon: "\xbf\xf6\xb8\xd3.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -215,7 +211,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.PROTECT_MDEF] = {
+	S[SC.PROTECT_MDEF] = {
 		icon: "\xb8\xb6\xb9\xfd\xb9\xe6\xbe\xee\xc6\xf7\xbc\xc7.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -226,7 +222,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.STAR_COMFORT] = {
+	S[SC.STAR_COMFORT] = {
 		icon: "i_starcomfort.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -237,7 +233,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.FOOD_CRITICALSUCCESSVALUE] = {
+	S[SC.FOOD_CRITICALSUCCESSVALUE] = {
 		icon: "gogi.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -247,7 +243,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.PROPERTYTELEKINESIS] = {
+	S[SC.PROPERTYTELEKINESIS] = {
 		icon: "i_p_tele.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -258,7 +254,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.GLOOMYDAY] = {
+	S[SC.GLOOMYDAY] = {
 		icon: "\xbc\xf6\xc1\xdd\xc0\xba\xc7\xcf\xb7\xe7\xc0\xc7\xbf\xec\xbf\xef.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -270,7 +266,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.SIRCLEOFNATURE] = {
+	S[SC.SIRCLEOFNATURE] = {
 		icon: "\xbc\xf8\xc8\xaf\xc7\xcf\xb4\xc2\xc0\xda\xbf\xac\xc0\xc7\xbc\xd2\xb8\xae.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -281,7 +277,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.DEADLYINFECT] = {
+	S[SC.DEADLYINFECT] = {
 		icon: "\xb5\xa5\xb5\xe9\xb8\xae\xc0\xce\xc6\xe5\xc6\xae.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -294,7 +290,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.SYMPHONY_LOVE] = {
+	S[SC.SYMPHONY_LOVE] = {
 		icon: "\xbf\xac\xc0\xce\xb5\xe9\xc0\xbb\xc0\xa7\xc7\xd1\xbd\xc9\xc6\xf7\xb4\xcf.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -305,7 +301,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.BANDING] = {
+	S[SC.BANDING] = {
 		icon: "lg_banding.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -316,7 +312,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.NJ_BUNSINJYUTSU] = {
+	S[SC.NJ_BUNSINJYUTSU] = {
 		icon: "i_bunsin.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -328,7 +324,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.WUGRIDER] = {
+	S[SC.WUGRIDER] = {
 		icon: "wolfmount.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -340,7 +336,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.ATKER_BLOOD] = {
+	S[SC.ATKER_BLOOD] = {
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
 		descript: [
@@ -350,7 +346,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.BODYPAINT] = {
+	S[SC.BODYPAINT] = {
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
 		descript: [
@@ -362,7 +358,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.NJ_UTSUSEMI] = {
+	S[SC.NJ_UTSUSEMI] = {
 		icon: "i_maemi.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -374,7 +370,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.POISONINGWEAPON] = {
+	S[SC.POISONINGWEAPON] = {
 		icon: "\xc6\xf7\xc0\xcc\xc1\xee\xb4\xd7\xbf\xfe\xc6\xf9.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -385,7 +381,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.CASH_DEATHPENALTY] = {
+	S[SC.CASH_DEATHPENALTY] = {
 		icon: "death.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -396,7 +392,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.GS_ADJUSTMENT] = {
+	S[SC.GS_ADJUSTMENT] = {
 		icon: "i_adjustment.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -409,7 +405,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.AUTOSPELL] = {
+	S[SC.AUTOSPELL] = {
 		icon: "\xbf\xc0\xc5\xe4\xbd\xba\xc6\xe7.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -423,7 +419,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.DEC_AGI] = {
+	S[SC.DEC_AGI] = {
 		icon: "\xb9\xce\xc3\xb8\xbc\xba\xb0\xa8\xbc\xd2.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -435,7 +431,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.NOEQUIPWEAPON] = {
+	S[SC.NOEQUIPWEAPON] = {
 		icon: "\xbd\xba\xc6\xae\xb8\xb3\xbf\xfe\xc6\xf9.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -446,7 +442,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.SHIELDSPELL_MDEF] = {
+	S[SC.SHIELDSPELL_MDEF] = {
 		icon: "lg_shieldspell_¸¶.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -457,7 +453,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.AUTOGUARD] = {
+	S[SC.AUTOGUARD] = {
 		icon: "\xbf\xc0\xc5\xe4\xb0\xa1\xb5\xe5.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -468,7 +464,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.TAROTCARD] = {
+	S[SC.TAROTCARD] = {
 		icon: "\x69\x5f\xc5\xb8\xb7\xce\xc4\xab\xb5\xe5.tga", //CUSTOM
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -479,7 +475,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.FEARBREEZE] = {
+	S[SC.FEARBREEZE] = {
 		icon: "ra_fearbreeze.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -491,7 +487,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.GN_CARTBOOST] = {
+	S[SC.GN_CARTBOOST] = {
 		icon: "icon07.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -502,7 +498,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.SHIELDSPELL_REF] = {
+	S[SC.SHIELDSPELL_REF] = {
 		icon: "lg_shieldspell_¿¬.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -513,7 +509,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.FOOD_INT_CASH] = {
+	S[SC.FOOD_INT_CASH] = {
 		icon: "int_gogi.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -523,7 +519,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.NOEQUIPSHIELD] = {
+	S[SC.NOEQUIPSHIELD] = {
 		icon: "\xbd\xba\xc6\xae\xb8\xb3\xbd\xaf\xb5\xe5.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -534,7 +530,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.MELTDOWN] = {
+	S[SC.MELTDOWN] = {
 		icon: "icon03.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -548,7 +544,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.QUAGMIRE] = {
+	S[SC.QUAGMIRE] = {
 		icon: "\xc4\xe2\xb1\xd7\xb8\xb6\xc0\xcc\xbe\xee.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -560,7 +556,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.KAIZEL] = {
+	S[SC.KAIZEL] = {
 		icon: "i_kaizel.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -572,7 +568,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.CR_SHRINK] = {
+	S[SC.CR_SHRINK] = {
 		icon: "i_shrink.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -584,7 +580,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.FOOD_VIT] = {
+	S[SC.FOOD_VIT] = {
 		icon: "vit_gogi.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -594,7 +590,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.PARRYING] = {
+	S[SC.PARRYING] = {
 		icon: "icon10.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -605,7 +601,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.PROTECTWEAPON] = {
+	S[SC.PROTECTWEAPON] = {
 		icon: "\xc4\xc9\xb9\xcc\xc4\xc3\xc7\xc1\xb7\xce\xc5\xd8\xbc\xc7\x5b\xbf\xfe\xc6\xf9\x5d.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -616,7 +612,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.FOOD_AGI] = {
+	S[SC.FOOD_AGI] = {
 		icon: "agi_gogi.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -626,7 +622,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.INC_AGI] = {
+	S[SC.INC_AGI] = {
 		icon: "\xb9\xce\xc3\xb8\xbc\xba\xc1\xf5\xb0\xa1.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -638,7 +634,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.SHOUT] = {
+	S[SC.SHOUT] = {
 		icon: "\xb0\xed\xbc\xba\xc1\xf6\xb8\xa3\xb1\xe2.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -649,7 +645,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.CASH_RECEIVEITEM] = {
+	S[SC.CASH_RECEIVEITEM] = {
 		icon: "item.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -660,7 +656,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.SPL_DEF] = {
+	S[SC.SPL_DEF] = {
 		icon: "efst_def.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -672,7 +668,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.ILLUSION] = {
+	S[SC.ILLUSION] = {
 		icon: "\xc8\xaf\xb0\xa2.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -685,7 +681,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.HOVERING] = {
+	S[SC.HOVERING] = {
 		icon: "\xc8\xa3\xb9\xf6\xb8\xb5.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -696,7 +692,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.BENEDICTIO] = {
+	S[SC.BENEDICTIO] = {
 		icon: "\xbc\xba\xc3\xbc\xb0\xad\xba\xb9.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -706,7 +702,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.WEAPONBLOCKING] = {
+	S[SC.WEAPONBLOCKING] = {
 		icon: "\xbf\xfe\xc6\xf9\xba\xed\xb7\xce\xc5\xb7.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -718,7 +714,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.ANGELUS] = {
+	S[SC.ANGELUS] = {
 		icon: "\xbe\xc8\xc1\xa9\xb7\xe7\xbd\xba.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -729,7 +725,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.MARSHOFABYSS] = {
+	S[SC.MARSHOFABYSS] = {
 		icon: "marshofabyss.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -741,7 +737,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.STEALTHFIELD] = {
+	S[SC.STEALTHFIELD] = {
 		icon: "\xbd\xba\xc5\xda\xbd\xba\xc7\xca\xb5\xe5.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -754,7 +750,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.ADRENALINE2] = {
+	S[SC.ADRENALINE2] = {
 		icon: "\xbe\xc6\xb5\xe5\xb7\xb9\xb3\xaf\xb8\xb0\xb7\xaf\xbd\xac.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -765,7 +761,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.MANU_MATK] = {
+	S[SC.MANU_MATK] = {
 		icon: "efst_matk.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -777,7 +773,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.NOEQUIPARMOR] = {
+	S[SC.NOEQUIPARMOR] = {
 		icon: "\xbd\xba\xc6\xae\xb8\xb3\xbe\xc6\xb8\xd3.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -788,7 +784,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.RENOVATIO] = {
+	S[SC.RENOVATIO] = {
 		icon: "\xb7\xb9\xb3\xeb\xb9\xd9\xc6\xbc\xbf\xc0.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -801,7 +797,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.HIDING] = {
+	S[SC.HIDING] = {
 		icon: "\xc7\xcf\xc0\xcc\xb5\xf9.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -813,7 +809,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.WEIGHTOVER50] = {
+	S[SC.WEIGHTOVER50] = {
 		icon: "\xb9\xab\xb0\xd4\x35\x30\xc0\xcc\xbb\xf3.tga",
 		descript: [
 			["Overweight 50%", COLOR_TITLE_DEBUFF],
@@ -821,7 +817,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.STRUP] = {
+	S[SC.STRUP] = {
 		icon: "i_run.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -834,7 +830,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.NOEQUIPHELM] = {
+	S[SC.NOEQUIPHELM] = {
 		icon: "\xbd\xba\xc6\xae\xb8\xb3\xc7\xef\xb8\xa7.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -845,7 +841,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.ATTHASTE_POTION3] = {
+	S[SC.ATTHASTE_POTION3] = {
 		icon: "\xb0\xf8\xbc\xd3\xb9\xb0\xbe\xe0.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -856,7 +852,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.ENDURE] = {
+	S[SC.ENDURE] = {
 		icon: "\xc0\xce\xb5\xe0\xbe\xee.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -868,7 +864,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.TURNKICK_ON] = {
+	S[SC.TURNKICK_ON] = {
 		icon: "i_turnkick.tga",
 		descript: [
 			["Ready Turn Kick", COLOR_TITLE_BUFF],
@@ -877,7 +873,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.ENCHANTPOISON] = {
+	S[SC.ENCHANTPOISON] = {
 		icon: "\xc0\xce\xc2\xf9\xc6\xae\xc6\xf7\xc0\xcc\xc1\xf0.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -888,7 +884,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.SPL_ATK] = {
+	S[SC.SPL_ATK] = {
 		icon: "efst_atk.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -900,7 +896,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.BLESSING] = {
+	S[SC.BLESSING] = {
 		icon: "\xba\xed\xb7\xb9\xbd\xcc.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -912,7 +908,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.ONEHANDQUICKEN] = {
+	S[SC.ONEHANDQUICKEN] = {
 		icon: "i_onehand.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -924,7 +920,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.SPEARQUICKEN] = {
+	S[SC.SPEARQUICKEN] = {
 		icon: "\xbd\xba\xc7\xc7\xbe\xee\xc4\xfb\xc5\xab.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -939,14 +935,14 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.BROKENWEAPON] = {
+	S[SC.BROKENWEAPON] = {
 		icon: "\xb9\xab\xb1\xe2\xc6\xc4\xb1\xab.tga",
 		descript: [
 			["Weapon is damaged.", COLOR_TITLE_DEBUFF]
 		]
 	};
 
-	StatusInfo[SC.ASSUMPTIO] = {
+	S[SC.ASSUMPTIO] = {
 		icon: "icon05.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -957,7 +953,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.MAXIMIZE] = {
+	S[SC.MAXIMIZE] = {
 		icon: "\xb8\xc6\xbd\xc3\xb8\xb6\xc0\xcc\xc1\xee\xc6\xc4\xbf\xf6.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -969,7 +965,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.PROTECTSHIELD] = {
+	S[SC.PROTECTSHIELD] = {
 		icon: "\xc4\xc9\xb9\xcc\xc4\xc3\xc7\xc1\xb7\xce\xc5\xd8\xbc\xc7\x5b\xbd\xaf\xb5\xe5\x5d.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -980,7 +976,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.MAGNIFICAT] = {
+	S[SC.MAGNIFICAT] = {
 		icon: "\xb8\xb6\xb4\xcf\xc7\xc7\xc4\xb1.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -991,7 +987,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.ATTHASTE_POTION1] = {
+	S[SC.ATTHASTE_POTION1] = {
 		icon: "\xb0\xf8\xbc\xd3\xb9\xb0\xbe\xe0.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1002,7 +998,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.POISONREACT] = {
+	S[SC.POISONREACT] = {
 		icon: "\xc6\xf7\xc0\xcc\xc1\xf0\xb8\xae\xbe\xd7\xc6\xae.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1015,7 +1011,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.MOVHASTE_HORSE] = {
+	S[SC.MOVHASTE_HORSE] = {
 		icon: "\xb9\xce\xc3\xb8\xbc\xba\xc1\xf5\xb0\xa1.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -1025,7 +1021,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.CRESCENTELBOW] = {
+	S[SC.CRESCENTELBOW] = {
 		icon: "\xb1\xe2\xb8\xae\xbf\xa1\xbf\xa4\xb7\xb9\xc0\xcc\xbc\xd5.tga", //CUSTOM
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1039,7 +1035,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.SONG_OF_MANA] = {
+	S[SC.SONG_OF_MANA] = {
 		icon: "\xb8\xb6\xb3\xaa\xc0\xc7\xb3\xeb\xb7\xa1.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1050,7 +1046,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.KAAHI] = {
+	S[SC.KAAHI] = {
 		icon: "i_kaahi.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1062,7 +1058,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.ECHOSONG] = {
+	S[SC.ECHOSONG] = {
 		icon: "\xb8\xb6\xbd\xba\xc4\xbf\xb7\xb9\xc0\xcc\xb5\xe5.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1073,7 +1069,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.PRESERVE] = {
+	S[SC.PRESERVE] = {
 		icon: "i_\xc7\xc1\xb8\xae\xc0\xfa\xba\xea.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1084,7 +1080,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.WEAPONPERFECT] = {
+	S[SC.WEAPONPERFECT] = {
 		icon: "\xbf\xfe\xc6\xf9\xc6\xdb\xc6\xe5\xbc\xc7.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1096,7 +1092,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.PROVOKE] = {
+	S[SC.PROVOKE] = {
 		icon: "\xc7\xc1\xb7\xce\xba\xb8\xc5\xa9.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1108,7 +1104,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.MOVHASTE_POTION] = {
+	S[SC.MOVHASTE_POTION] = {
 		icon: "\xb9\xce\xc3\xb8\xbc\xba\xc1\xf5\xb0\xa1.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -1118,7 +1114,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.EDP] = {
+	S[SC.EDP] = {
 		icon: "i_\xc4\xa1\xb5\xb6.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1126,11 +1122,11 @@ define(['./StatusConst'], function( SC )
 			["Enchant Deadly Poison", COLOR_TITLE_BUFF],
 			["%s", COLOR_TIME],
 			["Applies a deadly poison to weapon"],
-			["Damage increase does not apply to boss monsters",COLOR_SYSTEM]
+			["Damage increase does not apply to boss monsters", COLOR_SYSTEM]
 		]
 	};
 
-	StatusInfo[SC.JOINTBEAT] = {
+	S[SC.JOINTBEAT] = {
 		icon: "\xb0\xfc\xc0\xfd\xb0\xf8\xb0\xdd.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1142,7 +1138,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.PROVIDENCE] = {
+	S[SC.PROVIDENCE] = {
 		icon: "\xbd\xc5\xc0\xc7\xb6\xe6.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1154,7 +1150,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.FIGHTINGSPIRIT] = {
+	S[SC.FIGHTINGSPIRIT] = {
 		icon: "rk_eisir.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1166,7 +1162,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.FOOD_VIT_CASH] = {
+	S[SC.FOOD_VIT_CASH] = {
 		icon: "vit_gogi.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -1176,7 +1172,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.SATURDAY_NIGHT_FEVER] = {
+	S[SC.SATURDAY_NIGHT_FEVER] = {
 		icon: "\xbb\xf5\xc5\xcd\xb5\xa5\xc0\xcc\xb3\xaa\xc0\xcc\xc6\xae\xc7\xc7\xb9\xf6.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -1189,7 +1185,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.TRUESIGHT] = {
+	S[SC.TRUESIGHT] = {
 		icon: "icon09.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1201,7 +1197,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.CASH_PLUSONLYJOBEXP] = {
+	S[SC.CASH_PLUSONLYJOBEXP] = {
 		icon: "job.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -1211,7 +1207,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.ARMOR_PROPERTY] = {
+	S[SC.ARMOR_PROPERTY] = {
 		icon: "\xc4\xb3\xbd\xc3\xb0\xa9\xbf\xca\xbc\xd3\xbc\xba\xba\xce\xbf\xa9.tga", //CUSTOM
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1222,7 +1218,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.TENSIONRELAX] = {
+	S[SC.TENSIONRELAX] = {
 		icon: "icon08.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1233,7 +1229,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.DEATHHURT] = {
+	S[SC.DEATHHURT] = {
 		icon: "\xbb\xf3\xc3\xb3\xbf\xc0\xbf\xb0\xb5\xb6.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1244,7 +1240,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.IMPOSITIO] = {
+	S[SC.IMPOSITIO] = {
 		icon: "\xc0\xd3\xc6\xf7\xbd\xc3\xc6\xbc\xbf\xc0\xb8\xb6\xb4\xa9\xbd\xba.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1255,7 +1251,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.LEECHESEND] = {
+	S[SC.LEECHESEND] = {
 		icon: "\xb0\xc5\xb8\xd3\xb8\xae.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1266,7 +1262,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.REPRODUCE] = {
+	S[SC.REPRODUCE] = {
 		icon: "\xb8\xae\xc7\xc1\xb7\xce\xb5\xe0\xbd\xba.tga",
 		descript: [
 			["Reproduce", COLOR_TITLE_BUFF],
@@ -1275,7 +1271,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.ACCELERATION] = {
+	S[SC.ACCELERATION] = {
 		icon: "\xbf\xa2\xbc\xbf\xb7\xb9\xc0\xcc\xbc\xc7.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1286,7 +1282,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.NJ_NEN] = {
+	S[SC.NJ_NEN] = {
 		icon: "i_nen.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1297,7 +1293,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.FORCEOFVANGUARD] = {
+	S[SC.FORCEOFVANGUARD] = {
 		icon: "\xc6\xf7\xbd\xba\xbf\xc0\xba\xea\xb9\xf0\xb0\xa1\xb5\xe5.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1310,7 +1306,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.RG_CCONFINE_M] = {
+	S[SC.RG_CCONFINE_M] = {
 		icon: "i_closeconfine.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1323,7 +1319,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.TRICKDEAD] = {
+	S[SC.TRICKDEAD] = {
 		icon: "\xc1\xd7\xc0\xba\xc3\xb4\xc7\xcf\xb1\xe2.tga",
 		descript: [
 			["Trick Dead (Play Dead)", COLOR_TITLE_TOGGLE],
@@ -1331,7 +1327,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.PROPERTYWATER] = {
+	S[SC.PROPERTYWATER] = {
 		icon: "\xc7\xc1\xb7\xce\xbd\xba\xc6\xae\xbf\xfe\xc6\xf9.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1342,7 +1338,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.ADORAMUS] = {
+	S[SC.ADORAMUS] = {
 		icon: "\xb9\xce\xc3\xb8\xbc\xba\xb0\xa8\xbc\xd2.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1353,7 +1349,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.GENTLETOUCH_ENERGYGAIN] = {
+	S[SC.GENTLETOUCH_ENERGYGAIN] = {
 		icon: "\xc1\xa1\xc7\xf7\xb1\xb8.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1365,7 +1361,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.NEUTRALBARRIER] = {
+	S[SC.NEUTRALBARRIER] = {
 		icon: "\xb4\xba\xc6\xae\xb7\xb2\xb9\xe8\xb8\xae\xbe\xee.tga", //CUSTOM
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1374,10 +1370,10 @@ define(['./StatusConst'], function( SC )
 			["%s", COLOR_TIME],
 			["DEF/MDEF up"],
 			["Neutralizes ranged attacks"]
-			]
+		]
 	};
 
-	StatusInfo[SC.EARTHSCROLL] = {
+	S[SC.EARTHSCROLL] = {
 		icon: "\xb1\xdb\xb7\xce\xb8\xae\xbe\xc6.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1390,7 +1386,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.FALCON] = {
+	S[SC.FALCON] = {
 		icon: "\xc6\xc8\xc4\xdc.tga",
 		descript: [
 			["Falconry Mastery", COLOR_TITLE_TOGGLE],
@@ -1398,7 +1394,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.TWOHANDQUICKEN] = {
+	S[SC.TWOHANDQUICKEN] = {
 		icon: "\xc5\xf5\xc7\xda\xb5\xe5\xc4\xfb\xc5\xab.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1410,7 +1406,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.SUN_COMFORT] = {
+	S[SC.SUN_COMFORT] = {
 		icon: "i_suncomfort.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1421,7 +1417,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.KYRIE] = {
+	S[SC.KYRIE] = {
 		icon: "\xb1\xe2\xb8\xae\xbf\xa1\xbf\xa4\xb7\xb9\xc0\xcc\xbc\xd5.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1432,7 +1428,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.PROTECTARMOR] = {
+	S[SC.PROTECTARMOR] = {
 		icon: "\xc4\xc9\xb9\xcc\xc4\xc3\xc7\xc1\xb7\xce\xc5\xd8\xbc\xc7\x5b\xbe\xc6\xb8\xd3\x5d.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1443,7 +1439,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.GIANTGROWTH] = {
+	S[SC.GIANTGROWTH] = {
 		icon: "rk_turisuss.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1457,7 +1453,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.STR_SCROLL] = {
+	S[SC.STR_SCROLL] = {
 		icon: "str_gogi.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -1467,7 +1463,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.AB_SECRAMENT] = {
+	S[SC.AB_SECRAMENT] = {
 		icon: "\xbc\xbc\xc5\xa9\xb6\xf3\xb8\xe0\xc6\xae.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1478,7 +1474,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.PARALYSE] = {
+	S[SC.PARALYSE] = {
 		icon: "\xb0\xa8\xb0\xa2\xb8\xb6\xba\xf1\xb5\xb6.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1491,7 +1487,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.PROPERTYGROUND] = {
+	S[SC.PROPERTYGROUND] = {
 		icon: "\xbb\xe7\xc0\xcc\xc1\xee\xb9\xcd\xbf\xfe\xc6\xf9.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1502,7 +1498,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.DOUBLECASTING] = {
+	S[SC.DOUBLECASTING] = {
 		icon: "i_\xb4\xf5\xba\xed\xc4\xb3\xbd\xba\xc6\xc3.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1514,7 +1510,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.RG_CCONFINE_S] = {
+	S[SC.RG_CCONFINE_S] = {
 		icon: "i_closeconfine.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1527,7 +1523,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.OVERHEAT] = {
+	S[SC.OVERHEAT] = {
 		icon: "\xbf\xc0\xb9\xf6\xc8\xf7\xc6\xae.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -1538,7 +1534,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.SPL_MATK] = {
+	S[SC.SPL_MATK] = {
 		icon: "efst_matk.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1551,7 +1547,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.DEEP_SLEEP] = {
+	S[SC.DEEP_SLEEP] = {
 		icon: "\xbe\xc8\xbd\xc4\xc0\xc7\xc0\xda\xc0\xe5\xb0\xa1.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1563,7 +1559,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.RECOGNIZEDSPELL] = {
+	S[SC.RECOGNIZEDSPELL] = {
 		icon: "recognizespell.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1575,7 +1571,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.TARGET_ASPD] = {
+	S[SC.TARGET_ASPD] = {
 		icon: "plusmagicpower.tga", //CUSTOM
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -1585,7 +1581,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.FOOD_BASICAVOIDANCE] = {
+	S[SC.FOOD_BASICAVOIDANCE] = {
 		icon: "gogi.tga", //CUSTOM
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -1595,7 +1591,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.DEFENDER] = {
+	S[SC.DEFENDER] = {
 		icon: "\xb5\xf0\xc6\xe6\xb4\xf5.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1607,7 +1603,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.WEAPONPROPERTY] = {
+	S[SC.WEAPONPROPERTY] = {
 		icon: "\xbf\xac\xb8\xb6\xc1\xa6.tga", //CUSTOM
 		haveTimeLimit: 0,
 		descript: [
@@ -1615,7 +1611,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.S_LIFEPOTION] = {
+	S[SC.S_LIFEPOTION] = {
 		icon: "\xbc\xd2\xc7\xfc\xbb\xfd\xb8\xed\xbc\xf6.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1627,7 +1623,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.FOOD_LUK] = {
+	S[SC.FOOD_LUK] = {
 		icon: "luk_gogi.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -1637,7 +1633,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.BLOODING] = {
+	S[SC.BLOODING] = {
 		icon: "\xc3\xe2\xc7\xf7\xbb\xf3\xc5\xc2.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1649,7 +1645,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.REFRESH] = {
+	S[SC.REFRESH] = {
 		icon: "rk_nauthiz.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1662,7 +1658,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.FOOD_LUK_CASH] = {
+	S[SC.FOOD_LUK_CASH] = {
 		icon: "luk_gogi.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -1672,14 +1668,14 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.BROKENARMOR] = {
+	S[SC.BROKENARMOR] = {
 		icon: "\xb0\xa9\xbf\xca\xc6\xc4\xb1\xab.tga",
 		descript: [
 			["Armor is damaged", COLOR_TITLE_DEBUFF]
 		]
 	};
 
-	StatusInfo[SC.DODGE_ON] = {
+	S[SC.DODGE_ON] = {
 		icon: "i_dodge.tga",
 		descript: [
 			["Dodge", COLOR_TITLE_BUFF],
@@ -1691,7 +1687,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.TARGET_BLOOD] = {
+	S[SC.TARGET_BLOOD] = {
 		icon: "\xbc\xd2\xc7\xfc\xbb\xfd\xb8\xed\xbc\xf6.tga", //CUSTOM
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1704,7 +1700,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.MELODYOFSINK] = {
+	S[SC.MELODYOFSINK] = {
 		icon: "\xb8\xe1\xb7\xce\xb5\xf0\xbf\xc0\xba\xea\xbd\xcc\xc5\xa9.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1716,7 +1712,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.CRUCIS] = {
+	S[SC.CRUCIS] = {
 		icon: "\xbd\xc3\xb1\xd7\xb3\xd1\xc5\xa9\xb7\xe7\xbd\xc3\xbd\xba.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1727,7 +1723,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.SLOWCAST] = {
+	S[SC.SLOWCAST] = {
 		icon: "slowcast.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1738,7 +1734,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.PROPERTYWIND] = {
+	S[SC.PROPERTYWIND] = {
 		icon: "\xb6\xf3\xc0\xcc\xc6\xae\xb4\xd7\xb7\xce\xb4\xf5.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1749,7 +1745,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.ENCHANTBLADE] = {
+	S[SC.ENCHANTBLADE] = {
 		icon: "rk_enchant.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1760,7 +1756,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.ADRENALINE] = {
+	S[SC.ADRENALINE] = {
 		icon: "\xbe\xc6\xb5\xe5\xb7\xb9\xb3\xaf\xb8\xb0\xb7\xaf\xbd\xac.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1772,7 +1768,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.MAGICMUSHROOM] = {
+	S[SC.MAGICMUSHROOM] = {
 		icon: "\xbf\xf4\xc0\xbd\xb9\xf6\xbc\xb8.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1785,7 +1781,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.CASH_PLUSEXP] = {
+	S[SC.CASH_PLUSEXP] = {
 		icon: "exp.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -1795,7 +1791,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.ATTHASTE_POTION2] = {
+	S[SC.ATTHASTE_POTION2] = {
 		icon: "\xb0\xf8\xbc\xd3\xb9\xb0\xbe\xe0.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1806,7 +1802,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.TOXIN] = {
+	S[SC.TOXIN] = {
 		icon: "\xbd\xc5\xb0\xe6\xb8\xb6\xba\xf1\xb5\xb6.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1819,7 +1815,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.RAISINGDRAGON] = {
+	S[SC.RAISINGDRAGON] = {
 		icon: "\xc0\xe1\xb7\xe6\xbd\xc2\xc3\xb5.tga",
 		descript: [
 			["Rising Dragon", COLOR_TITLE_BUFF],
@@ -1831,7 +1827,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.HARMONIZE] = {
+	S[SC.HARMONIZE] = {
 		icon: "\xc7\xcf\xb8\xf0\xb3\xaa\xc0\xcc\xc1\xee.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1842,7 +1838,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.CHASEWALK2] = {
+	S[SC.CHASEWALK2] = {
 		icon: "i_\xc3\xbc\xc0\xcc\xbd\xba\xc8\xfb.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -1852,7 +1848,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.FOOD_STR_CASH] = {
+	S[SC.FOOD_STR_CASH] = {
 		icon: "str_gogi.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -1862,7 +1858,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.CLOAKINGEXCEED] = {
+	S[SC.CLOAKINGEXCEED] = {
 		icon: "\xc6\xf7\xc0\xcc\xc1\xee\xb4\xd7\xbf\xfe\xc6\xf9.tga",
 		descript: [
 			["Cloaking Exceed", COLOR_TITLE_BUFF],
@@ -1872,7 +1868,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.ASSUMPTIO2] = {
+	S[SC.ASSUMPTIO2] = {
 		icon: "icon05.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1883,7 +1879,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.THORNS_TRAP] = {
+	S[SC.THORNS_TRAP] = {
 		icon: "\xb0\xa1\xbd\xc3\xb3\xaa\xb9\xab\xb5\xa3.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1894,7 +1890,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.SLOWPOISON] = {
+	S[SC.SLOWPOISON] = {
 		icon: "\xbd\xbd\xb7\xce\xbf\xec\xc6\xf7\xc0\xcc\xc1\xf0.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1905,7 +1901,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.CLOAKING] = {
+	S[SC.CLOAKING] = {
 		icon: "\xc5\xac\xb7\xce\xc5\xb7.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1916,7 +1912,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.PARTYFLEE] = {
+	S[SC.PARTYFLEE] = {
 		icon: "icon06.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -1926,7 +1922,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.CRITICALPERCENT] = {
+	S[SC.CRITICALPERCENT] = {
 		icon: "\xbd\xba\xc6\xae\xb6\xf3\xc0\xcc\xc5\xb7.tga", //CUSTOM?
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1937,7 +1933,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.INSPIRATION] = {
+	S[SC.INSPIRATION] = {
 		icon: "lg_inspiration.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1952,7 +1948,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.UNLIMITED_HUMMING_VOICE] = {
+	S[SC.UNLIMITED_HUMMING_VOICE] = {
 		icon: "\xbe\xf0\xb8\xae\xb9\xcc\xc6\xbc\xb5\xe5\xc7\xe3\xb9\xd6\xba\xb8\xc0\xcc\xbd\xba.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1964,7 +1960,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.FOOD_DEX] = {
+	S[SC.FOOD_DEX] = {
 		icon: "dex_gogi.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -1974,7 +1970,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.ANALYZE] = {
+	S[SC.ANALYZE] = {
 		icon: "\xbe\xd6\xb3\xce\xb6\xf3\xc0\xcc\xc1\xee.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1985,7 +1981,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.GENTLETOUCH_REVITALIZE] = {
+	S[SC.GENTLETOUCH_REVITALIZE] = {
 		icon: "\xc1\xa1\xc7\xf7\xc8\xb0.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -1999,7 +1995,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.COUNTER_ON] = {
+	S[SC.COUNTER_ON] = {
 		icon: "i_counter.tga",
 		descript: [
 			["Prepare Counter Kick", COLOR_TITLE_BUFF],
@@ -2008,7 +2004,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.GLORIA] = {
+	S[SC.GLORIA] = {
 		icon: "\xb1\xdb\xb7\xce\xb8\xae\xbe\xc6.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2019,7 +2015,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.RUSH_WINDMILL] = {
+	S[SC.RUSH_WINDMILL] = {
 		icon: "\xc7\xb3\xc2\xf7\xb8\xa6\xc7\xe2\xc7\xd8\xb5\xb9\xb0\xdd.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2030,7 +2026,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.PYREXIA] = {
+	S[SC.PYREXIA] = {
 		icon: "\xbf\xad\xba\xb4\xb5\xb6.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2041,7 +2037,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.DANCE_WITH_WUG] = {
+	S[SC.DANCE_WITH_WUG] = {
 		icon: "\xbf\xf6\xb1\xd7\xbf\xcd\xc7\xd4\xb2\xb2\xc3\xe3\xc0\xbb.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2053,7 +2049,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.SWING] = {
+	S[SC.SWING] = {
 		icon: "\xbd\xba\xc0\xae\xb4\xed\xbd\xba.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2065,7 +2061,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.MOON_COMFORT] = {
+	S[SC.MOON_COMFORT] = {
 		icon: "i_mooncomfort.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2076,7 +2072,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.MOONLIT_SERENADE] = {
+	S[SC.MOONLIT_SERENADE] = {
 		icon: "\xb4\xde\xba\xfb\xc0\xc7\xbc\xbc\xb7\xb9\xb3\xaa\xb5\xa5.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2087,7 +2083,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.GENTLETOUCH_CHANGE] = {
+	S[SC.GENTLETOUCH_CHANGE] = {
 		icon: "\xc1\xa1\xc7\xf7\xb9\xdd.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2099,7 +2095,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.STRIPACCESSARY] = {
+	S[SC.STRIPACCESSARY] = {
 		icon: "\xbd\xba\xc6\xae\xb8\xb3\xbe\xd7\xbc\xbc\xbc\xad\xb8\xae.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2110,7 +2106,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.PROPERTYUNDEAD] = {
+	S[SC.PROPERTYUNDEAD] = {
 		icon: "bd_undead.tga", //CUSTOM TGA
 		haveTimeLimit: 1,
 		descript: [
@@ -2118,7 +2114,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.INVISIBILITY] = {
+	S[SC.INVISIBILITY] = {
 		icon: "\xc0\xce\xba\xf1\xc1\xf6\xba\xf4\xb8\xae\xc6\xbc.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2132,7 +2128,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.ABUNDANCE] = {
+	S[SC.ABUNDANCE] = {
 		icon: "rk_uruz.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2143,7 +2139,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.FOOD_BASICHIT] = {
+	S[SC.FOOD_BASICHIT] = {
 		icon: "gogi.tga", //CUSTOM?
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -2153,7 +2149,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.FOOD_AGI_CASH] = {
+	S[SC.FOOD_AGI_CASH] = {
 		icon: "agi_gogi.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -2163,7 +2159,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.SHADOWFORM] = {
+	S[SC.SHADOWFORM] = {
 		icon: "\xbd\xa6\xb5\xb5\xbf\xec\xc6\xfb.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2175,7 +2171,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.AUTOSHADOWSPELL] = {
+	S[SC.AUTOSHADOWSPELL] = {
 		icon: "\xbf\xc0\xc5\xe4\xbd\xa6\xb5\xb5\xbf\xec\xbd\xba\xc6\xe7.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2187,7 +2183,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.SHAPESHIFT] = {
+	S[SC.SHAPESHIFT] = {
 		icon: "\xbc\xce\xc0\xcc\xc7\xc1\xbd\xac\xc7\xc1\xc6\xae.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2198,7 +2194,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.MANU_ATK] = {
+	S[SC.MANU_ATK] = {
 		icon: "efst_atk.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2210,7 +2206,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.MARIONETTE_MASTER] = {
+	S[SC.MARIONETTE_MASTER] = {
 		icon: "icon01.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2222,7 +2218,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.MARIONETTE] = {
+	S[SC.MARIONETTE] = {
 		icon: "icon01.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2234,7 +2230,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.WZ_SIGHTBLASTER] = {
+	S[SC.WZ_SIGHTBLASTER] = {
 		icon: "i_sightblaster.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2246,7 +2242,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.LEXAETERNA] = {
+	S[SC.LEXAETERNA] = {
 		icon: "\xb7\xba\xbd\xba\xbf\xa1\xc5\xd7\xb8\xa3\xb3\xaa.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2257,7 +2253,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.INFRAREDSCAN] = {
+	S[SC.INFRAREDSCAN] = {
 		icon: "\xc0\xce\xc7\xc1\xb6\xf3\xb7\xb9\xb5\xe5\xbd\xba\xc4\xb5.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2269,7 +2265,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.INT_SCROLL] = {
+	S[SC.INT_SCROLL] = {
 		icon: "int_gogi.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -2279,7 +2275,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.ASPERSIO] = {
+	S[SC.ASPERSIO] = {
 		icon: "\xbe\xc6\xbd\xba\xc6\xe4\xb8\xa3\xbd\xc3\xbf\xc0.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2290,14 +2286,14 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.MOVHASTE_INFINITY] = {
+	S[SC.MOVHASTE_INFINITY] = {
 		icon: "\xb9\xce\xc3\xb8\xbc\xba\xc1\xf5\xb0\xa1.tga",
 		descript: [
 			["Increases Movement Speed"]
 		]
 	};
 
-	StatusInfo[SC.LERADS_DEW] = {
+	S[SC.LERADS_DEW] = {
 		icon: "\xb7\xb9\xb6\xf3\xb5\xe5\xc0\xc7\xc0\xcc\xbd\xbd.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2308,7 +2304,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.FOOD_INT] = {
+	S[SC.FOOD_INT] = {
 		icon: "int_gogi.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -2318,7 +2314,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.VENOMBLEED] = {
+	S[SC.VENOMBLEED] = {
 		icon: "\xbc\xe8\xbe\xe0\xb5\xb6.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2329,7 +2325,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.GS_GATLINGFEVER] = {
+	S[SC.GS_GATLINGFEVER] = {
 		icon: "i_fever.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2341,7 +2337,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.VITALITYACTIVATION] = {
+	S[SC.VITALITYACTIVATION] = {
 		icon: "rk_isha.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2355,7 +2351,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.STONEHARDSKIN] = {
+	S[SC.STONEHARDSKIN] = {
 		icon: "rk_hagalaz.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2369,7 +2365,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.WEIGHTOVER90] = {
+	S[SC.WEIGHTOVER90] = {
 		icon: "\xb9\xab\xb0\xd4\x39\x30\xc0\xcc\xbb\xf3.tga",
 		descript: [
 			["Overweight 90%", COLOR_TITLE_DEBUFF],
@@ -2378,7 +2374,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.PROTECTHELM] = {
+	S[SC.PROTECTHELM] = {
 		icon: "\xc4\xc9\xb9\xcc\xc4\xc3\xc7\xc1\xb7\xce\xc5\xd8\xbc\xc7\x5b\xc7\xef\xb8\xa7\x5d.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2389,7 +2385,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.PLUSAVOIDVALUE] = {
+	S[SC.PLUSAVOIDVALUE] = {
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
 		descript: [
@@ -2399,7 +2395,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.OBLIVIONCURSE] = {
+	S[SC.OBLIVIONCURSE] = {
 		icon: "\xb8\xc1\xb0\xa2\xc0\xc7\xc0\xe7.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2410,7 +2406,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.HEALPLUS] = {
+	S[SC.HEALPLUS] = {
 		icon: "\xc1\xdf\xc7\xfc\xbb\xfd\xb8\xed\xbc\xf6.tga", //CUSTOM
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2422,7 +2418,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.PROTECT_DEF] = {
+	S[SC.PROTECT_DEF] = {
 		icon: "gogi.tga", //CUSTOM
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2433,7 +2429,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.CRITICALWOUND] = {
+	S[SC.CRITICALWOUND] = {
 		icon: "criticalwound.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2444,7 +2440,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.PRESTIGE] = {
+	S[SC.PRESTIGE] = {
 		icon: "lg_prestige.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2456,7 +2452,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.FOOD_DEX_CASH] = {
+	S[SC.FOOD_DEX_CASH] = {
 		icon: "dex_gogi.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -2466,7 +2462,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.CARTBOOST] = {
+	S[SC.CARTBOOST] = {
 		icon: "icon07.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2477,7 +2473,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.L_LIFEPOTION] = {
+	S[SC.L_LIFEPOTION] = {
 		icon: "\xc1\xdf\xc7\xfc\xbb\xfd\xb8\xed\xbc\xf6.tga", //CUSTOM
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2489,7 +2485,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.WINDWALK] = {
+	S[SC.WINDWALK] = {
 		icon: "icon06.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2500,7 +2496,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.PROPERTYFIRE] = {
+	S[SC.PROPERTYFIRE] = {
 		icon: "\xc7\xc1\xb7\xb9\xc0\xd3\xb7\xb1\xc3\xc4.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2511,7 +2507,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.STRIKING] = {
+	S[SC.STRIKING] = {
 		icon: "\xbd\xba\xc6\xae\xb6\xf3\xc0\xcc\xc5\xb7.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2522,7 +2518,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.DOWNKICK_ON] = {
+	S[SC.DOWNKICK_ON] = {
 		icon: "i_downkick.tga",
 		descript: [
 			["Prepare Down Kick", COLOR_TITLE_BUFF],
@@ -2531,7 +2527,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.PROPERTYDARK] = {
+	S[SC.PROPERTYDARK] = {
 		icon: "\xc4\xb3\xbd\xc3\xb0\xa9\xbf\xca\xbc\xd3\xbc\xba\xba\xce\xbf\xa9.tga", //CUSTOM
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -2541,7 +2537,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.REFLECTSHIELD] = {
+	S[SC.REFLECTSHIELD] = {
 		icon: "\xb8\xae\xc7\xc3\xb7\xba\xc6\xae\xbd\xaf\xb5\xe5.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2553,7 +2549,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.DEVOTION] = {
+	S[SC.DEVOTION] = {
 		icon: "\xc7\xe5\xbd\xc5.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2564,14 +2560,14 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.RIDING] = {
+	S[SC.RIDING] = {
 		icon: "\xb6\xf3\xc0\xcc\xb5\xf9.tga",
 		descript: [
 			["Riding Vehicle", COLOR_TITLE_TOGGLE]
 		]
 	};
 
-	StatusInfo[SC.LIGHTNINGWALK] = {
+	S[SC.LIGHTNINGWALK] = {
 		icon: "icon02.tga", //CUSTOM
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2584,7 +2580,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.FROSTMISTY] = {
+	S[SC.FROSTMISTY] = {
 		icon: "frostmisty.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2596,7 +2592,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.COLD] = {
+	S[SC.COLD] = {
 		icon: "\xb4\xd9\xc0\xcc\xbe\xc6\xb8\xf3\xb5\xe5\xb4\xf5\xbd\xba\xc6\xae.tga", //CUSTOM?
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2611,7 +2607,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.GROUNDMAGIC] = {
+	S[SC.GROUNDMAGIC] = {
 		icon: "i_\xc0\xe5\xc6\xc7.tga", //CUSTOM?
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -2621,7 +2617,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.HELLPOWER] = {
+	S[SC.HELLPOWER] = {
 		icon: "npc_hellpower.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2634,7 +2630,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.SAVAGE_STEAK] = {
+	S[SC.SAVAGE_STEAK] = {
 		icon: "str_gogi.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2646,7 +2642,7 @@ define(['./StatusConst'], function( SC )
 	};
 
 
-	StatusInfo[SC.COCKTAIL_WARG_BLOOD] = {
+	S[SC.COCKTAIL_WARG_BLOOD] = {
 		icon: "int_gogi.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2657,7 +2653,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.MINOR_BBQ] = {
+	S[SC.MINOR_BBQ] = {
 		icon: "vit_gogi.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2668,7 +2664,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.SIROMA_ICE_TEA] = {
+	S[SC.SIROMA_ICE_TEA] = {
 		icon: "dex_gogi.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2679,7 +2675,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.DROCERA_HERB_STEAMED] = {
+	S[SC.DROCERA_HERB_STEAMED] = {
 		icon: "agi_gogi.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2690,7 +2686,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.PUTTI_TAILS_NOODLES] = {
+	S[SC.PUTTI_TAILS_NOODLES] = {
 		icon: "luk_gogi.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2701,7 +2697,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.STOMACHACHE] = {
+	S[SC.STOMACHACHE] = {
 		icon: "\xbe\xc8\xc6\xbc\xb8\xc5\xc5\xcd\xb8\xae\xbe\xf3.tga", //CUSTOM
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2715,7 +2711,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.PROTECTEXP] = {
+	S[SC.PROTECTEXP] = {
 		icon: "\xbe\xf6\xb8\xb6\xbe\xc6\xba\xfc\xbb\xe7\xb6\xfb\xc7\xd8\xbf\xe4.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2726,7 +2722,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.ANGEL_PROTECT] = {
+	S[SC.ANGEL_PROTECT] = {
 		icon: "death.tga", //CUSTOM
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2737,7 +2733,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.MORA_BUFF] = {
+	S[SC.MORA_BUFF] = {
 		icon: "gogi.tga", //CUSTOM
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2749,7 +2745,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.POPECOOKIE] = {
+	S[SC.POPECOOKIE] = {
 		icon: "gogi.tga", //CUSTOM
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2761,7 +2757,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.VITALIZE_POTION] = {
+	S[SC.VITALIZE_POTION] = {
 		icon: "\xbf\xa1\xc0\xcc\xb6\xf3\x31.tga", //CUSTOM
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2773,7 +2769,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.G_LIFEPOTION] = {
+	S[SC.G_LIFEPOTION] = {
 		icon: "\xc1\xdf\xc7\xfc\xbb\xfd\xb8\xed\xbc\xf6.tga", //CUSTOM
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2785,7 +2781,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.ODINS_POWER] = {
+	S[SC.ODINS_POWER] = {
 		icon: "all_odins_power.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2797,7 +2793,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.MAGIC_CANDY] = {
+	S[SC.MAGIC_CANDY] = {
 		icon: "plusmagicpower.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2811,7 +2807,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.ENERGYCOAT] = {
+	S[SC.ENERGYCOAT] = {
 		icon: "\xbf\xa1\xb3\xca\xc1\xf6\xc4\xda\xc6\xae.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2823,7 +2819,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.PAIN_KILLER] = {
+	S[SC.PAIN_KILLER] = {
 		icon: "\xbc\xbc\xb6\xf34.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2835,7 +2831,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.LIGHT_OF_REGENE] = {
+	S[SC.LIGHT_OF_REGENE] = {
 		icon: "\xbf\xa1\xc0\xcc\xb6\xf31.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2847,7 +2843,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.OVERED_BOOST] = {
+	S[SC.OVERED_BOOST] = {
 		icon: "\xbf\xa1\xc0\xcc\xb6\xf32.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2859,7 +2855,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.STYLE_CHANGE] = {
+	S[SC.STYLE_CHANGE] = {
 		icon: "efst_atk.tga", //CUSTOM
 		haveTimeLimit: 0,
 		descript: [
@@ -2868,7 +2864,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.MAGMA_FLOW] = {
+	S[SC.MAGMA_FLOW] = {
 		icon: "\xb5\xf0\xc0\xcc\xc5\xcd1.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2880,7 +2876,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.GRANITIC_ARMOR] = {
+	S[SC.GRANITIC_ARMOR] = {
 		icon: "\xb5\xf0\xc0\xcc\xc5\xcd2.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2892,7 +2888,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.PYROCLASTIC] = {
+	S[SC.PYROCLASTIC] = {
 		icon: "\xb5\xf0\xc0\xcc\xc5\xcd4.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2905,7 +2901,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.VOLCANIC_ASH] = {
+	S[SC.VOLCANIC_ASH] = {
 		icon: "\xb5\xf0\xc0\xcc\xc5\xcd5.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2918,7 +2914,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.ATKER_ASPD] = {
+	S[SC.ATKER_ASPD] = {
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
 		descript: [
@@ -2929,7 +2925,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.ATKER_MOVESPEED] = {
+	S[SC.ATKER_MOVESPEED] = {
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
 		descript: [
@@ -2940,7 +2936,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.OVERLAPEXPUP] = {
+	S[SC.OVERLAPEXPUP] = {
 		icon: "item.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -2953,7 +2949,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.PLUSATTACKPOWER] = {
+	S[SC.PLUSATTACKPOWER] = {
 		icon: "plusattackpower.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -2963,7 +2959,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.PLUSMAGICPOWER] = {
+	S[SC.PLUSMAGICPOWER] = {
 		icon: "plusmagicpower.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -2973,7 +2969,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.MACRO_PERMIT] = {
+	S[SC.MACRO_PERMIT] = {
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
 		descript: [
@@ -2983,7 +2979,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.MACRO_POSTDELAY] = {
+	S[SC.MACRO_POSTDELAY] = {
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
 		descript: [
@@ -2993,7 +2989,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.MONSTER_TRANSFORM] = {
+	S[SC.MONSTER_TRANSFORM] = {
 		icon: "\xba\xaf\xbd\xc5.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3004,21 +3000,21 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.SIT] = {
+	S[SC.SIT] = {
 		icon: "\xbe\xc9\xb1\xe2.tga",
 		descript: [
 			["Sit", COLOR_TITLE_TOGGLE],
 		]
 	};
 
-	StatusInfo[SC.ALL_RIDING] = {
+	S[SC.ALL_RIDING] = {
 		icon: "\xb6\xf3\xc0\xcc\xb5\xf9.tga",
 		descript: [
 			["Riding", COLOR_TITLE_TOGGLE],
 		]
 	};
 
-	StatusInfo[SC.SKF_MATK] = {
+	S[SC.SKF_MATK] = {
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
 		descript: [
@@ -3027,7 +3023,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.SKF_ATK] = {
+	S[SC.SKF_ATK] = {
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
 		descript: [
@@ -3036,7 +3032,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.SKF_ASPD] = {
+	S[SC.SKF_ASPD] = {
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
 		descript: [
@@ -3045,7 +3041,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.SKF_CAST] = {
+	S[SC.SKF_CAST] = {
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
 		descript: [
@@ -3054,7 +3050,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.REWARD_PLUSONLYJOBEXP] = {
+	S[SC.REWARD_PLUSONLYJOBEXP] = {
 		icon: "job.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
@@ -3064,7 +3060,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.ENERVATION] = {
+	S[SC.ENERVATION] = {
 		icon: "masquerade_enervation.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3076,7 +3072,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.GROOMY] = {
+	S[SC.GROOMY] = {
 		icon: "masquerade_groomy.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3089,7 +3085,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.IGNORANCE] = {
+	S[SC.IGNORANCE] = {
 		icon: "masquerade_ignorance.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3101,7 +3097,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.LAZINESS] = {
+	S[SC.LAZINESS] = {
 		icon: "masquerade_laziness.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3114,7 +3110,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.UNLUCKY] = {
+	S[SC.UNLUCKY] = {
 		icon: "masquerade_unlucky.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3128,7 +3124,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.WEAKNESS] = {
+	S[SC.WEAKNESS] = {
 		icon: "masquerade_weakness.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3141,7 +3137,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.STEELBODY] = {
+	S[SC.STEELBODY] = {
 		icon: "\x73\x74\x65\x65\x6c\x62\x6f\x64\x79.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3154,7 +3150,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.LG_REFLECTDAMAGE] = {
+	S[SC.LG_REFLECTDAMAGE] = {
 		icon: "lg_reflectdamage.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3166,7 +3162,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.MVPCARD_TAOGUNKA] = {
+	S[SC.MVPCARD_TAOGUNKA] = {
 		icon: "mvpcard_taogunka.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3178,7 +3174,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.MVPCARD_MISTRESS] = {
+	S[SC.MVPCARD_MISTRESS] = {
 		icon: "mvpcard_mistress.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3190,7 +3186,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.MVPCARD_ORCHERO] = {
+	S[SC.MVPCARD_ORCHERO] = {
 		icon: "mvpcard_orchero.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3201,7 +3197,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.MVPCARD_ORCLORD] = {
+	S[SC.MVPCARD_ORCLORD] = {
 		icon: "mvpcard_orclord.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3212,7 +3208,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.HANDICAPSTATE_NORECOVER] = {
+	S[SC.HANDICAPSTATE_NORECOVER] = {
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
 		descript: [
@@ -3222,7 +3218,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.SET_NUM_DEF] = {
+	S[SC.SET_NUM_DEF] = {
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
 		descript: [
@@ -3231,7 +3227,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.SET_NUM_MDEF] = {
+	S[SC.SET_NUM_MDEF] = {
 		haveTimeLimit: 1,
 		posTimeLimitStr: 1,
 		descript: [
@@ -3240,19 +3236,19 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.SET_PER_DEF] = {
+	S[SC.SET_PER_DEF] = {
 		descript: [
 			["DEF amount is fixed at certain percentage."]
 		]
 	};
 
-	StatusInfo[SC.SET_PER_MDEF] = {
+	S[SC.SET_PER_MDEF] = {
 		descript: [
 			["MDEF amount is fixed at certain percentage."]
 		]
 	};
 
-	StatusInfo[SC.EXTREMITYFIST] = {
+	S[SC.EXTREMITYFIST] = {
 		icon: "extremityfist.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3263,7 +3259,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.ATTHASTE_CASH] = {
+	S[SC.ATTHASTE_CASH] = {
 		icon: "aspdcash.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3274,7 +3270,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.RWC2011] = {
+	S[SC.RWC2011] = {
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
 		descript: [
@@ -3285,7 +3281,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.PHI_DEMON] = {
+	S[SC.PHI_DEMON] = {
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
 		descript: [
@@ -3296,7 +3292,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.GM_BATTLE] = {
+	S[SC.GM_BATTLE] = {
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
 		descript: [
@@ -3307,7 +3303,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.GM_BATTLE2] = {
+	S[SC.GM_BATTLE2] = {
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
 		descript: [
@@ -3318,7 +3314,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.RWC_SCROLL2011] = {
+	S[SC.RWC_SCROLL2011] = {
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
 		descript: [
@@ -3332,7 +3328,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.MEIKYOUSISUI] = {
+	S[SC.MEIKYOUSISUI] = {
 		icon: "meikyousisui.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3347,7 +3343,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.IZAYOI] = {
+	S[SC.IZAYOI] = {
 		icon: "izayoi.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3361,7 +3357,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.KG_KAGEHUMI] = {
+	S[SC.KG_KAGEHUMI] = {
 		icon: "kg_kagehumi.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3375,7 +3371,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.KYOMU] = {
+	S[SC.KYOMU] = {
 		icon: "kyomu.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3387,7 +3383,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.KAGEMUSYA] = {
+	S[SC.KAGEMUSYA] = {
 		icon: "kagemusya.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3400,7 +3396,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.ZANGETSU] = {
+	S[SC.ZANGETSU] = {
 		icon: "zangetsu.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3411,7 +3407,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.GENSOU] = {
+	S[SC.GENSOU] = {
 		icon: "gensou.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3424,7 +3420,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.AKAITSUKI] = {
+	S[SC.AKAITSUKI] = {
 		icon: "akaitsuki.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3436,7 +3432,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.MYSTICPOWDER] = {
+	S[SC.MYSTICPOWDER] = {
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
 		descript: [
@@ -3446,7 +3442,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.ACARAJE] = {
+	S[SC.ACARAJE] = {
 		icon: "\xb0\xf8\xbc\xd3\xb9\xb0\xbe\xe0.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3457,7 +3453,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.M_LIFEPOTION] = {
+	S[SC.M_LIFEPOTION] = {
 		icon: "\xc1\xdf\xc7\xfc\xbb\xfd\xb8\xed\xbc\xf6.tga", //CUSTOM
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3469,7 +3465,7 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.FLOWER_LEAF] = {
+	S[SC.FLOWER_LEAF] = {
 		icon: "flower_leaf.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3481,23 +3477,23 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	StatusInfo[SC.BDPLAYING] = {
+	S[SC.BDPLAYING] = {
 		icon: "\xb9\xd9\xb5\xe5\xb3\xeb\xb7\xa1.tga"
 	};
 
-	StatusInfo[SC.RUN] = {
+	S[SC.RUN] = {
 		icon: "i_run.tga"
 	};
 
-	StatusInfo[SC.CLIENT_ONLY_EQUIP_ARROW] = {
+	S[SC.CLIENT_ONLY_EQUIP_ARROW] = {
 		icon: "ArrowN.tga"
 	};
 
-	StatusInfo[SC.RAY_OF_PROTECTION] = {
+	S[SC.RAY_OF_PROTECTION] = {
 		icon: "all_ray_of_protection.tga"
 	};
 
-	StatusInfo[SC.DARKCROW] = {
+	S[SC.DARKCROW] = {
 		icon: "darkcrow.tga"
 	};
 
@@ -3505,27 +3501,27 @@ define(['./StatusConst'], function( SC )
 
 
 
-	StatusInfo[SC.FRIGG_SONG] = {
+	S[SC.FRIGG_SONG] = {
 		icon: "frigg_song.tga"
 	};
 
-	StatusInfo[SC.FULL_THROTTLE] = {
+	S[SC.FULL_THROTTLE] = {
 		icon: "full_throttle.tga",
 	};
 
-	StatusInfo[SC.GLASTHEIM_ATK] = {
+	S[SC.GLASTHEIM_ATK] = {
 		icon: "glastheim_atk.tga"
 	};
 
-	StatusInfo[SC.GLASTHEIM_DEF] = {
+	S[SC.GLASTHEIM_DEF] = {
 		icon: "glastheim_def.tga"
 	};
 
-	StatusInfo[SC.GLASTHEIM_HEAL] = {
+	S[SC.GLASTHEIM_HEAL] = {
 		icon: "glastheim_heal.tga"
 	};
-	
-	StatusInfo[SC.ATTACK_PROPERTY_NOTHING] = {
+
+	S[SC.ATTACK_PROPERTY_NOTHING] = {
 		icon: "weapon_property.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3535,8 +3531,8 @@ define(['./StatusConst'], function( SC )
 			["Enchants Weapon with Neutral Property"]
 		]
 	};
-	
-	StatusInfo[SC.ATTACK_PROPERTY_WATER] = {
+
+	S[SC.ATTACK_PROPERTY_WATER] = {
 		icon: "weapon_property_water.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3546,8 +3542,8 @@ define(['./StatusConst'], function( SC )
 			["Enchants Weapon with Water Property"]
 		]
 	};
-	
-	StatusInfo[SC.ATTACK_PROPERTY_GROUND] = {
+
+	S[SC.ATTACK_PROPERTY_GROUND] = {
 		icon: "weapon_property_ground.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3557,8 +3553,8 @@ define(['./StatusConst'], function( SC )
 			["Enchants Weapon with Earth Property"]
 		]
 	};
-	
-	StatusInfo[SC.ATTACK_PROPERTY_FIRE] = {
+
+	S[SC.ATTACK_PROPERTY_FIRE] = {
 		icon: "weapon_property_fire.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3568,8 +3564,8 @@ define(['./StatusConst'], function( SC )
 			["Enchants Weapon with Fire Property"]
 		]
 	};
-	
-	StatusInfo[SC.ATTACK_PROPERTY_WIND] = {
+
+	S[SC.ATTACK_PROPERTY_WIND] = {
 		icon: "weapon_property_wind.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3579,8 +3575,8 @@ define(['./StatusConst'], function( SC )
 			["Enchants Weapon with Wind Property"]
 		]
 	};
-	
-	StatusInfo[SC.ATTACK_PROPERTY_POISON] = {
+
+	S[SC.ATTACK_PROPERTY_POISON] = {
 		icon: "weapon_property.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3590,8 +3586,8 @@ define(['./StatusConst'], function( SC )
 			["Enchants Weapon with Poison Property"]
 		]
 	};
-	
-	StatusInfo[SC.ATTACK_PROPERTY_SAINT] = {
+
+	S[SC.ATTACK_PROPERTY_SAINT] = {
 		icon: "weapon_property.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3601,8 +3597,8 @@ define(['./StatusConst'], function( SC )
 			["Enchants Weapon with Holy Property"]
 		]
 	};
-	
-	StatusInfo[SC.ATTACK_PROPERTY_DARKNESS] = {
+
+	S[SC.ATTACK_PROPERTY_DARKNESS] = {
 		icon: "weapon_property.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3612,8 +3608,8 @@ define(['./StatusConst'], function( SC )
 			["Enchants Weapon with Dark Property"]
 		]
 	};
-	
-	StatusInfo[SC.ATTACK_PROPERTY_TELEKINESIS] = {
+
+	S[SC.ATTACK_PROPERTY_TELEKINESIS] = {
 		icon: "weapon_property.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3623,8 +3619,8 @@ define(['./StatusConst'], function( SC )
 			["Enchants Weapon with Ghost Property"]
 		]
 	};
-	
-	StatusInfo[SC.ATTACK_PROPERTY_UNDEAD] = {
+
+	S[SC.ATTACK_PROPERTY_UNDEAD] = {
 		icon: "weapon_property.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3634,8 +3630,8 @@ define(['./StatusConst'], function( SC )
 			["Enchants Weapon with Undead Property"]
 		]
 	};
-	
-	StatusInfo[SC.RESIST_PROPERTY_NOTHING] = {
+
+	S[SC.RESIST_PROPERTY_NOTHING] = {
 		icon: "resist_elemental_nothing.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3645,8 +3641,8 @@ define(['./StatusConst'], function( SC )
 			["Increases your resistance to the Neutral Property"]
 		]
 	};
-	
-	StatusInfo[SC.RESIST_PROPERTY_WATER] = {
+
+	S[SC.RESIST_PROPERTY_WATER] = {
 		icon: "resist_elemental_water.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3656,8 +3652,8 @@ define(['./StatusConst'], function( SC )
 			["Increases your resistance to the Water Property"]
 		]
 	};
-	
-	StatusInfo[SC.RESIST_PROPERTY_GROUND] = {
+
+	S[SC.RESIST_PROPERTY_GROUND] = {
 		icon: "resist_elemental_ground.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3667,8 +3663,8 @@ define(['./StatusConst'], function( SC )
 			["Increases your resistance to the Earth Property"]
 		]
 	};
-	
-	StatusInfo[SC.RESIST_PROPERTY_FIRE] = {
+
+	S[SC.RESIST_PROPERTY_FIRE] = {
 		icon: "resist_elemental_fire.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3678,8 +3674,8 @@ define(['./StatusConst'], function( SC )
 			["Increases your resistance to the Fire Property"]
 		]
 	};
-	
-	StatusInfo[SC.RESIST_PROPERTY_WIND] = {
+
+	S[SC.RESIST_PROPERTY_WIND] = {
 		icon: "resist_elemental_wind.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3689,8 +3685,8 @@ define(['./StatusConst'], function( SC )
 			["Increases your resistance to the Wind Property"]
 		]
 	};
-	
-	StatusInfo[SC.RESIST_PROPERTY_POISON] = {
+
+	S[SC.RESIST_PROPERTY_POISON] = {
 		icon: "resist_elemental_poison.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3700,8 +3696,8 @@ define(['./StatusConst'], function( SC )
 			["Increases your resistance to the Poison Property"]
 		]
 	};
-	
-	StatusInfo[SC.RESIST_PROPERTY_SAINT] = {
+
+	S[SC.RESIST_PROPERTY_SAINT] = {
 		icon: "resist_elemental_saint.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3711,8 +3707,8 @@ define(['./StatusConst'], function( SC )
 			["Increases your resistance to the Holy Property"]
 		]
 	};
-	
-	StatusInfo[SC.RESIST_PROPERTY_DARKNESS] = {
+
+	S[SC.RESIST_PROPERTY_DARKNESS] = {
 		icon: "resist_elemental_darkness.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3722,8 +3718,8 @@ define(['./StatusConst'], function( SC )
 			["Increases your resistance to the Dark Property"]
 		]
 	};
-	
-	StatusInfo[SC.RESIST_PROPERTY_TELEKINESIS] = {
+
+	S[SC.RESIST_PROPERTY_TELEKINESIS] = {
 		icon: "resist_elemental_telekinesis.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3733,8 +3729,8 @@ define(['./StatusConst'], function( SC )
 			["Increases your resistance to the Ghost Property"]
 		]
 	};
-	
-	StatusInfo[SC.RESIST_PROPERTY_UNDEAD] = {
+
+	S[SC.RESIST_PROPERTY_UNDEAD] = {
 		icon: "resist_elemental_undead.tga",
 		haveTimeLimit: 1,
 		posTimeLimitStr: 2,
@@ -3745,5 +3741,5 @@ define(['./StatusConst'], function( SC )
 		]
 	};
 
-	return StatusInfo;
+	return S;
 });

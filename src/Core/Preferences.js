@@ -7,7 +7,7 @@
  *
  * @author Vincent Thibault
  */
-define([ './Context' ], function( Context )
+define(function()
 {
 	'use strict';
 
@@ -38,8 +38,8 @@ define([ './Context' ], function( Context )
 	 * Get back values
 	 *
 	 * @param {string} key
-	 * @param {mixed} default value
-	 * @param {number} optional version
+	 * @param {any} def mixed default value
+	 * @param {number} [version] optional version
 	 */
 	function get( key, def, version )
 	{
@@ -79,8 +79,7 @@ define([ './Context' ], function( Context )
 	/**
 	 * Save value in storage
 	 *
-	 * @param {string} key
-	 * @param {object} value to store
+	 * @param {object} data value to store. Note: data must have `_key` property
 	 */
 	function save( data )
 	{

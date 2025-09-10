@@ -7,12 +7,11 @@
  *
  * @author Vincent Thibault, Antares
  */
-
-define(function()
-{
+define(function () {
 	"use strict";
 
-	return {
+	/** @type {DB.Mobs.MonsterTable} */
+	const MonsterTable = {
 		0: "Novice",
 		1: "Swordman",
 		2: "Mage",
@@ -3700,4 +3699,5 @@ define(function()
 		10252: "4_bonfire",
 		10253: "clear_npc"
 	};
+	return MonsterTable
 });

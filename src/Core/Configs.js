@@ -48,7 +48,7 @@ define(function()
 	 * Set a config
 	 *
 	 * @param {string} key name
-	 * @param {?} data
+	 * @param {*} value
 	 */
 	function set( key, value )
 	{
@@ -60,8 +60,8 @@ define(function()
 	 * Get the value of a config
 	 *
 	 * @param {string} key name
-	 * @param {?} default data value
-	 * @return {?} data
+	 * @param {*} defaultValue data value
+	 * @return {*} data
 	 */
 	function get( key, defaultValue )
 	{
@@ -88,7 +88,7 @@ define(function()
 	}
 
 
-	
+
 	/**
 	 * Return the server informations
 	 *

@@ -7,7 +7,7 @@
  *
  * @author Vincent Thibault
  */
-define(function(require)
+define(function(/** @type {Require} */require)
 {
 	'use strict';
 
@@ -15,11 +15,11 @@ define(function(require)
 	/**
 	 * Dependencies
 	 */
-	var Client        = require('Core/Client');
-	var jQuery        = require('Utils/jquery');
-	var html2canvas   = require('Utils/html2canvas');
-	var KEYS          = require('Controls/KeyEventHandler');
-	var ChatBox       = require('UI/Components/ChatBox/ChatBox');
+	/** @type {Core.Client} */var Client        = require('Core/Client');
+	/** @type {JQueryStatic} */var jQuery        = require('Utils/jquery');
+	/** @type {Utils.html2canvas} */var html2canvas   = require('Utils/html2canvas');
+	/** @type {Controls.KeyEventHandler} */var KEYS          = require('Controls/KeyEventHandler');
+	/** @type {UI.TUIComponent<{test:boolean}>} */var ChatBox       = require('UI/Components/ChatBox/ChatBox');
 
 
 	/**
@@ -61,7 +61,7 @@ define(function(require)
 	/**
 	 * Process ScreenShot
 	 *
-	 * @param {canvasElement} canvas
+	 * @param {HTMLCanvasElement} canvas
 	 */
 	ScreenShot.process = function processScreenShot(canvas)
 	{
@@ -87,7 +87,7 @@ define(function(require)
 		context.font = 'bold 16px Arial';
 		context.fillText(date, x, y);
 		context.strokeText(date, x, y);
-		
+
 		// Get and draw src_logo to canvas
 		Client.loadFile( 'data/texture/scr_logo.bmp', function(url) {
 			var img = new Image();
@@ -107,7 +107,7 @@ define(function(require)
 	/**
 	 * Display the ScreenShot, this method is ment to be replaced by plugins if wanted.
 	 *
-	 * @param {canvasElement} canvas
+	 * @param {HTMLCanvasElement} canvas
 	 * @param {string} date
 	 */
 	ScreenShot.display = function displayScreenShot(canvas, date) {

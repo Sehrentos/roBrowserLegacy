@@ -17,6 +17,7 @@ define(['Loaders/Targa'], function( Targa )
 
 	/**
 	 * Namespace
+	 * @type {Utils.Texture}
 	 */
 	var Texture = {};
 

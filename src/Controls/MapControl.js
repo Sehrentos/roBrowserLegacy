@@ -7,39 +7,39 @@
  *
  * @author Vincent Thibault
  */
-define(function( require )
+define(function( /** @type {Require} */require )
 {
 	'use strict';
 
 
 	// Load dependencies
-	var jQuery        = require('Utils/jquery');
-	var DB            = require('DB/DBManager');
-	var UIManager     = require('UI/UIManager');
-	var Cursor        = require('UI/CursorManager');
-	var Entity        = require('Renderer/Entity/Entity');
-	var InputBox      = require('UI/Components/InputBox/InputBox');
-	var ChatBox       = require('UI/Components/ChatBox/ChatBox');
-	var Equipment     = require('UI/Components/Equipment/Equipment');
-	var Inventory     = require('UI/Components/Inventory/Inventory');
-	var ShortCut      = require('UI/Components/ShortCut/ShortCut');
-	var SkillTargetSelection      = require('UI/Components/SkillTargetSelection/SkillTargetSelection');
-	var Mouse         = require('Controls/MouseEventHandler');
-	var Mobile        = require('Core/Mobile');
-	var Renderer      = require('Renderer/Renderer');
-	var Camera        = require('Renderer/Camera');
-	var EntityManager = require('Renderer/EntityManager');
-	var Session       = require('Engine/SessionStorage');
-	var Preferences   = require('Preferences/Controls');
-	var KEYS          = require('Controls/KeyEventHandler');
-	var AIDriver      = require('Core/AIDriver');
-	var Altitude 	  = require('Renderer/Map/Altitude');
-	var PACKETVER     = require('Network/PacketVerManager');
-	var PACKET        = require('Network/PacketStructure');
-	var Network       = require('Network/NetworkManager');
-	var Events        = require('Core/Events');
+	/** @type {JQueryStatic} */var jQuery        = require('Utils/jquery');
+	/** @type {DB.DBManager} */var DB            = require('DB/DBManager');
+	/** @type {UI.UIManager} */var UIManager     = require('UI/UIManager');
+	/** @type {UI.CursorManager} */var Cursor        = require('UI/CursorManager');
+	/** @type {Renderer.Entity.Entity} */var Entity        = require('Renderer/Entity/Entity');
+	/** @type {UI.TUIComponent} */var InputBox      = require('UI/Components/InputBox/InputBox');
+	/** @type {UI.TUIComponent} */var ChatBox       = require('UI/Components/ChatBox/ChatBox');
+	/** @type {UI.TUIComponent} */var Equipment     = require('UI/Components/Equipment/Equipment');
+	/** @type {UI.TUIComponent} */var Inventory     = require('UI/Components/Inventory/Inventory');
+	/** @type {UI.TUIComponent} */var ShortCut      = require('UI/Components/ShortCut/ShortCut');
+	/** @type {UI.TUIComponent} */var SkillTargetSelection      = require('UI/Components/SkillTargetSelection/SkillTargetSelection');
+	/** @type {Controls.MouseEventHandler} */var Mouse         = require('Controls/MouseEventHandler');
+	/** @type {Core.Mobile} */var Mobile        = require('Core/Mobile');
+	/** @type {Renderer.Renderer} */var Renderer      = require('Renderer/Renderer');
+	/** @type {Renderer.Camera} */var Camera        = require('Renderer/Camera');
+	/** @type {Renderer.EntityManager} */var EntityManager = require('Renderer/EntityManager');
+	/** @type {Engine.SessionStorage} */var Session       = require('Engine/SessionStorage');
+	/** @type {Preferences.ShortCutControls} */var Preferences   = require('Preferences/Controls');
+	/** @type {Controls.KeyEventHandler} */var KEYS          = require('Controls/KeyEventHandler');
+	/** @type {Core.AIDriver} */var AIDriver      = require('Core/AIDriver');
+	/** @type {Renderer.Map.Altitude} */var Altitude 	  = require('Renderer/Map/Altitude');
+	/** @type {Network.PacketVerManager} */var PACKETVER     = require('Network/PacketVerManager');
+	/** @type {Network.PacketStructure} */var PACKET        = require('Network/PacketStructure');
+	/** @type {Network.NetworkManager} */var Network       = require('Network/NetworkManager');
+	/** @type {Core.Events} */var Events        = require('Core/Events');
 
-	require('Controls/ScreenShot');
+	/** @type {Controls.ScreenShot} */var ScreenShot    = require('Controls/ScreenShot');
 
 
 	/**
@@ -122,7 +122,7 @@ define(function( require )
 				} else {
 					Session.moveAction = null;
 					Session.autoFollow = false;
-					
+
 					var stop        = false;
 					if(entityOver != Session.Entity){
 						if (entityFocus && entityFocus != entityOver) {

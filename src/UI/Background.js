@@ -16,7 +16,7 @@ define( function( require )
 	 * Load dependencies
 	 */
 	var DB     = require('DB/DBManager');
-	var jQuery = require('Utils/jquery');
+	/** @type {JQueryStatic} */var jQuery = require('Utils/jquery');
 	var Client = require('Core/Client');
 	var devicePixelRatio = window.devicePixelRatio || 1;
 

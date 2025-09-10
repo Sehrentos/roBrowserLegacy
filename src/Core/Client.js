@@ -9,19 +9,19 @@
  * @author Vincent Thibault
  */
 
-define(function( require )
+define(function( /** @type {Require} */require )
 {
 	'use strict';
 
 
 	// Load dependencies
-	var Executable    = require('Utils/Executable');
-	var Texture       = require('Utils/Texture');
-	var WebGL         = require('Utils/WebGL');
-	var Configs       = require('./Configs');
+	/** @type {Utils.Executable} */var Executable    = require('Utils/Executable');
+	/** @type {Utils.Texture} */var Texture = require('Utils/Texture');
+	/** @type {Utils.WebGL} */var WebGL = require('Utils/WebGL');
+	/** @type {Core.Configs} */var Configs = require('./Configs');
 	var Thread        = require('./Thread');
 	var Memory        = require('./MemoryManager');
-	var PACKETVER     = require('Network/PacketVerManager');
+	/** @type {Network.PacketVerManager} */var PACKETVER = require('Network/PacketVerManager');
 	var getModule     = require;
 
 
@@ -29,7 +29,7 @@ define(function( require )
 	 * Initialize Client
 	 * Load interesting files (executable, data.ini, GRFs, ...)
 	 *
-	 * @param {Array} FileList to load
+	 * @param {Array} files FileList to load
 	 */
 	function init( files )
 	{
@@ -70,7 +70,7 @@ define(function( require )
 	/**
 	 * Saving fullclient files in filesystem, display a progressbar during the upload
 	 *
-	 * @param {Array} FileList
+	 * @param {Array} files
 	 */
 	function savingFiles( files )
 	{

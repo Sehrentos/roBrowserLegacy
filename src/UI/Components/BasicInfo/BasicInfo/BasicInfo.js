@@ -22,7 +22,7 @@ define(function(require)
 	var Renderer           = require('Renderer/Renderer');
 	var Session            = require('Engine/SessionStorage');
 	var UIManager          = require('UI/UIManager');
-	var UIComponent        = require('UI/UIComponent');
+	/** @type {UI.UIComponent<UI.Component.BasicInfo>} */var UIComponent = require('UI/UIComponent');
 	var Inventory          = require('UI/Components/Inventory/Inventory');
 	var Equipment          = require('UI/Components/Equipment/Equipment');
 	var PartyFriends       = require('UI/Components/PartyFriends/PartyFriends');

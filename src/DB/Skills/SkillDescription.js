@@ -7,11 +7,10 @@
  *
  * @author Vincent Thibault
  */
-
-define(["./SkillConst"], function( SKID )
-{
+define(function () {
 	"use strict";
 
+	/** @type {DB.Skills.SkillDescription} */
 	var SkillDescription = {};
 
 	return SkillDescription;

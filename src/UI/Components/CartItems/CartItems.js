@@ -9,31 +9,27 @@
  * In some cases the client will send packet twice.eg NORMAL_ITEMLIST4; fixit [skybook888]
  *
  */
-define(function(require)
+define(function(/** @type {Require} */require)
 {
 	'use strict';
 
-
-	/**
-	 * Dependencies
-	 */
-	var DB                 = require('DB/DBManager');
-	var ItemType           = require('DB/Items/ItemType');
-	var jQuery             = require('Utils/jquery');
-	var Client             = require('Core/Client');
-	var Preferences        = require('Core/Preferences');
-	var Renderer           = require('Renderer/Renderer');
-	var Mouse              = require('Controls/MouseEventHandler');
-	var KEYS               = require('Controls/KeyEventHandler');
-	var UIManager          = require('UI/UIManager');
-	var UIComponent        = require('UI/UIComponent');
-	var InputBox           = require('UI/Components/InputBox/InputBox');
-	var ItemInfo           = require('UI/Components/ItemInfo/ItemInfo');
-	var ItemCompare        = require('UI/Components/ItemCompare/ItemCompare');
-	var Session    			= require('Engine/SessionStorage');
-	var htmlText           = require('text!./CartItems.html');
-	var cssText            = require('text!./CartItems.css');
-	var getModule          = require;
+	/** @type {DB.DBManager} */var DB = require('DB/DBManager');
+	/** @type {DB.Items.ItemType} */var ItemType = require('DB/Items/ItemType');
+	/** @type {JQueryStatic} */var jQuery = require('Utils/jquery');
+	/** @type {Core.Client} */var Client = require('Core/Client');
+	/** @type {Core.Preferences} */var Preferences = require('Core/Preferences');
+	/** @type {Renderer.Renderer} */var Renderer = require('Renderer/Renderer');
+	/** @type {Controls.MouseEventHandler} */var Mouse = require('Controls/MouseEventHandler');
+	/** @type {Controls.KeyEventHandler} */var KEYS = require('Controls/KeyEventHandler');
+	/** @type {UI.UIManager} */var UIManager = require('UI/UIManager');
+	/** @type {UI.UIComponent<UI.Component.CartItems>} */var UIComponent = require('UI/UIComponent');
+	/** @type {UI.UIComponent<UI.Component.InputBox>} */var InputBox = require('UI/Components/InputBox/InputBox');
+	/** @type {UI.UIComponent<UI.Component.ItemInfo>} */var ItemInfo = require('UI/Components/ItemInfo/ItemInfo');
+	/** @type {UI.UIComponent<UI.Component.ItemCompare>} */var ItemCompare = require('UI/Components/ItemCompare/ItemCompare');
+	/** @type {Engine.SessionStorage} */var Session = require('Engine/SessionStorage');
+	/** @type {string} */var htmlText = require('text!./CartItems.html');
+	/** @type {string} */var cssText = require('text!./CartItems.css');
+	var getModule = require;
 
 
 	/**
@@ -531,7 +527,7 @@ define(function(require)
 	/**
 	 * Drop an item from storage to inventory
 	 *
-	 * @param {event}
+	 * @param {Event} event
 	 */
 	function onDrop( event )
 	{

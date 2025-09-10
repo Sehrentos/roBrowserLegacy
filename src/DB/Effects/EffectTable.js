@@ -6,10 +6,9 @@
  *
  * @author Vincent Thibault
  */
-define(function( require )
+define(function( /** @type {Require} */ require )
 {
 	'use strict';
-
 
 	/// Common parameters
 	///
@@ -363,12 +362,12 @@ define(function( require )
 	///   if set to true the effect will play repeatedly until removed
 
 	// Song requirements
-	const SongEffects = require('Renderer/Effects/Songs');
+	/** @type {Renderer.Effects.Songs} */const SongEffects = require('Renderer/Effects/Songs');
 	const ServiceEffects = SongEffects.ServiceEffects;
 	const getBragiSpellNote = SongEffects.getBragiSpellNote;
 
-	return {
-
+	/** @type {DB.Effects.Table} */
+	const EffectTable = {
 		0: [{	//EF_HIT1	Regular hit
 			type: '3D',
 			duplicate: 4,
@@ -11046,11 +11045,11 @@ define(function( require )
 				});
 			}
 		}],
-
-		'ef_great_echo': [{
-			wav: 'effect/\xbc\xa8\xc5\xcd\xbd\xba\xc5\xe8',
-			attachedEntity: true
-		}],
+		// FIXME duplicate line below, which on to use?
+		// 'ef_great_echo': [{
+		// 	wav: 'effect/\xbc\xa8\xc5\xcd\xbd\xba\xc5\xe8',
+		// 	attachedEntity: true
+		// }],
 
 		'ef_magicpower': [{
 			wav: 'effect/\xb8\xb6\xb9\xfd\xb7\xc2\x20\xc1\xf5\xc6\xf8',
@@ -11557,115 +11556,115 @@ define(function( require )
 			file: '\xc3\xbb\xb7\xcf\xbb\xf6\xc6\xae\xb7\xa6',
 			attachedEntity: true,
 		}],
-		
+
 		'ef_trap_01': [{
 			type: 'RSM',
 			file: '\xbf\xdc\xba\xce\xbc\xd2\xc7\xb0\x5c\xc6\xae\xb7\xa601',
 			attachedEntity: true
 		}],
-		
+
 		'ef_trap_02': [{
 			type: 'RSM',
 			file: '\xbf\xdc\xba\xce\xbc\xd2\xc7\xb0\x5c\xc6\xae\xb7\xa602',
 			attachedEntity: true
 		}],
-		
+
 		'ef_trap_03': [{
 			type: 'RSM',
 			file: '\xbf\xdc\xba\xce\xbc\xd2\xc7\xb0\x5c\xc6\xae\xb7\xa603',
 			attachedEntity: true
 		}],
-		
+
 		'ef_trap_03_2': [{
 			type: 'RSM',
 			file: '\xbf\xdc\xba\xce\xbc\xd2\xc7\xb0\x5c\xc6\xae\xb7\xa603_2',
 			attachedEntity: true
 		}],
-		
+
 		'ef_trap_03_3': [{
 			type: 'RSM',
 			file: '\xbf\xdc\xba\xce\xbc\xd2\xc7\xb0\x5c\xc6\xae\xb7\xa603_3',
 			attachedEntity: true
 		}],
-		
+
 		'ef_trap_03_4': [{
 			type: 'RSM',
 			file: '\xbf\xdc\xba\xce\xbc\xd2\xc7\xb0\x5c\xc6\xae\xb7\xa603_4',
 			attachedEntity: true
 		}],
-		
+
 		'ef_trap_03_5': [{
 			type: 'RSM',
 			file: '\xbf\xdc\xba\xce\xbc\xd2\xc7\xb0\x5c\xc6\xae\xb7\xa603_5',
 			attachedEntity: true
 		}],
-		
+
 		'ef_trap_03_6': [{
 			type: 'RSM',
 			file: '\xbf\xdc\xba\xce\xbc\xd2\xc7\xb0\x5c\xc6\xae\xb7\xa603_6',
 			attachedEntity: true
 		}],
-		
+
 		'ef_trap_04': [{
 			type: 'RSM',
 			file: '\xbf\xdc\xba\xce\xbc\xd2\xc7\xb0\x5c\xc6\xae\xb7\xa604',
 			attachedEntity: true
 		}],
-		
+
 		'ef_trap_05': [{
 			type: 'RSM',
 			file: '\xbf\xdc\xba\xce\xbc\xd2\xc7\xb0\x5c\xc6\xae\xb7\xa605',
 			attachedEntity: true
 		}],
-		
+
 		'ef_trap_3_thorn': [{
 			type: 'RSM',
 			file: 'event/3\xc2\xf7\xc6\xae\xb7\xa6_\xb0\xa1\xbd\xc301',
 			attachedEntity: true
 		}],
-		
+
 		'ef_trap_3_cobalt': [{
 			type: 'RSM',
 			file: 'event/3\xc2\xf7\xc6\xae\xb7\xa6_\xba\xaf\xbc\xf601',
 			attachedEntity: true
 		}],
-		
+
 		'ef_trap_3_maze': [{
 			type: 'RSM',
 			file: 'event/3\xc2\xf7\xc6\xae\xb7\xa6_\xba\xaf\xc1\xf601',
 			attachedEntity: true
 		}],
-		
+
 		'ef_trap_3_verdure': [{
 			type: 'RSM',
 			file: 'event/3\xc2\xf7\xc6\xae\xb7\xa6_\xba\xaf\xc7\xb301',
 			attachedEntity: true
 		}],
-		
+
 		'ef_trap_3_magenta': [{
 			type: 'RSM',
 			file: 'event/3\xc2\xf7\xc6\xae\xb7\xa6_\xba\xaf\xc8\xad01',
 			attachedEntity: true
 		}],
-		
+
 		'ef_trap_3_ice': [{
 			type: 'RSM',
 			file: 'event/3\xc2\xf7\xc6\xae\xb7\xa6_\xbc\xf601',
 			attachedEntity: true
 		}],
-		
+
 		'ef_trap_3_cluster': [{
 			type: 'RSM',
 			file: 'event/3\xc2\xf7\xc6\xae\xb7\xa6_\xc1\xf601',
 			attachedEntity: true
 		}],
-		
+
 		'ef_trap_3_shock': [{
 			type: 'RSM',
 			file: 'event/3\xc2\xf7\xc6\xae\xb7\xa6_\xc7\xb301',
 			attachedEntity: true
 		}],
-		
+
 		'ef_trap_3_fire': [{
 			type: 'RSM',
 			file: 'event/3\xc2\xf7\xc6\xae\xb7\xa6_\xc8\xad01',
@@ -11677,4 +11676,6 @@ define(function( require )
 			attachedEntity: true
 		}],
 	};
+
+	return EffectTable;
 });

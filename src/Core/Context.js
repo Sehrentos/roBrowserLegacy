@@ -12,7 +12,7 @@ define(function()
 {
 	'use strict';
 
-
+	/** @type {Core.Context} */
 	var Context = {};
 
 

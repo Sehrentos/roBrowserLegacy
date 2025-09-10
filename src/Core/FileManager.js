@@ -23,11 +23,13 @@ define(function( require )
 	var Action     = require('Loaders/Action');
 	var Str        = require('Loaders/Str');
 	var FileSystem = require('Core/FileSystem');
+	//@ts-ignore
 	var fs         = self.requireNode && self.requireNode('fs');
 
 
 	/**
 	 * FileManager namespace
+	 * @type {Core.FileManager}
 	 */
 	var FileManager = {};
 
@@ -56,7 +58,7 @@ define(function( require )
 	/**
 	 * Initialize file manager with a list of files
 	 *
-	 * @param {mixed} grf list
+	 * @param {*} grfList mixed grf list
 	 */
 	FileManager.init = function Init( grfList )
 	{

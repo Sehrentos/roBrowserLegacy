@@ -9,22 +9,22 @@
  * @author Vincent Thibault
  */
 
-define(function( require )
+define(function( /** @type {Require} */require )
 {
 	'use strict';
 
 
 	// Load dependencies
-	var Configs        = require('Core/Configs');
-	var BinaryReader   = require('Utils/BinaryReader');
-	var PACKETVER      = require('./PacketVerManager');
-	var PacketVersions = require('./PacketVersions');
-	var PacketRegister = require('./PacketRegister');
-	var PacketCrypt    = require('./PacketCrypt');
-	var PacketLength   = require('./PacketLength');
-	var WebSocket      = require('./SocketHelpers/WebSocket');
-	var NodeSocket     = require('./SocketHelpers/NodeSocket');
-	var getModule      = require;
+	/** @type {Core.Configs} */var Configs = require('Core/Configs');
+	/** @type {Utils.BinaryReader} */var BinaryReader = require('Utils/BinaryReader');
+	/** @type {Network.PacketVerManager} */var PACKETVER = require('./PacketVerManager');
+	/** @type {Network.PacketVersions} */var PacketVersions = require('./PacketVersions');
+	/** @type {Network.PacketRegister} */var PacketRegister = require('./PacketRegister');
+	/** @type {Network.PacketCrypt} */var PacketCrypt = require('./PacketCrypt');
+	/** @type {Network.PacketLength} */var PacketLength = require('./PacketLength');
+	/** @type {Network.WebSocket} */var WebSocket = require('./SocketHelpers/WebSocket');
+	/** @type {Network.NodeSocket} */var NodeSocket = require('./SocketHelpers/NodeSocket');
+	var getModule = require;
 
 
 	/**
@@ -145,7 +145,7 @@ define(function( require )
 		if(packetDump) {
 			let fp = new BinaryReader( pkt.buffer );
 			let id = fp.readUShort()
-			console.log("%c[Network] Dump Send: \n%cPacket ID: 0x%s\nPacket Name: %s\nLength: %d\nContent:\n%s", 
+			console.log("%c[Network] Dump Send: \n%cPacket ID: 0x%s\nPacket Name: %s\nLength: %d\nContent:\n%s",
 				'color:#007070', 'color:#FFFFFF',
 				id.toString(16), Packet.constructor.name, pkt.buffer.byteLength, utilsBufferToHexString(pkt.buffer).toUpperCase());
 		}
@@ -304,11 +304,11 @@ define(function( require )
 
 			if(Packets.list[id]) {
 				packet  = Packets.list[id];
-				
+
 				if(packetDump) {
 					let buffer_console = new Uint8Array( buffer, 0, length );
-					console.log("%c[Network] Dump Recv:\n%cPacket ID: 0x%s\nPacket Name: %s\nLength: %d\nContent:\n%s", 
-						'color:#900090', 'color:#FFFFFF', 
+					console.log("%c[Network] Dump Recv:\n%cPacket ID: 0x%s\nPacket Name: %s\nLength: %d\nContent:\n%s",
+						'color:#900090', 'color:#FFFFFF',
 						id.toString(16), packet.name, length, utilsBufferToHexString(buffer_console).toUpperCase());
 				}
 

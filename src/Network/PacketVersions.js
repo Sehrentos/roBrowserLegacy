@@ -9,10 +9,10 @@
  * @author Vincent Thibault
  */
 
-define(['./PacketStructure'], function (PACKET) {
+define(['./PacketStructure'], function (/** @type {Network.PacketStructure} */PACKET) {
 	'use strict';
 
-
+	/** @type {Network.PacketVersions} */
 	return {
 
 		// BASE PACKET VERSION

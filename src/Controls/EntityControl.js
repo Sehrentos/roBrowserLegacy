@@ -7,34 +7,34 @@
  *
  * @author Vincent Thibault
  */
-define(function( require )
+define(function(/** @type {Require} */require )
 {
 	'use strict';
 
 
 	// Load dependencies
-	var glMatrix    = require('Utils/gl-matrix');
-	var PathFinding = require('Utils/PathFinding');
-	var DB          = require('DB/DBManager');
-	var KEYS        = require('Controls/KeyEventHandler');
-	var Mouse       = require('Controls/MouseEventHandler');
-	var Preferences = require('Preferences/Controls');
-	var Camera      = require('Renderer/Camera');
-	var Session     = require('Engine/SessionStorage');
-	var Friends     = require('Engine/MapEngine/Friends');
-	var PACKETVER   = require('Network/PacketVerManager');
-	var PACKET      = require('Network/PacketStructure');
-	var Network     = require('Network/NetworkManager');
-	var Cursor      = require('UI/CursorManager');
-	var InputBox    = require('UI/Components/InputBox/InputBox');
-	var ChatRoom    = require('UI/Components/ChatRoom/ChatRoom');
-	var ContextMenu = require('UI/Components/ContextMenu/ContextMenu');
-	var Pet         = require('UI/Components/PetInformations/PetInformations');
-	var Trade       = require('UI/Components/Trade/Trade');
-	var NpcBox 		= require('UI/Components/NpcBox/NpcBox');
-	var Altitude 	= require('Renderer/Map/Altitude');
-	var ChatBox     = require('UI/Components/ChatBox/ChatBox');
-	var Equipment   = require('UI/Components/Equipment/Equipment');
+	/** @type {Utils.glMatrix} */var glMatrix    = require('Utils/gl-matrix');
+	/** @type {Utils.PathFinding} */var PathFinding = require('Utils/PathFinding');
+	/** @type {DB.DBManager} */var DB          = require('DB/DBManager');
+	/** @type {Controls.KeyEventHandler} */var KEYS        = require('Controls/KeyEventHandler');
+	/** @type {Controls.MouseEventHandler} */var Mouse       = require('Controls/MouseEventHandler');
+	/** @type {Preferences.ShortCutControls} */var Preferences = require('Preferences/Controls');
+	/** @type {Renderer.Camera} */var Camera      = require('Renderer/Camera');
+	/** @type {Engine.SessionStorage} */var Session     = require('Engine/SessionStorage');
+	/** @type {Engine.MapEngine.Friends} */var Friends     = require('Engine/MapEngine/Friends');
+	/** @type {Network.PacketVerManager} */var PACKETVER   = require('Network/PacketVerManager');
+	/** @type {Network.PacketStructure} */var PACKET      = require('Network/PacketStructure');
+	/** @type {Network.NetworkManager} */var Network     = require('Network/NetworkManager');
+	/** @type {UI.UIManager} */var Cursor      = require('UI/CursorManager');
+	/** @type {UI.TUIComponent} */var InputBox    = require('UI/Components/InputBox/InputBox');
+	/** @type {UI.TUIComponent} */var ChatRoom    = require('UI/Components/ChatRoom/ChatRoom');
+	/** @type {UI.TUIComponent} */var ContextMenu = require('UI/Components/ContextMenu/ContextMenu');
+	/** @type {UI.TUIComponent} */var Pet         = require('UI/Components/PetInformations/PetInformations');
+	/** @type {UI.TUIComponent} */var Trade       = require('UI/Components/Trade/Trade');
+	/** @type {UI.TUIComponent} */var NpcBox 		= require('UI/Components/NpcBox/NpcBox');
+	/** @type {Renderer.Map.Altitude} */var Altitude 	= require('Renderer/Map/Altitude');
+	/** @type {UI.TUIComponent} */var ChatBox     = require('UI/Components/ChatBox/ChatBox');
+	/** @type {UI.TUIComponent} */var Equipment   = require('UI/Components/Equipment/Equipment');
 	var getModule   = require;
 
 

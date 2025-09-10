@@ -7,12 +7,11 @@
  *
  * @author Vincent Thibault, Antares
  */
-
-define(function()
-{
+define(function () {
 	"use strict";
 
-	return {
+	/** @type {DB.Mobs.MonsterNameTable} */
+	const MOBS = {
 		1001: "Scorpion",
 		1002: "Poring",
 		1004: "Hornet",
@@ -2459,4 +2458,5 @@ define(function()
 		21394: "Diligent Vitata",
 		21395: "Silent Maya"
 	};
+	return MOBS;
 });

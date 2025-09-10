@@ -9,19 +9,23 @@
  *
  * @author Vincent Thibault
  */
-
 define( ['require', 'Utils/jquery', 'Core/Client', 'Preferences/Audio'],
-function( require,         jQuery,        Client,   Preferences )
-{
+function(
+	/** @type {Require} */require,
+	/** @type {JQueryStatic} */jQuery,
+	/** @type {Core.Client} */Client,
+	/** @type {Preferences.Audio} */Preferences
+) {
 	'use strict';
 
 
 	/**
 	 * BGM NameSpace
+	 * @type {Audio.BGM}
 	 */
 	var BGM = {};
 
-	
+
 	BGM.filename    = null;
 	BGM.volume      = Preferences.BGM.volume;
 	BGM.extension   = 'mp3';

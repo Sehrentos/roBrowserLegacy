@@ -7,12 +7,11 @@
  *
  * @author Vincent Thibault
  */
-
-define(function()
-{
+define(function () {
 	"use strict";
 
-	return [
+	/** @type {DB.Jobs.HairIndexTable} */
+	const HAIR_INDEX = [
 		// Human_F
 		[2, 2, 4, 7, 1, 5, 3, 6, 12, 10, 9, 11, 8],
 
@@ -25,4 +24,5 @@ define(function()
 		// Doram_M
 		[0, 1, 2, 3, 4, 5, 6]
 	];
+	return HAIR_INDEX;
 });

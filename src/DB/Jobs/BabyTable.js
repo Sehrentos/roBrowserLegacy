@@ -7,13 +7,13 @@
  *
  * @author Vincent Thibault
  */
-
-define(['./JobConst'], function( JobId )
-{
+define(['./JobConst'], function (
+	/** @type {DB.Jobs.JobConst} */JobId
+) {
 	"use strict";
 
-
-	return [
+	/** @type {DB.Jobs.BabyTable} */
+	const BabyTable = [
 		JobId.NOVICE_B,
 		JobId.SUPERNOVICE_B,
 
@@ -109,4 +109,5 @@ define(['./JobConst'], function( JobId )
 		JobId.DO_SUMMONER_B1,
 
 	];
+	return BabyTable;
 });

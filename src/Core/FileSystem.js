@@ -436,7 +436,7 @@ define(function()
 	/**
 	 * Search a file from FileSystem using a regex
 	 *
-	 * @param {RegExp|string} to match the filename
+	 * @param {RegExp|string} regex to match the filename
 	 */
 	function search( regex )
 	{
@@ -472,6 +472,7 @@ define(function()
 
 	/**
 	 * Public methods
+	 * @type {Core.FileSystem}
 	 */
 	return {
 		bind:        bind,

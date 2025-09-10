@@ -10,7 +10,7 @@
  * @author Vincent Thibault
  */
 
-define( ['./BinaryReader'], function( BinaryReader )
+define( ['./BinaryReader'], function( /** @type {Utils.BinaryReader} */ BinaryReader )
 {
 	'use strict';
 

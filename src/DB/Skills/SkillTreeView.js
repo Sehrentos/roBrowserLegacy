@@ -1,17 +1,20 @@
-define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
+define(["./SkillConst", "DB/Jobs/JobConst"], function (
+	/** @type {DB.Skills.SkillConst} */ SK,
+	/** @type {DB.Jobs.JobConst} */ JobId
+) {
 	"use strict";
 
+	/** @type {DB.Skills.SkillTreeView} */
+	var S = {};
 
-	var SkillTreeView = {};
-
-	SkillTreeView[JobId.NOVICE] = {
+	S[JobId.NOVICE] = {
 		list: 1,
 		beforeJob: null,
-		[SK.NV_BASIC]: 0, 
-		[SK.NV_FIRSTAID]: 7, 
-		[SK.NV_TRICKDEAD ]: 14
-	},
-	SkillTreeView[JobId.SWORDMAN] = {
+		[SK.NV_BASIC]: 0,
+		[SK.NV_FIRSTAID]: 7,
+		[SK.NV_TRICKDEAD]: 14
+	};
+	S[JobId.SWORDMAN] = {
 		list: 1,
 		beforeJob: JobId.NOVICE,
 		[SK.SM_SWORD]: 1,
@@ -24,8 +27,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.SM_MAGNUM]: 10,
 		[SK.SM_ENDURE]: 11,
 		[SK.SM_FATALBLOW]: 12
-	},
-	SkillTreeView[JobId.MAGICIAN] = {
+	};
+	S[JobId.MAGICIAN] = {
 		list: 1,
 		beforeJob: JobId.NOVICE,
 		[SK.MG_STONECURSE]: 1,
@@ -42,8 +45,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.MG_ENERGYCOAT]: 13,
 		[SK.MG_SAFETYWALL]: 18,
 		[SK.MG_FIREWALL]: 19
-	},
-	SkillTreeView[JobId.ARCHER] = {
+	};
+	S[JobId.ARCHER] = {
 		list: 1,
 		beforeJob: JobId.NOVICE,
 		[SK.AC_DOUBLE]: 2,
@@ -53,8 +56,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.AC_VULTURE]: 10,
 		[SK.AC_MAKINGARROW]: 12,
 		[SK.AC_CONCENTRATION]: 17
-	},
-	SkillTreeView[JobId.ACOLYTE] = {
+	};
+	S[JobId.ACOLYTE] = {
 		list: 1,
 		beforeJob: JobId.NOVICE,
 		[SK.AL_RUWACH]: 1,
@@ -72,8 +75,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.AL_DECAGI]: 17,
 		[SK.AL_CRUCIS]: 19,
 		[SK.AL_PNEUMA]: 22
-	},
-	SkillTreeView[JobId.MERCHANT] = {
+	};
+	S[JobId.MERCHANT] = {
 		list: 1,
 		beforeJob: JobId.NOVICE,
 		[SK.MC_INCCARRY]: 1,
@@ -87,8 +90,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.MC_OVERCHARGE]: 15,
 		[SK.MC_VENDING]: 16,
 		[SK.MC_CARTREVOLUTION]: 19
-	},
-	SkillTreeView[JobId.THIEF] = {
+	};
+	S[JobId.THIEF] = {
 		list: 1,
 		beforeJob: JobId.NOVICE,
 		[SK.TF_DOUBLE]: 1,
@@ -101,8 +104,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.TF_DETOXIFY]: 10,
 		[SK.TF_BACKSLIDING]: 11,
 		[SK.TF_PICKSTONE]: 12
-	},
-	SkillTreeView[JobId.KNIGHT] = {
+	};
+	S[JobId.KNIGHT] = {
 		list: 2,
 		beforeJob: JobId.SWORDMAN,
 		[SK.KN_TWOHANDQUICKEN]: 0,
@@ -117,8 +120,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.KN_SPEARBOOMERANG]: 16,
 		[SK.KN_SPEARSTAB]: 17,
 		[SK.KN_BRANDISHSPEAR]: 24
-	},
-	SkillTreeView[JobId.PRIEST] = {
+	};
+	S[JobId.PRIEST] = {
 		list: 2,
 		beforeJob: JobId.ACOLYTE,
 		[SK.PR_KYRIE]: 0,
@@ -140,8 +143,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.MG_SAFETYWALL]: 20,
 		[SK.PR_MAGNUS]: 25,
 		[SK.PR_REDEMPTIO]: 27
-	},
-	SkillTreeView[JobId.WIZARD] = {
+	};
+	S[JobId.WIZARD] = {
 		list: 2,
 		beforeJob: JobId.MAGICIAN,
 		[SK.WZ_ESTIMATION]: 0,
@@ -158,8 +161,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.WZ_WATERBALL]: 15,
 		[SK.WZ_QUAGMIRE]: 17,
 		[SK.WZ_STORMGUST]: 22
-	},
-	SkillTreeView[JobId.BLACKSMITH] = {
+	};
+	S[JobId.BLACKSMITH] = {
 		list: 2,
 		beforeJob: JobId.MERCHANT,
 		[SK.BS_IRON]: 0,
@@ -186,8 +189,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.BS_ADRENALINE2]: 31,
 		[SK.BS_GREED]: 33,
 		[SK.BS_UNFAIRLYTRICK]: 34
-	},
-	SkillTreeView[JobId.HUNTER] = {
+	};
+	S[JobId.HUNTER] = {
 		list: 2,
 		beforeJob: JobId.ARCHER,
 		[SK.HT_BEASTBANE]: 0,
@@ -209,8 +212,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.HT_BLASTMINE]: 22,
 		[SK.HT_TALKIEBOX]: 24,
 		[SK.HT_CLAYMORETRAP]: 29
-	},
-	SkillTreeView[JobId.ASSASSIN] = {
+	};
+	S[JobId.ASSASSIN] = {
 		list: 2,
 		beforeJob: JobId.THIEF,
 		[SK.AS_RIGHT]: 0,
@@ -225,8 +228,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.AS_SONICACCEL]: 13,
 		[SK.AS_GRIMTOOTH]: 15,
 		[SK.AS_SPLASHER]: 17
-	},
-	SkillTreeView[JobId.CRUSADER] = {
+	};
+	S[JobId.CRUSADER] = {
 		list: 2,
 		beforeJob: JobId.SWORDMAN,
 		[SK.CR_TRUST]: 0,
@@ -248,8 +251,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.AL_HEAL]: 28,
 		[SK.CR_DEVOTION]: 29,
 		[SK.CR_PROVIDENCE]: 35
-	},
-	SkillTreeView[JobId.MONK] = {
+	};
+	S[JobId.MONK] = {
 		list: 2,
 		beforeJob: JobId.ACOLYTE,
 		[SK.MO_IRONHAND]: 0,
@@ -269,8 +272,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.MO_EXTREMITYFIST]: 22,
 		[SK.MO_STEELBODY]: 24,
 		[SK.MO_BODYRELOCATION]: 30
-	},
-	SkillTreeView[JobId.SAGE] = {
+	};
+	S[JobId.SAGE] = {
 		list: 2,
 		beforeJob: JobId.MAGICIAN,
 		[SK.SA_ADVANCEDBOOK]: 0,
@@ -298,8 +301,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.SA_DISPELL]: 24,
 		[SK.SA_LANDPROTECTOR]: 26,
 		[SK.SA_ABRACADABRA]: 33
-	},
-	SkillTreeView[JobId.ROGUE] = {
+	};
+	S[JobId.ROGUE] = {
 		list: 2,
 		beforeJob: JobId.THIEF,
 		[SK.AC_VULTURE]: 0,
@@ -323,8 +326,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.RG_INTIMIDATE]: 29,
 		[SK.RG_GRAFFITI]: 32,
 		[SK.RG_PLAGIARISM]: 36
-	},
-	SkillTreeView[JobId.ALCHEMIST] = {
+	};
+	S[JobId.ALCHEMIST] = {
 		list: 2,
 		beforeJob: JobId.MERCHANT,
 		[SK.AM_LEARNINGPOTION]: 0,
@@ -347,8 +350,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.AM_CP_WEAPON]: 24,
 		[SK.AM_RESURRECTHOMUN]: 25,
 		[SK.AM_CANNIBALIZE]: 29
-	},
-	SkillTreeView[JobId.BARD] = {
+	};
+	S[JobId.BARD] = {
 		list: 2,
 		beforeJob: JobId.ARCHER,
 		[SK.BD_ADAPTATION]: 0,
@@ -370,8 +373,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.BD_ETERNALCHAOS]: 24,
 		[SK.BD_RICHMANKIM]: 25,
 		[SK.BD_RINGNIBELUNGEN]: 26
-	},
-	SkillTreeView[JobId.DANCER] = {
+	};
+	S[JobId.DANCER] = {
 		list: 2,
 		beforeJob: JobId.ARCHER,
 		[SK.BD_ADAPTATION]: 0,
@@ -393,8 +396,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.BD_ETERNALCHAOS]: 24,
 		[SK.BD_RICHMANKIM]: 25,
 		[SK.BD_RINGNIBELUNGEN]: 26
-	},
-	SkillTreeView[JobId.SUPERNOVICE] = {
+	};
+	S[JobId.SUPERNOVICE] = {
 		list: 1,
 		beforeJob: JobId.NOVICE,
 		[SK.SM_SWORD]: 1,
@@ -446,8 +449,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.MC_OVERCHARGE]: 51,
 		[SK.MC_PUSHCART]: 52,
 		[SK.MC_VENDING]: 53,
-	},
-	SkillTreeView[JobId.GUNSLINGER] = {
+	};
+	S[JobId.GUNSLINGER] = {
 		list: 1,
 		beforeJob: JobId.NOVICE,
 		[SK.GS_GLITTERING]: 1,
@@ -472,8 +475,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.GS_GATLINGFEVER]: 31,
 		[SK.GS_SNAKEEYE]: 34,
 		[SK.GS_BULLSEYE]: 36
-	},
-	SkillTreeView[JobId.NINJA] = {
+	};
+	S[JobId.NINJA] = {
 		list: 1,
 		beforeJob: JobId.NOVICE,
 		[SK.NJ_TOBIDOUGU]: 1,
@@ -499,16 +502,16 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.NJ_ZENYNAGE]: 29,
 		[SK.NJ_BUNSINJYUTSU]: 30,
 		[SK.NJ_ISSEN]: 31
-	},
-	SkillTreeView[JobId.PRIEST_H] = {
+	};
+	S[JobId.PRIEST_H] = {
 		list: 2,
 		beforeJob: JobId.PRIEST,
 		[SK.HP_ASSUMPTIO]: 10,
 		[SK.HP_BASILICA]: 17,
 		[SK.HP_MANARECHARGE]: 22,
 		[SK.HP_MEDITATIO]: 19
-	},
-	SkillTreeView[JobId.BLACKSMITH_H] = {
+	};
+	S[JobId.BLACKSMITH_H] = {
 		list: 2,
 		beforeJob: JobId.BLACKSMITH,
 		[SK.WS_CARTBOOST]: 21,
@@ -516,8 +519,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.WS_MELTDOWN]: 22,
 		[SK.WS_OVERTHRUSTMAX]: 25,
 		[SK.WS_WEAPONREFINE]: 23
-	},
-	SkillTreeView[JobId.ASSASSIN_H] = {
+	};
+	S[JobId.ASSASSIN_H] = {
 		list: 2,
 		beforeJob: JobId.ASSASSIN,
 		[SK.ASC_BREAKER]: 18,
@@ -525,8 +528,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.ASC_EDP]: 19,
 		[SK.ASC_KATAR]: 9,
 		[SK.ASC_METEORASSAULT]: 25
-	},
-	SkillTreeView[JobId.TAEKWON] = {
+	};
+	S[JobId.TAEKWON] = {
 		list: 1,
 		beforeJob: JobId.NOVICE,
 		[SK.TK_RUN]: 1,
@@ -546,8 +549,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.TK_POWER]: 18,
 		[SK.TK_SEVENWIND]: 24,
 		[SK.TK_MISSION]: 25
-	},
-	SkillTreeView[JobId.SAGE_H] = {
+	};
+	S[JobId.SAGE_H] = {
 		list: 2,
 		beforeJob: JobId.SAGE,
 		[SK.PF_SPIDERWEB]: 14,
@@ -558,15 +561,15 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.PF_MEMORIZE]: 30,
 		[SK.PF_SOULBURN]: 31,
 		[SK.PF_MINDBREAKER]: 32
-	},
-	SkillTreeView[JobId.ALCHEMIST_H] = {
+	};
+	S[JobId.ALCHEMIST_H] = {
 		list: 2,
 		beforeJob: JobId.ALCHEMIST,
 		[SK.CR_SLIMPITCHER]: 9,
 		[SK.CR_ACIDDEMONSTRATION]: 23,
 		[SK.CR_FULLPROTECTION]: 31
-	},
-	SkillTreeView[JobId.DANCER_H] = {
+	};
+	S[JobId.DANCER_H] = {
 		list: 2,
 		beforeJob: JobId.DANCER,
 		[SK.CG_ARROWVULCAN]: 29,
@@ -576,8 +579,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.CG_LONGINGFREEDOM]: 38,
 		[SK.CG_SPECIALSINGER]: 38,
 		[SK.CG_TAROTCARD]: 39
-	},
-	SkillTreeView[JobId.RUNE_KNIGHT] = {
+	};
+	S[JobId.RUNE_KNIGHT] = {
 		list: 3,
 		beforeJob: JobId.KNIGHT_H,
 		[SK.RK_RUNEMASTERY]: 1,
@@ -593,8 +596,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.RK_DRAGONBREATH_WATER]: 19,
 		[SK.RK_IGNITIONBREAK]: 23,
 		[SK.ALL_FULL_THROTTLE]: 41
-	},
-	SkillTreeView[JobId.RANGER] = {
+	};
+	S[JobId.RANGER] = {
 		list: 3,
 		beforeJob: JobId.HUNTER_H,
 		[SK.RA_AIMEDBOLT]: 0,
@@ -621,8 +624,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.RA_MAIZETRAP]: 29,
 		[SK.RA_VERDURETRAP]: 36,
 		[SK.ALL_FULL_THROTTLE]: 41
-	},
-	SkillTreeView[JobId.MECHANIC] = {
+	};
+	S[JobId.MECHANIC] = {
 		list: 3,
 		beforeJob: JobId.BLACKSMITH_H,
 		[SK.NC_MADOLICENCE]: 2,
@@ -656,8 +659,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.NC_NEUTRALBARRIER]: 39,
 		[SK.NC_STEALTHFIELD]: 40,
 		[SK.ALL_FULL_THROTTLE]: 41
-	},
-	SkillTreeView[JobId.SHADOW_CHASER] = {
+	};
+	S[JobId.SHADOW_CHASER] = {
 		list: 3,
 		beforeJob: JobId.ROGUE_H,
 		[SK.SC_REPRODUCE]: 0,
@@ -683,8 +686,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.SC_INVISIBILITY]: 29,
 		[SK.SC_MAELSTROM]: 33,
 		[SK.ALL_FULL_THROTTLE]: 41
-	},
-	SkillTreeView[JobId.ROYAL_GUARD] = {
+	};
+	S[JobId.ROYAL_GUARD] = {
 		list: 3,
 		beforeJob: JobId.CRUSADER_H,
 		[SK.LG_MOONSLASHER]: 0,
@@ -708,8 +711,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.LG_HESPERUSLIT]: 24,
 		[SK.LG_INSPIRATION]: 26,
 		[SK.ALL_FULL_THROTTLE]: 41
-	},
-	SkillTreeView[JobId.MINSTREL] = {
+	};
+	S[JobId.MINSTREL] = {
 		list: 3,
 		beforeJob: JobId.BARD_H,
 		[SK.WM_SEVERE_RAINSTORM]: 0,
@@ -738,8 +741,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.ALL_FULL_THROTTLE]: 41,
 		[SK.WM_SOUND_OF_DESTRUCTION]: 45,
 		[SK.WM_UNLIMITED_HUMMING_VOICE]: 46
-	},
-	SkillTreeView[JobId.KNIGHT_H] = {
+	};
+	S[JobId.KNIGHT_H] = {
 		list: 2,
 		beforeJob: JobId.KNIGHT,
 		[SK.LK_BERSERK]: 4,
@@ -750,8 +753,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.LK_HEADCRUSH]: 19,
 		[SK.LK_SPIRALPIERCE]: 25,
 		[SK.LK_JOINTBEAT]: 26
-	},
-	SkillTreeView[JobId.WIZARD_H] = {
+	};
+	S[JobId.WIZARD_H] = {
 		list: 2,
 		beforeJob: JobId.WIZARD,
 		[SK.HW_GANBANTEIN]: 7,
@@ -760,16 +763,16 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.HW_NAPALMVULCAN]: 19,
 		[SK.HW_MAGICPOWER]: 20,
 		[SK.HW_GRAVITATION]: 24
-	},
-	SkillTreeView[JobId.HUNTER_H] = {
+	};
+	S[JobId.HUNTER_H] = {
 		list: 2,
 		beforeJob: JobId.HUNTER,
 		[SK.SN_FALCONASSAULT]: 28,
 		[SK.SN_SHARPSHOOTING]: 5,
 		[SK.SN_SIGHT]: 26,
 		[SK.SN_WINDWALK]: 12
-	},
-	SkillTreeView[JobId.GENETIC] = {
+	};
+	S[JobId.GENETIC] = {
 		list: 3,
 		beforeJob: JobId.ALCHEMIST_H,
 		[SK.GN_CHANGEMATERIAL]: 0,
@@ -791,24 +794,24 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.GN_CARTBOOST]: 26,
 		[SK.GN_ILLUSIONDOPING]: 30,
 		[SK.ALL_FULL_THROTTLE]: 41
-	},
-	SkillTreeView[JobId.MONK_H] = {
+	};
+	S[JobId.MONK_H] = {
 		list: 2,
 		beforeJob: JobId.MONK,
 		[SK.CH_PALMSTRIKE]: 11,
 		[SK.CH_SOULCOLLECT]: 21,
 		[SK.CH_TIGERFIST]: 25,
 		[SK.CH_CHAINCRUSH]: 32
-	},
-	SkillTreeView[JobId.ROGUE_H] = {
+	};
+	S[JobId.ROGUE_H] = {
 		list: 2,
 		beforeJob: JobId.ROGUE,
 		[SK.ST_CHASEWALK]: 8,
 		[SK.ST_FULLSTRIP]: 30,
 		[SK.ST_PRESERVE]: 38,
 		[SK.ST_REJECTSWORD]: 31
-	},
-	SkillTreeView[JobId.BARD_H] = {
+	};
+	S[JobId.BARD_H] = {
 		list: 2,
 		beforeJob: JobId.BARD,
 		[SK.CG_ARROWVULCAN]: 29,
@@ -818,8 +821,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.CG_LONGINGFREEDOM]: 38,
 		[SK.CG_SPECIALSINGER]: 38,
 		[SK.CG_TAROTCARD]: 39
-	},
-	SkillTreeView[JobId.SURA] = {
+	};
+	S[JobId.SURA] = {
 		list: 3,
 		beforeJob: JobId.MONK_H,
 		[SK.SR_POWERVELOCITY]: 0,
@@ -846,8 +849,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.SR_FLASHCOMBO]: 23,
 		[SK.SR_GATEOFHELL]: 31,
 		[SK.ALL_FULL_THROTTLE]: 41
-	},
-	SkillTreeView[JobId.WARLOCK] = {
+	};
+	S[JobId.WARLOCK] = {
 		list: 3,
 		beforeJob: JobId.WIZARD_H,
 		[SK.WL_MARSHOFABYSS]: 0,
@@ -875,8 +878,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.WL_RECOGNIZEDSPELL]: 30,
 		[SK.WL_TETRAVORTEX]: 32,
 		[SK.ALL_FULL_THROTTLE]: 41
-	},
-	SkillTreeView[JobId.ARCHBISHOP] = {
+	};
+	S[JobId.ARCHBISHOP] = {
 		list: 3,
 		beforeJob: JobId.PRIEST_H,
 		[SK.AB_JUDEX]: 0,
@@ -901,8 +904,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.AB_VITUPERATUM]: 30,
 		[SK.AB_SECRAMENT]: 32,
 		[SK.ALL_FULL_THROTTLE]: 41
-	},
-	SkillTreeView[JobId.GUILLOTINE_CROSS] = {
+	};
+	S[JobId.GUILLOTINE_CROSS] = {
 		list: 3,
 		beforeJob: JobId.ASSASSIN_H,
 		[SK.GC_CROSSIMPACT]: 0,
@@ -924,8 +927,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.GC_VENOMPRESSURE]: 25,
 		[SK.GC_POISONSMOKE]: 26,
 		[SK.ALL_FULL_THROTTLE]: 41
-	},
-	SkillTreeView[JobId.STAR] = {
+	};
+	S[JobId.STAR] = {
 		list: 2,
 		beforeJob: JobId.TAEKWON,
 		[SK.SG_FEEL]: 0,
@@ -946,8 +949,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.SG_STAR_COMFORT]: 22,
 		[SK.SG_STAR_ANGER]: 23,
 		[SK.SG_STAR_BLESS]: 24
-	},
-	SkillTreeView[JobId.LINKER] = {
+	};
+	S[JobId.LINKER] = {
 		list: 2,
 		beforeJob: JobId.TAEKWON,
 		[SK.SL_ALCHEMIST]: 0,
@@ -977,8 +980,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.SL_STIN]: 31,
 		[SK.SL_STUN]: 32,
 		[SK.SL_SMA]: 33
-	},
-	SkillTreeView[JobId.SORCERER] = {
+	};
+	S[JobId.SORCERER] = {
 		list: 3,
 		beforeJob: JobId.SAGE_H,
 		[SK.SO_VACUUM_EXTREME]: 0,
@@ -1009,8 +1012,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.SO_EARTH_INSIGNIA]: 27,
 		[SK.SO_ELEMENTAL_SHIELD]: 31,
 		[SK.ALL_FULL_THROTTLE]: 41
-	},
-	SkillTreeView[JobId.WANDERER] = {
+	};
+	S[JobId.WANDERER] = {
 		list: 3,
 		beforeJob: JobId.DANCER_H,
 		[SK.WM_SEVERE_RAINSTORM]: 0,
@@ -1039,16 +1042,16 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.ALL_FULL_THROTTLE]: 41,
 		[SK.WM_SOUND_OF_DESTRUCTION]: 45,
 		[SK.WM_UNLIMITED_HUMMING_VOICE]: 46
-	},
-	SkillTreeView[JobId.CRUSADER_H] = {
+	};
+	S[JobId.CRUSADER_H] = {
 		list: 2,
 		beforeJob: JobId.CRUSADER,
 		[SK.PA_PRESSURE]: 17,
 		[SK.PA_SHIELDCHAIN]: 25,
 		[SK.PA_GOSPEL]: 30,
 		[SK.PA_SACRIFICE]: 36
-	},
-	SkillTreeView[JobId.SUPERNOVICE2] = {
+	};
+	S[JobId.SUPERNOVICE2] = {
 		list: 2,
 		beforeJob: JobId.SUPERNOVICE,
 		[SK.MO_IRONHAND]: 0,
@@ -1100,8 +1103,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.NV_BREAKTHROUGH]: 56,
 		[SK.NV_HELPANGEL]: 57,
 		[SK.NV_TRANSCENDENCE]: 58
-	},
-	SkillTreeView[JobId.KAGEROU] = {
+	};
+	S[JobId.KAGEROU] = {
 		list: 2,
 		beforeJob: JobId.NINJA,
 		[SK.KO_YAMIKUMO]: 0,
@@ -1129,8 +1132,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.KO_LEFT]: 34,
 		[SK.KO_HUUMARANKA]: 36,
 		[SK.KO_MUCHANAGE]: 37
-	},
-	SkillTreeView[JobId.OBORO] = {
+	};
+	S[JobId.OBORO] = {
 		list: 2,
 		beforeJob: JobId.NINJA,
 		[SK.KO_YAMIKUMO]: 0,
@@ -1158,8 +1161,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.KO_LEFT]: 34,
 		[SK.KO_HUUMARANKA]: 36,
 		[SK.KO_MUCHANAGE]: 37
-	},
-	SkillTreeView[JobId.REBELLION] = {
+	};
+	S[JobId.REBELLION] = {
 		list: 2,
 		beforeJob: JobId.GUNSLINGER,
 		[SK.RL_RICHS_COIN]: 0,
@@ -1182,8 +1185,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.RL_C_MARKER]: 30,
 		[SK.RL_QD_SHOT]: 31,
 		[SK.RL_E_CHAIN]: 32
-	},
-	SkillTreeView[JobId.DO_SUMMONER1] = {
+	};
+	S[JobId.DO_SUMMONER1] = {
 		list: 1,
 		beforeJob: null,
 		[SK.SU_BASIC_SKILL]: 0,
@@ -1221,8 +1224,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.SU_SPIRITOFSEA]: 64,
 		[SK.SU_SPIRITOFLAND]: 65,
 		[SK.SU_SPIRITOFLIFE]: 66
-	},
-	SkillTreeView[JobId.STAR_EMPEROR] = {
+	};
+	S[JobId.STAR_EMPEROR] = {
 		list: 2,
 		beforeJob: JobId.STAR,
 		[SK.SJ_DOCUMENT]: 1,
@@ -1245,8 +1248,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.SJ_LIGHTOFSTAR]: 30,
 		[SK.SJ_BOOKOFCREATINGSTAR]: 32,
 		[SK.SJ_BOOKOFDIMENSION]: 33
-	},
-	SkillTreeView[JobId.SOUL_REAPER] = {
+	};
+	S[JobId.SOUL_REAPER] = {
 		list: 2,
 		beforeJob: JobId.LINKER,
 		[SK.SP_SOULCOLLECT]: 3,
@@ -1266,8 +1269,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.SP_SWHOO]: 28,
 		[SK.SP_SOULDIVISION]: 29,
 		[SK.SP_SOULEXPLOSION]: 32
-	},
-	SkillTreeView[JobId.DRAGON_KNIGHT] = {
+	};
+	S[JobId.DRAGON_KNIGHT] = {
 		list: 4,
 		beforeJob: JobId.RUNE_KNIGHT,
 		[SK.DK_SERVANTWEAPON]: 1,
@@ -1282,8 +1285,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.DK_SERVANT_W_DEMOL]: 22,
 		[SK.DK_VIGOR]: 24,
 		[SK.DK_DRAGONIC_AURA]: 26
-	},
-	SkillTreeView[JobId.ARCH_MAGE] = {
+	};
+	S[JobId.ARCH_MAGE] = {
 		list: 4,
 		beforeJob: JobId.WARLOCK,
 		[SK.AG_TWOHANDSTAFF]: 0,
@@ -1304,8 +1307,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.AG_DESTRUCTIVE_HURRICANE]: 19,
 		[SK.AG_VIOLENT_QUAKE]: 20,
 		[SK.AG_ASTRAL_STRIKE]: 22
-	},
-	SkillTreeView[JobId.INQUISITOR] = {
+	};
+	S[JobId.INQUISITOR] = {
 		list: 4,
 		beforeJob: JobId.SURA,
 		[SK.IQ_WILL_OF_FAITH]: 1,
@@ -1325,8 +1328,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.IQ_THIRD_PUNISH]: 31,
 		[SK.IQ_THIRD_CONSECRATION]: 32,
 		[SK.IQ_THIRD_FLAME_BOMB]: 33
-	},
-	SkillTreeView[JobId.IMPERIAL_GUARD] = {
+	};
+	S[JobId.IMPERIAL_GUARD] = {
 		list: 4,
 		beforeJob: JobId.ROYAL_GUARD,
 		[SK.IG_SPEAR_SWORD_M]: 1,
@@ -1342,8 +1345,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.IG_GRAND_JUDGEMENT]: 22,
 		[SK.IG_ULTIMATE_SACRIFICE]: 25,
 		[SK.IG_JUDGEMENT_CROSS]: 26
-	},
-	SkillTreeView[JobId.SHADOW_CROSS] = {
+	};
+	S[JobId.SHADOW_CROSS] = {
 		list: 4,
 		beforeJob: JobId.GUILLOTINE_CROSS,
 		[SK.SHC_SHADOW_SENSE]: 0,
@@ -1356,8 +1359,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.SHC_SHADOW_STAB]: 22,
 		[SK.SHC_SHADOW_EXCEED]: 25,
 		[SK.SHC_FATAL_SHADOW_CROW]: 30
-	},
-	SkillTreeView[JobId.CARDINAL] = {
+	};
+	S[JobId.CARDINAL] = {
 		list: 4,
 		beforeJob: JobId.ARCHBISHOP,
 		[SK.CD_DILECTIO_HEAL]: 1,
@@ -1376,8 +1379,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.CD_ARGUTUS_VITA]: 23,
 		[SK.CD_PNEUMATICUS_PROCELLA]: 25,
 		[SK.CD_COMPETENTIA]: 29
-	},
-	SkillTreeView[JobId.BIOLO] = {
+	};
+	S[JobId.BIOLO] = {
 		list: 4,
 		beforeJob: JobId.GENETIC,
 		[SK.BO_BIONIC_PHARMACY]: 0,
@@ -1395,8 +1398,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.BO_WOODEN_FAIRY]: 19,
 		[SK.BO_RESEARCHREPORT]: 24,
 		[SK.BO_HELLTREE]: 25
-	},
-	SkillTreeView[JobId.WINDHAWK] = {
+	};
+	S[JobId.WINDHAWK] = {
 		list: 4,
 		beforeJob: JobId.RANGER,
 		[SK.WH_CRESCIVE_BOLT]: 0,
@@ -1412,8 +1415,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.WH_SWIFTTRAP]: 18,
 		[SK.WH_CALAMITYGALE]: 21,
 		[SK.WH_HAWKBOOMERANG]: 26
-	},
-	SkillTreeView[JobId.TROUBADOUR] = {
+	};
+	S[JobId.TROUBADOUR] = {
 		list: 4,
 		beforeJob: JobId.MINSTREL,
 		[SK.TR_RHYTHMSHOOTING]: 1,
@@ -1431,8 +1434,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.TR_ROKI_CAPRICCIO]: 24,
 		[SK.TR_NIPELHEIM_REQUIEM]: 25,
 		[SK.TR_KVASIR_SONATA]: 31
-	},
-	SkillTreeView[JobId.TROUVERE] = {
+	};
+	S[JobId.TROUVERE] = {
 		list: 4,
 		beforeJob: JobId.WANDERER,
 		[SK.TR_RHYTHMSHOOTING]: 1,
@@ -1450,8 +1453,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.TR_ROKI_CAPRICCIO]: 24,
 		[SK.TR_NIPELHEIM_REQUIEM]: 25,
 		[SK.TR_KVASIR_SONATA]: 31
-	},
-	SkillTreeView[JobId.ABYSS_CHASER] = {
+	};
+	S[JobId.ABYSS_CHASER] = {
 		list: 4,
 		beforeJob: JobId.SHADOW_CHASER,
 		[SK.ABC_DAGGER_AND_BOW_M]: 1,
@@ -1466,8 +1469,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.ABC_ABYSS_SQUARE]: 19,
 		[SK.ABC_ABYSS_SLAYER]: 23,
 		[SK.ABC_ABYSS_STRIKE]: 26
-	},
-	SkillTreeView[JobId.MEISTER] = {
+	};
+	S[JobId.MEISTER] = {
 		list: 4,
 		beforeJob: JobId.MECHANIC,
 		[SK.MT_TWOAXEDEF]: 1,
@@ -1484,8 +1487,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.MT_TRIPLE_LASER]: 20,
 		[SK.MT_SUMMON_ABR_MOTHER_NET]: 26,
 		[SK.MT_SUMMON_ABR_INFINITY]: 33
-	},
-	SkillTreeView[JobId.ELEMENTAL_MASTER] = {
+	};
+	S[JobId.ELEMENTAL_MASTER] = {
 		list: 4,
 		beforeJob: JobId.SORCERER,
 		[SK.EM_MAGIC_BOOK_M]: 2,
@@ -1505,8 +1508,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.EM_SUMMON_ELEMENTAL_SERPENS]: 26,
 		[SK.EM_SUMMON_ELEMENTAL_TERREMOTUS]: 27,
 		[SK.EM_ELEMENTAL_BUSTER]: 33
-	},
-	SkillTreeView[JobId.SKY_EMPEROR] = {
+	};
+	S[JobId.SKY_EMPEROR] = {
 		list: 3,
 		beforeJob: JobId.STAR_EMPEROR,
 		[SK.SKE_WAR_BOOK_MASTERY]: 1,
@@ -1522,8 +1525,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.SKE_STAR_CANNON]: 26,
 		[SK.SKE_ALL_IN_THE_SKY]: 30,
 		[SK.SKE_ENCHANTING_SKY]: 32
-	},
-	SkillTreeView[JobId.SOUL_ASCETIC] = {
+	};
+	S[JobId.SOUL_ASCETIC] = {
 		list: 3,
 		beforeJob: JobId.SOUL_REAPER,
 		[SK.SOA_SOUL_MASTERY]: 2,
@@ -1543,8 +1546,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.SOA_TALISMAN_OF_FOUR_BEARING_GOD]: 31,
 		[SK.SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS]: 38,
 		[SK.SOA_SOUL_OF_HEAVEN_AND_EARTH]: 40
-	},
-	SkillTreeView[JobId.NIGHT_WATCH] = {
+	};
+	S[JobId.NIGHT_WATCH] = {
 		list: 3,
 		beforeJob: JobId.REBELLION,
 		[SK.NW_P_F_I]: 2,
@@ -1562,8 +1565,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.NW_GRENADES_DROPPING]: 26,
 		[SK.NW_AUTO_FIRING_LAUNCHER]: 27,
 		[SK.NW_MISSION_BOMBARD]: 33
-	},
-	SkillTreeView[JobId.HYPER_NOVICE] = {
+	};
+	S[JobId.HYPER_NOVICE] = {
 		list: 3,
 		beforeJob: JobId.SUPERNOVICE2,
 		[SK.HN_SELFSTUDY_TATICS]: 0,
@@ -1580,8 +1583,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.HN_NAPALM_VULCAN_STRIKE]: 18,
 		[SK.HN_BREAKINGLIMIT]: 21,
 		[SK.HN_RULEBREAK]: 24
-	},
-	SkillTreeView[JobId.SPIRIT_HANDLER] = {
+	};
+	S[JobId.SPIRIT_HANDLER] = {
 		list: 2,
 		beforeJob: JobId.DO_SUMMONER1,
 		[SK.SH_MYSTICAL_CREATURE_MASTERY]: 3,
@@ -1600,8 +1603,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.SH_COMMUNE_WITH_HYUN_ROK]: 33,
 		[SK.SH_TEMPORARY_COMMUNION]: 37,
 		[SK.SH_BLESSING_OF_MYSTICAL_CREATURES]: 39
-	},
-	SkillTreeView[JobId.SHIRANUI] = {
+	};
+	S[JobId.SHIRANUI] = {
 		list: 3,
 		beforeJob: JobId.OBORO,
 		[SK.SS_SHINKIROU]: 0,
@@ -1624,8 +1627,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.SS_KAGEAKUMU]: 32,
 		[SK.SS_ANTENPOU]: 34,
 		[SK.SS_ANKOKURYUUAKUMU]: 41
-	},
-	SkillTreeView[JobId.SHINKIRO] = {
+	};
+	S[JobId.SHINKIRO] = {
 		list: 3,
 		beforeJob: JobId.KAGEROU,
 		[SK.SS_SHINKIROU]: 0,
@@ -1649,132 +1652,132 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.SS_ANTENPOU]: 34,
 		[SK.SS_ANKOKURYUUAKUMU]: 41
 	}
-	
+
 	function duplicateEntry(origin) {
-		var value = SkillTreeView[origin];
+		var value = S[origin];
 		var i, count = arguments.length;
 
 		for (i = 1; i < count; ++i) {
-			SkillTreeView[arguments[i]] = value;
+			S[arguments[i]] = value;
 		}
 	}
 
 	// Inherit
 	// baby
-	duplicateEntry(JobId.NOVICE,           JobId.NOVICE_B);
-	duplicateEntry(JobId.SWORDMAN,         JobId.SWORDMAN_B);
-	duplicateEntry(JobId.MAGICIAN,         JobId.MAGICIAN_B);
-	duplicateEntry(JobId.ARCHER,           JobId.ARCHER_B);
-	duplicateEntry(JobId.ACOLYTE,          JobId.ACOLYTE_B);
-	duplicateEntry(JobId.MERCHANT,         JobId.MERCHANT_B);
-	duplicateEntry(JobId.THIEF,            JobId.THIEF_B);
-	duplicateEntry(JobId.KNIGHT,           JobId.KNIGHT_B);
-	duplicateEntry(JobId.KNIGHT2,          JobId.KNIGHT2_B);
-	duplicateEntry(JobId.PRIEST,           JobId.PRIEST_B);
-	duplicateEntry(JobId.WIZARD,           JobId.WIZARD_B);
-	duplicateEntry(JobId.BLACKSMITH,       JobId.BLACKSMITH_B);
-	duplicateEntry(JobId.HUNTER,           JobId.HUNTER_B);
-	duplicateEntry(JobId.ASSASSIN,         JobId.ASSASSIN_B);
-	duplicateEntry(JobId.CRUSADER,         JobId.CRUSADER_B);
-	duplicateEntry(JobId.CRUSADER2,        JobId.CRUSADER2_B);
-	duplicateEntry(JobId.MONK,             JobId.MONK_B);
-	duplicateEntry(JobId.SAGE,             JobId.SAGE_B);
-	duplicateEntry(JobId.ROGUE,            JobId.ROGUE_B);
-	duplicateEntry(JobId.ALCHEMIST,        JobId.ALCHEMIST_B);
-	duplicateEntry(JobId.BARD,             JobId.BARD_B);
-	duplicateEntry(JobId.DANCER,           JobId.DANCER_B);
-	duplicateEntry(JobId.NINJA,            JobId.NINJA_B);
-	duplicateEntry(JobId.KAGEROU,          JobId.KAGEROU_B);
-	duplicateEntry(JobId.OBORO,            JobId.OBORO_B);
-	duplicateEntry(JobId.TAEKWON,          JobId.TAEKWON_B);
-	duplicateEntry(JobId.STAR_B,           JobId.STAR_B);
-	duplicateEntry(JobId.STAR2_B,          JobId.STAR2_B);
-	duplicateEntry(JobId.LINKER,           JobId.LINKER_B);
-	duplicateEntry(JobId.GUNSLINGER,       JobId.GUNSLINGER_B);
-	duplicateEntry(JobId.REBELLION,        JobId.REBELLION_B);
-	duplicateEntry(JobId.STAR_EMPEROR,     JobId.EMPEROR_B);
-	duplicateEntry(JobId.STAR_EMPEROR,     JobId.EMPEROR2_B);
-	duplicateEntry(JobId.SOUL_REAPER,      JobId.REAPER_B);
+	duplicateEntry(JobId.NOVICE, JobId.NOVICE_B);
+	duplicateEntry(JobId.SWORDMAN, JobId.SWORDMAN_B);
+	duplicateEntry(JobId.MAGICIAN, JobId.MAGICIAN_B);
+	duplicateEntry(JobId.ARCHER, JobId.ARCHER_B);
+	duplicateEntry(JobId.ACOLYTE, JobId.ACOLYTE_B);
+	duplicateEntry(JobId.MERCHANT, JobId.MERCHANT_B);
+	duplicateEntry(JobId.THIEF, JobId.THIEF_B);
+	duplicateEntry(JobId.KNIGHT, JobId.KNIGHT_B);
+	duplicateEntry(JobId.KNIGHT2, JobId.KNIGHT2_B);
+	duplicateEntry(JobId.PRIEST, JobId.PRIEST_B);
+	duplicateEntry(JobId.WIZARD, JobId.WIZARD_B);
+	duplicateEntry(JobId.BLACKSMITH, JobId.BLACKSMITH_B);
+	duplicateEntry(JobId.HUNTER, JobId.HUNTER_B);
+	duplicateEntry(JobId.ASSASSIN, JobId.ASSASSIN_B);
+	duplicateEntry(JobId.CRUSADER, JobId.CRUSADER_B);
+	duplicateEntry(JobId.CRUSADER2, JobId.CRUSADER2_B);
+	duplicateEntry(JobId.MONK, JobId.MONK_B);
+	duplicateEntry(JobId.SAGE, JobId.SAGE_B);
+	duplicateEntry(JobId.ROGUE, JobId.ROGUE_B);
+	duplicateEntry(JobId.ALCHEMIST, JobId.ALCHEMIST_B);
+	duplicateEntry(JobId.BARD, JobId.BARD_B);
+	duplicateEntry(JobId.DANCER, JobId.DANCER_B);
+	duplicateEntry(JobId.NINJA, JobId.NINJA_B);
+	duplicateEntry(JobId.KAGEROU, JobId.KAGEROU_B);
+	duplicateEntry(JobId.OBORO, JobId.OBORO_B);
+	duplicateEntry(JobId.TAEKWON, JobId.TAEKWON_B);
+	duplicateEntry(JobId.STAR_B, JobId.STAR_B);
+	duplicateEntry(JobId.STAR2_B, JobId.STAR2_B);
+	duplicateEntry(JobId.LINKER, JobId.LINKER_B);
+	duplicateEntry(JobId.GUNSLINGER, JobId.GUNSLINGER_B);
+	duplicateEntry(JobId.REBELLION, JobId.REBELLION_B);
+	duplicateEntry(JobId.STAR_EMPEROR, JobId.EMPEROR_B);
+	duplicateEntry(JobId.STAR_EMPEROR, JobId.EMPEROR2_B);
+	duplicateEntry(JobId.SOUL_REAPER, JobId.REAPER_B);
 
 	// High + Baby
-	duplicateEntry(JobId.RUNE_KNIGHT,      JobId.RUNE_KNIGHT_H,      JobId.RUNE_KNIGHT_B);
-	duplicateEntry(JobId.RUNE_KNIGHT,      JobId.RUNE_KNIGHT2,       JobId.RUNE_KNIGHT2_H,     JobId.RUNE_KNIGHT2_B);
-	duplicateEntry(JobId.WARLOCK,          JobId.WARLOCK_H,          JobId.WARLOCK_B);
-	duplicateEntry(JobId.RANGER,           JobId.RANGER_H,           JobId.RANGER_B);
-	duplicateEntry(JobId.RANGER,           JobId.RANGER2,            JobId.RANGER2_H,          JobId.RANGER2_B);
-	duplicateEntry(JobId.ARCHBISHOP,       JobId.ARCHBISHOP_H,       JobId.ARCHBISHOP_B);
-	duplicateEntry(JobId.MECHANIC,         JobId.MECHANIC_H,         JobId.MECHANIC_B);
-	duplicateEntry(JobId.MECHANIC,         JobId.MECHANIC2,          JobId.MECHANIC2_H,        JobId.MECHANIC2_B);
+	duplicateEntry(JobId.RUNE_KNIGHT, JobId.RUNE_KNIGHT_H, JobId.RUNE_KNIGHT_B);
+	duplicateEntry(JobId.RUNE_KNIGHT, JobId.RUNE_KNIGHT2, JobId.RUNE_KNIGHT2_H, JobId.RUNE_KNIGHT2_B);
+	duplicateEntry(JobId.WARLOCK, JobId.WARLOCK_H, JobId.WARLOCK_B);
+	duplicateEntry(JobId.RANGER, JobId.RANGER_H, JobId.RANGER_B);
+	duplicateEntry(JobId.RANGER, JobId.RANGER2, JobId.RANGER2_H, JobId.RANGER2_B);
+	duplicateEntry(JobId.ARCHBISHOP, JobId.ARCHBISHOP_H, JobId.ARCHBISHOP_B);
+	duplicateEntry(JobId.MECHANIC, JobId.MECHANIC_H, JobId.MECHANIC_B);
+	duplicateEntry(JobId.MECHANIC, JobId.MECHANIC2, JobId.MECHANIC2_H, JobId.MECHANIC2_B);
 	duplicateEntry(JobId.GUILLOTINE_CROSS, JobId.GUILLOTINE_CROSS_H, JobId.GUILLOTINE_CROSS_B);
-	duplicateEntry(JobId.ROYAL_GUARD,      JobId.ROYAL_GUARD_H,      JobId.ROYAL_GUARD_B);
-	duplicateEntry(JobId.ROYAL_GUARD,      JobId.ROYAL_GUARD2,       JobId.ROYAL_GUARD2_H,     JobId.ROYAL_GUARD2_B);
-	duplicateEntry(JobId.SORCERER,         JobId.SORCERER_H,         JobId.SORCERER_B);
-	duplicateEntry(JobId.MINSTREL,         JobId.MINSTREL_H,         JobId.MINSTREL_B);
-	duplicateEntry(JobId.WANDERER,         JobId.WANDERER_H,         JobId.WANDERER_B);
-	duplicateEntry(JobId.SURA,             JobId.SURA_H,             JobId.SURA_B);
-	duplicateEntry(JobId.GENETIC,          JobId.GENETIC_H,          JobId.GENETIC_B);
-	duplicateEntry(JobId.SHADOW_CHASER,    JobId.SHADOW_CHASER_H,    JobId.SHADOW_CHASER_B);
-	
-	duplicateEntry(JobId.DO_SUMMONER1,     JobId.DO_SUMMONER_B1);
+	duplicateEntry(JobId.ROYAL_GUARD, JobId.ROYAL_GUARD_H, JobId.ROYAL_GUARD_B);
+	duplicateEntry(JobId.ROYAL_GUARD, JobId.ROYAL_GUARD2, JobId.ROYAL_GUARD2_H, JobId.ROYAL_GUARD2_B);
+	duplicateEntry(JobId.SORCERER, JobId.SORCERER_H, JobId.SORCERER_B);
+	duplicateEntry(JobId.MINSTREL, JobId.MINSTREL_H, JobId.MINSTREL_B);
+	duplicateEntry(JobId.WANDERER, JobId.WANDERER_H, JobId.WANDERER_B);
+	duplicateEntry(JobId.SURA, JobId.SURA_H, JobId.SURA_B);
+	duplicateEntry(JobId.GENETIC, JobId.GENETIC_H, JobId.GENETIC_B);
+	duplicateEntry(JobId.SHADOW_CHASER, JobId.SHADOW_CHASER_H, JobId.SHADOW_CHASER_B);
+
+	duplicateEntry(JobId.DO_SUMMONER1, JobId.DO_SUMMONER_B1);
 
 	//MOUNTS
-	duplicateEntry(JobId.NOVICE           ,JobId.PORING_NOVICE    ,JobId.PORING_NOVICE_H     ,JobId.PORING_NOVICE_B);
+	duplicateEntry(JobId.NOVICE, JobId.PORING_NOVICE, JobId.PORING_NOVICE_H, JobId.PORING_NOVICE_B);
 
-	duplicateEntry(JobId.ACOLYTE          ,JobId.SHEEP_ACO        ,JobId.SHEEP_ACO_H         ,JobId.SHEEP_ACO_B);
-	duplicateEntry(JobId.ARCHER           ,JobId.OSTRICH_ARCHER   ,JobId.OSTRICH_ARCHER_H    ,JobId.OSTRICH_ARCHER_B);
-	duplicateEntry(JobId.MAGICIAN         ,JobId.FOX_MAGICIAN     ,JobId.FOX_MAGICIAN_H      ,JobId.FOX_MAGICIAN_B);
-	duplicateEntry(JobId.MERCHANT         ,JobId.PIG_MERCHANT     ,JobId.PIG_MERCHANT_H      ,JobId.PIG_MERCHANT_B);
-	duplicateEntry(JobId.SWORDMAN         ,JobId.PECO_SWORD       ,JobId.PECO_SWORD_H        ,JobId.PECO_SWORD_B);
-	duplicateEntry(JobId.THIEF            ,JobId.DOG_THIEF_H      ,JobId.DOG_THIEF_B);
+	duplicateEntry(JobId.ACOLYTE, JobId.SHEEP_ACO, JobId.SHEEP_ACO_H, JobId.SHEEP_ACO_B);
+	duplicateEntry(JobId.ARCHER, JobId.OSTRICH_ARCHER, JobId.OSTRICH_ARCHER_H, JobId.OSTRICH_ARCHER_B);
+	duplicateEntry(JobId.MAGICIAN, JobId.FOX_MAGICIAN, JobId.FOX_MAGICIAN_H, JobId.FOX_MAGICIAN_B);
+	duplicateEntry(JobId.MERCHANT, JobId.PIG_MERCHANT, JobId.PIG_MERCHANT_H, JobId.PIG_MERCHANT_B);
+	duplicateEntry(JobId.SWORDMAN, JobId.PECO_SWORD, JobId.PECO_SWORD_H, JobId.PECO_SWORD_B);
+	duplicateEntry(JobId.THIEF, JobId.DOG_THIEF_H, JobId.DOG_THIEF_B);
 
-	duplicateEntry(JobId.PRIEST           ,JobId.SHEEP_PRIEST     ,JobId.SHEEP_PRIEST_B);
-	duplicateEntry(JobId.HUNTER           ,JobId.OSTRICH_HUNTER   ,JobId.OSTRICH_HUNTER_B);
-	duplicateEntry(JobId.WIZARD           ,JobId.FOX_WIZ          ,JobId.FOX_WIZ_B);
-	duplicateEntry(JobId.BLACKSMITH       ,JobId.PIG_BLACKSMITH   ,JobId.PIG_BLACKSMITH_B);
-	duplicateEntry(JobId.KNIGHT           ,JobId.LION_KNIGHT      ,JobId.LION_KNIGHT_B);
-	duplicateEntry(JobId.ASSASSIN         ,JobId.DOG_ASSASSIN     ,JobId.DOG_ASSASSIN_B);
+	duplicateEntry(JobId.PRIEST, JobId.SHEEP_PRIEST, JobId.SHEEP_PRIEST_B);
+	duplicateEntry(JobId.HUNTER, JobId.OSTRICH_HUNTER, JobId.OSTRICH_HUNTER_B);
+	duplicateEntry(JobId.WIZARD, JobId.FOX_WIZ, JobId.FOX_WIZ_B);
+	duplicateEntry(JobId.BLACKSMITH, JobId.PIG_BLACKSMITH, JobId.PIG_BLACKSMITH_B);
+	duplicateEntry(JobId.KNIGHT, JobId.LION_KNIGHT, JobId.LION_KNIGHT_B);
+	duplicateEntry(JobId.ASSASSIN, JobId.DOG_ASSASSIN, JobId.DOG_ASSASSIN_B);
 
-	duplicateEntry(JobId.MONK             ,JobId.SHEEP_MONK       ,JobId.SHEEP_MONK_B);
-	duplicateEntry(JobId.BARD             ,JobId.OSTRICH_BARD     ,JobId.OSTRICH_BARD_B);
-	duplicateEntry(JobId.DANCER           ,JobId.OSTRICH_DANCER   ,JobId.OSTRICH_DANCER_B);
-	duplicateEntry(JobId.SAGE             ,JobId.FOX_SAGE         ,JobId.FOX_SAGE_B);
-	duplicateEntry(JobId.ALCHEMIST        ,JobId.PIG_ALCHE        ,JobId.PIG_ALCHE_B);
-	duplicateEntry(JobId.CRUSADER         ,JobId.LION_CRUSADER    ,JobId.LION_CRUSADER_B);
-	duplicateEntry(JobId.ROGUE            ,JobId.DOG_ROGUE        ,JobId.DOG_ROGUE_B);
+	duplicateEntry(JobId.MONK, JobId.SHEEP_MONK, JobId.SHEEP_MONK_B);
+	duplicateEntry(JobId.BARD, JobId.OSTRICH_BARD, JobId.OSTRICH_BARD_B);
+	duplicateEntry(JobId.DANCER, JobId.OSTRICH_DANCER, JobId.OSTRICH_DANCER_B);
+	duplicateEntry(JobId.SAGE, JobId.FOX_SAGE, JobId.FOX_SAGE_B);
+	duplicateEntry(JobId.ALCHEMIST, JobId.PIG_ALCHE, JobId.PIG_ALCHE_B);
+	duplicateEntry(JobId.CRUSADER, JobId.LION_CRUSADER, JobId.LION_CRUSADER_B);
+	duplicateEntry(JobId.ROGUE, JobId.DOG_ROGUE, JobId.DOG_ROGUE_B);
 
-	duplicateEntry(JobId.ARCHBISHOP      ,JobId.SHEEP_ARCB       ,JobId.SHEEP_ARCB_B);
-	duplicateEntry(JobId.RANGER          ,JobId.OSTRICH_RANGER   ,JobId.OSTRICH_RANGER_B);
-	duplicateEntry(JobId.WARLOCK         ,JobId.FOX_WARLOCK      ,JobId.FOX_WARLOCK_B);
-	duplicateEntry(JobId.MECHANIC        ,JobId.PIG_MECHANIC     ,JobId.PIG_MECHANIC_B);
-	duplicateEntry(JobId.KNIGHT          ,JobId.LION_RUNE_KNIGHT ,JobId.LION_RUNE_KNIGHT_B);
-	duplicateEntry(JobId.GUILLOTINE_CROSS      ,JobId.DOG_G_CROSS      ,JobId.DOG_G_CROSS_B);
+	duplicateEntry(JobId.ARCHBISHOP, JobId.SHEEP_ARCB, JobId.SHEEP_ARCB_B);
+	duplicateEntry(JobId.RANGER, JobId.OSTRICH_RANGER, JobId.OSTRICH_RANGER_B);
+	duplicateEntry(JobId.WARLOCK, JobId.FOX_WARLOCK, JobId.FOX_WARLOCK_B);
+	duplicateEntry(JobId.MECHANIC, JobId.PIG_MECHANIC, JobId.PIG_MECHANIC_B);
+	duplicateEntry(JobId.KNIGHT, JobId.LION_RUNE_KNIGHT, JobId.LION_RUNE_KNIGHT_B);
+	duplicateEntry(JobId.GUILLOTINE_CROSS, JobId.DOG_G_CROSS, JobId.DOG_G_CROSS_B);
 
-	duplicateEntry(JobId.SURA            ,JobId.SHEEP_SURA       ,JobId.SHEEP_SURA_B);
-	duplicateEntry(JobId.MINSTREL        ,JobId.OSTRICH_MINSTREL ,JobId.OSTRICH_MINSTREL_B);
-	duplicateEntry(JobId.WANDER          ,JobId.OSTRICH_WANDER   ,JobId.OSTRICH_WANDER_B);
-	duplicateEntry(JobId.SORCERER        ,JobId.FOX_SORCERER     ,JobId.FOX_SORCERER_B);
-	duplicateEntry(JobId.GENETIC         ,JobId.PIG_GENETIC      ,JobId.PIG_GENETIC_B);
-	duplicateEntry(JobId.ROYAL_GUARD     ,JobId.LION_ROYAL_GUARD ,JobId.LION_ROYAL_GUARD_B);
-	duplicateEntry(JobId.SHADOW_CHASER   ,JobId.DOG_CHASER       ,JobId.DOG_CHASER_B);
+	duplicateEntry(JobId.SURA, JobId.SHEEP_SURA, JobId.SHEEP_SURA_B);
+	duplicateEntry(JobId.MINSTREL, JobId.OSTRICH_MINSTREL, JobId.OSTRICH_MINSTREL_B);
+	duplicateEntry(JobId.WANDER, JobId.OSTRICH_WANDER, JobId.OSTRICH_WANDER_B);
+	duplicateEntry(JobId.SORCERER, JobId.FOX_SORCERER, JobId.FOX_SORCERER_B);
+	duplicateEntry(JobId.GENETIC, JobId.PIG_GENETIC, JobId.PIG_GENETIC_B);
+	duplicateEntry(JobId.ROYAL_GUARD, JobId.LION_ROYAL_GUARD, JobId.LION_ROYAL_GUARD_B);
+	duplicateEntry(JobId.SHADOW_CHASER, JobId.DOG_CHASER, JobId.DOG_CHASER_B);
 
-	duplicateEntry(JobId.SUPERNOVICE     ,JobId.PORING_SNOVICE ,JobId.PORING_SNOVICE_B ,JobId.PORING_SNOVICE2 ,JobId.PORING_SNOVICE2_B);
+	duplicateEntry(JobId.SUPERNOVICE, JobId.PORING_SNOVICE, JobId.PORING_SNOVICE_B, JobId.PORING_SNOVICE2, JobId.PORING_SNOVICE2_B);
 
-	duplicateEntry(JobId.NINJA           ,JobId.FROG_NINJA       ,JobId.FROG_NINJA_B);
-	duplicateEntry(JobId.GUNSLINGER      ,JobId.PECO_GUNNER      ,JobId.PECO_GUNNER_B);
-	duplicateEntry(JobId.TAEKWON         ,JobId.PORING_TAEKWON   ,JobId.PORING_TAEKWON_B);
+	duplicateEntry(JobId.NINJA, JobId.FROG_NINJA, JobId.FROG_NINJA_B);
+	duplicateEntry(JobId.GUNSLINGER, JobId.PECO_GUNNER, JobId.PECO_GUNNER_B);
+	duplicateEntry(JobId.TAEKWON, JobId.PORING_TAEKWON, JobId.PORING_TAEKWON_B);
 
-	duplicateEntry(JobId.STAR            ,JobId.PORING_STAR      ,JobId.PORING_STAR_B);
-	duplicateEntry(JobId.LINKER          ,JobId.FROG_LINKER      ,JobId.FROG_LINKER_B);
+	duplicateEntry(JobId.STAR, JobId.PORING_STAR, JobId.PORING_STAR_B);
+	duplicateEntry(JobId.LINKER, JobId.FROG_LINKER, JobId.FROG_LINKER_B);
 
-	duplicateEntry(JobId.KAGEROU         ,JobId.FROG_KAGEROU     ,JobId.FROG_KAGEROU_B);
-	duplicateEntry(JobId.OBORO           ,JobId.FROG_OBORO       ,JobId.FROG_OBORO_B);
-	duplicateEntry(JobId.REBELLION       ,JobId.PECO_REBELLION   ,JobId.PECO_REBELLION_B);
+	duplicateEntry(JobId.KAGEROU, JobId.FROG_KAGEROU, JobId.FROG_KAGEROU_B);
+	duplicateEntry(JobId.OBORO, JobId.FROG_OBORO, JobId.FROG_OBORO_B);
+	duplicateEntry(JobId.REBELLION, JobId.PECO_REBELLION, JobId.PECO_REBELLION_B);
 
 	// 4TH
-	duplicateEntry(JobId.WINDHAWK        ,JobId.WINDHAWK2);
-	duplicateEntry(JobId.MEISTER         ,JobId.MEISTER2);
-	duplicateEntry(JobId.DRAGON_KNIGHT   ,JobId.DRAGON_KNIGHT2);
-	duplicateEntry(JobId.IMPERIAL_GUARD  ,JobId.IMPERIAL_GUARD2);
-	duplicateEntry(JobId.SKY_EMPEROR     ,JobId.SKY_EMPEROR2);
-	return SkillTreeView;
+	duplicateEntry(JobId.WINDHAWK, JobId.WINDHAWK2);
+	duplicateEntry(JobId.MEISTER, JobId.MEISTER2);
+	duplicateEntry(JobId.DRAGON_KNIGHT, JobId.DRAGON_KNIGHT2);
+	duplicateEntry(JobId.IMPERIAL_GUARD, JobId.IMPERIAL_GUARD2);
+	duplicateEntry(JobId.SKY_EMPEROR, JobId.SKY_EMPEROR2);
+	return S;
 })

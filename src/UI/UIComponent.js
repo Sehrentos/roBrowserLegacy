@@ -7,15 +7,15 @@
  *
  * @author Vincent Thibault
  */
-define(function( require )
+define(function( /** @type {Require} */require )
 {
 	'use strict';
 
 
 	// Load dependencies
 	var CommonCSS = require('text!./Common.css');
-	var jQuery    = require('Utils/jquery');
-	var Cursor    = require('./CursorManager');
+	/** @type {JQueryStatic} */var jQuery = require('Utils/jquery');
+	/** @type {UI.CursorManager} */var Cursor = require('./CursorManager');
 	var DB        = require('DB/DBManager');
 	var Client    = require('Core/Client');
 	var Events    = require('Core/Events');
@@ -89,6 +89,36 @@ define(function( require )
 	 * @var {boolean} focus element zIndex ?
 	 */
 	UIComponent.prototype.needFocus = true;
+
+	/**
+	 * optional. override this function to initialize the UI
+	 */
+	UIComponent.prototype.init = undefined;
+
+	/**
+	 * internal. is component visible
+	 */
+	UIComponent.prototype.__visible = false;
+
+	/**
+	 * optional. called when the component is appended
+	 */
+	UIComponent.prototype.onAppend = undefined;
+
+	/**
+	 * optional. called when the component is removed
+	 */
+	UIComponent.prototype.onRemove = undefined;
+
+	/**
+	 * optional. called when the keydown even is triggered on the component
+	 */
+	UIComponent.prototype.onKeyDown = undefined;
+
+	/**
+	 * internal. mouse stop block (MouseMode.STOP)
+	 */
+	UIComponent.prototype.__mouseStopBlock = undefined;
 
 
 	/**
@@ -221,7 +251,7 @@ define(function( require )
 	/**
 	* Add the component to HTML
 	*
-	* @param {string|jQueryElement} [target] - Target element to append the UI to. If not provided, appends to body.
+	* @param {JQuery.Selector} [target] - Target element to append the UI to. If not provided, appends to body.
 	*/
 	UIComponent.prototype.append = function append(target)
 	{
@@ -248,7 +278,7 @@ define(function( require )
 		} else {
 			$target = jQuery('body');
 		}
-	
+
 		// Append UI content to the target element
 		this.ui.appendTo($target);
 
@@ -347,7 +377,7 @@ define(function( require )
 		this.ui.css('zIndex', list.length + 50 - j);
 	};
 
-	
+
 	/**
 	 * add UI at the top of others
 	 */

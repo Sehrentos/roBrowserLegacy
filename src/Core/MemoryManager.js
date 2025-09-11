@@ -9,15 +9,13 @@
  *
  * @author Vincent Thibault
  */
-
-define( ['Core/MemoryItem'], function( /** @type {Core.MemoryItem} */MemoryItem )
-{
+define(['Core/MemoryItem'], function ( /** @type {Core.MemoryItem} */MemoryItem) {
 	'use strict';
 
 
 	/**
 	 * List of files in memory
-	 * @var List MemoryItem
+	 * @type {{[key:string]: Core.MemoryItem}}
 	 */
 	var _memory = {};
 
@@ -49,8 +47,7 @@ define( ['Core/MemoryItem'], function( /** @type {Core.MemoryItem} */MemoryItem 
 	 * @param {function} [onerror] - optional
 	 * @return mixed data
 	 */
-	function get( filename, onload, onerror )
-	{
+	function get(filename, onload, onerror) {
 		var item;
 
 		// Not in memory yet, create slot
@@ -61,11 +58,11 @@ define( ['Core/MemoryItem'], function( /** @type {Core.MemoryItem} */MemoryItem 
 		item = _memory[filename];
 
 		if (onload) {
-			item.addEventListener('load', onload );
+			item.addEventListener('load', onload);
 		}
 
 		if (onerror) {
-			item.addEventListener('error', onerror );
+			item.addEventListener('error', onerror);
 		}
 
 		return item.data;
@@ -78,8 +75,7 @@ define( ['Core/MemoryItem'], function( /** @type {Core.MemoryItem} */MemoryItem 
 	 * @param {string} filename
 	 * @return boolean isInMemory
 	 */
-	function exist( filename )
-	{
+	function exist(filename) {
 		return !!_memory[filename];
 	}
 
@@ -91,18 +87,17 @@ define( ['Core/MemoryItem'], function( /** @type {Core.MemoryItem} */MemoryItem 
 	 * @param {string|object} data
 	 * @param {string} error - optional
 	 */
-	function set( filename, data, error )
-	{
+	function set(filename, data, error) {
 		// Not in memory yet, create slot
 		if (!_memory[filename]) {
 			_memory[filename] = new MemoryItem();
 		}
 
 		if (error || !data) {
-			_memory[filename].onerror( error );
+			_memory[filename].onerror(error);
 		}
 		else {
-			_memory[filename].onload( data );
+			_memory[filename].onload(data);
 		}
 	}
 
@@ -113,8 +108,7 @@ define( ['Core/MemoryItem'], function( /** @type {Core.MemoryItem} */MemoryItem 
 	 * @param {object} gl - WebGL Context
 	 * @param {number} now - game tick
 	 */
-	function clean( gl, now )
-	{
+	function clean(gl, now) {
 		if (_lastCheckTick + _cleanUpInterval > now) {
 			return;
 		}
@@ -123,20 +117,20 @@ define( ['Core/MemoryItem'], function( /** @type {Core.MemoryItem} */MemoryItem 
 		var i, count, tick;
 		var list = [];
 
-		keys  = Object.keys(_memory);
+		keys = Object.keys(_memory);
 		count = keys.length;
-		tick  = now - _rememberTime;
+		tick = now - _rememberTime;
 
 		for (i = 0; i < count; ++i) {
-			item = _memory[ keys[i] ];
+			item = _memory[keys[i]];
 			if (item.complete && item.lastTimeUsed < tick) {
-				remove( gl, keys[i] );
-				list.push( keys[i] );
+				remove(gl, keys[i]);
+				list.push(keys[i]);
 			}
 		}
 
 		if (list.length) {
-			console.log( '%c[MemoryManager] - Removing ' +  list.length + ' unused elements from memory.', 'color:#d35111', list);
+			console.log('%c[MemoryManager] - Removing ' + list.length + ' unused elements from memory.', 'color:#d35111', list);
 		}
 
 		_lastCheckTick = now;
@@ -149,15 +143,14 @@ define( ['Core/MemoryItem'], function( /** @type {Core.MemoryItem} */MemoryItem 
 	 * @param {object} gl - WebGL Context
 	 * @param {string} filename
 	 */
-	function remove( gl, filename )
-	{
+	function remove(gl, filename) {
 		// Not found or filename is undefined?
 		if (!filename || !_memory[filename]) {
 			return;
 		}
 
-		var file = get( filename );
-		var ext  = '';
+		var file = get(filename);
+		var ext = '';
 		var i, count;
 
 		var matches = filename.match(/\.[^\.]+$/);
@@ -175,19 +168,19 @@ define( ['Core/MemoryItem'], function( /** @type {Core.MemoryItem} */MemoryItem 
 					if (file.frames) {
 						for (i = 0, count = file.frames.length; i < count; ++i) {
 							if (file.frames[i].texture && gl != null && gl.isTexture(file.frames[i].texture)) {
-								gl.deleteTexture( file.frames[i].texture );
+								gl.deleteTexture(file.frames[i].texture);
 							}
 						}
 					}
 					if (file.texture && gl != null && gl.isTexture(file.texture)) {
-						gl.deleteTexture( file.texture );
+						gl.deleteTexture(file.texture);
 					}
 					break;
 
 				// Delete palette
 				case '.pal':
 					if (file.texture && gl != null && gl.isTexture(file.texture)) {
-						gl.deleteTexture( file.texture );
+						gl.deleteTexture(file.texture);
 					}
 					break;
 
@@ -211,17 +204,16 @@ define( ['Core/MemoryItem'], function( /** @type {Core.MemoryItem} */MemoryItem 
 	 * @param regex
 	 * @return string[] filename
 	 */
-	function search(regex)
-	{
+	function search(regex) {
 		var keys;
 		var i, count, out = [];
 
-		keys  = Object.keys(_memory);
+		keys = Object.keys(_memory);
 		count = keys.length;
 
 		for (i = 0; i < count; ++i) {
 			if (keys[i].match(regex)) {
-				out.push( keys[i] );
+				out.push(keys[i]);
 			}
 		}
 
@@ -233,11 +225,11 @@ define( ['Core/MemoryItem'], function( /** @type {Core.MemoryItem} */MemoryItem 
 	 * Export methods
 	 */
 	return {
-		get:    get,
-		set:    set,
-		clean:  clean,
+		get: get,
+		set: set,
+		clean: clean,
 		remove: remove,
-		exist:  exist,
+		exist: exist,
 		search: search
 	};
 });

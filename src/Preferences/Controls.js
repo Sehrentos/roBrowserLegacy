@@ -7,19 +7,17 @@
  *
  * @author Vincent Thibault
  */
-define( ['Core/Preferences'], function( Preferences )
-{
+define(['Core/Preferences'], function (/** @type {Core.Preferences<Preferences.Controls>} */Preferences) {
 	'use strict';
-
 
 	/**
 	 * Export
 	 */
-	return Preferences.get( 'Controls', {
-		noctrl:  true,
+	return Preferences.get('Controls', {
+		noctrl: true,
 		noshift: false,
-        	snap: false,
-        	itemsnap: false
-	}, 1.0 );
+		snap: false,
+		itemsnap: false
+	}, 1.0);
 
 });

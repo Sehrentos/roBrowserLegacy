@@ -7,9 +7,9 @@
  *
  * @author Vincent Thibault
  */
-
-define(['Core/Configs', 'Network/PacketLength'], function( Configs, /** @type {Network.PacketLength} */PacketLength )
-{
+define(['Core/Configs', 'Network/PacketLength'], function (
+	/** @type {Core.Configs} */Configs,
+	/** @type {Network.PacketLength} */PacketLength) {
 	"use strict";
 
 	/**
@@ -26,8 +26,8 @@ define(['Core/Configs', 'Network/PacketLength'], function( Configs, /** @type {N
 		var versions = this.versions;
 		var i, count = versions.length;
 
-		for (i = 0; i < count-1; ++i) {
-			if (_value < versions[i+1][0]) {
+		for (i = 0; i < count - 1; ++i) {
+			if (_value < versions[i + 1][0]) {
 				return versions[i];
 			}
 		}
@@ -133,7 +133,7 @@ define(['Core/Configs', 'Network/PacketLength'], function( Configs, /** @type {N
 
 		// Invalid blocksize...
 		if (!blockSize || length % blockSize) {
-			console.error('CHARACTER_INFO size error!! blockSize : "'+ blockSize +'", list length: ' + length + ', auto-detect...');
+			console.error('CHARACTER_INFO size error!! blockSize : "' + blockSize + '", list length: ' + length + ', auto-detect...');
 
 			var knownSize = [106, 108, 112, 116, 124, 128, 132, 136, 140, 144, 145, 147, 155, 175];
 			var matches = [];
@@ -146,7 +146,7 @@ define(['Core/Configs', 'Network/PacketLength'], function( Configs, /** @type {N
 
 			// No result, or multiple ones...
 			if (matches.length !== 1) {
-				require('UI/UIManager').showErrorBox('CHARACTER_INFO size error!! blockSize : "'+ blockSize +'", list length: ' + length + ', auto-detect...');
+				require('UI/UIManager').showErrorBox('CHARACTER_INFO size error!! blockSize : "' + blockSize + '", list length: ' + length + ', auto-detect...');
 				return out;
 			}
 
@@ -187,7 +187,7 @@ define(['Core/Configs', 'Network/PacketLength'], function( Configs, /** @type {N
 				}
 			}
 
-			if(_value < 20201007 || blockSize < 175) {
+			if (_value < 20201007 || blockSize < 175) {
 				out[i].sp = fp.readShort();
 				out[i].maxsp = fp.readShort();
 			} else {
@@ -283,8 +283,8 @@ define(['Core/Configs', 'Network/PacketLength'], function( Configs, /** @type {N
 		var i, count = list.length;
 
 		for (i = 0; i < count; ++i) {
-			param    = list[i];
-			packet   = param[0];
+			param = list[i];
+			packet = param[0];
 			param[0] = date;
 
 			if (!packet?.prototype?.versions)
@@ -298,6 +298,7 @@ define(['Core/Configs', 'Network/PacketLength'], function( Configs, /** @type {N
 
 	/**
 	 * Export
+	 * @type {Network.PacketVerManager}
 	 */
 	return {
 
@@ -310,12 +311,12 @@ define(['Core/Configs', 'Network/PacketLength'], function( Configs, /** @type {N
 		set value(v) {
 			if (v !== _value) {
 				PacketLength.init(v);
-				console.log( "%c[PACKETVER] Set packet version ", "color:#007000", _value = v);
+				console.log("%c[PACKETVER] Set packet version ", "color:#007000", _value = v);
 			}
 		},
 
 		// Add support for packet version
-		addSupport:    addSupport,
+		addSupport: addSupport,
 		parseCharInfo: parseCharList
 	};
 });

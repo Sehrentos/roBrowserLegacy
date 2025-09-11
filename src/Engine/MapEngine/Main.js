@@ -7,42 +7,35 @@
  *
  * @author Vincent Thibault
  */
-
-define(function( require )
-{
+define(/** @type {(require: Require)=>Engine.MapEngine.Main} */function (require) {
 	'use strict';
 
-
-	/**
-	 * Load dependencies
-	 */
-	var DB             = require('DB/DBManager');
-	var StatusProperty = require('DB/Status/StatusProperty');
-	var EffectConst       = require('DB/Effects/EffectConst');
-	var Session        = require('Engine/SessionStorage');
-	var Network        = require('Network/NetworkManager');
-	var PACKET         = require('Network/PacketStructure');
-	var PACKETVER	   = require('Network/PacketVerManager');
-	var EntityManager  = require('Renderer/EntityManager');
-	var SkillActionTable  = require('DB/Skills/SkillAction');
-	var EffectManager  = require('Renderer/EffectManager');
-	var Renderer       = require('Renderer/Renderer');
-	var Damage         = require('Renderer/Effects/Damage');
-	var Altitude       = require('Renderer/Map/Altitude');
-	var ChatBox        = require('UI/Components/ChatBox/ChatBox');
-	var ChatRoom       = require('UI/Components/ChatRoom/ChatRoom');
-	var Announce       = require('UI/Components/Announce/Announce');
-	var Equipment      = require('UI/Components/Equipment/Equipment');
-	var ChangeCart     = require('UI/Components/ChangeCart/ChangeCart');
-	var PartyUI        = require('UI/Components/PartyFriends/PartyFriends');
-	var PetMessageConst    = require('DB/Pets/PetMessageConst');
-	var uint32ToRGB    = require('Utils/colors');
+	/** @type {DB.DBManager} */var DB = require('DB/DBManager');
+	/** @type {DB.Status.StatusProperty} */var StatusProperty = require('DB/Status/StatusProperty');
+	/** @type {DB.Effects.Const} */var EffectConst = require('DB/Effects/EffectConst');
+	/** @type {Engine.SessionStorage} */var Session = require('Engine/SessionStorage');
+	/** @type {Network.NetworkManager} */var Network = require('Network/NetworkManager');
+	/** @type {Network.PacketStructure} */var PACKET = require('Network/PacketStructure');
+	/** @type {Network.PacketVerManager} */var PACKETVER = require('Network/PacketVerManager');
+	/** @type {Renderer.EntityManager} */var EntityManager = require('Renderer/EntityManager');
+	/** @type {DB.Skills.SkillAction} */var SkillActionTable = require('DB/Skills/SkillAction');
+	/** @type {Renderer.EffectManager} */var EffectManager = require('Renderer/EffectManager');
+	/** @type {Renderer.Renderer} */var Renderer = require('Renderer/Renderer');
+	/** @type {Renderer.Effects.Damage} */var Damage = require('Renderer/Effects/Damage');
+	/** @type {Renderer.Map.Altitude} */var Altitude = require('Renderer/Map/Altitude');
+	/** @type {UI.Component.ChatBox} */var ChatBox = require('UI/Components/ChatBox/ChatBox');
+	/** @type {UI.Component.ChatRoom} */var ChatRoom = require('UI/Components/ChatRoom/ChatRoom');
+	/** @type {UI.Component.Announce} */var Announce = require('UI/Components/Announce/Announce');
+	/** @type {UI.Component.Equipment} */var Equipment = require('UI/Components/Equipment/Equipment');
+	/** @type {UI.Component.ChangeCart} */var ChangeCart = require('UI/Components/ChangeCart/ChangeCart');
+	/** @type {UI.Component.PartyFriends} */var PartyUI = require('UI/Components/PartyFriends/PartyFriends');
+	/** @type {DB.Pets.PetMessageConst} */var PetMessageConst = require('DB/Pets/PetMessageConst');
+	/** @type {Utils.colors} */var uint32ToRGB = require('Utils/colors');
 
 	// Version Dependent UIs
-	var BasicInfo = require('UI/Components/BasicInfo/BasicInfo');
-	var SkillList = require('UI/Components/SkillList/SkillList');
-	var WinStats  = require('UI/Components/WinStats/WinStats');
-
+	/** @type {UI.Component.BasicInfo} */var BasicInfo = require('UI/Components/BasicInfo/BasicInfo');
+	/** @type {UI.Component.SkillList} */var SkillList = require('UI/Components/SkillList/SkillList');
+	/** @type {UI.Component.WinStats} */var WinStats = require('UI/Components/WinStats/WinStats');
 
 
 	/**
@@ -50,8 +43,7 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.NOTIFY_PLAYERMOVE
 	 */
-	function onPlayerMove( pkt )
-	{
+	function onPlayerMove(pkt) {
 		Session.Entity.walkTo(
 			pkt.MoveData[0],
 			pkt.MoveData[1],
@@ -66,16 +58,15 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET_ZC_NOTIFY_PLAYERCHAT
 	 */
-	function onPlayerMessage( pkt )
-	{
+	function onPlayerMessage(pkt) {
 		if (ChatRoom.isOpen) {
 			ChatRoom.message(pkt.msg);
 			return;
 		}
 
-		ChatBox.addText( pkt.msg, ChatBox.TYPE.PUBLIC | ChatBox.TYPE.SELF, ChatBox.FILTER.PUBLIC_CHAT );
+		ChatBox.addText(pkt.msg, ChatBox.TYPE.PUBLIC | ChatBox.TYPE.SELF, ChatBox.FILTER.PUBLIC_CHAT);
 		if (Session.Entity) {
-			Session.Entity.dialog.set( pkt.msg );
+			Session.Entity.dialog.set(pkt.msg);
 		}
 	}
 
@@ -85,8 +76,7 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.ATTACK_FAILURE_FOR_DISTANCE
 	 */
-	function onPlayerTooFarToAttack( pkt )
-	{
+	function onPlayerTooFarToAttack(pkt) {
 		var entity = EntityManager.get(pkt.targetAID);
 		if (entity) {
 			entity.onFocus();
@@ -99,8 +89,7 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.ATTACK_RANGE
 	 */
-	function onAttackRangeUpdate( pkt )
-	{
+	function onAttackRangeUpdate(pkt) {
 		Session.Entity.attack_range = pkt.currentAttRange;
 	}
 
@@ -110,34 +99,33 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.STATUS
 	 */
-	function onStatusParameterChange( pkt )
-	{
-		WinStats.getUI().update('str',         pkt.str);
-		WinStats.getUI().update('agi',         pkt.agi);
-		WinStats.getUI().update('vit',         pkt.vit);
-		WinStats.getUI().update('int',         pkt.Int);
-		WinStats.getUI().update('dex',         pkt.dex);
-		WinStats.getUI().update('luk',         pkt.luk);
-		WinStats.getUI().update('str3',        pkt.standardStr);
-		WinStats.getUI().update('agi3',        pkt.standardAgi);
-		WinStats.getUI().update('vit3',        pkt.standardVit);
-		WinStats.getUI().update('int3',        pkt.standardInt);
-		WinStats.getUI().update('dex3',        pkt.standardDex);
-		WinStats.getUI().update('luk3',        pkt.standardLuk);
-		WinStats.getUI().update('aspd',        ( pkt.ASPD + pkt.plusASPD ) / 4);
-		WinStats.getUI().update('atak',        pkt.attPower);
-		WinStats.getUI().update('atak2',       pkt.refiningPower);
-		WinStats.getUI().update('matak',       pkt.min_mattPower);
-		WinStats.getUI().update('matak2',      pkt.max_mattPower);
-		WinStats.getUI().update('flee',        pkt.avoidSuccessValue );
-		WinStats.getUI().update('flee2',       pkt.plusAvoidSuccessValue );
-		WinStats.getUI().update('critical',    pkt.criticalSuccessValue );
-		WinStats.getUI().update('hit',         pkt.hitSuccessValue );
-		WinStats.getUI().update('def',         pkt.itemdefPower );
-		WinStats.getUI().update('def2',        pkt.plusdefPower );
-		WinStats.getUI().update('mdef',        pkt.mdefPower );
-		WinStats.getUI().update('mdef2',       pkt.plusmdefPower );
-		WinStats.getUI().update('statuspoint', pkt.point );
+	function onStatusParameterChange(pkt) {
+		WinStats.getUI().update('str', pkt.str);
+		WinStats.getUI().update('agi', pkt.agi);
+		WinStats.getUI().update('vit', pkt.vit);
+		WinStats.getUI().update('int', pkt.Int);
+		WinStats.getUI().update('dex', pkt.dex);
+		WinStats.getUI().update('luk', pkt.luk);
+		WinStats.getUI().update('str3', pkt.standardStr);
+		WinStats.getUI().update('agi3', pkt.standardAgi);
+		WinStats.getUI().update('vit3', pkt.standardVit);
+		WinStats.getUI().update('int3', pkt.standardInt);
+		WinStats.getUI().update('dex3', pkt.standardDex);
+		WinStats.getUI().update('luk3', pkt.standardLuk);
+		WinStats.getUI().update('aspd', (pkt.ASPD + pkt.plusASPD) / 4);
+		WinStats.getUI().update('atak', pkt.attPower);
+		WinStats.getUI().update('atak2', pkt.refiningPower);
+		WinStats.getUI().update('matak', pkt.min_mattPower);
+		WinStats.getUI().update('matak2', pkt.max_mattPower);
+		WinStats.getUI().update('flee', pkt.avoidSuccessValue);
+		WinStats.getUI().update('flee2', pkt.plusAvoidSuccessValue);
+		WinStats.getUI().update('critical', pkt.criticalSuccessValue);
+		WinStats.getUI().update('hit', pkt.hitSuccessValue);
+		WinStats.getUI().update('def', pkt.itemdefPower);
+		WinStats.getUI().update('def2', pkt.plusdefPower);
+		WinStats.getUI().update('mdef', pkt.mdefPower);
+		WinStats.getUI().update('mdef2', pkt.plusmdefPower);
+		WinStats.getUI().update('statuspoint', pkt.point);
 	}
 
 
@@ -146,8 +134,7 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.STATUS_CHANGE_ACK
 	 */
-	function onStatusParameterUpdateAnswer( pkt )
-	{
+	function onStatusParameterUpdateAnswer(pkt) {
 		// Fail
 		if (!pkt.result) {
 			return;
@@ -209,8 +196,7 @@ define(function( require )
 	 * Modify main players parameters
 	 * Generic function
 	 */
-	function onParameterChange( pkt )
-	{
+	function onParameterChange(pkt) {
 		var amount = 0, type;
 
 		if (pkt.hasOwnProperty('varID')) {
@@ -224,7 +210,7 @@ define(function( require )
 		}
 		else if (pkt.hasOwnProperty('type')) {
 			type = pkt.type;
-	  	}
+		}
 		else {
 			type = -1; // goto "default".
 		}
@@ -248,14 +234,14 @@ define(function( require )
 			case StatusProperty.EXP:
 				BasicInfo.getUI().base_exp = amount;
 				if (BasicInfo.getUI().base_exp_next) {
-					BasicInfo.getUI().update('bexp', BasicInfo.getUI().base_exp, BasicInfo.getUI().base_exp_next );
+					BasicInfo.getUI().update('bexp', BasicInfo.getUI().base_exp, BasicInfo.getUI().base_exp_next);
 				}
 				break;
 
 			case StatusProperty.JOBEXP:
 				BasicInfo.getUI().job_exp = amount;
 				if (BasicInfo.getUI().job_exp_next) {
-					BasicInfo.getUI().update('jexp', BasicInfo.getUI().job_exp, BasicInfo.getUI().job_exp_next );
+					BasicInfo.getUI().update('jexp', BasicInfo.getUI().job_exp, BasicInfo.getUI().job_exp_next);
 				}
 				break;
 
@@ -276,26 +262,26 @@ define(function( require )
 					}
 				}
 				//Danger
-				if(Session.Entity.life.hp <= (25/100*Session.Entity.life.hp_max)){
+				if (Session.Entity.life.hp <= (25 / 100 * Session.Entity.life.hp_max)) {
 					//Pet Talk
-					if(Session.pet.friendly > 900 && (Session.pet.lastTalk || 0) + 10000 < Date.now()){
+					if (Session.pet.friendly > 900 && (Session.pet.lastTalk || 0) + 10000 < Date.now()) {
 						const hunger = DB.getPetHungryState(Session.pet.oldHungry);
 						const talk = DB.getPetTalkNumber(Session.pet.job, PetMessageConst.PM_DANGER, hunger);
 
-						var pkt    = new PACKET.CZ.PET_ACT();
+						var pkt = new PACKET.CZ.PET_ACT();
 						pkt.data = talk;
 						Network.sendPacket(pkt);
 						Session.pet.lastTalk = Date.now();
 					}
 				}
 				//Died
-				if(Session.Entity.life.hp <= 1){
+				if (Session.Entity.life.hp <= 1) {
 					//Pet Talk
-					if(Session.pet.friendly > 900 ){
+					if (Session.pet.friendly > 900) {
 						const hunger = DB.getPetHungryState(Session.pet.oldHungry);
 						const talk = DB.getPetTalkNumber(Session.pet.job, PetMessageConst.PM_DEAD, hunger);
 
-						var pkt    = new PACKET.CZ.PET_ACT();
+						var pkt = new PACKET.CZ.PET_ACT();
 						pkt.data = talk;
 						Network.sendPacket(pkt);
 						Session.pet.lastTalk = Date.now();
@@ -342,17 +328,17 @@ define(function( require )
 			case StatusProperty.CLEVEL:
 				Session.Entity.clevel = amount;
 				// load aura on levelup
-				Session.Entity.aura.load( EffectManager );
+				Session.Entity.aura.load(EffectManager);
 				BasicInfo.getUI().update('blvl', amount);
 				Equipment.getUI().onLevelUp();
 				ChangeCart.onLevelUp(amount);
 
 				//Pet Talk
-				if(Session.pet.friendly > 900){
+				if (Session.pet.friendly > 900) {
 					const hunger = DB.getPetHungryState(Session.pet.oldHungry);
 					const talk = DB.getPetTalkNumber(Session.pet.job, PetMessageConst.PM_LEVELUP, hunger);
 
-					var pkt    = new PACKET.CZ.PET_ACT();
+					var pkt = new PACKET.CZ.PET_ACT();
 					pkt.data = talk;
 					Network.sendPacket(pkt);
 					Session.pet.lastTalk = Date.now();
@@ -364,32 +350,32 @@ define(function( require )
 				break;
 
 			case StatusProperty.STR:
-				WinStats.getUI().update('str',  pkt.defaultStatus);
+				WinStats.getUI().update('str', pkt.defaultStatus);
 				WinStats.getUI().update('str2', pkt.plusStatus);
 				break;
 
 			case StatusProperty.AGI:
-				WinStats.getUI().update('agi',  pkt.defaultStatus);
+				WinStats.getUI().update('agi', pkt.defaultStatus);
 				WinStats.getUI().update('agi2', pkt.plusStatus);
 				break;
 
 			case StatusProperty.VIT:
-				WinStats.getUI().update('vit',  pkt.defaultStatus);
+				WinStats.getUI().update('vit', pkt.defaultStatus);
 				WinStats.getUI().update('vit2', pkt.plusStatus);
 				break;
 
 			case StatusProperty.INT:
-				WinStats.getUI().update('int',  pkt.defaultStatus);
+				WinStats.getUI().update('int', pkt.defaultStatus);
 				WinStats.getUI().update('int2', pkt.plusStatus);
 				break;
 
 			case StatusProperty.DEX:
-				WinStats.getUI().update('dex',  pkt.defaultStatus);
+				WinStats.getUI().update('dex', pkt.defaultStatus);
 				WinStats.getUI().update('dex2', pkt.plusStatus);
 				break;
 
 			case StatusProperty.LUK:
-				WinStats.getUI().update('luk',  pkt.defaultStatus);
+				WinStats.getUI().update('luk', pkt.defaultStatus);
 				WinStats.getUI().update('luk2', pkt.plusStatus);
 				break;
 
@@ -400,21 +386,21 @@ define(function( require )
 			case StatusProperty.MAXEXP:
 				BasicInfo.getUI().base_exp_next = amount;
 				if (BasicInfo.getUI().base_exp > -1) {
-					BasicInfo.getUI().update('bexp', BasicInfo.getUI().base_exp, BasicInfo.getUI().base_exp_next );
+					BasicInfo.getUI().update('bexp', BasicInfo.getUI().base_exp, BasicInfo.getUI().base_exp_next);
 				}
 				break;
 
 			case StatusProperty.MAXJOBEXP:
 				BasicInfo.getUI().job_exp_next = amount;
 				if (BasicInfo.getUI().job_exp > -1) {
-					BasicInfo.getUI().update('jexp', BasicInfo.getUI().job_exp, BasicInfo.getUI().job_exp_next );
+					BasicInfo.getUI().update('jexp', BasicInfo.getUI().job_exp, BasicInfo.getUI().job_exp_next);
 				}
 				break;
 
 			case StatusProperty.WEIGHT:
 				Session.Character.weight = amount;	// Save weight in Session instead of UI
 				if (BasicInfo.getUI().weight_max > -1) {
-					BasicInfo.getUI().update('weight', Session.Character.weight, BasicInfo.getUI().weight_max );
+					BasicInfo.getUI().update('weight', Session.Character.weight, BasicInfo.getUI().weight_max);
 				}
 				break;
 
@@ -422,7 +408,7 @@ define(function( require )
 				Session.Character.max_weight = amount;	// Save max weight in Session instead of UI only
 				BasicInfo.getUI().weight_max = amount;
 				if (BasicInfo.getUI().weight > -1) {
-					BasicInfo.getUI().update('weight', Session.Character.weight, BasicInfo.getUI().weight_max );
+					BasicInfo.getUI().update('weight', Session.Character.weight, BasicInfo.getUI().weight_max);
 				}
 				break;
 
@@ -508,32 +494,32 @@ define(function( require )
 				break;
 
 			case StatusProperty.VAR_SP_POW:
-				WinStats.getUI().update('pow', 	pkt.defaultStatus);
+				WinStats.getUI().update('pow', pkt.defaultStatus);
 				WinStats.getUI().update('pow2', pkt.plusStatus);
 				break;
 
 			case StatusProperty.VAR_SP_STA:
-				WinStats.getUI().update('sta', 	pkt.defaultStatus);
+				WinStats.getUI().update('sta', pkt.defaultStatus);
 				WinStats.getUI().update('sta2', pkt.plusStatus);
 				break;
 
 			case StatusProperty.VAR_SP_WIS:
-				WinStats.getUI().update('wis', 	pkt.defaultStatus);
+				WinStats.getUI().update('wis', pkt.defaultStatus);
 				WinStats.getUI().update('wis2', pkt.plusStatus);
 				break;
 
 			case StatusProperty.VAR_SP_SPL:
-				WinStats.getUI().update('spl', 	pkt.defaultStatus);
+				WinStats.getUI().update('spl', pkt.defaultStatus);
 				WinStats.getUI().update('spl2', pkt.plusStatus);
 				break;
 
 			case StatusProperty.VAR_SP_CON:
-				WinStats.getUI().update('con', 	pkt.defaultStatus);
+				WinStats.getUI().update('con', pkt.defaultStatus);
 				WinStats.getUI().update('con2', pkt.plusStatus);
 				break;
 
 			case StatusProperty.VAR_SP_CRT:
-				WinStats.getUI().update('crt', 	pkt.defaultStatus);
+				WinStats.getUI().update('crt', pkt.defaultStatus);
 				WinStats.getUI().update('crt2', pkt.plusStatus);
 				break;
 
@@ -608,7 +594,7 @@ define(function( require )
 				break;
 
 			default:
-				console.log( 'Main::onParameterChange() - Unsupported type', pkt);
+				console.log('Main::onParameterChange() - Unsupported type', pkt);
 		}
 	}
 
@@ -618,15 +604,14 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.BROADCAST
 	 */
-	function onGlobalAnnounce( pkt )
-	{
+	function onGlobalAnnounce(pkt) {
 		var color;
 
 		if (pkt.fontColor) {
 			color = 'rgb(' + ([
-				( pkt.fontColor & 0x00ff0000 ) >> 16,
-				( pkt.fontColor & 0x0000ff00 ) >> 8,
-				( pkt.fontColor & 0x000000ff )
+				(pkt.fontColor & 0x00ff0000) >> 16,
+				(pkt.fontColor & 0x0000ff00) >> 8,
+				(pkt.fontColor & 0x000000ff)
 			]).join(',') + ')';
 		}
 		else if (pkt.msg.match(/^blue/)) {
@@ -641,9 +626,9 @@ define(function( require )
 			color = '#FFFF00';
 		}
 
-		ChatBox.addText( pkt.msg, ChatBox.TYPE.ANNOUNCE, ChatBox.FILTER.PUBLIC_CHAT, color );
+		ChatBox.addText(pkt.msg, ChatBox.TYPE.ANNOUNCE, ChatBox.FILTER.PUBLIC_CHAT, color);
 		Announce.append();
-		Announce.set( pkt.msg, color );
+		Announce.set(pkt.msg, color);
 	}
 
 
@@ -651,9 +636,8 @@ define(function( require )
 	 * Receive player count in server
 	 * @param {object} pkt - PACKET.ZC.USER_COUNT
 	 */
-	function onPlayerCountAnswer( pkt )
-	{
-		ChatBox.addText( DB.getMessage(178).replace('%d', pkt.count), ChatBox.TYPE.INFO, ChatBox.FILTER.PUBLIC_LOG );
+	function onPlayerCountAnswer(pkt) {
+		ChatBox.addText(DB.getMessage(178).replace('%d', pkt.count), ChatBox.TYPE.INFO, ChatBox.FILTER.PUBLIC_LOG);
 	}
 
 
@@ -662,27 +646,26 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET_ZC_ACTION_FAILURE
 	 */
-	function onActionFailure( pkt )
-	{
+	function onActionFailure(pkt) {
 		var entity = Session.Entity;
 		var srcEntity = EntityManager.get(entity.GID);
 
 		switch (pkt.errorCode) {
 			case 0: // Please equip the proper amnution first
-				ChatBox.addText( DB.getMessage(242), ChatBox.TYPE.ERROR, ChatBox.FILTER.ITEM );
+				ChatBox.addText(DB.getMessage(242), ChatBox.TYPE.ERROR, ChatBox.FILTER.ITEM);
 				break;
 
 			case 1:  // You can't Attack or use Skills because your Weight Limit has been exceeded.
-				ChatBox.addText( DB.getMessage(243), ChatBox.TYPE.ERROR, ChatBox.FILTER.ITEM );
+				ChatBox.addText(DB.getMessage(243), ChatBox.TYPE.ERROR, ChatBox.FILTER.ITEM);
 				break;
 
 			case 2: // You can't use Skills because Weight Limit has been exceeded.
-				ChatBox.addText( DB.getMessage(244), ChatBox.TYPE.ERROR, ChatBox.FILTER.ITEM );
+				ChatBox.addText(DB.getMessage(244), ChatBox.TYPE.ERROR, ChatBox.FILTER.ITEM);
 				break;
 
 			case 3: // Ammunition has been equipped.
 				// TODO: check the class - assassin: 1040 | gunslinger: 1175 | default: 245
-				ChatBox.addText( DB.getMessage(245), ChatBox.TYPE.BLUE, ChatBox.FILTER.ITEM );
+				ChatBox.addText(DB.getMessage(245), ChatBox.TYPE.BLUE, ChatBox.FILTER.ITEM);
 				break;
 		}
 	}
@@ -693,12 +676,11 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET_ZC_MSG & PACKET_ZC_MSG_COLOR
 	 */
-	function onMessage( pkt )
-	{
+	function onMessage(pkt) {
 		if (pkt.color) {
-			ChatBox.addText( DB.getMessage(pkt.msg), ChatBox.TYPE.PUBLIC, ChatBox.FILTER.PUBLIC_LOG, uint32ToRGB(pkt.color) );
+			ChatBox.addText(DB.getMessage(pkt.msg), ChatBox.TYPE.PUBLIC, ChatBox.FILTER.PUBLIC_LOG, uint32ToRGB(pkt.color));
 		} else {
-			ChatBox.addText( DB.getMessage(pkt.msg), ChatBox.TYPE.PUBLIC, ChatBox.FILTER.PUBLIC_LOG );
+			ChatBox.addText(DB.getMessage(pkt.msg), ChatBox.TYPE.PUBLIC, ChatBox.FILTER.PUBLIC_LOG);
 		}
 	}
 
@@ -708,12 +690,11 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.RECOVERY
 	 */
-	function onRecovery( pkt )
-	{
+	function onRecovery(pkt) {
 		switch (pkt.varID) {
 
 			case StatusProperty.HP:
-				Damage.add( pkt.amount, Session.Entity, Renderer.tick, null, Damage.TYPE.HEAL );
+				Damage.add(pkt.amount, Session.Entity, Renderer.tick, null, Damage.TYPE.HEAL);
 
 				var EF_Init_Par = {
 					effectId: EffectConst.EF_HPTIME,
@@ -731,7 +712,7 @@ define(function( require )
 				break;
 
 			case StatusProperty.SP:
-				Damage.add( pkt.amount, Session.Entity, Renderer.tick, null, Damage.TYPE.HEAL | Damage.TYPE.SP );
+				Damage.add(pkt.amount, Session.Entity, Renderer.tick, null, Damage.TYPE.HEAL | Damage.TYPE.SP);
 				var EF_Init_Par = {
 					effectId: EffectConst.EF_SPTIME,
 					ownerAID: Session.Entity.GID,
@@ -750,37 +731,37 @@ define(function( require )
 	}
 
 
-	function onRank(pkt){
+	function onRank(pkt) {
 		var message = '';
 
 		//Header
 		message += '=========== ';
-		if(pkt instanceof PACKET.ZC.BLACKSMITH_RANK) { message += DB.getMessage(2386); } // "BlackSmith"
-		else if(pkt instanceof PACKET.ZC.ALCHEMIST_RANK) { message += DB.getMessage(2387); } // "Alchemist"
-		else if(pkt instanceof PACKET.ZC.TAEKWON_RANK) { message += DB.getMessage(2388); } // "Taekwon"
+		if (pkt instanceof PACKET.ZC.BLACKSMITH_RANK) { message += DB.getMessage(2386); } // "BlackSmith"
+		else if (pkt instanceof PACKET.ZC.ALCHEMIST_RANK) { message += DB.getMessage(2387); } // "Alchemist"
+		else if (pkt instanceof PACKET.ZC.TAEKWON_RANK) { message += DB.getMessage(2388); } // "Taekwon"
 		//else if(pkt instanceof PACKET.ZC.KILLER_RANK) { message += DB.getMessage(2389); } //PK currently unsupported
 		else { message += 'Unknown'; }
 		message += ' ';
 		message += DB.getMessage(2383);  // "Rank"
 		message += ' ===========';
-		ChatBox.addText( message, ChatBox.TYPE.ANNOUNCE, ChatBox.FILTER.PUBLIC_LOG );
+		ChatBox.addText(message, ChatBox.TYPE.ANNOUNCE, ChatBox.FILTER.PUBLIC_LOG);
 
 		//List
-		for(var i = 0; i < 10; ++i){
+		for (var i = 0; i < 10; ++i) {
 			let name, point;
 			name = pkt?.Name?.[i] ?? 'None';
 			point = pkt?.Point?.[i] ?? 0;
 
 			message = '[%rank%] %name% : %point% ' + DB.getMessage(2385); // [x] name : y Points
-			message = message.replace('%rank%', i+1);
+			message = message.replace('%rank%', i + 1);
 			message = message.replace('%name%', name);
 			message = message.replace('%point%', point);
-			ChatBox.addText( message, ChatBox.TYPE.ANNOUNCE, ChatBox.FILTER.PUBLIC_LOG );
+			ChatBox.addText(message, ChatBox.TYPE.ANNOUNCE, ChatBox.FILTER.PUBLIC_LOG);
 		}
 
 	}
 
-	function onUpdateMapInfo(pkt){
+	function onUpdateMapInfo(pkt) {
 		Altitude.setCellType(pkt.xPos, pkt.yPos, pkt.type);
 	}
 
@@ -792,14 +773,14 @@ define(function( require )
 	 */
 	function onRatesInfo(pkt) {
 		const serverName = Session.ServerName || "Unknown Server";
-    	let message = '';
+		let message = '';
 
 		// Header
 		ChatBox.addText("=====================================================================", ChatBox.TYPE.INFO, ChatBox.FILTER.PUBLIC_LOG, '#ffb563');
 		message += DB.getMessage(1933) + formatRate(DB.getMessage(3032), pkt.total_exp, pkt.info, 'exp', serverName) + '\n';
 		message += DB.getMessage(1934) + formatRate(DB.getMessage(3032), pkt.total_drop, pkt.info, 'drop', serverName) + '\n';
 		message += DB.getMessage(1935) + formatRate(DB.getMessage(3032), pkt.total_death, pkt.info, 'death', serverName) + '\n';
-		ChatBox.addText(message, ChatBox.TYPE.SELF, ChatBox.FILTER.PUBLIC_LOG, '#ffb563' );
+		ChatBox.addText(message, ChatBox.TYPE.SELF, ChatBox.FILTER.PUBLIC_LOG, '#ffb563');
 		ChatBox.addText("=====================================================================", ChatBox.TYPE.INFO, ChatBox.FILTER.PUBLIC_LOG, '#ffb563');
 		Session.ratesInfo = message;
 	}
@@ -819,7 +800,7 @@ define(function( require )
 		const pcCafeRate = (info[0]?.[key] / 1000).toFixed(1) || "0.0";
 		const tplusRate = (info[3]?.[key] / 1000).toFixed(1) || "0.0"; // TPLUS fallback
 		const serverRate = (info[2]?.[key] / 1000).toFixed(1) || "0.0"; // Server fallback
-	
+
 		// Replace placeholders in the format string
 		return format
 			.replace('%.1f%%', `${totalRate}%`)
@@ -831,38 +812,38 @@ define(function( require )
 
 	/**
 	 * Initialize
+	 * @type {Engine.MapEngine.Main}
 	 */
-	return function MainEngine()
-	{
-		Network.hookPacket( PACKET.ZC.NOTIFY_PLAYERMOVE,           onPlayerMove );
-		Network.hookPacket( PACKET.ZC.PAR_CHANGE,                  onParameterChange );
-		Network.hookPacket( PACKET.ZC.LONGPAR_CHANGE,              onParameterChange );
-		Network.hookPacket( PACKET.ZC.LONGPAR_CHANGE2,             onParameterChange );
-		Network.hookPacket( PACKET.ZC.STATUS_CHANGE,               onParameterChange );
-		Network.hookPacket( PACKET.ZC.NOTIFY_CARTITEM_COUNTINFO,   onParameterChange );
-		Network.hookPacket( PACKET.ZC.COUPLESTATUS,                onParameterChange );
-		Network.hookPacket( PACKET.ZC.STATUS,                      onStatusParameterChange );
-		Network.hookPacket( PACKET.ZC.STATUS_CHANGE_ACK,           onStatusParameterUpdateAnswer );
-		Network.hookPacket( PACKET.ZC.ATTACK_RANGE,                onAttackRangeUpdate );
-		Network.hookPacket( PACKET.ZC.BROADCAST,                   onGlobalAnnounce );
-		Network.hookPacket( PACKET.ZC.BROADCAST2,                  onGlobalAnnounce );
-		Network.hookPacket( PACKET.ZC.USER_COUNT,                  onPlayerCountAnswer );
-		Network.hookPacket( PACKET.ZC.NOTIFY_PLAYERCHAT,           onPlayerMessage );
-		Network.hookPacket( PACKET.ZC.ATTACK_FAILURE_FOR_DISTANCE, onPlayerTooFarToAttack );
-		Network.hookPacket( PACKET.ZC.ACTION_FAILURE,              onActionFailure );
-		Network.hookPacket( PACKET.ZC.MSG,                         onMessage );
-		Network.hookPacket( PACKET.ZC.MSG_COLOR,                   onMessage );
+	return function MainEngine() {
+		Network.hookPacket(PACKET.ZC.NOTIFY_PLAYERMOVE, onPlayerMove);
+		Network.hookPacket(PACKET.ZC.PAR_CHANGE, onParameterChange);
+		Network.hookPacket(PACKET.ZC.LONGPAR_CHANGE, onParameterChange);
+		Network.hookPacket(PACKET.ZC.LONGPAR_CHANGE2, onParameterChange);
+		Network.hookPacket(PACKET.ZC.STATUS_CHANGE, onParameterChange);
+		Network.hookPacket(PACKET.ZC.NOTIFY_CARTITEM_COUNTINFO, onParameterChange);
+		Network.hookPacket(PACKET.ZC.COUPLESTATUS, onParameterChange);
+		Network.hookPacket(PACKET.ZC.STATUS, onStatusParameterChange);
+		Network.hookPacket(PACKET.ZC.STATUS_CHANGE_ACK, onStatusParameterUpdateAnswer);
+		Network.hookPacket(PACKET.ZC.ATTACK_RANGE, onAttackRangeUpdate);
+		Network.hookPacket(PACKET.ZC.BROADCAST, onGlobalAnnounce);
+		Network.hookPacket(PACKET.ZC.BROADCAST2, onGlobalAnnounce);
+		Network.hookPacket(PACKET.ZC.USER_COUNT, onPlayerCountAnswer);
+		Network.hookPacket(PACKET.ZC.NOTIFY_PLAYERCHAT, onPlayerMessage);
+		Network.hookPacket(PACKET.ZC.ATTACK_FAILURE_FOR_DISTANCE, onPlayerTooFarToAttack);
+		Network.hookPacket(PACKET.ZC.ACTION_FAILURE, onActionFailure);
+		Network.hookPacket(PACKET.ZC.MSG, onMessage);
+		Network.hookPacket(PACKET.ZC.MSG_COLOR, onMessage);
 		if (PACKETVER.value < 20141022) {
-			Network.hookPacket( PACKET.ZC.RECOVERY,                    onRecovery );
+			Network.hookPacket(PACKET.ZC.RECOVERY, onRecovery);
 		} else {
-			Network.hookPacket( PACKET.ZC.RECOVERY2,                   onRecovery );
+			Network.hookPacket(PACKET.ZC.RECOVERY2, onRecovery);
 		}
-		Network.hookPacket( PACKET.ZC.BLACKSMITH_RANK,             onRank );
-		Network.hookPacket( PACKET.ZC.ALCHEMIST_RANK,              onRank );
-		Network.hookPacket( PACKET.ZC.TAEKWON_RANK,                onRank );
+		Network.hookPacket(PACKET.ZC.BLACKSMITH_RANK, onRank);
+		Network.hookPacket(PACKET.ZC.ALCHEMIST_RANK, onRank);
+		Network.hookPacket(PACKET.ZC.TAEKWON_RANK, onRank);
 		//Network.hookPacket( PACKET.ZC.KILLER_RANK,                 onRank ); //PK currently unsupported
-		Network.hookPacket( PACKET.ZC.UPDATE_MAPINFO,				onUpdateMapInfo );
-		Network.hookPacket( PACKET.ZC.PERSONAL_INFORMATION,			onRatesInfo);
-		Network.hookPacket( PACKET.ZC.PERSONAL_INFORMATION2,		onRatesInfo);
+		Network.hookPacket(PACKET.ZC.UPDATE_MAPINFO, onUpdateMapInfo);
+		Network.hookPacket(PACKET.ZC.PERSONAL_INFORMATION, onRatesInfo);
+		Network.hookPacket(PACKET.ZC.PERSONAL_INFORMATION2, onRatesInfo);
 	};
 });

@@ -7,21 +7,18 @@
  *
  * @author Vincent Thibault
  */
-
-define( ['Utils/BinaryReader'], function( BinaryReader )
-{
+define(['Utils/BinaryReader'], function (/** @type {Utils.BinaryReader} */BinaryReader) {
 	'use strict';
-
 
 	/**
 	 * Altitude Constructor
 	 *
 	 * @param {ArrayBuffer} data
+	 * @type {Loaders.Altitude}
 	 */
-	function GAT( data )
-	{
+	function GAT(data) {
 		if (data) {
-			this.load( data );
+			this.load(data);
 		}
 	}
 
@@ -30,9 +27,9 @@ define( ['Utils/BinaryReader'], function( BinaryReader )
 	 * Cell known type
 	 */
 	GAT.TYPE = {
-		NONE:     1 << 0,
+		NONE: 1 << 0,
 		WALKABLE: 1 << 1,
-		WATER:    1 << 2,
+		WATER: 1 << 2,
 		SNIPABLE: 1 << 3
 	};
 
@@ -52,16 +49,16 @@ define( ['Utils/BinaryReader'], function( BinaryReader )
 
 		/* Taken from Grf Editor */
 		[-1]: GAT.TYPE.NONE,                                       // NoGat (-1)
-    	[0x80000000]: GAT.TYPE.WALKABLE | GAT.TYPE.SNIPABLE,       // Weird0 (Int32.MinValue)
-    	[0x80000001]: GAT.TYPE.NONE,                               // Weird1
-    	[0x80000002]: GAT.TYPE.WALKABLE | GAT.TYPE.SNIPABLE,       // Weird2
-    	[0x80000003]: GAT.TYPE.WALKABLE | GAT.TYPE.SNIPABLE | GAT.TYPE.WATER, // Weird3
-    	[0x80000004]: GAT.TYPE.NONE,                               // Weird4
-    	[0x80000005]: GAT.TYPE.WALKABLE | GAT.TYPE.SNIPABLE,       // Weird5
-    	[0x80000006]: GAT.TYPE.WALKABLE | GAT.TYPE.SNIPABLE,       // Weird6
-    	[0x80000007]: GAT.TYPE.NONE,                               // Weird7
-    	[0x80000008]: GAT.TYPE.NONE,                               // Weird8
-    	[0x80000009]: GAT.TYPE.NONE                                // Weird9
+		[0x80000000]: GAT.TYPE.WALKABLE | GAT.TYPE.SNIPABLE,       // Weird0 (Int32.MinValue)
+		[0x80000001]: GAT.TYPE.NONE,                               // Weird1
+		[0x80000002]: GAT.TYPE.WALKABLE | GAT.TYPE.SNIPABLE,       // Weird2
+		[0x80000003]: GAT.TYPE.WALKABLE | GAT.TYPE.SNIPABLE | GAT.TYPE.WATER, // Weird3
+		[0x80000004]: GAT.TYPE.NONE,                               // Weird4
+		[0x80000005]: GAT.TYPE.WALKABLE | GAT.TYPE.SNIPABLE,       // Weird5
+		[0x80000006]: GAT.TYPE.WALKABLE | GAT.TYPE.SNIPABLE,       // Weird6
+		[0x80000007]: GAT.TYPE.NONE,                               // Weird7
+		[0x80000008]: GAT.TYPE.NONE,                               // Weird8
+		[0x80000009]: GAT.TYPE.NONE                                // Weird9
 	};
 
 
@@ -70,27 +67,26 @@ define( ['Utils/BinaryReader'], function( BinaryReader )
 	 *
 	 * @param {ArrayBuffer} data
 	 */
-	GAT.prototype.load = function load( data )
-	{
+	GAT.prototype.load = function load(data) {
 		var fp, header, cells;
 		var version, width, height, i, count;
 
-		fp        = new BinaryReader(data);
-		header    = fp.readBinaryString(4);
+		fp = new BinaryReader(data);
+		header = fp.readBinaryString(4);
 
 		// Well, the file should be a gat file, noh ?
-		if ( header !== 'GRAT' ) {
-			throw new Error('GAT::load() - Invalid header "'+ header + '", must be "GRAT"');
+		if (header !== 'GRAT') {
+			throw new Error('GAT::load() - Invalid header "' + header + '", must be "GRAT"');
 		}
 
 		// Load parameters
-		version   = fp.readUByte() + fp.readUByte()/10;
-		width     = fp.readULong();
-		height    = fp.readULong();
-		cells     = new Float32Array(width * height * 5);
+		version = fp.readUByte() + fp.readUByte() / 10;
+		width = fp.readULong();
+		height = fp.readULong();
+		cells = new Float32Array(width * height * 5);
 
 		// Load the cells
-		for ( i=0, count=width*height; i<count; ++i ) {
+		for (i = 0, count = width * height; i < count; ++i) {
 			// Creating x objects is too slow to send with postMessage...
 			// So just generate a float32array (10 times faster)
 			cells[i * 5 + 0] = fp.readFloat() * 0.2;           // height 1
@@ -101,9 +97,9 @@ define( ['Utils/BinaryReader'], function( BinaryReader )
 		}
 
 		// Exports
-		this.width   = width;
-		this.height  = height;
-		this.cells   = cells;
+		this.width = width;
+		this.height = height;
+		this.cells = cells;
 		this.version = version;
 	};
 
@@ -111,19 +107,19 @@ define( ['Utils/BinaryReader'], function( BinaryReader )
 	/**
 	 * Compile GAT file
 	 */
-	GAT.prototype.compile = function compile()
-	{
+	GAT.prototype.compile = function compile() {
 		// Return some usefulls things.
 		return {
-			cells:        this.cells,
-			width:        this.width,
-			height:       this.height,
+			cells: this.cells,
+			width: this.width,
+			height: this.height,
 		};
 	};
 
 
 	/**
 	 * Exports
+	 * @type {Loaders.Altitude}
 	 */
 	return GAT;
 });

@@ -8,10 +8,7 @@
  *
  * @author Vincent Thibault
  */
-
-
-define(function()
-{
+define(function () {
 	'use strict';
 
 	/**
@@ -23,7 +20,7 @@ define(function()
 	/**
 	 * @param {number} client total size (in octets)
 	 */
-	var _clientSize   = 0;
+	var _clientSize = 0;
 
 
 	/**
@@ -39,13 +36,13 @@ define(function()
 
 
 	/**
-	 * @param {FileSyStem} sync
+	 * @param {FileSystem} sync
 	 */
 	var _fs_sync;
 
 
 	/**
-	 * @param {FileSyStem} async (used for streaming)
+	 * @param {FileSystem} async (used for streaming)
 	 */
 	var _fs;
 
@@ -65,12 +62,11 @@ define(function()
 	/**
 	 * Initialize FileSystem API
 	 *
-	 * @param {Array} FileList
+	 * @param {Array} files FileList
 	 * @param {boolean} save files
 	 * @param {Object} quota information
 	 */
-	function init( files, save, quota )
-	{
+	function init(files, save, quota) {
 		var requestFileSystemSync, requestFileSystem;
 		_files = normalizeFilesPath(files);
 
@@ -82,13 +78,13 @@ define(function()
 		calculateClientSize();
 
 		requestFileSystemSync = self.requestFileSystemSync || self.webkitRequestFileSystemSync;
-		requestFileSystem     = self.requestFileSystem     || self.webkitRequestFileSystem;
+		requestFileSystem = self.requestFileSystem || self.webkitRequestFileSystem;
 
 		var size = _clientSize || quota.used || quota.remaining;
 
-		requestFileSystem( self.TEMPORARY, size, function( fs ){
-			_fs      = fs;
-			_fs_sync = requestFileSystemSync( self.TEMPORARY, size );
+		requestFileSystem(self.TEMPORARY, size, function (fs) {
+			_fs = fs;
+			_fs_sync = requestFileSystemSync(self.TEMPORARY, size);
 
 			if (save && _files.length) {
 				cleanUp();
@@ -105,17 +101,16 @@ define(function()
 	/**
 	 * Normalize file path
 	 *
-	 * @param {array} FileList
+	 * @param {array} files FileList
 	 * @returns {array} normalized filelist
 	 */
-	function normalizeFilesPath( files )
-	{
+	function normalizeFilesPath(files) {
 		var i, count;
 		var list = new Array(files.length);
 		var backslash = /\\\\/g;
 
 		for (i = 0, count = files.length; i < count; ++i) {
-			list[i]       = files[i].file;
+			list[i] = files[i].file;
 			list[i]._path = files[i].path.replace(backslash, '/');
 		}
 
@@ -127,8 +122,7 @@ define(function()
 	/**
 	 * Error Handler give a human error
 	 */
-	function errorHandler(e)
-	{
+	function errorHandler(e) {
 		var msg = '';
 		switch (e.code) {
 			case FileError.QUOTA_EXCEEDED_ERR:
@@ -157,10 +151,9 @@ define(function()
 
 	/**
 	 * Calculate FullClient total size
-	 * @returns {integer}
+	 * @returns {number}
 	 */
-	function calculateClientSize()
-	{
+	function calculateClientSize() {
 		var i, count;
 
 		_clientSize = 0;
@@ -168,6 +161,7 @@ define(function()
 		for (i = 0, count = _files.length; i < count; ++i) {
 			_clientSize += _files[i].size || 0;
 		}
+		return _clientSize;
 	}
 
 
@@ -176,8 +170,7 @@ define(function()
 	 *
 	 * @param {number} index
 	 */
-	function processUpload( index )
-	{
+	function processUpload(index) {
 		var file = _files[index];
 
 		// Finished.
@@ -185,12 +178,12 @@ define(function()
 			var i, count;
 
 			// Move all files from the directory to root.
-			var tmpDir    = _fs_sync.root.getDirectory('/__tmp_upload/', {});
+			var tmpDir = _fs_sync.root.getDirectory('/__tmp_upload/', {});
 			var dirReader = tmpDir.createReader();
-			var entries   = dirReader.readEntries();
+			var entries = dirReader.readEntries();
 
 			for (i = 0, count = entries.length; i < count; ++i) {
-				entries[i].moveTo( _fs_sync.root, entries[i].name );
+				entries[i].moveTo(_fs_sync.root, entries[i].name);
 			}
 
 			tmpDir.removeRecursively();
@@ -201,21 +194,21 @@ define(function()
 		}
 
 		if (file.name[0] === '.') {
-			_files.splice( index, 1);
-			processUpload( index );
+			_files.splice(index, 1);
+			processUpload(index);
 			return;
 		}
 
-		_fs.root.getFile( '/__tmp_upload/' + file._path, {create: true}, function(fileEntry){
-			fileEntry.createWriter(function(writer){
-				writer.onerror     = errorHandler;
-				writer.onwriteend  = function() {
+		_fs.root.getFile('/__tmp_upload/' + file._path, { create: true }, function (fileEntry) {
+			fileEntry.createWriter(function (writer) {
+				writer.onerror = errorHandler;
+				writer.onwriteend = function () {
 					_streamOffset += file.size;
-					processUpload( index + 1);
+					processUpload(index + 1);
 				};
 
 				var last_tick = Date.now();
-				writer.onprogress= function(evt){
+				writer.onprogress = function (evt) {
 
 					// Do not spam the main thread
 					var now = Date.now();
@@ -228,14 +221,14 @@ define(function()
 						filename: file.name,
 						filePath: file._path,
 						file: {
-							total:  evt.total,
+							total: evt.total,
 							loaded: evt.loaded,
-							perc:   (evt.loaded / evt.total * 100).toFixed(2)
+							perc: (evt.loaded / evt.total * 100).toFixed(2)
 						},
 						total: {
-							total:  _clientSize,
+							total: _clientSize,
 							loaded: _streamOffset + evt.loaded,
-							perc:   (( _streamOffset + evt.loaded) / _clientSize * 100).toFixed(2)
+							perc: ((_streamOffset + evt.loaded) / _clientSize * 100).toFixed(2)
 						}
 					});
 				};
@@ -250,30 +243,29 @@ define(function()
 	/**
 	 * Build directory hierarchy
 	 */
-	function buildHierarchy()
-	{
+	function buildHierarchy() {
 		var cache = {}, keys;
 		var i = 0, count = _files.length;
 		var path, filename = /\/?[^\/]+$/;
 
 		// Extract directory from each file path
 		for (; i < count; ++i) {
-			path = _files[i]._path.split('/').slice(0,-1).join('/');
+			path = _files[i]._path.split('/').slice(0, -1).join('/');
 			while (!(path in cache) && path.length) {
 				cache[path] = true;
-				path        = path.replace(filename,'');
+				path = path.replace(filename, '');
 			}
 		}
 
 		// Extract keys and build directories
-		keys  = Object.keys(cache);
+		keys = Object.keys(cache);
 		keys.sort();
 
 		// Directory where to upload data
-		_fs_sync.root.getDirectory( '/__tmp_upload/', {create: true});
+		_fs_sync.root.getDirectory('/__tmp_upload/', { create: true });
 
-		for (i = 0, count = keys.length; i < count ; ++i) {
-			_fs_sync.root.getDirectory( '/__tmp_upload/' + keys[i], {create: true});
+		for (i = 0, count = keys.length; i < count; ++i) {
+			_fs_sync.root.getDirectory('/__tmp_upload/' + keys[i], { create: true });
 		}
 	}
 
@@ -281,11 +273,10 @@ define(function()
 	/**
 	 * Remove all files from FileSystem
 	 */
-	function cleanUp()
-	{
+	function cleanUp() {
 		var i, count;
 		var dirReader = _fs_sync.root.createReader();
-		var entries   = dirReader.readEntries();
+		var entries = dirReader.readEntries();
 
 		for (i = 0, count = entries.length; i < count; ++i) {
 			if (entries[i].isDirectory) {
@@ -304,12 +295,11 @@ define(function()
 	 * @param {string} eventname
 	 * @param {mixed...}
 	 */
-	function trigger( eventname )
-	{
-		if (_events[ eventname ]) {
-			_events[ eventname ].apply(
+	function trigger(eventname) {
+		if (_events[eventname]) {
+			_events[eventname].apply(
 				null,
-				Array.prototype.slice.call( arguments, 1)
+				Array.prototype.slice.call(arguments, 1)
 			);
 		}
 	}
@@ -321,9 +311,8 @@ define(function()
 	 * @param {string} eventname
 	 * @param {function} callback
 	 */
-	function bind( eventname, callback )
-	{
-		_events[ eventname ] = callback;
+	function bind(eventname, callback) {
+		_events[eventname] = callback;
 	}
 
 
@@ -333,9 +322,8 @@ define(function()
 	 * @param {string} filename
 	 * @returns {File}
 	 */
-	function getFileSync( filename )
-	{
-		filename = filename.replace( /\\/g, '/');
+	function getFileSync(filename) {
+		filename = filename.replace(/\\/g, '/');
 
 		if (!_available || _files.length) {
 			var i, count = _files.length;
@@ -352,9 +340,9 @@ define(function()
 		var fileEntry;
 
 		try {
-			fileEntry = _fs_sync.root.getFile(filename, {create:false});
+			fileEntry = _fs_sync.root.getFile(filename, { create: false });
 		}
-		catch(e) {
+		catch (e) {
 			// not found
 			return null;
 		}
@@ -371,12 +359,11 @@ define(function()
 	 * Get a file in FileSystem (async)
 	 *
 	 * @param {string} filename
-	 * @param {function} once loaded
-	 * @param {function} callback if not found
+	 * @param {function} onload once loaded
+	 * @param {function} onerror callback if not found
 	 */
-	function getFile( filename, onload, onerror )
-	{
-		filename = filename.replace( /\\/g, '/');
+	function getFile(filename, onload, onerror) {
+		filename = filename.replace(/\\/g, '/');
 
 		if (!_available || _files.length) {
 			var i, count = _files.length;
@@ -392,7 +379,7 @@ define(function()
 			return;
 		}
 
-		_fs.root.getFile( filename, {create: false}, function(fileEntry){
+		_fs.root.getFile(filename, { create: false }, function (fileEntry) {
 			if (fileEntry.isFile) {
 				fileEntry.file(onload);
 			}
@@ -410,24 +397,23 @@ define(function()
 	 * @param {string} filePath
 	 * @param {ArrayBuffer} buffer
 	 */
-	function saveFile( filePath, buffer )
-	{
+	function saveFile(filePath, buffer) {
 		if (!_save || !_available) {
 			return;
 		}
 
-		var filename    = filePath.replace( /\\/g, '/');
-		var directories = filename.split('/').slice(0,-1);
-		var path        = '';
+		var filename = filePath.replace(/\\/g, '/');
+		var directories = filename.split('/').slice(0, -1);
+		var path = '';
 
 		// Create hierarchy
 		while (directories.length) {
 			path += directories.shift() + '/';
-			_fs_sync.root.getDirectory( path, {create: true});
+			_fs_sync.root.getDirectory(path, { create: true });
 		}
 
-		var fileEntry = _fs_sync.root.getFile(filename, {create:true});
-		var writer    = fileEntry.createWriter();
+		var fileEntry = _fs_sync.root.getFile(filename, { create: true });
+		var writer = fileEntry.createWriter();
 
 		writer.write(new Blob([buffer]));
 	}
@@ -438,19 +424,18 @@ define(function()
 	 *
 	 * @param {RegExp|string} regex to match the filename
 	 */
-	function search( regex )
-	{
+	function search(regex) {
 		var i, count;
 		var list = [];
 
 		if (!(regex instanceof RegExp)) {
-			regex = new RegExp('^'+ regex.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, '\\$1') + '$', 'i');
+			regex = new RegExp('^' + regex.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, '\\$1') + '$', 'i');
 		}
 
 		if (!_available || _files.length) {
 
 			for (i = 0, count = _files.length; i < count; ++i) {
-				if ( _files[i].name.match(regex)) {
+				if (_files[i].name.match(regex)) {
 					list.push(_files[i]);
 				}
 			}
@@ -462,7 +447,7 @@ define(function()
 
 		for (i = 0, count = entries.length; i < count; ++i) {
 			if (entries[i].isFile && entries[i].name.match(regex)) {
-				list.push( entries[i].file() );
+				list.push(entries[i].file());
 			}
 		}
 
@@ -475,12 +460,12 @@ define(function()
 	 * @type {Core.FileSystem}
 	 */
 	return {
-		bind:        bind,
-		getFile:     getFile,
+		bind: bind,
+		getFile: getFile,
 		getFileSync: getFileSync,
-		init:        init,
-		cleanup:     cleanUp,
-		search:      search,
-		saveFile:    saveFile
+		init: init,
+		cleanup: cleanUp,
+		search: search,
+		saveFile: saveFile
 	};
 });

@@ -11,7 +11,6 @@ define(function(/** @type {Require} */require )
 {
 	'use strict';
 
-
 	// Load dependencies
 	/** @type {Utils.glMatrix} */var glMatrix    = require('Utils/gl-matrix');
 	/** @type {Utils.PathFinding} */var PathFinding = require('Utils/PathFinding');
@@ -25,16 +24,16 @@ define(function(/** @type {Require} */require )
 	/** @type {Network.PacketVerManager} */var PACKETVER   = require('Network/PacketVerManager');
 	/** @type {Network.PacketStructure} */var PACKET      = require('Network/PacketStructure');
 	/** @type {Network.NetworkManager} */var Network     = require('Network/NetworkManager');
-	/** @type {UI.UIManager} */var Cursor      = require('UI/CursorManager');
-	/** @type {UI.TUIComponent} */var InputBox    = require('UI/Components/InputBox/InputBox');
-	/** @type {UI.TUIComponent} */var ChatRoom    = require('UI/Components/ChatRoom/ChatRoom');
-	/** @type {UI.TUIComponent} */var ContextMenu = require('UI/Components/ContextMenu/ContextMenu');
-	/** @type {UI.TUIComponent} */var Pet         = require('UI/Components/PetInformations/PetInformations');
-	/** @type {UI.TUIComponent} */var Trade       = require('UI/Components/Trade/Trade');
-	/** @type {UI.TUIComponent} */var NpcBox 		= require('UI/Components/NpcBox/NpcBox');
+	/** @type {UI.CursorManager} */var Cursor      = require('UI/CursorManager');
+	/** @type {UI.Component.InputBox} */var InputBox    = require('UI/Components/InputBox/InputBox');
+	/** @type {UI.Component.ChatRoom} */var ChatRoom    = require('UI/Components/ChatRoom/ChatRoom');
+	/** @type {UI.Component.ContextMenu} */var ContextMenu = require('UI/Components/ContextMenu/ContextMenu');
+	/** @type {UI.Component.PetInformations} */var Pet         = require('UI/Components/PetInformations/PetInformations');
+	/** @type {UI.Component.Trade} */var Trade       = require('UI/Components/Trade/Trade');
+	/** @type {UI.Component.NpcBox} */var NpcBox 		= require('UI/Components/NpcBox/NpcBox');
 	/** @type {Renderer.Map.Altitude} */var Altitude 	= require('Renderer/Map/Altitude');
-	/** @type {UI.TUIComponent} */var ChatBox     = require('UI/Components/ChatBox/ChatBox');
-	/** @type {UI.TUIComponent} */var Equipment   = require('UI/Components/Equipment/Equipment');
+	/** @type {UI.Component.ChatBox} */var ChatBox     = require('UI/Components/ChatBox/ChatBox');
+	/** @type {UI.Component.Equipment} */var Equipment   = require('UI/Components/Equipment/Equipment');
 	var getModule   = require;
 
 

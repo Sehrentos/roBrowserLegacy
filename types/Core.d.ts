@@ -22,7 +22,7 @@ declare namespace Core {
 		init(files: string[]): void
 		getFile(filename: string, onload: Function, onerror?: Function, args?: any): any
 		getFiles(filenames: string[], callback: Function): void
-		loadFile(filename: string, onload: Function, onerror?: Function, args?: any): any
+		loadFile(filename: string, onload?: Function, onerror?: Function, args?: any): any
 		loadFiles(filenames: string[], callback: Function): void
 		search(regex: RegExp, callback: Function): void
 		onFilesLoaded: Function
@@ -47,6 +47,7 @@ declare namespace Core {
 	}
 
 	interface Events {
+		(): void // for empty func constructor
 		process: (tick: number) => void
 		clearTimeout: (uid: number) => void
 		setTimeout: (callback: Function, delay: number) => number
@@ -101,13 +102,14 @@ declare namespace Core {
 
 	interface Mobile {
 		init(): void
-		onTouchStart: (event:TouchEvent) => void // MapControl
-		onTouchEnd: (event:TouchEvent) => void // MapControl
+		onTouchStart: (event: TouchEvent) => void // MapControl
+		onTouchEnd: (event: TouchEvent) => void // MapControl
 	}
 
-	interface Preferences {
-		get(key: string, def: any, version?: number): any
-		save(data: any): void
+	// example: Core.Preferences<Preferences.Audio>
+	interface Preferences<T> {
+		get(key: string, def?: T, version?: number): T;
+		save(data: any): void;
 	}
 
 	interface Thread {

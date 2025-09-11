@@ -7,17 +7,15 @@
  *
  * @author Vincent Thibault
  */
-
-define(function()
-{
+define(function () {
 	'use strict';
 
 	/**
 	 * TGA Namespace
 	 * @constructor
+	 * @type {Loaders.Targa}
 	 */
-	function Targa()
-	{
+	function Targa() {
 	}
 
 
@@ -25,13 +23,13 @@ define(function()
 	 * @var {object} TGA type constants
 	 */
 	Targa.Type = {
-		NO_DATA     : 0,
-		INDEXED     : 1,
-		RGB         : 2,
-		GREY        : 3,
-		RLE_INDEXED : 9,
-		RLE_RGB     : 10,
-		RLE_GREY    : 11,
+		NO_DATA: 0,
+		INDEXED: 1,
+		RGB: 2,
+		GREY: 3,
+		RLE_INDEXED: 9,
+		RLE_RGB: 10,
+		RLE_GREY: 11,
 	};
 
 
@@ -39,12 +37,12 @@ define(function()
 	 * @var {object} TGA origin constants
 	 */
 	Targa.Origin = {
-		BOTTOM_LEFT:  0x00,
+		BOTTOM_LEFT: 0x00,
 		BOTTOM_RIGHT: 0x01,
-		TOP_LEFT:     0x02,
-		TOP_RIGHT:    0x03,
-		SHIFT:        0x04,
-		MASK:         0x30,
+		TOP_LEFT: 0x02,
+		TOP_RIGHT: 0x03,
+		SHIFT: 0x04,
+		MASK: 0x30,
 	};
 
 
@@ -54,8 +52,7 @@ define(function()
 	 * @param {object} tga header structure
 	 * @throws Error
 	 */
-	function checkHeader( header )
-	{
+	function checkHeader(header) {
 		// What the need of a file without data ?
 		if (header.imageType === Targa.Type.NO_DATA) {
 			throw new Error('Targa::checkHeader() - No data');
@@ -79,10 +76,10 @@ define(function()
 		}
 
 		// Check pixel size
-		if (header.pixelDepth !== 8  &&
-		    header.pixelDepth !== 16 &&
-		    header.pixelDepth !== 24 &&
-		    header.pixelDepth !== 32) {
+		if (header.pixelDepth !== 8 &&
+			header.pixelDepth !== 16 &&
+			header.pixelDepth !== 24 &&
+			header.pixelDepth !== 32) {
 			throw new Error('Targa::checkHeader() - Invalid pixel size "' + header.pixelDepth + '"');
 		}
 	}
@@ -96,17 +93,16 @@ define(function()
 	 * @param {number} pixel count
 	 * @param {number} output buffer size
 	 */
-	function decodeRLE( data, offset, pixelSize, outputSize)
-	{
+	function decodeRLE(data, offset, pixelSize, outputSize) {
 		var pos, c, count, i;
 		var pixels, output;
 
 		output = new Uint8Array(outputSize);
 		pixels = new Uint8Array(pixelSize);
-		pos    = 0;
+		pos = 0;
 
 		while (pos < outputSize) {
-			c     = data[offset++];
+			c = data[offset++];
 			count = (c & 0x7f) + 1;
 
 			// RLE pixels.
@@ -151,8 +147,7 @@ define(function()
 	 * @param {number} x_end   - stop at pixel x.
 	 * @returns {Array} imageData
 	 */
-	function getImageData8bits(imageData, indexes, colormap, width, y_start, y_step, y_end, x_start, x_step, x_end)
-	{
+	function getImageData8bits(imageData, indexes, colormap, width, y_start, y_step, y_end, x_start, x_step, x_end) {
 		var color, i, x, y;
 
 		for (i = 0, y = y_start; y !== y_end; y += y_step) {
@@ -184,8 +179,7 @@ define(function()
 	 * @param {number} x_end   - stop at pixel x.
 	 * @returns {Array} imageData
 	 */
-	function getImageData16bits(imageData, pixels, colormap, width, y_start, y_step, y_end, x_start, x_step, x_end)
-	{
+	function getImageData16bits(imageData, pixels, colormap, width, y_start, y_step, y_end, x_start, x_step, x_end) {
 		var color, i, x, y;
 
 		for (i = 0, y = y_start; y !== y_end; y += y_step) {
@@ -217,8 +211,7 @@ define(function()
 	 * @param {number} x_end   - stop at pixel x.
 	 * @returns {Array} imageData
 	 */
-	function getImageData24bits(imageData, pixels, colormap, width, y_start, y_step, y_end, x_start, x_step, x_end)
-	{
+	function getImageData24bits(imageData, pixels, colormap, width, y_start, y_step, y_end, x_start, x_step, x_end) {
 		var i, x, y;
 
 		for (i = 0, y = y_start; y !== y_end; y += y_step) {
@@ -249,8 +242,7 @@ define(function()
 	 * @param {number} x_end   - stop at pixel x.
 	 * @returns {Array} imageData
 	 */
-	function getImageData32bits(imageData, pixels, colormap, width, y_start, y_step, y_end, x_start, x_step, x_end)
-	{
+	function getImageData32bits(imageData, pixels, colormap, width, y_start, y_step, y_end, x_start, x_step, x_end) {
 		var i, x, y;
 
 		for (i = 0, y = y_start; y !== y_end; y += y_step) {
@@ -281,8 +273,7 @@ define(function()
 	 * @param {number} x_end   - stop at pixel x.
 	 * @returns {Array} imageData
 	 */
-	function getImageDataGrey8bits(imageData, pixels, colormap, width, y_start, y_step, y_end, x_start, x_step, x_end)
-	{
+	function getImageDataGrey8bits(imageData, pixels, colormap, width, y_start, y_step, y_end, x_start, x_step, x_end) {
 		var color, i, x, y;
 
 		for (i = 0, y = y_start; y !== y_end; y += y_step) {
@@ -314,8 +305,7 @@ define(function()
 	 * @param {number} x_end   - stop at pixel x.
 	 * @returns {Array} imageData
 	 */
-	function getImageDataGrey16bits(imageData, pixels, colormap, width, y_start, y_step, y_end, x_start, x_step, x_end)
-	{
+	function getImageDataGrey16bits(imageData, pixels, colormap, width, y_start, y_step, y_end, x_start, x_step, x_end) {
 		var i, x, y;
 
 		for (i = 0, y = y_start; y !== y_end; y += y_step) {
@@ -337,13 +327,12 @@ define(function()
 	 * @param {string} path - Path of the filename to load
 	 * @param {function} callback - callback to trigger when the file is loaded
 	 */
-	Targa.prototype.open = function targaOpen(path, callback)
-	{
+	Targa.prototype.open = function targaOpen(path, callback) {
 		var req, tga = this;
 		req = new XMLHttpRequest();
 		req.responseType = 'arraybuffer';
 		req.open('GET', path, true);
-		req.onload = function() {
+		req.onload = function () {
 			if (this.status === 200) {
 				tga.load(new Uint8Array(req.response));
 				if (callback) {
@@ -360,8 +349,7 @@ define(function()
 	 *
 	 * @param {Uint8Array} data - TGA file buffer array
 	 */
-	Targa.prototype.load = function targaLoad( data )
-	{
+	Targa.prototype.load = function targaLoad(data) {
 		var offset = 0;
 
 		// Not enough data to contain header ?
@@ -371,24 +359,24 @@ define(function()
 
 		// Read TgaHeader
 		this.header = {
-			/* 0x00  BYTE */  idLength:       data[offset++],
-			/* 0x01  BYTE */  colorMapType:   data[offset++],
-			/* 0x02  BYTE */  imageType:      data[offset++],
-			/* 0x03  WORD */  colorMapIndex:  data[offset++] | data[offset++] << 8,
+			/* 0x00  BYTE */  idLength: data[offset++],
+			/* 0x01  BYTE */  colorMapType: data[offset++],
+			/* 0x02  BYTE */  imageType: data[offset++],
+			/* 0x03  WORD */  colorMapIndex: data[offset++] | data[offset++] << 8,
 			/* 0x05  WORD */  colorMapLength: data[offset++] | data[offset++] << 8,
-			/* 0x07  BYTE */  colorMapDepth:  data[offset++],
-			/* 0x08  WORD */  offsetX:        data[offset++] | data[offset++] << 8,
-			/* 0x0a  WORD */  offsetY:        data[offset++] | data[offset++] << 8,
-			/* 0x0c  WORD */  width:          data[offset++] | data[offset++] << 8,
-			/* 0x0e  WORD */  height:         data[offset++] | data[offset++] << 8,
-			/* 0x10  BYTE */  pixelDepth:     data[offset++],
-			/* 0x11  BYTE */  flags:          data[offset++]
+			/* 0x07  BYTE */  colorMapDepth: data[offset++],
+			/* 0x08  WORD */  offsetX: data[offset++] | data[offset++] << 8,
+			/* 0x0a  WORD */  offsetY: data[offset++] | data[offset++] << 8,
+			/* 0x0c  WORD */  width: data[offset++] | data[offset++] << 8,
+			/* 0x0e  WORD */  height: data[offset++] | data[offset++] << 8,
+			/* 0x10  BYTE */  pixelDepth: data[offset++],
+			/* 0x11  BYTE */  flags: data[offset++]
 		};
 
 		// Set shortcut
-		this.header.hasEncoding = (this.header.imageType === Targa.Type.RLE_INDEXED || this.header.imageType === Targa.Type.RLE_RGB   || this.header.imageType === Targa.Type.RLE_GREY);
+		this.header.hasEncoding = (this.header.imageType === Targa.Type.RLE_INDEXED || this.header.imageType === Targa.Type.RLE_RGB || this.header.imageType === Targa.Type.RLE_GREY);
 		this.header.hasColorMap = (this.header.imageType === Targa.Type.RLE_INDEXED || this.header.imageType === Targa.Type.INDEXED);
-		this.header.isGreyColor = (this.header.imageType === Targa.Type.RLE_GREY    || this.header.imageType === Targa.Type.GREY);
+		this.header.isGreyColor = (this.header.imageType === Targa.Type.RLE_GREY || this.header.imageType === Targa.Type.GREY);
 
 		// Check if a valid TGA file (or if we can load it)
 		checkHeader(this.header);
@@ -401,13 +389,13 @@ define(function()
 
 		// Read palette
 		if (this.header.hasColorMap) {
-			var colorMapSize  = this.header.colorMapLength * (this.header.colorMapDepth >> 3);
-			this.palette      = data.subarray( offset, offset + colorMapSize);
-			offset           += colorMapSize;
+			var colorMapSize = this.header.colorMapLength * (this.header.colorMapDepth >> 3);
+			this.palette = data.subarray(offset, offset + colorMapSize);
+			offset += colorMapSize;
 		}
 
-		var pixelSize  = this.header.pixelDepth >> 3;
-		var imageSize  = this.header.width * this.header.height;
+		var pixelSize = this.header.pixelDepth >> 3;
+		var imageSize = this.header.width * this.header.height;
 		var pixelTotal = imageSize * pixelSize;
 
 		// RLE encoded
@@ -417,7 +405,7 @@ define(function()
 
 		// RAW pixels
 		else {
-			this.imageData = data.subarray( offset, offset + (this.header.hasColorMap ? imageSize : pixelTotal) );
+			this.imageData = data.subarray(offset, offset + (this.header.hasColorMap ? imageSize : pixelTotal));
 		}
 	};
 
@@ -428,9 +416,8 @@ define(function()
 	 * @param {object} imageData - Optional ImageData to work with
 	 * @returns {object} imageData
 	 */
-	Targa.prototype.getImageData = function targaGetImageData( imageData )
-	{
-		var width  = this.header.width;
+	Targa.prototype.getImageData = function targaGetImageData(imageData) {
+		var width = this.header.width;
 		var height = this.header.height;
 		var origin = (this.header.flags & Targa.Origin.MASK) >> Targa.Origin.SHIFT;
 		var x_start, x_step, x_end, y_start, y_step, y_end;
@@ -444,7 +431,7 @@ define(function()
 			// In Thread context ?
 			else {
 				imageData = {
-					width:  width,
+					width: width,
 					height: height,
 					data: new Uint8ClampedArray(width * height * 4)
 				};
@@ -453,24 +440,24 @@ define(function()
 
 		if (origin === Targa.Origin.TOP_LEFT || origin === Targa.Origin.TOP_RIGHT) {
 			y_start = 0;
-			y_step  = 1;
-			y_end   = height;
+			y_step = 1;
+			y_end = height;
 		}
 		else {
 			y_start = height - 1;
-			y_step  = -1;
-			y_end   = -1;
+			y_step = -1;
+			y_end = -1;
 		}
 
 		if (origin === Targa.Origin.TOP_LEFT || origin === Targa.Origin.BOTTOM_LEFT) {
 			x_start = 0;
-			x_step  = 1;
-			x_end   = width;
+			x_step = 1;
+			x_end = width;
 		}
 		else {
 			x_start = width - 1;
-			x_step  = -1;
-			x_end   = -1;
+			x_step = -1;
+			x_end = -1;
 		}
 
 		// TODO: use this.header.offsetX and this.header.offsetY ?
@@ -503,15 +490,14 @@ define(function()
 	 *
 	 * @returns {object} CanvasElement
 	 */
-	Targa.prototype.getCanvas = function targaGetCanvas()
-	{
+	Targa.prototype.getCanvas = function targaGetCanvas() {
 		var canvas, ctx, imageData;
 
-		canvas    = document.createElement('canvas');
-		ctx       = canvas.getContext('2d');
+		canvas = document.createElement('canvas');
+		ctx = canvas.getContext('2d');
 		imageData = ctx.createImageData(this.header.width, this.header.height);
 
-		canvas.width  = this.header.width;
+		canvas.width = this.header.width;
 		canvas.height = this.header.height;
 
 		ctx.putImageData(this.getImageData(imageData), 0, 0);
@@ -526,14 +512,14 @@ define(function()
 	 * @param {string} type - Optional image content-type to output (default: image/png)
 	 * @returns {string} url
 	 */
-	Targa.prototype.getDataURL = function targaGetDatURL( type )
-	{
+	Targa.prototype.getDataURL = function targaGetDatURL(type) {
 		return this.getCanvas().toDataURL(type || 'image/png');
 	};
 
 
 	/**
 	 * Export
+	 * @type {Loaders.Targa}
 	 */
 	return Targa;
 });

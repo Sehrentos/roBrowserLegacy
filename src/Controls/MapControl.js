@@ -7,39 +7,37 @@
  *
  * @author Vincent Thibault
  */
-define(function( /** @type {Require} */require )
-{
+define(function ( /** @type {Require} */require) {
 	'use strict';
 
-
 	// Load dependencies
-	/** @type {JQueryStatic} */var jQuery        = require('Utils/jquery');
-	/** @type {DB.DBManager} */var DB            = require('DB/DBManager');
-	/** @type {UI.UIManager} */var UIManager     = require('UI/UIManager');
-	/** @type {UI.CursorManager} */var Cursor        = require('UI/CursorManager');
-	/** @type {Renderer.Entity.Entity} */var Entity        = require('Renderer/Entity/Entity');
-	/** @type {UI.TUIComponent} */var InputBox      = require('UI/Components/InputBox/InputBox');
-	/** @type {UI.TUIComponent} */var ChatBox       = require('UI/Components/ChatBox/ChatBox');
-	/** @type {UI.TUIComponent} */var Equipment     = require('UI/Components/Equipment/Equipment');
-	/** @type {UI.TUIComponent} */var Inventory     = require('UI/Components/Inventory/Inventory');
-	/** @type {UI.TUIComponent} */var ShortCut      = require('UI/Components/ShortCut/ShortCut');
-	/** @type {UI.TUIComponent} */var SkillTargetSelection      = require('UI/Components/SkillTargetSelection/SkillTargetSelection');
-	/** @type {Controls.MouseEventHandler} */var Mouse         = require('Controls/MouseEventHandler');
-	/** @type {Core.Mobile} */var Mobile        = require('Core/Mobile');
-	/** @type {Renderer.Renderer} */var Renderer      = require('Renderer/Renderer');
-	/** @type {Renderer.Camera} */var Camera        = require('Renderer/Camera');
+	/** @type {JQueryStatic} */var jQuery = require('Utils/jquery');
+	/** @type {DB.DBManager} */var DB = require('DB/DBManager');
+	/** @type {UI.UIManager} */var UIManager = require('UI/UIManager');
+	/** @type {UI.CursorManager} */var Cursor = require('UI/CursorManager');
+	/** @type {Renderer.Entity.Entity} */var Entity = require('Renderer/Entity/Entity');
+	/** @type {UI.Component.InputBox} */var InputBox = require('UI/Components/InputBox/InputBox');
+	/** @type {UI.Component.ChatBox} */var ChatBox = require('UI/Components/ChatBox/ChatBox');
+	/** @type {UI.Component.Equipment} */var Equipment = require('UI/Components/Equipment/Equipment');
+	/** @type {UI.Component.Inventory} */var Inventory = require('UI/Components/Inventory/Inventory');
+	/** @type {UI.Component.ShortCut} */var ShortCut = require('UI/Components/ShortCut/ShortCut');
+	/** @type {UI.Component.SkillTargetSelection} */var SkillTargetSelection = require('UI/Components/SkillTargetSelection/SkillTargetSelection');
+	/** @type {Controls.MouseEventHandler} */var Mouse = require('Controls/MouseEventHandler');
+	/** @type {Core.Mobile} */var Mobile = require('Core/Mobile');
+	/** @type {Renderer.Renderer} */var Renderer = require('Renderer/Renderer');
+	/** @type {Renderer.Camera} */var Camera = require('Renderer/Camera');
 	/** @type {Renderer.EntityManager} */var EntityManager = require('Renderer/EntityManager');
-	/** @type {Engine.SessionStorage} */var Session       = require('Engine/SessionStorage');
-	/** @type {Preferences.ShortCutControls} */var Preferences   = require('Preferences/Controls');
-	/** @type {Controls.KeyEventHandler} */var KEYS          = require('Controls/KeyEventHandler');
-	/** @type {Core.AIDriver} */var AIDriver      = require('Core/AIDriver');
-	/** @type {Renderer.Map.Altitude} */var Altitude 	  = require('Renderer/Map/Altitude');
-	/** @type {Network.PacketVerManager} */var PACKETVER     = require('Network/PacketVerManager');
-	/** @type {Network.PacketStructure} */var PACKET        = require('Network/PacketStructure');
-	/** @type {Network.NetworkManager} */var Network       = require('Network/NetworkManager');
-	/** @type {Core.Events} */var Events        = require('Core/Events');
+	/** @type {Engine.SessionStorage} */var Session = require('Engine/SessionStorage');
+	/** @type {Preferences.ShortCutControls} */var Preferences = require('Preferences/Controls');
+	/** @type {Controls.KeyEventHandler} */var KEYS = require('Controls/KeyEventHandler');
+	/** @type {Core.AIDriver} */var AIDriver = require('Core/AIDriver');
+	/** @type {Renderer.Map.Altitude} */var Altitude = require('Renderer/Map/Altitude');
+	/** @type {Network.PacketVerManager} */var PACKETVER = require('Network/PacketVerManager');
+	/** @type {Network.PacketStructure} */var PACKET = require('Network/PacketStructure');
+	/** @type {Network.NetworkManager} */var Network = require('Network/NetworkManager');
+	/** @type {Core.Events} */var Events = require('Core/Events');
 
-	/** @type {Controls.ScreenShot} */var ScreenShot    = require('Controls/ScreenShot');
+	/** @type {Controls.ScreenShot} */var ScreenShot = require('Controls/ScreenShot');
 
 
 	/**
@@ -57,47 +55,45 @@ define(function( /** @type {Require} */require )
 	/**
 	 * Callback used when requesting to move somewhere
 	 */
-	MapControl.onRequestWalk = function(){};
+	MapControl.onRequestWalk = function () { };
 
 
 	/**
 	 * Callback used when request to stop move
 	 */
-	MapControl.onRequestStopWalk = function(){};
+	MapControl.onRequestStopWalk = function () { };
 
 
 	/**
 	 * Callback used when dropping an item to the map
 	 */
-	MapControl.onRequestDropItem = function(){};
+	MapControl.onRequestDropItem = function () { };
 
 
 	/**
 	 * Initializing the controller
 	 */
-	MapControl.init = function init()
-	{
+	MapControl.init = function init() {
 		Mobile.init();
 		Mobile.onTouchStart = onMouseDown.bind(this);
-		Mobile.onTouchEnd   = onMouseUp.bind(this);
+		Mobile.onTouchEnd = onMouseUp.bind(this);
 
 		// Attach events
-		jQuery( Renderer.canvas )
+		jQuery(Renderer.canvas)
 			.on('mousewheel DOMMouseScroll', onMouseWheel)
-			.on('dragover',                  onDragOver )
-			.on('drop',                      onDrop.bind(this));
+			.on('dragover', onDragOver)
+			.on('drop', onDrop.bind(this));
 
 		jQuery(window)
-			.on('mousedown.map',   onMouseDown.bind(this))
-			.on('mouseup.map',     onMouseUp.bind(this));
+			.on('mousedown.map', onMouseDown.bind(this))
+			.on('mouseup.map', onMouseUp.bind(this));
 	};
 
 
 	/**
 	 * What to do when clicking on the map ?
 	 */
-	function onMouseDown( event )
-	{
+	function onMouseDown(event) {
 		var action = event && event.which || 1;
 
 		if (!Mouse.intersect) {
@@ -105,7 +101,7 @@ define(function( /** @type {Require} */require )
 		}
 
 		var entityFocus = EntityManager.getFocusEntity();
-		var entityOver  = EntityManager.getOverEntity();
+		var entityOver = EntityManager.getOverEntity();
 
 		switch (action) {
 
@@ -114,19 +110,19 @@ define(function( /** @type {Require} */require )
 				if (!KEYS.SHIFT && KEYS.ALT && !KEYS.CTRL) {
 
 					if (entityOver && entityOver != Session.Entity && entityOver.objecttype != Entity.TYPE_EFFECT && entityOver.objecttype != Entity.TYPE_TRAP) {
-						AIDriver.mercenary.setmsg(Session.mercId, '3,'+ entityOver.GID);
+						AIDriver.mercenary.setmsg(Session.mercId, '3,' + entityOver.GID);
 					} else {
-						AIDriver.mercenary.setmsg(Session.mercId, '1,'+ Mouse.world.x + ',' + Mouse.world.y);
+						AIDriver.mercenary.setmsg(Session.mercId, '1,' + Mouse.world.x + ',' + Mouse.world.y);
 					}
 
 				} else {
 					Session.moveAction = null;
 					Session.autoFollow = false;
 
-					var stop        = false;
-					if(entityOver != Session.Entity){
+					var stop = false;
+					if (entityOver != Session.Entity) {
 						if (entityFocus && entityFocus != entityOver) {
-							if(!(Session.TouchTargeting && !entityOver)) {
+							if (!(Session.TouchTargeting && !entityOver)) {
 								entityFocus.onFocusEnd();
 								EntityManager.setFocusEntity(null);
 							}
@@ -158,12 +154,12 @@ define(function( /** @type {Require} */require )
 				_rightClickPosition[1] = Mouse.screen.y;
 
 				if (!KEYS.SHIFT && KEYS.ALT && !KEYS.CTRL) {
-					Camera.rotate( false );
+					Camera.rotate(false);
 
 					if (entityOver && entityOver != Session.Entity && entityOver.objecttype != Entity.TYPE_EFFECT && entityOver.objecttype != Entity.TYPE_TRAP) {
-						AIDriver.homunculus.setmsg(Session.homunId, '3,'+ entityOver.GID);
+						AIDriver.homunculus.setmsg(Session.homunId, '3,' + entityOver.GID);
 					} else {
-						AIDriver.homunculus.setmsg(Session.homunId, '1,'+ Mouse.world.x + ',' + Mouse.world.y);
+						AIDriver.homunculus.setmsg(Session.homunId, '1,' + Mouse.world.x + ',' + Mouse.world.y);
 					}
 
 				} else {
@@ -181,8 +177,8 @@ define(function( /** @type {Require} */require )
 						EntityManager.setFocusEntity(entityOver);
 					}
 
-					Cursor.setType( Cursor.ACTION.ROTATE );
-					Camera.rotate( true );
+					Cursor.setType(Cursor.ACTION.ROTATE);
+					Camera.rotate(true);
 				}
 				break;
 		}
@@ -192,8 +188,7 @@ define(function( /** @type {Require} */require )
 	/**
 	 * What to do when stop clicking on the map ?
 	 */
-	function onMouseUp( event )
-	{
+	function onMouseUp(event) {
 		var entity, ET;
 		var action = event && event.which || 1;
 
@@ -214,7 +209,7 @@ define(function( /** @type {Require} */require )
 					entity.onMouseUp();
 
 					// Entity lock is only on MOB type (except when Touch Targeting is active)
-					if (Preferences.noctrl === false || (![ET.TYPE_MOB, ET.TYPE_NPC_ABR, ET.TYPE_NPC_BIONIC].includes(entity.objecttype) && !Session.TouchTargeting )) {
+					if (Preferences.noctrl === false || (![ET.TYPE_MOB, ET.TYPE_NPC_ABR, ET.TYPE_NPC_BIONIC].includes(entity.objecttype) && !Session.TouchTargeting)) {
 						EntityManager.setFocusEntity(null);
 						entity.onFocusEnd();
 					}
@@ -228,8 +223,8 @@ define(function( /** @type {Require} */require )
 
 			// Right Click
 			case 3:
-				Cursor.setType( Cursor.ACTION.DEFAULT );
-				Camera.rotate( false );
+				Cursor.setType(Cursor.ACTION.DEFAULT);
+				Camera.rotate(false);
 
 				// Seems like it's how the official client handle the contextmenu
 				// Just check for the same position on mousedown and mouseup
@@ -248,12 +243,11 @@ define(function( /** @type {Require} */require )
 	/**
 	 * Zoom feature
 	 */
-	function onMouseWheel( event )
-	{
-		if(Mouse.state === Mouse.MOUSE_STATE.USESKILL){
-			if(event.originalEvent.wheelDelta > 0){
+	function onMouseWheel(event) {
+		if (Mouse.state === Mouse.MOUSE_STATE.USESKILL) {
+			if (event.originalEvent.wheelDelta > 0) {
 				SkillTargetSelection.setSkillLevelDelta(1);
-			}else{
+			} else {
 				SkillTargetSelection.setSkillLevelDelta(-1);
 			}
 			return;
@@ -262,7 +256,7 @@ define(function( /** @type {Require} */require )
 		// Cross browser delta
 		var delta;
 		if (event.originalEvent.wheelDelta) {
-			delta = event.originalEvent.wheelDelta / 120 ;
+			delta = event.originalEvent.wheelDelta / 120;
 			if (window.opera) {
 				delta = -delta;
 			}
@@ -279,8 +273,7 @@ define(function( /** @type {Require} */require )
 	/**
 	 * Allow dropping data
 	 */
-	function onDragOver(event)
-	{
+	function onDragOver(event) {
 		event.stopImmediatePropagation();
 		return false;
 	}
@@ -290,8 +283,7 @@ define(function( /** @type {Require} */require )
 	/**
 	 * Drop items to the map
 	 */
-	function onDrop( event )
-	{
+	function onDrop(event) {
 		var item, data;
 
 		try {
@@ -299,7 +291,7 @@ define(function( /** @type {Require} */require )
 				event.originalEvent.dataTransfer.getData('Text')
 			);
 		}
-		catch(e) {}
+		catch (e) { }
 
 		// Stop default behavior
 		event.stopImmediatePropagation();
@@ -341,18 +333,18 @@ define(function( /** @type {Require} */require )
 		if (item.count > 1) {
 			InputBox.append();
 			InputBox.setType('item', false, item.count, item.ITID);
-			InputBox.onSubmitRequest = function onSubmitRequest( count ) {
+			InputBox.onSubmitRequest = function onSubmitRequest(count) {
 				InputBox.remove();
 				MapControl.onRequestDropItem(
 					item.index,
-					parseInt(count, 10 )
+					parseInt(count, 10)
 				);
 			};
 		}
 
 		// Only one, don't have to specify
 		else {
-			MapControl.onRequestDropItem( item.index, 1 );
+			MapControl.onRequestDropItem(item.index, 1);
 		}
 
 		return false;
@@ -361,8 +353,8 @@ define(function( /** @type {Require} */require )
 	/**
 	 * Auto follow logic
 	 */
-	function onAutoFollow(){
-		if(Session.autoFollow){
+	function onAutoFollow() {
+		if (Session.autoFollow) {
 			var player = Session.Entity;
 			var target = Session.autoFollowTarget;
 
@@ -370,23 +362,23 @@ define(function( /** @type {Require} */require )
 			var dy = Math.abs(player.position[1] - target.position[1]);
 
 			// Use square based range check instead of Pythagorean because of diagonals
-			if( dx>1 || dy>1 ){
-				var dest = [0,0];
+			if (dx > 1 || dy > 1) {
+				var dest = [0, 0];
 
 				// If there is valid cell send move packet
 				if (checkFreeCell(Math.round(target.position[0]), Math.round(target.position[1]), 1, dest)) {
 					var pkt;
-					if(PACKETVER.value >= 20180307) {
-						pkt         = new PACKET.CZ.REQUEST_MOVE2();
+					if (PACKETVER.value >= 20180307) {
+						pkt = new PACKET.CZ.REQUEST_MOVE2();
 					} else {
-						pkt         = new PACKET.CZ.REQUEST_MOVE();
+						pkt = new PACKET.CZ.REQUEST_MOVE();
 					}
 					pkt.dest = dest;
 					Network.sendPacket(pkt);
 				}
 			}
 
-			Events.setTimeout( onAutoFollow, 500);
+			Events.setTimeout(onAutoFollow, 500);
 		}
 	}
 
@@ -399,8 +391,7 @@ define(function( /** @type {Require} */require )
 	 * @param {number} range
 	 * @param {array} out
 	 */
-	function checkFreeCell(x, y, range, out)
-	{
+	function checkFreeCell(x, y, range, out) {
 		var _x, _y, r;
 		var d_x = Session.Entity.position[0] < x ? -1 : 1;
 		var d_y = Session.Entity.position[1] < y ? -1 : 1;
@@ -429,15 +420,14 @@ define(function( /** @type {Require} */require )
 	 * @param {number} y
 	 * @param {returns} is free
 	 */
-	function isFreeCell(x, y)
-	{
+	function isFreeCell(x, y) {
 		if (!(Altitude.getCellType(x, y) & Altitude.TYPE.WALKABLE)) {
 			return false;
 		}
 
 		var free = true;
 
-		EntityManager.forEach(function(entity){
+		EntityManager.forEach(function (entity) {
 			if (entity.objecttype != entity.constructor.TYPE_EFFECT &&
 				entity.objecttype != entity.constructor.TYPE_UNIT &&
 				entity.objecttype != entity.constructor.TYPE_TRAP &&

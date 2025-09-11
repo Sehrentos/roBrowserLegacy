@@ -7,31 +7,27 @@
  *
  * @author Vincent Thibault
  */
-define(function( require )
-{
+define(function (/** @type {Require} */require) {
 	'use strict';
 
-
-	/**
-	 * Load dependencies
-	 */
-	var WebGL         = require('Utils/WebGL');
-	var jQuery        = require('Utils/jquery');
-	var glMatrix      = require('Utils/gl-matrix');
-	var Configs       = require('Core/Configs');
-	var GraphicsSettings = require('Preferences/Graphics');
-	var Events        = require('Core/Events');
-	var Background    = require('UI/Background');
-	var Cursor        = require('UI/CursorManager');
-	var Mouse         = require('Controls/MouseEventHandler');
-	var Camera        = require('Renderer/Camera');
-	var Session       = require('Engine/SessionStorage');
-	var mat4          = glMatrix.mat4;
-	var getModule     = require;
+	/** @type {Utils.WebGL} */var WebGL = require('Utils/WebGL');
+	/** @type {JQueryStatic} */var jQuery = require('Utils/jquery');
+	/** @type {Utils.glMatrix} */var glMatrix = require('Utils/gl-matrix');
+	/** @type {Core.Configs} */var Configs = require('Core/Configs');
+	/** @type {Preferences.Graphics} */var GraphicsSettings = require('Preferences/Graphics');
+	/** @type {Core.Events} */var Events = require('Core/Events');
+	/** @type {UI.Background} */var Background = require('UI/Background');
+	/** @type {UI.CursorManager} */var Cursor = require('UI/CursorManager');
+	/** @type {Controls.MouseEventHandler} */var Mouse = require('Controls/MouseEventHandler');
+	/** @type {Renderer.Camera} */var Camera = require('Renderer/Camera');
+	/** @type {Engine.SessionStorage} */var Session = require('Engine/SessionStorage');
+	var mat4 = glMatrix.mat4;
+	var getModule = require;
 
 
 	/**
 	 * Renderer Namespace
+	 * type {Renderer.Renderer}
 	 */
 	var Renderer = {};
 
@@ -45,7 +41,7 @@ define(function( require )
 	/**
 	 * @var {WebGLContext}
 	 */
-	Renderer.gl     = null;
+	Renderer.gl = null;
 
 
 	/**
@@ -82,7 +78,7 @@ define(function( require )
 	 * @var {integer} game tick
 	 */
 	Renderer.tick = 0;
-	
+
 	/**
 	 * @var {float} vertical field of view in degrees
 	 */
@@ -97,73 +93,62 @@ define(function( require )
 	/**
 	 * Shime for requestAnimationFrame
 	 */
-	var _requestAnimationFrame =
-		window.requestAnimationFrame        ||
-		window.webkitRequestAnimationFrame  ||
-		window.mozRequestAnimationFrame     ||
-		window.oRequestAnimationFrame       ||
-		window.msRequestAnimationFrame      ||
-		function(callback){
-			return window.setTimeout( callback, 1000/60 );
-		}
-	;
+	//@ts-ignore
+	var _requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
+		function (callback) {
+			return window.setTimeout(callback, 1000 / 60);
+		};
 
 
 	/**
 	 * Shime for cancelAnimationFrame
 	 */
-	var _cancelAnimationFrame =
-		window.cancelAnimationFrame        ||
-		window.webkitCancelAnimationFrame  ||
-		window.mozCancelAnimationFrame     ||
-		window.oCancelAnimationFrame       ||
-		window.msCancelAnimationFrame      ||
-		function(updateId){
-			window.clearTimeout( updateId );
-		}
-	;
+	//@ts-ignore
+	var _cancelAnimationFrame = window.cancelAnimationFrame || window.webkitCancelAnimationFrame || window.mozCancelAnimationFrame || window.oCancelAnimationFrame || window.msCancelAnimationFrame ||
+		function (updateId) {
+			window.clearTimeout(updateId);
+		};
 
 
 	/**
 	 * Initialize renderer
 	 */
-	Renderer.init = function init( param )
-	{
-		if (!this.gl) {
-			this.canvas.style.position = 'absolute';
-			this.canvas.style.top      = '0px';
-			this.canvas.style.left     = '0px';
-			this.canvas.style.zIndex   =  0;
+	Renderer.init = function init(param) {
+		if (!Renderer.gl) {
+			Renderer.canvas.style.position = 'absolute';
+			Renderer.canvas.style.top = '0px';
+			Renderer.canvas.style.left = '0px';
+			Renderer.canvas.style.zIndex = '0';
 
-			this.gl = WebGL.getContext( this.canvas, param );
+			Renderer.gl = WebGL.getContext(Renderer.canvas, param);
 
 			jQuery(window)
-				.resize(this.onResize.bind(this))
-				.on('contextmenu',function(){
+				.resize(Renderer.onResize.bind(this))
+				.on('contextmenu', function () {
 					return false;
 				});
 
-			this.render(null);
-			this.resize();
+			Renderer.render(null);
+			Renderer.resize();
 		}
 
-		var gl = this.gl;
+		var gl = Renderer.gl;
 
-		gl.clearDepth( 1.0 );
-		gl.enable( gl.DEPTH_TEST );
-		gl.depthFunc( gl.LEQUAL );
+		gl.clearDepth(1.0);
+		gl.enable(gl.DEPTH_TEST);
+		gl.depthFunc(gl.LEQUAL);
 
-		gl.enable( gl.BLEND );
-		gl.blendFunc( gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA );
+		gl.enable(gl.BLEND);
+		gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 	};
 
 
 	/**
 	 * Show renderer
 	 */
-	Renderer.show = function show(){
-		if (!this.canvas.parentNode) {
-			document.body.appendChild(this.canvas);
+	Renderer.show = function show() {
+		if (!Renderer.canvas.parentNode) {
+			document.body.appendChild(Renderer.canvas);
 		}
 	};
 
@@ -171,9 +156,9 @@ define(function( require )
 	/**
 	 * Remove renderer
 	 */
-	Renderer.remove = function remove(){
-		if (this.canvas.parentNode) {
-			document.body.removeChild(this.canvas);
+	Renderer.remove = function remove() {
+		if (Renderer.canvas.parentNode) {
+			document.body.removeChild(Renderer.canvas);
 		}
 	};
 
@@ -181,49 +166,46 @@ define(function( require )
 	/**
 	 * Get back WebGL Context
 	 */
-	Renderer.getContext = function getContext()
-	{
-		return this.gl;
+	Renderer.getContext = function getContext() {
+		return Renderer.gl;
 	};
 
 
 	/**
 	 * Ask for resizing the window, avoid flooding the function (can flood the context), wait for 500ms each time
 	 */
-	Renderer.onResize = function onResize()
-	{
-		Events.clearTimeout( this.resizeTimeOut );
-		this.resizeTimeOut = Events.setTimeout( this.resize.bind(this), 500 );
+	Renderer.onResize = function onResize() {
+		Events.clearTimeout(Renderer.resizeTimeOut);
+		Renderer.resizeTimeOut = Events.setTimeout(Renderer.resize.bind(this), 500);
 	};
 
 
 	/**
 	 * Resizing window
 	 */
-	Renderer.resize = function resize()
-	{
+	Renderer.resize = function resize() {
 		var width, height, quality, dpr = window.devicePixelRatio || 1;
 
-		width  = window.innerWidth  || document.body.offsetWidth;
+		width = window.innerWidth || document.body.offsetWidth;
 		height = window.innerHeight || document.body.offsetHeight;
 
-		Mouse.screen.width  = this.width  = width;
-		Mouse.screen.height = this.height = height;
+		Mouse.screen.width = Renderer.width = width;
+		Mouse.screen.height = Renderer.height = height;
 
 		quality = Configs.get('quality', 100) / 100;
-		width  *= quality;
+		width *= quality;
 		height *= quality;
 
-		this.canvas.width         = width * dpr;
-		this.canvas.height        = height * dpr;
-		this.canvas.style.width   = this.width + 'px';
-		this.canvas.style.height  = this.height + 'px';
+		Renderer.canvas.width = width * dpr;
+		Renderer.canvas.height = height * dpr;
+		Renderer.canvas.style.width = Renderer.width + 'px';
+		Renderer.canvas.style.height = Renderer.height + 'px';
 
-		this.gl.viewport( 0, 0, width * dpr, height * dpr );
+		Renderer.gl.viewport(0, 0, width * dpr, height * dpr);
 
-		mat4.perspective( this.vFov, width/height, 1, 1000, Camera.projection );
+		mat4.perspective(Renderer.vFov, width / height, 1, 1000, Camera.projection);
 
-		Background.resize( this.width, this.height );
+		Background.resize(Renderer.width, Renderer.height);
 
 		/*
 		* Note about this hack:
@@ -236,7 +218,7 @@ define(function( require )
 		 * we just cause a big circular dependencies resulting as having Renderer variable as null in
 		 * UI/UIManager.
 		 */
-		getModule('UI/UIManager').fixResizeOverflow( this.width, this.height );
+		getModule('UI/UIManager').fixResizeOverflow(Renderer.width, Renderer.height);
 	};
 
 
@@ -249,60 +231,58 @@ define(function( require )
 	/**
 	 * Rendering scene
 	 */
-	Renderer._render = function render( timeDelta )
-	{
+	Renderer._render = function render(timeDelta) {
 		var newTick = Date.now();
 
-		if( this.frameLimit > 0 ) {
-			if( typeof( timeDelta ) !== 'undefined' ) {
-				_cancelAnimationFrame( this.updateId );
+		if (Renderer.frameLimit > 0) {
+			if (typeof (timeDelta) !== 'undefined') {
+				_cancelAnimationFrame(Renderer.updateId);
 			}
 
-			if( ( 100 / ( newTick - this.tick ) ) > ( 1000 / this.frameLimit ) ) return;
+			if ((100 / (newTick - Renderer.tick)) > (1000 / Renderer.frameLimit)) return;
 		}
 		else {
-			if( typeof( timeDelta ) === 'undefined' ) {
-				clearInterval( this.updateId );
+			if (typeof (timeDelta) === 'undefined') {
+				clearInterval(Renderer.updateId);
 			}
 
-			this.updateId = _requestAnimationFrame( this._render.bind(this), this.canvas );
+			Renderer.updateId = _requestAnimationFrame(Renderer._render.bind(this), Renderer.canvas);
 		}
-		
+
 		// Increment serverTick with delta
-		Session.serverTick += (newTick - this.tick);
+		Session.serverTick += (newTick - Renderer.tick);
 
 		// TODO: clamp this so we don't accumulate a huge delta if we're set inactive for a while
-		this.tick = newTick;
+		Renderer.tick = newTick;
 
 		// Execute events
-		Events.process( this.tick );
+		Events.process(Renderer.tick);
 
 		var i, count;
 
-		for (i = 0, count = this.renderCallbacks.length; i < count; ++i) {
-			this.renderCallbacks[i]( this.tick, this.gl );
+		for (i = 0, count = Renderer.renderCallbacks.length; i < count; ++i) {
+			Renderer.renderCallbacks[i](Renderer.tick, Renderer.gl);
 		}
 
-		Cursor.render( this.tick );
+		Cursor.render(Renderer.tick);
 	};
 
 
 	/**
 	 * Start rendering
 	 */
-	Renderer.render = function renderCallback( fn )
-	{
+	Renderer.render = function renderCallback(fn) {
 		if (fn) {
-			this.renderCallbacks.push(fn);
+			Renderer.renderCallbacks.push(fn);
 		}
 
-		if (!this.rendering) {
-			this.rendering = true;
-			if( this.frameLimit > 0 ) {
-				this.updateId = setInterval( this._render.bind(this), 1000 / this.frameLimit );
+		if (!Renderer.rendering) {
+			Renderer.rendering = true;
+			if (Renderer.frameLimit > 0) {
+				Renderer.updateId = window.setInterval(Renderer._render.bind(this), 1000 / Renderer.frameLimit);
 			}
 			else {
-				this._render();
+				Renderer._render();
 			}
 		}
 	};
@@ -311,23 +291,23 @@ define(function( require )
 	/**
 	 * Stop rendering
 	 */
-	Renderer.stop = function stop( fn )
-	{
+	Renderer.stop = function stop(fn) {
 		// No callback specified, remove all
 		if (!arguments.length) {
-			this.renderCallbacks.length = 0;
+			Renderer.renderCallbacks.length = 0;
 			return;
 		}
 
-		var pos = this.renderCallbacks.indexOf(fn);
+		var pos = Renderer.renderCallbacks.indexOf(fn);
 		if (pos > -1) {
-			this.renderCallbacks.splice( pos, 1 );
+			Renderer.renderCallbacks.splice(pos, 1);
 		}
 	};
 
 
 	/**
 	 * Export
+	 * @type {Renderer.Renderer}
 	 */
 	return Renderer;
 });

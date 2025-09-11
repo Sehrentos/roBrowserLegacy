@@ -7,8 +7,10 @@
  *
  * @author Vincent Thibault
  */
-
-define(["./PacketStructure"], function (/** @type {Network.PacketStructure} */PACKET) {
+define(["./PacketStructure"], /**
+ * @param {Network.PacketStructure} PACKET
+ * @return {Network.PacketRegister}
+ */function (PACKET) {
 	"use strict";
 
 	return {
@@ -597,15 +599,15 @@ define(["./PacketStructure"], function (/** @type {Network.PacketStructure} */PA
 		0x99b: PACKET.ZC.MAPPROPERTY_R2,
 		0x99f: PACKET.ZC.SKILL_ENTRY4, //ok
 		/*
-        bgqueue_ackType = 0x8d8,
-        bgqueue_notice_deleteType = 0x8db,
-        bgqueue_registerType = 0x8d7,
-        bgqueue_updateinfoType = 0x8d9,
-        bgqueue_checkstateType = 0x90a,
-        bgqueue_revokereqType = 0x8da,
-        bgqueue_battlebeginackType = 0x8e0,
-        bgqueue_notify_entryType = 0x8d9,
-        bgqueue_battlebeginsType = 0x8df,
+		bgqueue_ackType = 0x8d8,
+		bgqueue_notice_deleteType = 0x8db,
+		bgqueue_registerType = 0x8d7,
+		bgqueue_updateinfoType = 0x8d9,
+		bgqueue_checkstateType = 0x90a,
+		bgqueue_revokereqType = 0x8da,
+		bgqueue_battlebeginackType = 0x8e0,
+		bgqueue_notify_entryType = 0x8d9,
+		bgqueue_battlebeginsType = 0x8df,
 */
 		0x99d: PACKET.HC.ACCEPT_ENTER_NEO_UNION_LIST, // ok
 		0x9a0: PACKET.HC.CHARLIST_NOTIFY,

@@ -7,20 +7,17 @@
  *
  * @author Vincent Thibault
  */
-define(function (require) {
+define(/** @type {(require: Require)=>Engine.MapEngine.Quest} */function (require) {
 	'use strict';
 
-	/**
-	 * Load dependencies
-	 */
-	var DB = require('DB/DBManager');
-	var Network = require('Network/NetworkManager');
-	var PACKETVER = require('Network/PacketVerManager');
-	var PACKET = require('Network/PacketStructure');
-	var jQuery = require('Utils/jquery');
-	
+	/** @type {DB.DBManager} */var DB = require('DB/DBManager');
+	/** @type {Network.NetworkManager} */var Network = require('Network/NetworkManager');
+	/** @type {Network.PacketVerManager} */var PACKETVER = require('Network/PacketVerManager');
+	/** @type {Network.PacketStructure} */var PACKET = require('Network/PacketStructure');
+	/** @type {JQueryStatic} */var jQuery = require('Utils/jquery');
+
 	// Version Dependent UIs
-	var Quest = require('UI/Components/Quest/Quest');
+	/** @type {UI.Component.Quest} */var Quest = require('UI/Components/Quest/Quest');
 
 	/**
 	 * Quest List
@@ -204,6 +201,7 @@ define(function (require) {
 
 	/**
 	 * Initialize
+	 * @type {Engine.MapEngine.Quest}
 	 */
 	return function MainEngine() {
 		Network.hookPacket(PACKET.ZC.ALL_QUEST_LIST, onAllQuestList);

@@ -8,10 +8,13 @@
  *
  * @author Vincent Thibault
  */
-define(['Utils/gl-matrix', 'Renderer/Renderer'], function (glMatrix, Renderer) {
+define(['Utils/gl-matrix', 'Renderer/Renderer'], function (
+	/** @type {Utils.glMatrix} */glMatrix,
+	/** @type {Renderer.Renderer} */Renderer
+) {
 	'use strict';
 
-	var MapPreferences = require('Preferences/Map');
+	/** @type {Preferences.Map} */var MapPreferences = require('Preferences/Map');
 
 	/**
 	 * Global methods
@@ -109,6 +112,7 @@ define(['Utils/gl-matrix', 'Renderer/Renderer'], function (glMatrix, Renderer) {
 
 	/**
 	 * Display structure
+	 * @type {Renderer.Entity.DisplayManager}
 	 */
 	function Display() {
 		this.TYPE = {
@@ -137,7 +141,7 @@ define(['Utils/gl-matrix', 'Renderer/Renderer'], function (glMatrix, Renderer) {
 		this.canvas = document.createElement('canvas');
 		this.ctx = this.canvas.getContext('2d');
 		this.canvas.style.position = 'absolute';
-		this.canvas.style.zIndex = 1;
+		this.canvas.style.zIndex = '1';
 	}
 
 
@@ -170,7 +174,7 @@ define(['Utils/gl-matrix', 'Renderer/Renderer'], function (glMatrix, Renderer) {
 
 	/**
 	 * Update the display
-	 * @param {string} color
+	 * @param {number} style color
 	 */
 	Display.prototype.update = function update(style) {
 		style = style || this.STYLE.DEFAULT;

@@ -7,9 +7,7 @@
  *
  * @author Vincent Thibault
  */
-
-define(function()
-{
+define(function () {
 	'use strict';
 
 
@@ -29,8 +27,7 @@ define(function()
 	 * Constructor
 	 * Apply configs
 	 */
-	(function init(configs)
-	{
+	(function init(configs) {
 		if (typeof configs !== 'object') {
 			return;
 		}
@@ -39,7 +36,7 @@ define(function()
 		var i, count;
 
 		for (i = 0, count = keys.length; i < count; ++i) {
-			set( keys[i], configs[keys[i]]);
+			set(keys[i], configs[keys[i]]);
 		}
 	})(window.ROConfig);
 
@@ -50,8 +47,7 @@ define(function()
 	 * @param {string} key name
 	 * @param {*} value
 	 */
-	function set( key, value )
-	{
+	function set(key, value) {
 		_global[key] = value;
 	}
 
@@ -63,8 +59,7 @@ define(function()
 	 * @param {*} defaultValue data value
 	 * @return {*} data
 	 */
-	function get( key, defaultValue )
-	{
+	function get(key, defaultValue) {
 		if (key in _server) {
 			return _server[key];
 		}
@@ -82,8 +77,7 @@ define(function()
 	 *
 	 * @param {object} server config
 	 */
-	function setServer( server )
-	{
+	function setServer(server) {
 		_server = server;
 	}
 
@@ -93,19 +87,17 @@ define(function()
 	 * Return the server informations
 	 *
 	 */
-	function getServer()
-	{
+	function getServer() {
 		return _server;
 	}
-
 
 
 	/**
 	 * Export
 	 */
 	return {
-		get:       get,
-		set:       set,
+		get: get,
+		set: set,
 		setServer: setServer,
 		getServer: getServer
 	};

@@ -8,9 +8,7 @@
  *
  * @author Vincent Thibault
  */
-
-
-define(['require', 'Core/Configs'], function(
+define(['require', 'Core/Configs'], /** @return {Core.Thread} */function (
 	/** @type {Require} */require,
 	/** @type {Core.Configs} */Configs
 ) {
@@ -28,7 +26,7 @@ define(['require', 'Core/Configs'], function(
 	 * List of hook callback
 	 * @var List
 	 */
-	var _hook   = {};
+	var _hook = {};
 
 
 	/**
@@ -54,24 +52,22 @@ define(['require', 'Core/Configs'], function(
 	 *
 	 * @return {(type:any, data:any, callback:Function) => void}
 	 */
-	var Send = function SendClosure()
-	{
+	var Send = function SendClosure() {
 		var _input = { type: '', data: null, uid: 0 };
 
-		return function Send( type, data, callback )
-		{
+		return function Send(type, data, callback) {
 			var uid = 0;
 
 			if (callback) {
-				uid          = ++_uid;
+				uid = ++_uid;
 				_memory[uid] = callback;
 			}
 
 			_input.type = type;
 			_input.data = data;
-			_input.uid  = uid;
+			_input.uid = uid;
 
-			_source.postMessage( _input, _origin );
+			_source.postMessage(_input, _origin);
 		};
 	}();
 
@@ -82,9 +78,8 @@ define(['require', 'Core/Configs'], function(
 	 *
 	 * @param {object} event
 	 */
-	function Receive(event)
-	{
-		var uid  = event.data.uid;
+	function Receive(event) {
+		var uid = event.data.uid;
 		var type = event.data.type;
 
 		// Direct callback
@@ -106,8 +101,7 @@ define(['require', 'Core/Configs'], function(
 	 * @param {string} type
 	 * @param {function} callback
 	 */
-	function Hook( type, callback )
-	{
+	function Hook(type, callback) {
 		_hook[type] = callback;
 	}
 
@@ -118,8 +112,7 @@ define(['require', 'Core/Configs'], function(
 	 * @param {Window} source
 	 * @param {string} origin
 	 */
-	function Delegate( source, origin )
-	{
+	function Delegate(source, origin) {
 		_source = source;
 		_origin = origin;
 	}
@@ -128,11 +121,10 @@ define(['require', 'Core/Configs'], function(
 	/**
 	 * Initialize Thread
 	 */
-	function Init()
-	{
+	function Init() {
 		if (!_source) {
 			var url = Configs.get('development') ? './ThreadEventHandler.js' : './../../ThreadEventHandler.js';
-			_source = new Worker( require.toUrl(url) + '?' + Configs.get('version', '') );
+			_source = new Worker(require.toUrl(url) + '?' + Configs.get('version', ''));
 		}
 
 		// Worker context
@@ -142,8 +134,8 @@ define(['require', 'Core/Configs'], function(
 
 		// Other frame worker
 		else {
-			window.addEventListener('message', Receive, false );
-			_source.postMessage({type:'SYNC'}, _origin );
+			window.addEventListener('message', Receive, false);
+			_source.postMessage({ type: 'SYNC' }, _origin);
 		}
 	}
 
@@ -152,9 +144,9 @@ define(['require', 'Core/Configs'], function(
 	 * Exports
 	 */
 	return {
-		send:     Send,
-		hook:     Hook,
-		init:     Init,
+		send: Send,
+		hook: Hook,
+		init: Init,
 		delegate: Delegate
 	};
 });

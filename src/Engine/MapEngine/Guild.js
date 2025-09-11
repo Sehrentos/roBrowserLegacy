@@ -7,34 +7,29 @@
  *
  * @author Vincent Thibault
  */
-
-define(function( require )
-{
+define(/** @type {(require: Require)=>Engine.MapEngine.Guild} */function (require) {
 	'use strict';
 
-
-	/**
-	 * Load dependencies
-	 */
-	var DB            = require('DB/DBManager');
-	var Inflate       = require('Utils/Inflate');
-	var Texture       = require('Utils/Texture');
-	var BinaryWriter  = require('Utils/BinaryWriter');
-	var Session       = require('Engine/SessionStorage');
-	var Network       = require('Network/NetworkManager');
-	var PACKETVER     = require('Network/PacketVerManager');
-	var PACKET        = require('Network/PacketStructure');
-	var EntityManager = require('Renderer/EntityManager');
-	var ChatBox       = require('UI/Components/ChatBox/ChatBox');
-	var Guild         = require('UI/Components/Guild/Guild');
-	var UIManager     = require('UI/UIManager');
+	/** @type {DB.DBManager} */var DB = require('DB/DBManager');
+	/** @type {Utils.Inflate} */var Inflate = require('Utils/Inflate');
+	/** @type {Utils.Texture} */var Texture = require('Utils/Texture');
+	/** @type {Utils.BinaryWriter} */var BinaryWriter = require('Utils/BinaryWriter');
+	/** @type {Engine.SessionStorage} */var Session = require('Engine/SessionStorage');
+	/** @type {Network.NetworkManager} */var Network = require('Network/NetworkManager');
+	/** @type {Network.PacketVerManager} */var PACKETVER = require('Network/PacketVerManager');
+	/** @type {Network.PacketStructure} */var PACKET = require('Network/PacketStructure');
+	/** @type {Renderer.EntityManager} */var EntityManager = require('Renderer/EntityManager');
+	/** @type {UI.Component.ChatBox} */var ChatBox = require('UI/Components/ChatBox/ChatBox');
+	/** @type {UI.Component.Guild} */var Guild = require('UI/Components/Guild/Guild');
+	/** @type {UI.UIManager} */var UIManager = require('UI/UIManager');
 
 	// Version Dependent UIs
-	var MiniMap = require('UI/Components/MiniMap/MiniMap');
+	/** @type {UI.Component.MiniMap} */var MiniMap = require('UI/Components/MiniMap/MiniMap');
 
 
 	/**
 	 * Engine namespace
+	 * @type {Engine.MapEngine.Guild}
 	 */
 	var GuildEngine = {};
 
@@ -48,57 +43,56 @@ define(function( require )
 	/**
 	 * Initialize engine
 	 */
-	GuildEngine.init = function init()
-	{
-		Network.hookPacket( PACKET.ZC.GUILD_CHAT,                    onMemberTalk );
-		Network.hookPacket( PACKET.ZC.NOTIFY_POSITION_TO_GUILDM,     onMemberMove );
-		Network.hookPacket( PACKET.ZC.GUILD_INFO,                    onGuildInfo );
-		Network.hookPacket( PACKET.ZC.GUILD_INFO2,                   onGuildInfo );
-		Network.hookPacket( PACKET.ZC.GUILD_INFO3,                   onGuildInfo );
-		Network.hookPacket( PACKET.ZC.GUILD_INFO4,                   onGuildInfo );
-		Network.hookPacket( PACKET.ZC.MYGUILD_BASIC_INFO,            onGuildRelation );
-		Network.hookPacket( PACKET.ZC.GUILD_EMBLEM_IMG,              onGuildEmblem );
-		Network.hookPacket( PACKET.ZC.MEMBERMGR_INFO,                onGuildMembers );
-		Network.hookPacket( PACKET.ZC.MEMBERMGR_INFO2,               onGuildMembers );
-		Network.hookPacket( PACKET.ZC.MEMBERMGR_INFO3,               onGuildMembers );
-		Network.hookPacket( PACKET.ZC.ACK_GUILD_MEMBER_INFO,         onGuildMemberUpdate );
-		Network.hookPacket( PACKET.ZC.POSITION_INFO,                 onGuildPositions );
-		Network.hookPacket( PACKET.ZC.POSITION_ID_NAME_INFO,         onGuildPositionsName );
-		Network.hookPacket( PACKET.ZC.ACK_CHANGE_GUILD_POSITIONINFO, onGuildPositions );
-		Network.hookPacket( PACKET.ZC.GUILD_SKILLINFO,               onGuildSkillList );
-		Network.hookPacket( PACKET.ZC.GUILD_NOTICE,                  onGuildNotice );
-		Network.hookPacket( PACKET.ZC.ACK_REQ_CHANGE_MEMBERS,        onGuildMemberPositionUpdate );
-		Network.hookPacket( PACKET.ZC.ACK_GUILD_MENUINTERFACE,       onGuildAccess );
-		Network.hookPacket( PACKET.ZC.RESULT_MAKE_GUILD,             onGuildCreationResult );
-		Network.hookPacket( PACKET.ZC.UPDATE_GDID,                   onGuildOwnInfo );
-		Network.hookPacket( PACKET.ZC.BAN_LIST,                      onGuildExpelList );
-		Network.hookPacket( PACKET.ZC.ACK_DISORGANIZE_GUILD_RESULT,  onGuildDestroy );
-		Network.hookPacket( PACKET.ZC.REQ_JOIN_GUILD,                onGuildInviteRequest );
-		Network.hookPacket( PACKET.ZC.ACK_REQ_JOIN_GUILD,            onGuildInviteResult );
-		Network.hookPacket( PACKET.ZC.UPDATE_CHARSTAT,               onGuildMemberStatus );
-		Network.hookPacket( PACKET.ZC.UPDATE_CHARSTAT2,              onGuildMemberStatus );
-		Network.hookPacket( PACKET.ZC.ACK_BAN_GUILD,                 onGuildMemberExpulsion );
-		Network.hookPacket( PACKET.ZC.ACK_BAN_GUILD_SSO,             onGuildMemberExpulsion );
-		Network.hookPacket( PACKET.ZC.ACK_LEAVE_GUILD,               onGuildMemberLeave );
-		Network.hookPacket( PACKET.ZC.DELETE_RELATED_GUILD,          onGuildAllianceDeleteAck );
-		Network.hookPacket( PACKET.ZC.ADD_RELATED_GUILD,             onGuildAllianceAdd );
-		Network.hookPacket( PACKET.ZC.REQ_ALLY_GUILD,                onGuildAskForAlliance );
-		Network.hookPacket( PACKET.ZC.ACK_REQ_ALLY_GUILD,            onGuildAllianceResult );
-		Network.hookPacket( PACKET.ZC.ACK_REQ_HOSTILE_GUILD,         onGuildHostilityResult );
-		Network.hookPacket( PACKET.ZC.GUILD_AGIT_INFO,               onGuildCastleInfo );
+	GuildEngine.init = function init() {
+		Network.hookPacket(PACKET.ZC.GUILD_CHAT, onMemberTalk);
+		Network.hookPacket(PACKET.ZC.NOTIFY_POSITION_TO_GUILDM, onMemberMove);
+		Network.hookPacket(PACKET.ZC.GUILD_INFO, onGuildInfo);
+		Network.hookPacket(PACKET.ZC.GUILD_INFO2, onGuildInfo);
+		Network.hookPacket(PACKET.ZC.GUILD_INFO3, onGuildInfo);
+		Network.hookPacket(PACKET.ZC.GUILD_INFO4, onGuildInfo);
+		Network.hookPacket(PACKET.ZC.MYGUILD_BASIC_INFO, onGuildRelation);
+		Network.hookPacket(PACKET.ZC.GUILD_EMBLEM_IMG, onGuildEmblem);
+		Network.hookPacket(PACKET.ZC.MEMBERMGR_INFO, onGuildMembers);
+		Network.hookPacket(PACKET.ZC.MEMBERMGR_INFO2, onGuildMembers);
+		Network.hookPacket(PACKET.ZC.MEMBERMGR_INFO3, onGuildMembers);
+		Network.hookPacket(PACKET.ZC.ACK_GUILD_MEMBER_INFO, onGuildMemberUpdate);
+		Network.hookPacket(PACKET.ZC.POSITION_INFO, onGuildPositions);
+		Network.hookPacket(PACKET.ZC.POSITION_ID_NAME_INFO, onGuildPositionsName);
+		Network.hookPacket(PACKET.ZC.ACK_CHANGE_GUILD_POSITIONINFO, onGuildPositions);
+		Network.hookPacket(PACKET.ZC.GUILD_SKILLINFO, onGuildSkillList);
+		Network.hookPacket(PACKET.ZC.GUILD_NOTICE, onGuildNotice);
+		Network.hookPacket(PACKET.ZC.ACK_REQ_CHANGE_MEMBERS, onGuildMemberPositionUpdate);
+		Network.hookPacket(PACKET.ZC.ACK_GUILD_MENUINTERFACE, onGuildAccess);
+		Network.hookPacket(PACKET.ZC.RESULT_MAKE_GUILD, onGuildCreationResult);
+		Network.hookPacket(PACKET.ZC.UPDATE_GDID, onGuildOwnInfo);
+		Network.hookPacket(PACKET.ZC.BAN_LIST, onGuildExpelList);
+		Network.hookPacket(PACKET.ZC.ACK_DISORGANIZE_GUILD_RESULT, onGuildDestroy);
+		Network.hookPacket(PACKET.ZC.REQ_JOIN_GUILD, onGuildInviteRequest);
+		Network.hookPacket(PACKET.ZC.ACK_REQ_JOIN_GUILD, onGuildInviteResult);
+		Network.hookPacket(PACKET.ZC.UPDATE_CHARSTAT, onGuildMemberStatus);
+		Network.hookPacket(PACKET.ZC.UPDATE_CHARSTAT2, onGuildMemberStatus);
+		Network.hookPacket(PACKET.ZC.ACK_BAN_GUILD, onGuildMemberExpulsion);
+		Network.hookPacket(PACKET.ZC.ACK_BAN_GUILD_SSO, onGuildMemberExpulsion);
+		Network.hookPacket(PACKET.ZC.ACK_LEAVE_GUILD, onGuildMemberLeave);
+		Network.hookPacket(PACKET.ZC.DELETE_RELATED_GUILD, onGuildAllianceDeleteAck);
+		Network.hookPacket(PACKET.ZC.ADD_RELATED_GUILD, onGuildAllianceAdd);
+		Network.hookPacket(PACKET.ZC.REQ_ALLY_GUILD, onGuildAskForAlliance);
+		Network.hookPacket(PACKET.ZC.ACK_REQ_ALLY_GUILD, onGuildAllianceResult);
+		Network.hookPacket(PACKET.ZC.ACK_REQ_HOSTILE_GUILD, onGuildHostilityResult);
+		Network.hookPacket(PACKET.ZC.GUILD_AGIT_INFO, onGuildCastleInfo);
 
 		// Hook UI
-		Guild.onGuildInfoRequest      = GuildEngine.requestInfo;
+		Guild.onGuildInfoRequest = GuildEngine.requestInfo;
 		Guild.onPositionUpdateRequest = GuildEngine.requestPositionUpdate;
 		Guild.onChangeMemberPosRequest = GuildEngine.requestChangeMemberPos;
-		Guild.onNoticeUpdateRequest   = GuildEngine.requestNoticeUpdate;
-		Guild.onRequestLeave          = GuildEngine.requestLeave;
-		Guild.onRequestMemberExpel    = GuildEngine.requestMemberExpel;
-		Guild.onRequestMemberInfo     = GuildEngine.requestMemberInfo;
+		Guild.onNoticeUpdateRequest = GuildEngine.requestNoticeUpdate;
+		Guild.onRequestLeave = GuildEngine.requestLeave;
+		Guild.onRequestMemberExpel = GuildEngine.requestMemberExpel;
+		Guild.onRequestMemberInfo = GuildEngine.requestMemberInfo;
 		Guild.onRequestDeleteRelation = GuildEngine.requestDeleteRelatedGuild;
-		Guild.onRequestAccess         = GuildEngine.requestAccess;
-		Guild.onRequestGuildEmblem    = GuildEngine.requestGuildEmblem;
-		Guild.onSendEmblem            = GuildEngine.sendEmblem;
+		Guild.onRequestAccess = GuildEngine.requestAccess;
+		Guild.onRequestGuildEmblem = GuildEngine.requestGuildEmblem;
+		Guild.onSendEmblem = GuildEngine.sendEmblem;
 	};
 
 
@@ -107,8 +101,7 @@ define(function( require )
 	 *
 	 * @param {number} type (page)
 	 */
-	GuildEngine.requestInfo = function requestInfo( type )
-	{
+	GuildEngine.requestInfo = function requestInfo(type) {
 		if (type > 4) {
 			return;
 		}
@@ -122,19 +115,18 @@ define(function( require )
 	/**
 	 * Ask to get an emblem
 	 *
-	 * @param {number} guild id
+	 * @param {number} guild_id
 	 * @param {number} version
 	 * @param {function} callback
 	 */
-	GuildEngine.requestGuildEmblem = function requestGuildEmblem(guild_id, version, callback)
-	{
+	GuildEngine.requestGuildEmblem = function requestGuildEmblem(guild_id, version, callback) {
 		var emblem;
 
 		// Guild does not exist
 		if (!_emblems[guild_id]) {
 			_emblems[guild_id] = {
-				version:  -1,
-				image:    new Image(),
+				version: -1,
+				image: new Image(),
 				callback: []
 			};
 		}
@@ -148,7 +140,7 @@ define(function( require )
 		}
 
 		// Ask for new version
-		var pkt  = new PACKET.CZ.REQ_GUILD_EMBLEM_IMG();
+		var pkt = new PACKET.CZ.REQ_GUILD_EMBLEM_IMG();
 		pkt.GDID = guild_id;
 		Network.sendPacket(pkt);
 
@@ -159,8 +151,7 @@ define(function( require )
 	/**
 	 * Need to know the access we have to the guild UI
 	 */
-	GuildEngine.requestAccess = function requestAccess()
-	{
+	GuildEngine.requestAccess = function requestAccess() {
 		Network.sendPacket(
 			new PACKET.CZ.REQ_GUILD_MENUINTERFACE()
 		);
@@ -170,12 +161,11 @@ define(function( require )
 	/**
 	 * Ask the server to create a guild
 	 *
-	 * @param {string} guild name
+	 * @param {string} name guild name
 	 */
-	GuildEngine.createGuild = function createGuild( name )
-	{
-		var pkt   = new PACKET.CZ.REQ_MAKE_GUILD();
-		pkt.GID   = Session.GID;
+	GuildEngine.createGuild = function createGuild(name) {
+		var pkt = new PACKET.CZ.REQ_MAKE_GUILD();
+		pkt.GID = Session.GID;
 		pkt.GName = name;
 
 		Network.sendPacket(pkt);
@@ -185,12 +175,11 @@ define(function( require )
 	/**
 	 * Ask the server to delete the guild
 	 *
-	 * @param {string} guild name
+	 * @param {string} name guild name
 	 */
-	GuildEngine.breakGuild = function breakGuild( name )
-	{
-		var pkt   = new PACKET.CZ.REQ_DISORGANIZE_GUILD();
-		pkt.key   = name;
+	GuildEngine.breakGuild = function breakGuild(name) {
+		var pkt = new PACKET.CZ.REQ_DISORGANIZE_GUILD();
+		pkt.key = name;
 
 		Network.sendPacket(pkt);
 	};
@@ -201,21 +190,19 @@ define(function( require )
 	 *
 	 * @param {Array} positions
 	 */
-	GuildEngine.requestPositionUpdate = function requestPositionUpdate( positions )
-	{
+	GuildEngine.requestPositionUpdate = function requestPositionUpdate(positions) {
 		var pkt = new PACKET.CZ.REG_CHANGE_GUILD_POSITIONINFO();
 		pkt.memberList = positions;
 
 		Network.sendPacket(pkt);
 	};
-	
+
 	/**
 	 * Send new player position
 	 *
-	 * @param {Array} positions
+	 * @param {Array} memberInfo
 	 */
-	GuildEngine.requestChangeMemberPos = function requestChangeMemberPos( memberInfo )
-	{
+	GuildEngine.requestChangeMemberPos = function requestChangeMemberPos(memberInfo) {
 		var pkt = new PACKET.CZ.REQ_CHANGE_MEMBERPOS();
 		pkt.memberInfo = memberInfo;
 
@@ -228,12 +215,11 @@ define(function( require )
 	 * @param {string} subject
 	 * @param {string} content
 	 */
-	GuildEngine.requestNoticeUpdate = function requestNoticeUpdate(subject, content)
-	{
-		var pkt  = new PACKET.CZ.GUILD_NOTICE();
+	GuildEngine.requestNoticeUpdate = function requestNoticeUpdate(subject, content) {
+		var pkt = new PACKET.CZ.GUILD_NOTICE();
 		pkt.GDID = GuildEngine.guild_id;
 		pkt.subject = subject;
-		pkt.notice  = content;
+		pkt.notice = content;
 
 		Network.sendPacket(pkt);
 	};
@@ -242,12 +228,11 @@ define(function( require )
 	/**
 	 * Send an invitation to the player
 	 *
-	 * @param {number} target account id
+	 * @param {number} AID target account id
 	 */
-	GuildEngine.requestPlayerInvitation = function requestPlayerInvitation( AID )
-	{
-		var pkt   = new PACKET.CZ.REQ_JOIN_GUILD();
-		pkt.AID   = AID;
+	GuildEngine.requestPlayerInvitation = function requestPlayerInvitation(AID) {
+		var pkt = new PACKET.CZ.REQ_JOIN_GUILD();
+		pkt.AID = AID;
 		pkt.MyAID = Session.AID;
 		pkt.MyGID = Session.GID;
 
@@ -258,12 +243,11 @@ define(function( require )
 	/**
 	 * Send a guild alliance to a target player
 	 *
-	 * @param {number} target account id
+	 * @param {number} AID target account id
 	 */
-	GuildEngine.requestAlliance = function requestAlliance( AID )
-	{
-		var pkt   = new PACKET.CZ.REQ_ALLY_GUILD();
-		pkt.AID   = AID;
+	GuildEngine.requestAlliance = function requestAlliance(AID) {
+		var pkt = new PACKET.CZ.REQ_ALLY_GUILD();
+		pkt.AID = AID;
 		pkt.MyAID = Session.AID;
 		pkt.MyGID = Session.GID;
 
@@ -274,12 +258,11 @@ define(function( require )
 	/**
 	 * Set a guild as hostile
 	 *
-	 * @param {number} target account id
+	 * @param {number} AID target account id
 	 */
-	GuildEngine.requestHostility = function requestHostility( AID )
-	{
-		var pkt   = new PACKET.CZ.REQ_HOSTILE_GUILD();
-		pkt.AID   = AID;
+	GuildEngine.requestHostility = function requestHostility(AID) {
+		var pkt = new PACKET.CZ.REQ_HOSTILE_GUILD();
+		pkt.AID = AID;
 
 		Network.sendPacket(pkt);
 	};
@@ -288,12 +271,11 @@ define(function( require )
 	/**
 	 * Request to leave the guild
 	 *
-	 * @param {number} account id
-	 * @param {number} character id
+	 * @param {number} AID account id
+	 * @param {number} GID character id
 	 * @param {string} reason for the leave
 	 */
-	GuildEngine.requestLeave = function requestLeave( AID, GID, reason)
-	{
+	GuildEngine.requestLeave = function requestLeave(AID, GID, reason) {
 		var pkt = new PACKET.CZ.REQ_LEAVE_GUILD();
 		pkt.GDID = GuildEngine.guild_id;
 		pkt.AID = AID;
@@ -307,12 +289,11 @@ define(function( require )
 	/**
 	 * Request to expel a member from the guild
 	 *
-	 * @param {number} account id
-	 * @param {number} character id
+	 * @param {number} AID account id
+	 * @param {number} GID character id
 	 * @param {string} reason to expel
 	 */
-	GuildEngine.requestMemberExpel = function requestMemberExpel( AID, GID, reason)
-	{
+	GuildEngine.requestMemberExpel = function requestMemberExpel(AID, GID, reason) {
 		var pkt = new PACKET.CZ.REQ_BAN_GUILD();
 		pkt.GDID = GuildEngine.guild_id;
 		pkt.AID = AID;
@@ -326,10 +307,9 @@ define(function( require )
 	/**
 	 * Request to get member information
 	 *
-	 * @param {number} account id
+	 * @param {number} AID account id
 	 */
-	GuildEngine.requestMemberInfo = function requestMemberInfo( AID )
-	{
+	GuildEngine.requestMemberInfo = function requestMemberInfo(AID) {
 		var pkt = new PACKET.CZ.REQ_OPEN_MEMBER_INFO();
 		pkt.AID = AID;
 
@@ -343,8 +323,7 @@ define(function( require )
 	 * @param {number} guild_id
 	 * @param {number} relation (0 = Ally, 1 = Enemy)
 	 */
-	GuildEngine.requestDeleteRelatedGuild = function requestDeleteRelatedGuild( guild_id, relation)
-	{
+	GuildEngine.requestDeleteRelatedGuild = function requestDeleteRelatedGuild(guild_id, relation) {
 		var pkt = new PACKET.CZ.REQ_DELETE_RELATED_GUILD();
 
 		pkt.OpponentGDID = guild_id;
@@ -359,8 +338,7 @@ define(function( require )
 	 *
 	 * @param {Uint8Array} file
 	 */
-	GuildEngine.sendEmblem = (function sendEmblemClosure()
-	{
+	GuildEngine.sendEmblem = (function sendEmblemClosure() {
 		function adler32(data) {
 			for (var i = 0, len = data.length, s1 = 1, s2 = 0; i < len; i++) {
 				s1 = (s1 + data[i]) % 65521;
@@ -379,7 +357,7 @@ define(function( require )
 			out.writeUShort(len);
 			out.writeUShort(~len & 0xffff);
 			out.writeBuffer(data.buffer);
-			out.view.setInt32( out.offset, adler32(data), false); // big endian
+			out.view.setInt32(out.offset, adler32(data), false); // big endian
 
 
 			// send packet
@@ -401,9 +379,8 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.NOTIFY_HP_TO_GROUPM
 	 */
-	function onMemberTalk( pkt )
-	{
-		ChatBox.addText( pkt.msg, ChatBox.TYPE.GUILD, ChatBox.FILTER.GUILD );
+	function onMemberTalk(pkt) {
+		ChatBox.addText(pkt.msg, ChatBox.TYPE.GUILD, ChatBox.FILTER.GUILD);
 	}
 
 
@@ -412,14 +389,13 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.NOTIFY_POSITION_TO_GUILDM
 	 */
-	function onMemberMove( pkt )
-	{
+	function onMemberMove(pkt) {
 		// Server remove mark with "-1" as position
 		if (pkt.xPos < 0 || pkt.yPos < 0) {
-			MiniMap.getUI().removeGuildMemberMark( pkt.AID );
+			MiniMap.getUI().removeGuildMemberMark(pkt.AID);
 		}
 		else {
-			MiniMap.getUI().addGuildMemberMark( pkt.AID, pkt.xPos, pkt.yPos );
+			MiniMap.getUI().addGuildMemberMark(pkt.AID, pkt.xPos, pkt.yPos);
 		}
 	}
 
@@ -429,9 +405,8 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.GUILD_INFO
 	 */
-	function onGuildInfo( pkt )
-	{
-		Guild.setGuildInformations( pkt );
+	function onGuildInfo(pkt) {
+		Guild.setGuildInformations(pkt);
 	}
 
 
@@ -440,8 +415,7 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.ACK_GUILD_MENUINTERFACE
 	 */
-	function onGuildAccess( pkt )
-	{
+	function onGuildAccess(pkt) {
 		Guild.setAccess(pkt.guildMemuFlag);
 	}
 
@@ -451,15 +425,14 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.UPDATE_GDID
 	 */
-	function onGuildOwnInfo( pkt )
-	{
-		GuildEngine.guild_id  = pkt.GDID;
+	function onGuildOwnInfo(pkt) {
+		GuildEngine.guild_id = pkt.GDID;
 
-		Session.hasGuild      = true;
-		Session.guildRight    = pkt.right;
+		Session.hasGuild = true;
+		Session.guildRight = pkt.right;
 		Session.isGuildMaster = !!pkt.isMaster;
 
-		Session.Entity.GUID       = pkt.GDID;
+		Session.Entity.GUID = pkt.GDID;
 		Session.Entity.GEmblemVer = pkt.emblemVersion;
 	}
 
@@ -469,9 +442,8 @@ define(function( require )
 	 *
 	 * @param {objec} pkt - PACKET.ZC.MYGUILD_BASIC_INFO
 	 */
-	function onGuildRelation( pkt )
-	{
-		Guild.setRelations( pkt.relatedGuildList );
+	function onGuildRelation(pkt) {
+		Guild.setRelations(pkt.relatedGuildList);
 	}
 
 
@@ -480,36 +452,34 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.GUILD_EMBLEM_IMG
 	 */
-	var onGuildEmblem = (function onGuildEmblemClosure()
-	{
-		var data = new Uint8Array(2*1024);
+	var onGuildEmblem = (function onGuildEmblemClosure() {
+		var data = new Uint8Array(2 * 1024);
 
-		return function onGuildEmblem( pkt )
-		{
+		return function onGuildEmblem(pkt) {
 			var emblem, inflate, len, src, img;
 
 			// Create guild namespace if does not exist
 			if (!_emblems[pkt.GDID]) {
 				_emblems[pkt.GDID] = {
-					version:  -1,
-					image:    new Image(),
+					version: -1,
+					image: new Image(),
 					callback: []
 				};
 			}
 
 			// Uncompress emblem
 			inflate = new Inflate(pkt.img);
-			len     = inflate.getBytes(data);
-			src     = URL.createObjectURL(new Blob([data.subarray(0, len).buffer], { type: 'image/bmp' }));
-			emblem  = _emblems[pkt.GDID];
+			len = inflate.getBytes(data);
+			src = URL.createObjectURL(new Blob([data.subarray(0, len).buffer], { type: 'image/bmp' }));
+			emblem = _emblems[pkt.GDID];
 
 			// Prepare our emblem image
-			img            = new Image();
-			img.onload     = renderEmblem;
+			img = new Image();
+			img.onload = renderEmblem;
 			emblem.version = pkt.emblemVersion;
 
 			// Load the emblem, remove magenta, free blob from memory
-			Texture.load(src, function(){
+			Texture.load(src, function () {
 				img.src = this.toDataURL();
 			});
 
@@ -528,7 +498,7 @@ define(function( require )
 				}
 
 				// Update display name of entities
-				EntityManager.forEach(function(entity){
+				EntityManager.forEach(function (entity) {
 					if (entity.GUID === pkt.GDID) {
 						entity.display.emblem = img;
 						entity.display.refresh(entity);
@@ -544,9 +514,8 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.MEMBERMGR_INFO
 	 */
-	function onGuildMembers( pkt )
-	{
-		Guild.setMembers( pkt.memberInfo );
+	function onGuildMembers(pkt) {
+		Guild.setMembers(pkt.memberInfo);
 	}
 
 
@@ -555,8 +524,7 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.POSITION_INFO | PACKET.ZC.ACK_CHANGE_GUILD_POSITIONINFO
 	 */
-	function onGuildPositions( pkt )
-	{
+	function onGuildPositions(pkt) {
 		var erase = false;
 		var list;
 
@@ -568,7 +536,7 @@ define(function( require )
 			list = pkt.memberList;
 		}
 
-		Guild.setPositions( list, erase);
+		Guild.setPositions(list, erase);
 	}
 
 
@@ -577,9 +545,8 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.POSITION_ID_NAME_INFO
 	 */
-	function onGuildPositionsName( pkt )
-	{
-		Guild.setPositionsName( pkt.memberList );
+	function onGuildPositionsName(pkt) {
+		Guild.setPositionsName(pkt.memberList);
 	}
 
 
@@ -588,9 +555,8 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.ACK_GUILD_MEMBER_INFO
 	 */
-	function onGuildMemberUpdate( pkt )
-	{
-		Guild.setMember( pkt.Info );
+	function onGuildMemberUpdate(pkt) {
+		Guild.setMember(pkt.Info);
 	}
 
 
@@ -599,8 +565,7 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.ACK_REQ_CHANGE_MEMBERS
 	 */
-	function onGuildMemberPositionUpdate( pkt )
-	{
+	function onGuildMemberPositionUpdate(pkt) {
 		Guild.updateMemberPosition(pkt.AID, pkt.GID, pkt.positionID);
 	}
 
@@ -610,10 +575,9 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET_ZC_GUILD_SKILLINFO
 	 */
-	function onGuildSkillList( pkt )
-	{
-		Guild.setPoints( pkt.skillPoint );
-		Guild.setSkills( pkt.skillList );
+	function onGuildSkillList(pkt) {
+		Guild.setPoints(pkt.skillPoint);
+		Guild.setSkills(pkt.skillList);
 	}
 
 
@@ -622,12 +586,11 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.GUILD_NOTICE
 	 */
-	function onGuildNotice( pkt )
-	{
-		ChatBox.addText('[ '+ pkt.subject +' ]', ChatBox.TYPE.GUILD, ChatBox.FILTER.GUILD, '#FFFF63');
-		ChatBox.addText('[ '+ pkt.notice +' ]', ChatBox.TYPE.GUILD, ChatBox.FILTER.GUILD, '#FFFF63');
+	function onGuildNotice(pkt) {
+		ChatBox.addText('[ ' + pkt.subject + ' ]', ChatBox.TYPE.GUILD, ChatBox.FILTER.GUILD, '#FFFF63');
+		ChatBox.addText('[ ' + pkt.notice + ' ]', ChatBox.TYPE.GUILD, ChatBox.FILTER.GUILD, '#FFFF63');
 
-		Guild.setNotice( pkt.subject, pkt.notice );
+		Guild.setNotice(pkt.subject, pkt.notice);
 	}
 
 
@@ -636,9 +599,8 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.BAN_LIST
 	 */
-	function onGuildExpelList( pkt )
-	{
-		Guild.setExpelList( pkt.banList );
+	function onGuildExpelList(pkt) {
+		Guild.setExpelList(pkt.banList);
 	}
 
 
@@ -647,25 +609,24 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.RESULT_MAKE_GUILD
 	 */
-	function onGuildCreationResult( pkt )
-	{
+	function onGuildCreationResult(pkt) {
 		switch (pkt.result) {
 			case 0: // Success
 				Session.hasGuild = true;
-				ChatBox.addText( DB.getMessage(374), ChatBox.TYPE.BLUE, ChatBox.FILTER.GUILD);
+				ChatBox.addText(DB.getMessage(374), ChatBox.TYPE.BLUE, ChatBox.FILTER.GUILD);
 				Guild.show();
 				break;
 
 			case 1: // You are already in a Guild.#
-				ChatBox.addText( DB.getMessage(375), ChatBox.TYPE.ERROR, ChatBox.FILTER.GUILD);
+				ChatBox.addText(DB.getMessage(375), ChatBox.TYPE.ERROR, ChatBox.FILTER.GUILD);
 				break;
 
 			case 2: // That Guild Name already exists.
-				ChatBox.addText( DB.getMessage(376), ChatBox.TYPE.ERROR, ChatBox.FILTER.GUILD);
+				ChatBox.addText(DB.getMessage(376), ChatBox.TYPE.ERROR, ChatBox.FILTER.GUILD);
 				break;
 
 			case 3: // You need the neccessary item to create a Guild.
-				ChatBox.addText( DB.getMessage(405), ChatBox.TYPE.ERROR, ChatBox.FILTER.GUILD);
+				ChatBox.addText(DB.getMessage(405), ChatBox.TYPE.ERROR, ChatBox.FILTER.GUILD);
 				break;
 		}
 	}
@@ -676,21 +637,20 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.ACK_DISORGANIZE_GUILD_RESULT
 	 */
-	function onGuildDestroy( pkt )
-	{
+	function onGuildDestroy(pkt) {
 		switch (pkt.reason) {
 			case 0: // success
 				Guild.hide();
 				Session.hasGuild = false;
-				ChatBox.addText( DB.getMessage(400), ChatBox.TYPE.BLUE, ChatBox.FILTER.GUILD);
+				ChatBox.addText(DB.getMessage(400), ChatBox.TYPE.BLUE, ChatBox.FILTER.GUILD);
 				break;
 
 			case 1: // invalid guild name
-				ChatBox.addText( DB.getMessage(401), ChatBox.TYPE.ERROR, ChatBox.FILTER.GUILD);
+				ChatBox.addText(DB.getMessage(401), ChatBox.TYPE.ERROR, ChatBox.FILTER.GUILD);
 				break;
 
 			case 2: // still members on the guild
-				ChatBox.addText( DB.getMessage(402), ChatBox.TYPE.ERROR, ChatBox.FILTER.GUILD);
+				ChatBox.addText(DB.getMessage(402), ChatBox.TYPE.ERROR, ChatBox.FILTER.GUILD);
 				break;
 		}
 	}
@@ -701,21 +661,20 @@ define(function( require )
 	 *
 	 * @param {object} PACKET.ZC.REQ_JOIN_GUILD
 	 */
-	function onGuildInviteRequest( pkt )
-	{
+	function onGuildInviteRequest(pkt) {
 		var guild_id = pkt.GDID;
 
 		function answer(result) {
-			return function() {
-				var pkt    = new PACKET.CZ.JOIN_GUILD();
-				pkt.GDID   = guild_id;
+			return function () {
+				var pkt = new PACKET.CZ.JOIN_GUILD();
+				pkt.GDID = guild_id;
 				pkt.answer = result;
 
 				Network.sendPacket(pkt);
 			};
 		}
 
-		UIManager.showPromptBox( '(' + pkt.guildName + ') ' + DB.getMessage(377), 'ok', 'cancel', answer(1), answer(0));
+		UIManager.showPromptBox('(' + pkt.guildName + ') ' + DB.getMessage(377), 'ok', 'cancel', answer(1), answer(0));
 	}
 
 
@@ -724,23 +683,22 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.ACK_REQ_JOIN_GUILD
 	 */
-	function onGuildInviteResult( pkt )
-	{
+	function onGuildInviteResult(pkt) {
 		switch (pkt.answer) {
 			case 0: // Already in guild.
-				ChatBox.addText( DB.getMessage(378), ChatBox.TYPE.ERROR, ChatBox.FILTER.GUILD);
+				ChatBox.addText(DB.getMessage(378), ChatBox.TYPE.ERROR, ChatBox.FILTER.GUILD);
 				break;
 
 			case 1: // Offer rejected.
-				ChatBox.addText( DB.getMessage(379), ChatBox.TYPE.ERROR, ChatBox.FILTER.GUILD);
+				ChatBox.addText(DB.getMessage(379), ChatBox.TYPE.ERROR, ChatBox.FILTER.GUILD);
 				break;
 
 			case 2: // Offer accepted.
-				ChatBox.addText( DB.getMessage(380), ChatBox.TYPE.BLUE, ChatBox.FILTER.GUILD);
+				ChatBox.addText(DB.getMessage(380), ChatBox.TYPE.BLUE, ChatBox.FILTER.GUILD);
 				break;
 
 			case 3: // Guild full.
-				ChatBox.addText( DB.getMessage(381), ChatBox.TYPE.ERROR, ChatBox.FILTER.GUILD);
+				ChatBox.addText(DB.getMessage(381), ChatBox.TYPE.ERROR, ChatBox.FILTER.GUILD);
 				break;
 		}
 	}
@@ -751,8 +709,7 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.UPDATE_CHARSTAT
 	 */
-	function onGuildMemberStatus( pkt )
-	{
+	function onGuildMemberStatus(pkt) {
 		Guild.updateMemberStatus(pkt);
 	}
 
@@ -762,8 +719,7 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.ACK_BAN_GUILD_SSO
 	 */
-	function onGuildMemberExpulsion( pkt )
-	{
+	function onGuildMemberExpulsion(pkt) {
 		// %s has been expelled from our guild.
 		// Expulsion Reason: %s
 		ChatBox.addText(DB.getMessage(370).replace('%s', pkt.charName), ChatBox.TYPE.GUILD, ChatBox.FILTER.GUILD, '#FFFF00');
@@ -775,8 +731,8 @@ define(function( require )
 			Guild.hide();
 			Session.hasGuild = false;
 			Session.isGuildMaster = false;
-			Session.guildRight    = 0;
-			Session.Entity.GUID   = 0;
+			Session.guildRight = 0;
+			Session.Entity.GUID = 0;
 		}
 	}
 
@@ -786,8 +742,7 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.ACK_LEAVE_GUILD
 	 */
-	function onGuildMemberLeave( pkt )
-	{
+	function onGuildMemberLeave(pkt) {
 		// %s has withdrawn from the guild
 		// Secession Reason: %s
 		ChatBox.addText(DB.getMessage(364).replace('%s', pkt.charName), ChatBox.TYPE.GUILD, ChatBox.FILTER.GUILD, '#FFFF00');
@@ -799,8 +754,8 @@ define(function( require )
 			Guild.hide();
 			Session.hasGuild = false;
 			Session.isGuildMaster = false;
-			Session.guildRight    = 0;
-			Session.Entity.GUID   = 0;
+			Session.guildRight = 0;
+			Session.Entity.GUID = 0;
 		}
 	}
 
@@ -810,8 +765,7 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.DELETE_RELATED_GUILD
 	 */
-	function onGuildAllianceDeleteAck( pkt )
-	{
+	function onGuildAllianceDeleteAck(pkt) {
 		Guild.removeRelation(pkt.OpponentGDID, pkt.Relation);
 	}
 
@@ -821,8 +775,7 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.ADD_RELATED_GUILD
 	 */
-	function onGuildAllianceAdd( pkt )
-	{
+	function onGuildAllianceAdd(pkt) {
 		Guild.addRelation(pkt.Info);
 	}
 
@@ -832,22 +785,21 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.REQ_ALLY_GUILD
 	 */
-	function onGuildAskForAlliance( pkt )
-	{
+	function onGuildAskForAlliance(pkt) {
 		var AID = pkt.otherAID;
 
 		function answer(result) {
-			return function() {
+			return function () {
 				var pkt = new PACKET.CZ.ALLY_GUILD();
 				pkt.otherAID = AID;
-				pkt.answer   = result;
+				pkt.answer = result;
 
 				Network.sendPacket(pkt);
 			};
 		}
 
 		// Guild is asking you to agree to an Alliance with them. Do you accept?#
-		UIManager.showPromptBox( '(' + pkt.guildName + ') ' + DB.getMessage(393), 'ok', 'cancel', answer(1), answer(0));
+		UIManager.showPromptBox('(' + pkt.guildName + ') ' + DB.getMessage(393), 'ok', 'cancel', answer(1), answer(0));
 	}
 
 
@@ -856,8 +808,7 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.ACK_REQ_ALLY_GUILD
 	 */
-	function onGuildAllianceResult( pkt )
-	{
+	function onGuildAllianceResult(pkt) {
 		switch (pkt.answer) {
 			case 0: // Already allied.
 				ChatBox.addText(DB.getMessage(394), ChatBox.TYPE.ERROR, ChatBox.FILTER.GUILD);
@@ -891,8 +842,7 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.ACK_REQ_HOSTILE_GUILD
 	 */
-	function onGuildHostilityResult( pkt )
-	{
+	function onGuildHostilityResult(pkt) {
 		switch (pkt.result) {
 			case 0: // Antagonist has been set.
 				ChatBox.addText(DB.getMessage(495), ChatBox.TYPE.BLUE, ChatBox.FILTER.GUILD);
@@ -912,8 +862,7 @@ define(function( require )
 		}
 	}
 
-	function onGuildCastleInfo ( pkt )
-	{
+	function onGuildCastleInfo(pkt) {
 		// TODO: what is castle list?
 	}
 

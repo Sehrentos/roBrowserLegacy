@@ -5,23 +5,18 @@
  *
  * @author Alisonrag
  */
-
-define(function (require) {
+define(/** @type {(require: Require)=>Engine.MapEngine.Rodex} */function (require) {
 	'use strict';
 
-	/**
-	 * Load dependencies
-	 */
-	var DB = require('DB/DBManager');
-	var ChatBox = require('UI/Components/ChatBox/ChatBox');
-	var Network = require('Network/NetworkManager');
-	var PACKET = require('Network/PacketStructure');
-	var PACKETVER = require('Network/PacketVerManager');
-	var RodexIcon = require('UI/Components/Rodex/RodexIcon');
-	var Rodex = require('UI/Components/Rodex/Rodex');
-	var ReadRodex = require('UI/Components/Rodex/ReadRodex');
-	var WriteRodex = require('UI/Components/Rodex/WriteRodex');
-
+	/** @type {DB.DBManager} */var DB = require('DB/DBManager');
+	/** @type {UI.Component.ChatBox} */var ChatBox = require('UI/Components/ChatBox/ChatBox');
+	/** @type {Network.NetworkManager} */var Network = require('Network/NetworkManager');
+	/** @type {Network.PacketStructure} */var PACKET = require('Network/PacketStructure');
+	/** @type {Network.PacketVerManager} */var PACKETVER = require('Network/PacketVerManager');
+	/** @type {UI.Component.RodexIcon} */var RodexIcon = require('UI/Components/Rodex/RodexIcon');
+	/** @type {UI.Component.Rodex} */var Rodex = require('UI/Components/Rodex/Rodex');
+	/** @type {UI.Component.RodexRead} */var ReadRodex = require('UI/Components/Rodex/ReadRodex');
+	/** @type {UI.Component.RodexWrite} */var WriteRodex = require('UI/Components/Rodex/WriteRodex');
 
 	/**
 	 * Send Packets
@@ -422,6 +417,7 @@ define(function (require) {
 
 	/**
 	 * Initialize
+	 * @type {Engine.MapEngine.Rodex}
 	 */
 	return function MainEngine() {
 		Network.hookPacket(PACKET.ZC.RODEX_ICON, rodexIcon);

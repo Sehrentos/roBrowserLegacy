@@ -8,8 +8,7 @@
  * @author Vincent Thibault
  */
 
-define(function()
-{
+define(function () {
 	'use strict';
 
 	/** @type {Core.Context} */
@@ -21,7 +20,7 @@ define(function()
 	 */
 	Context.Is = {
 		POPUP: !!(window.opener),
-		FRAME:    window.top !== window.self
+		FRAME: window.top !== window.self
 	};
 
 
@@ -29,8 +28,7 @@ define(function()
 	 * Check if roBrowser is in FullScreen
 	 * @returns {boolean} is in fullscreen
 	 */
-	Context.isFullScreen = function IsFullScreen()
-	{
+	Context.isFullScreen = function IsFullScreen() {
 		return !!(
 			document.fullscreenElement ||
 			document.mozFullScreenElement ||
@@ -42,8 +40,7 @@ define(function()
 	/**
 	 * Try to launch roBrowser in Full Screen
 	 */
-	Context.requestFullScreen = function RequestFullScreen()
-	{
+	Context.requestFullScreen = function RequestFullScreen() {
 		if (!Context.isFullScreen()) {
 			var element = document.documentElement;
 
@@ -63,8 +60,7 @@ define(function()
 	/**
 	 * Try to cancel roBrowser full screen
 	 */
-	Context.cancelFullScreen = function CancelFullScreen()
-	{
+	Context.cancelFullScreen = function CancelFullScreen() {
 		if (document.cancelFullScreen) {
 			document.cancelFullScreen();
 		}
@@ -83,8 +79,7 @@ define(function()
 	 *
 	 * (2D graphics, 3D graphics, Threads, File API, ...)
 	 */
-	Context.checkSupport = function CheckSupport()
-	{
+	Context.checkSupport = function CheckSupport() {
 		var div, canvas, element, gl;
 
 		// Drag drop
@@ -105,8 +100,8 @@ define(function()
 		}
 
 		element = document.createElement('canvas');
-		try { gl = element.getContext('webgl2'); } catch(e){}
-		try { gl = gl || element.getContext('webgl'); } catch(e){}
+		try { gl = element.getContext('webgl2'); } catch (e) { }
+		try { gl = gl || element.getContext('webgl'); } catch (e) { }
 
 		if (!gl) {
 			throw 'Your web browser OR your Graphics Card OR Drivers need to be updated, it does not support 3D graphics.\nFor more informations check <a href="http://get.webgl.org/" target="_blank">get.webgl.org</a>';

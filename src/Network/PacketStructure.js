@@ -8,15 +8,13 @@
  *
  * @author Vincent Thibault
  */
-
 define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Configs'], function (
 	/** @type {Utils.BinaryWriter} */BinaryWriter,
 	/** @type {Network.PacketVerManager} */PACKETVER,
 	/** @type {Utils.Struct} */Struct,
-	Configs
+	/** @type {Core.Configs} */Configs
 ) {
 	'use strict';
-
 
 	var UNUSED_PACKET;
 	var NAME_LENGTH = 24; // Must be equal to same name var in mmo.h
@@ -28,19 +26,14 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	var CLASSIC = !RENEWAL; // For ease of reading checks
 	UNUSED_PACKET = PACKET;
 
-
-	PACKET.CA  = {};  PACKET.AC = {}; // Login
-	PACKET.CH  = {};  PACKET.HC = {}; // Char
-	PACKET.CZ  = {};  PACKET.ZC = {}; // Map
-	PACKET.CS  = {};  PACKET.SC = {}; // All servers
-	PACKET.ZH  = {};                  // ??? typo error ?
+	PACKET.CA = {}; PACKET.AC = {}; // Login
+	PACKET.CH = {}; PACKET.HC = {}; // Char
+	PACKET.CZ = {}; PACKET.ZC = {}; // Map
+	PACKET.CS = {}; PACKET.SC = {}; // All servers
+	PACKET.ZH = {};                  // ??? typo error ?
 	PACKET.AHC = {}; PACKET.CAH = {}; // Security
 
 	// 0x186 PACKET_COLLECTORDEAD ??
-
-	// * auto-generated *
-
-
 
 	// 0x64
 	PACKET.CA.LOGIN = function PACKET_CA_LOGIN() {
@@ -49,7 +42,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.Passwd = '';
 		this.clienttype = 0;
 	};
-	PACKET.CA.LOGIN.prototype.build = function() {
+	PACKET.CA.LOGIN.prototype.build = function () {
 		var pkt_len = 2 + 4 + 24 + 24 + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -70,7 +63,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.clientType = 0;
 		this.Sex = 0;
 	};
-	PACKET.CH.ENTER.prototype.build = function() {
+	PACKET.CH.ENTER.prototype.build = function () {
 		var pkt_len = 2 + 4 + 4 + 4 + 2 + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -88,7 +81,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CH.SELECT_CHAR = function PACKET_CH_SELECT_CHAR() {
 		this.CharNum = 0;
 	};
-	PACKET.CH.SELECT_CHAR.prototype.build = function() {
+	PACKET.CH.SELECT_CHAR.prototype.build = function () {
 		var pkt_len = 2 + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -112,7 +105,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.headPal = 0;
 		this.head = 0;
 	};
-	PACKET.CH.MAKE_CHAR.prototype.build = function() {
+	PACKET.CH.MAKE_CHAR.prototype.build = function () {
 		var pkt_len = 2 + 24 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 2 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -136,7 +129,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.GID = 0;
 		this.key = '';
 	};
-	PACKET.CH.DELETE_CHAR.prototype.build = function() {
+	PACKET.CH.DELETE_CHAR.prototype.build = function () {
 		var pkt_len = 2 + 4 + 40;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -155,7 +148,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.clientTime = 0;
 		this.Sex = 0;
 	};
-	PACKET.CZ.ENTER.prototype.build = function() {
+	PACKET.CZ.ENTER.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -171,8 +164,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x7d
-	PACKET.CZ.NOTIFY_ACTORINIT = function PACKET_CZ_NOTIFY_ACTORINIT() {};
-	PACKET.CZ.NOTIFY_ACTORINIT.prototype.build = function() {
+	PACKET.CZ.NOTIFY_ACTORINIT = function PACKET_CZ_NOTIFY_ACTORINIT() { };
+	PACKET.CZ.NOTIFY_ACTORINIT.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -186,7 +179,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQUEST_TIME = function PACKET_CZ_REQUEST_TIME() {
 		this.clientTime = 0;
 	};
-	PACKET.CZ.REQUEST_TIME.prototype.build = function() {
+	PACKET.CZ.REQUEST_TIME.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -197,8 +190,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x844
-	PACKET.CZ.HBT = function PACKET_CZ_HBT() {};
-	PACKET.CZ.HBT.prototype.build = function() {
+	PACKET.CZ.HBT = function PACKET_CZ_HBT() { };
+	PACKET.CZ.HBT.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 		pkt_buf.writeShort(0x0844);
@@ -208,8 +201,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x82
-	PACKET.CZ.REQUEST_QUIT = function PACKET_CZ_REQUEST_QUIT() {};
-	PACKET.CZ.REQUEST_QUIT.prototype.build = function() {
+	PACKET.CZ.REQUEST_QUIT = function PACKET_CZ_REQUEST_QUIT() { };
+	PACKET.CZ.REQUEST_QUIT.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -223,7 +216,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQUEST_MOVE = function PACKET_CZ_REQUEST_MOVE() {
 		this.dest = [0, 0];
 	};
-	PACKET.CZ.REQUEST_MOVE.prototype.build = function() {
+	PACKET.CZ.REQUEST_MOVE.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -238,7 +231,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.targetGID = 0;
 		this.action = 0;
 	};
-	PACKET.CZ.REQUEST_ACT.prototype.build = function() {
+	PACKET.CZ.REQUEST_ACT.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -253,7 +246,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQUEST_CHAT = function PACKET_CZ_REQUEST_CHAT() {
 		this.msg = '';
 	};
-	PACKET.CZ.REQUEST_CHAT.prototype.build = function() {
+	PACKET.CZ.REQUEST_CHAT.prototype.build = function () {
 		var version = this.getPacketVersion();
 		var pkt_len = 2 + 2 + this.msg.length + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
@@ -271,7 +264,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.NAID = 0;
 		this.type = 0;
 	};
-	PACKET.CZ.CONTACTNPC.prototype.build = function() {
+	PACKET.CZ.CONTACTNPC.prototype.build = function () {
 		var pkt_len = 2 + 4 + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -286,7 +279,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQNAME = function PACKET_CZ_REQNAME() {
 		this.AID = 0;
 	};
-	PACKET.CZ.REQNAME.prototype.build = function() {
+	PACKET.CZ.REQNAME.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -301,7 +294,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.receiver = '';
 		this.msg = '';
 	};
-	PACKET.CZ.WHISPER.prototype.build = function() {
+	PACKET.CZ.WHISPER.prototype.build = function () {
 		var pkt_len = 2 + 2 + 24 + this.msg.length + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -317,7 +310,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.headDir = 0;
 		this.dir = 0;
 	};
-	PACKET.CZ.CHANGE_DIRECTION.prototype.build = function() {
+	PACKET.CZ.CHANGE_DIRECTION.prototype.build = function () {
 		var servDirection = [4, 3, 2, 1, 0, 7, 6, 5];
 
 		var ver = this.getPacketVersion();
@@ -334,7 +327,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.ITEM_PICKUP = function PACKET_CZ_ITEM_PICKUP() {
 		this.ITAID = 0;
 	};
-	PACKET.CZ.ITEM_PICKUP.prototype.build = function() {
+	PACKET.CZ.ITEM_PICKUP.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -349,7 +342,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.Index = 0;
 		this.count = 0;
 	};
-	PACKET.CZ.ITEM_THROW.prototype.build = function() {
+	PACKET.CZ.ITEM_THROW.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -365,7 +358,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.index = 0;
 		this.AID = 0;
 	};
-	PACKET.CZ.USE_ITEM.prototype.build = function() {
+	PACKET.CZ.USE_ITEM.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -381,13 +374,13 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.index = 0;
 		this.wearLocation = 0;
 	};
-	PACKET.CZ.REQ_WEAR_EQUIP.prototype.build = function() {
+	PACKET.CZ.REQ_WEAR_EQUIP.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
 		pkt.writeShort(ver[1]);
 		pkt.view.setUint16(ver[3], this.index, true);
-		if(PACKETVER.value >= 20120925) {
+		if (PACKETVER.value >= 20120925) {
 			pkt.view.setUint32(ver[4], this.wearLocation, true);
 		} else {
 			pkt.view.setUint16(ver[4], this.wearLocation, true);
@@ -400,7 +393,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQ_TAKEOFF_EQUIP = function PACKET_CZ_REQ_TAKEOFF_EQUIP() {
 		this.index = 0;
 	};
-	PACKET.CZ.REQ_TAKEOFF_EQUIP.prototype.build = function() {
+	PACKET.CZ.REQ_TAKEOFF_EQUIP.prototype.build = function () {
 		var pkt_len = 2 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -414,7 +407,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.RESTART = function PACKET_CZ_RESTART() {
 		this.type = 0;
 	};
-	PACKET.CZ.RESTART.prototype.build = function() {
+	PACKET.CZ.RESTART.prototype.build = function () {
 		var pkt_len = 2 + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -429,7 +422,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.NAID = 0;
 		this.num = 0;
 	};
-	PACKET.CZ.CHOOSE_MENU.prototype.build = function() {
+	PACKET.CZ.CHOOSE_MENU.prototype.build = function () {
 		var pkt_len = 2 + 4 + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -444,7 +437,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQ_NEXT_SCRIPT = function PACKET_CZ_REQ_NEXT_SCRIPT() {
 		this.NAID = 0;
 	};
-	PACKET.CZ.REQ_NEXT_SCRIPT.prototype.build = function() {
+	PACKET.CZ.REQ_NEXT_SCRIPT.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -455,8 +448,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0xba
-	PACKET.CZ.REQ_STATUS = function PACKET_CZ_REQ_STATUS() {};
-	PACKET.CZ.REQ_STATUS.prototype.build = function() {
+	PACKET.CZ.REQ_STATUS = function PACKET_CZ_REQ_STATUS() { };
+	PACKET.CZ.REQ_STATUS.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -470,7 +463,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.statusID = 0;
 		this.changeAmount = 0;
 	};
-	PACKET.CZ.STATUS_CHANGE.prototype.build = function() {
+	PACKET.CZ.STATUS_CHANGE.prototype.build = function () {
 		if (this.statusID >= 219 && this.statusID <= 224) {
 			var pkt_len = 2 + 3 + 1;
 		} else {
@@ -493,7 +486,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQ_EMOTION = function PACKET_CZ_REQ_EMOTION() {
 		this.type = 0;
 	};
-	PACKET.CZ.REQ_EMOTION.prototype.build = function() {
+	PACKET.CZ.REQ_EMOTION.prototype.build = function () {
 		var pkt_len = 2 + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -505,8 +498,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0xc1
-	PACKET.CZ.REQ_USER_COUNT = function PACKET_CZ_REQ_USER_COUNT() {};
-	PACKET.CZ.REQ_USER_COUNT.prototype.build = function() {
+	PACKET.CZ.REQ_USER_COUNT = function PACKET_CZ_REQ_USER_COUNT() { };
+	PACKET.CZ.REQ_USER_COUNT.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -520,7 +513,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.NAID = 0;
 		this.type = 0;
 	};
-	PACKET.CZ.ACK_SELECT_DEALTYPE.prototype.build = function() {
+	PACKET.CZ.ACK_SELECT_DEALTYPE.prototype.build = function () {
 		var pkt_len = 2 + 4 + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -535,9 +528,9 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.PC_PURCHASE_ITEMLIST = function PACKET_CZ_PC_PURCHASE_ITEMLIST() {
 		this.itemList = [];
 	};
-	PACKET.CZ.PC_PURCHASE_ITEMLIST.prototype.build = function() {
+	PACKET.CZ.PC_PURCHASE_ITEMLIST.prototype.build = function () {
 		var pkt_len;
-		if(PACKETVER.value >= 20181121) {
+		if (PACKETVER.value >= 20181121) {
 			pkt_len = 2 + 2 + this.itemList.length * 6;
 		} else {
 			pkt_len = 2 + 2 + this.itemList.length * 4;
@@ -550,7 +543,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		var i, count;
 		for (i = 0, count = this.itemList.length; i < count; ++i) {
 			pkt_buf.writeShort(this.itemList[i].count);
-			if(PACKETVER.value >= 20181121) {
+			if (PACKETVER.value >= 20181121) {
 				pkt_buf.writeULong(this.itemList[i].ITID);
 			} else {
 				pkt_buf.writeUShort(this.itemList[i].ITID);
@@ -565,7 +558,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.PC_SELL_ITEMLIST = function PACKET_CZ_PC_SELL_ITEMLIST() {
 		this.itemList = [];
 	};
-	PACKET.CZ.PC_SELL_ITEMLIST.prototype.build = function() {
+	PACKET.CZ.PC_SELL_ITEMLIST.prototype.build = function () {
 		var pkt_len = 2 + 2 + this.itemList.length * 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -587,7 +580,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.name = '';
 		this.type = 0;
 	};
-	PACKET.CZ.SETTING_WHISPER_PC.prototype.build = function() {
+	PACKET.CZ.SETTING_WHISPER_PC.prototype.build = function () {
 		var pkt_len = 2 + 24 + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -603,7 +596,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.SETTING_WHISPER_STATE = function PACKET_CZ_SETTING_WHISPER_STATE() {
 		this.type = 0;
 	};
-	PACKET.CZ.SETTING_WHISPER_STATE.prototype.build = function() {
+	PACKET.CZ.SETTING_WHISPER_STATE.prototype.build = function () {
 		var pkt_len = 2 + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -614,8 +607,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0xd3
-	PACKET.CZ.REQ_WHISPER_LIST = function PACKET_CZ_REQ_WHISPER_LIST() {};
-	PACKET.CZ.REQ_WHISPER_LIST.prototype.build = function() {
+	PACKET.CZ.REQ_WHISPER_LIST = function PACKET_CZ_REQ_WHISPER_LIST() { };
+	PACKET.CZ.REQ_WHISPER_LIST.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -632,7 +625,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.passwd = '';
 		this.title = '';
 	};
-	PACKET.CZ.CREATE_CHATROOM.prototype.build = function() {
+	PACKET.CZ.CREATE_CHATROOM.prototype.build = function () {
 		var pkt_len = 2 + 2 + 2 + 1 + 8 + this.title.length;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -652,7 +645,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.roomID = 0;
 		this.passwd = '';
 	};
-	PACKET.CZ.REQ_ENTER_ROOM.prototype.build = function() {
+	PACKET.CZ.REQ_ENTER_ROOM.prototype.build = function () {
 		var pkt_len = 2 + 4 + 8;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -670,7 +663,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.passwd = '';
 		this.title = '';
 	};
-	PACKET.CZ.CHANGE_CHATROOM.prototype.build = function() {
+	PACKET.CZ.CHANGE_CHATROOM.prototype.build = function () {
 		var pkt_len = 2 + 2 + 2 + 1 + 8 + this.title.length;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -690,7 +683,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.role = 0;
 		this.name = '';
 	};
-	PACKET.CZ.REQ_ROLE_CHANGE.prototype.build = function() {
+	PACKET.CZ.REQ_ROLE_CHANGE.prototype.build = function () {
 		var pkt_len = 2 + 4 + 24;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -705,7 +698,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQ_EXPEL_MEMBER = function PACKET_CZ_REQ_EXPEL_MEMBER() {
 		this.name = '';
 	};
-	PACKET.CZ.REQ_EXPEL_MEMBER.prototype.build = function() {
+	PACKET.CZ.REQ_EXPEL_MEMBER.prototype.build = function () {
 		var pkt_len = 2 + 24;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -716,8 +709,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0xe3
-	PACKET.CZ.EXIT_ROOM = function PACKET_CZ_EXIT_ROOM() {};
-	PACKET.CZ.EXIT_ROOM.prototype.build = function() {
+	PACKET.CZ.EXIT_ROOM = function PACKET_CZ_EXIT_ROOM() { };
+	PACKET.CZ.EXIT_ROOM.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -730,7 +723,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQ_EXCHANGE_ITEM = function PACKET_CZ_REQ_EXCHANGE_ITEM() {
 		this.AID = 0;
 	};
-	PACKET.CZ.REQ_EXCHANGE_ITEM.prototype.build = function() {
+	PACKET.CZ.REQ_EXCHANGE_ITEM.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -744,7 +737,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.ACK_EXCHANGE_ITEM = function PACKET_CZ_ACK_EXCHANGE_ITEM() {
 		this.result = 0;
 	};
-	PACKET.CZ.ACK_EXCHANGE_ITEM.prototype.build = function() {
+	PACKET.CZ.ACK_EXCHANGE_ITEM.prototype.build = function () {
 		var pkt_len = 2 + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -759,7 +752,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.index = 0;
 		this.count = 0;
 	};
-	PACKET.CZ.ADD_EXCHANGE_ITEM.prototype.build = function() {
+	PACKET.CZ.ADD_EXCHANGE_ITEM.prototype.build = function () {
 		var pkt_len = 2 + 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -771,8 +764,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0xeb
-	PACKET.CZ.CONCLUDE_EXCHANGE_ITEM = function PACKET_CZ_CONCLUDE_EXCHANGE_ITEM() {};
-	PACKET.CZ.CONCLUDE_EXCHANGE_ITEM.prototype.build = function() {
+	PACKET.CZ.CONCLUDE_EXCHANGE_ITEM = function PACKET_CZ_CONCLUDE_EXCHANGE_ITEM() { };
+	PACKET.CZ.CONCLUDE_EXCHANGE_ITEM.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -782,8 +775,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0xed
-	PACKET.CZ.CANCEL_EXCHANGE_ITEM = function PACKET_CZ_CANCEL_EXCHANGE_ITEM() {};
-	PACKET.CZ.CANCEL_EXCHANGE_ITEM.prototype.build = function() {
+	PACKET.CZ.CANCEL_EXCHANGE_ITEM = function PACKET_CZ_CANCEL_EXCHANGE_ITEM() { };
+	PACKET.CZ.CANCEL_EXCHANGE_ITEM.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -793,8 +786,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0xef
-	PACKET.CZ.EXEC_EXCHANGE_ITEM = function PACKET_CZ_EXEC_EXCHANGE_ITEM() {};
-	PACKET.CZ.EXEC_EXCHANGE_ITEM.prototype.build = function() {
+	PACKET.CZ.EXEC_EXCHANGE_ITEM = function PACKET_CZ_EXEC_EXCHANGE_ITEM() { };
+	PACKET.CZ.EXEC_EXCHANGE_ITEM.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -808,7 +801,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.index = 0;
 		this.count = 0;
 	};
-	PACKET.CZ.MOVE_ITEM_FROM_BODY_TO_STORE.prototype.build = function() {
+	PACKET.CZ.MOVE_ITEM_FROM_BODY_TO_STORE.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -824,7 +817,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.index = 0;
 		this.count = 0;
 	};
-	PACKET.CZ.MOVE_ITEM_FROM_STORE_TO_BODY.prototype.build = function() {
+	PACKET.CZ.MOVE_ITEM_FROM_STORE_TO_BODY.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -836,8 +829,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0xf7
-	PACKET.CZ.CLOSE_STORE = function PACKET_CZ_CLOSE_STORE() {};
-	PACKET.CZ.CLOSE_STORE.prototype.build = function() {
+	PACKET.CZ.CLOSE_STORE = function PACKET_CZ_CLOSE_STORE() { };
+	PACKET.CZ.CLOSE_STORE.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -851,7 +844,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.MAKE_GROUP = function PACKET_CZ_MAKE_GROUP() {
 		this.groupName = '';
 	};
-	PACKET.CZ.MAKE_GROUP.prototype.build = function() {
+	PACKET.CZ.MAKE_GROUP.prototype.build = function () {
 		var pkt_len = 2 + 24;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -866,7 +859,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.AID = 0;
 		this.CharName = '';
 	};
-	PACKET.CZ.REQ_JOIN_GROUP.prototype.build = function() {
+	PACKET.CZ.REQ_JOIN_GROUP.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -885,7 +878,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.GRID = 0;
 		this.answer = 0;
 	};
-	PACKET.CZ.JOIN_GROUP.prototype.build = function() {
+	PACKET.CZ.JOIN_GROUP.prototype.build = function () {
 		var pkt_len = 2 + 4 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -897,8 +890,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x100
-	PACKET.CZ.REQ_LEAVE_GROUP = function PACKET_CZ_REQ_LEAVE_GROUP() {};
-	PACKET.CZ.REQ_LEAVE_GROUP.prototype.build = function() {
+	PACKET.CZ.REQ_LEAVE_GROUP = function PACKET_CZ_REQ_LEAVE_GROUP() { };
+	PACKET.CZ.REQ_LEAVE_GROUP.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -911,7 +904,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.CHANGE_GROUPEXPOPTION = function PACKET_CZ_CHANGE_GROUPEXPOPTION() {
 		this.expOption = 0;
 	};
-	PACKET.CZ.CHANGE_GROUPEXPOPTION.prototype.build = function() {
+	PACKET.CZ.CHANGE_GROUPEXPOPTION.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -926,7 +919,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.AID = 0;
 		this.characterName = '';
 	};
-	PACKET.CZ.REQ_EXPEL_GROUP_MEMBER.prototype.build = function() {
+	PACKET.CZ.REQ_EXPEL_GROUP_MEMBER.prototype.build = function () {
 		var pkt_len = 2 + 4 + 24;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -941,7 +934,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQUEST_CHAT_PARTY = function PACKET_CZ_REQUEST_CHAT_PARTY() {
 		this.msg = '';
 	};
-	PACKET.CZ.REQUEST_CHAT_PARTY.prototype.build = function() {
+	PACKET.CZ.REQUEST_CHAT_PARTY.prototype.build = function () {
 		var pkt_len = 2 + 2 + this.msg.length + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -956,7 +949,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.UPGRADE_SKILLLEVEL = function PACKET_CZ_UPGRADE_SKILLLEVEL() {
 		this.SKID = 0;
 	};
-	PACKET.CZ.UPGRADE_SKILLLEVEL.prototype.build = function() {
+	PACKET.CZ.UPGRADE_SKILLLEVEL.prototype.build = function () {
 		var pkt_len = 2 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -973,7 +966,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.SKID = 0;
 		this.targetID = 0;
 	};
-	PACKET.CZ.USE_SKILL.prototype.build = function() {
+	PACKET.CZ.USE_SKILL.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -992,7 +985,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.xPos = 0;
 		this.yPos = 0;
 	};
-	PACKET.CZ.USE_SKILL_TOGROUND.prototype.build = function() {
+	PACKET.CZ.USE_SKILL_TOGROUND.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -1006,8 +999,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x118
-	PACKET.CZ.CANCEL_LOCKON = function PACKET_CZ_CANCEL_LOCKON() {};
-	PACKET.CZ.CANCEL_LOCKON.prototype.build = function() {
+	PACKET.CZ.CANCEL_LOCKON = function PACKET_CZ_CANCEL_LOCKON() { };
+	PACKET.CZ.CANCEL_LOCKON.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1021,7 +1014,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.SKID = 0;
 		this.mapName = '';
 	};
-	PACKET.CZ.SELECT_WARPPOINT.prototype.build = function() {
+	PACKET.CZ.SELECT_WARPPOINT.prototype.build = function () {
 		var pkt_len = 2 + 2 + 16;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1034,8 +1027,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x11d
-	PACKET.CZ.REMEMBER_WARPPOINT = function PACKET_CZ_REMEMBER_WARPPOINT() {};
-	PACKET.CZ.REMEMBER_WARPPOINT.prototype.build = function() {
+	PACKET.CZ.REMEMBER_WARPPOINT = function PACKET_CZ_REMEMBER_WARPPOINT() { };
+	PACKET.CZ.REMEMBER_WARPPOINT.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1050,7 +1043,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.index = 0;
 		this.count = 0;
 	};
-	PACKET.CZ.MOVE_ITEM_FROM_BODY_TO_CART.prototype.build = function() {
+	PACKET.CZ.MOVE_ITEM_FROM_BODY_TO_CART.prototype.build = function () {
 		var pkt_len = 2 + 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1067,7 +1060,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.index = 0;
 		this.count = 0;
 	};
-	PACKET.CZ.MOVE_ITEM_FROM_CART_TO_BODY.prototype.build = function() {
+	PACKET.CZ.MOVE_ITEM_FROM_CART_TO_BODY.prototype.build = function () {
 		var pkt_len = 2 + 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1083,7 +1076,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.index = 0;
 		this.count = 0;
 	};
-	PACKET.CZ.MOVE_ITEM_FROM_STORE_TO_CART.prototype.build = function() {
+	PACKET.CZ.MOVE_ITEM_FROM_STORE_TO_CART.prototype.build = function () {
 		var pkt_len = 2 + 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1099,7 +1092,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.index = 0;
 		this.count = 0;
 	};
-	PACKET.CZ.MOVE_ITEM_FROM_CART_TO_STORE.prototype.build = function() {
+	PACKET.CZ.MOVE_ITEM_FROM_CART_TO_STORE.prototype.build = function () {
 		var pkt_len = 2 + 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1111,8 +1104,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x12a
-	PACKET.CZ.REQ_CARTOFF = function PACKET_CZ_REQ_CARTOFF() {};
-	PACKET.CZ.REQ_CARTOFF.prototype.build = function() {
+	PACKET.CZ.REQ_CARTOFF = function PACKET_CZ_REQ_CARTOFF() { };
+	PACKET.CZ.REQ_CARTOFF.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1122,8 +1115,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x12e
-	PACKET.CZ.REQ_CLOSESTORE = function PACKET_CZ_REQ_CLOSESTORE() {};
-	PACKET.CZ.REQ_CLOSESTORE.prototype.build = function() {
+	PACKET.CZ.REQ_CLOSESTORE = function PACKET_CZ_REQ_CLOSESTORE() { };
+	PACKET.CZ.REQ_CLOSESTORE.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1137,7 +1130,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.storeName = '';
 		this.storeList = [];
 	};
-	PACKET.CZ.REQ_OPENSTORE.prototype.build = function() {
+	PACKET.CZ.REQ_OPENSTORE.prototype.build = function () {
 		var i, count;
 		var pkt_len = 2 + 2 + 80 + this.storeList.length * 8;
 		var pkt_buf = new BinaryWriter(pkt_len);
@@ -1160,7 +1153,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQ_BUY_FROMMC = function PACKET_CZ_REQ_BUY_FROMMC() {
 		this.AID = 0;
 	};
-	PACKET.CZ.REQ_BUY_FROMMC.prototype.build = function() {
+	PACKET.CZ.REQ_BUY_FROMMC.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1175,7 +1168,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.AID = 0;
 		this.itemList = [];
 	};
-	PACKET.CZ.PC_PURCHASE_ITEMLIST_FROMMC.prototype.build = function() {
+	PACKET.CZ.PC_PURCHASE_ITEMLIST_FROMMC.prototype.build = function () {
 		var i, count;
 		var pkt_len = 2 + 2 + 4 + this.itemList.length * 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
@@ -1198,7 +1191,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.PKMODE_CHANGE = function PACKET_CZ_PKMODE_CHANGE() {
 		this.isTurnOn = 0;
 	};
-	PACKET.CZ.PKMODE_CHANGE.prototype.build = function() {
+	PACKET.CZ.PKMODE_CHANGE.prototype.build = function () {
 		var pkt_len = 2 + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1213,7 +1206,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.NAID = 0;
 		this.value = 0;
 	};
-	PACKET.CZ.INPUT_EDITDLG.prototype.build = function() {
+	PACKET.CZ.INPUT_EDITDLG.prototype.build = function () {
 		var pkt_len = 2 + 4 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1228,7 +1221,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.CLOSE_DIALOG = function PACKET_CZ_CLOSE_DIALOG() {
 		this.NAID = 0;
 	};
-	PACKET.CZ.CLOSE_DIALOG.prototype.build = function() {
+	PACKET.CZ.CLOSE_DIALOG.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1239,8 +1232,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x14d
-	PACKET.CZ.REQ_GUILD_MENUINTERFACE = function PACKET_CZ_REQ_GUILD_MENUINTERFACE() {};
-	PACKET.CZ.REQ_GUILD_MENUINTERFACE.prototype.build = function() {
+	PACKET.CZ.REQ_GUILD_MENUINTERFACE = function PACKET_CZ_REQ_GUILD_MENUINTERFACE() { };
+	PACKET.CZ.REQ_GUILD_MENUINTERFACE.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1253,7 +1246,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQ_GUILD_MENU = function PACKET_CZ_REQ_GUILD_MENU() {
 		this.Type = 0;
 	};
-	PACKET.CZ.REQ_GUILD_MENU.prototype.build = function() {
+	PACKET.CZ.REQ_GUILD_MENU.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1267,7 +1260,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQ_GUILD_EMBLEM_IMG = function PACKET_CZ_REQ_GUILD_EMBLEM_IMG() {
 		this.GDID = 0;
 	};
-	PACKET.CZ.REQ_GUILD_EMBLEM_IMG.prototype.build = function() {
+	PACKET.CZ.REQ_GUILD_EMBLEM_IMG.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1282,7 +1275,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REGISTER_GUILD_EMBLEM_IMG = function PACKET_CZ_REGISTER_GUILD_EMBLEM_IMG() {
 		this.img;
 	};
-	PACKET.CZ.REGISTER_GUILD_EMBLEM_IMG.prototype.build = function() {
+	PACKET.CZ.REGISTER_GUILD_EMBLEM_IMG.prototype.build = function () {
 		var pkt_len = 2 + 2 + this.img.byteLength;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1298,7 +1291,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQ_CHANGE_MEMBERPOS = function PACKET_CZ_REQ_CHANGE_MEMBERPOS() {
 		this.memberInfo = [];
 	};
-	PACKET.CZ.REQ_CHANGE_MEMBERPOS.prototype.build = function() {
+	PACKET.CZ.REQ_CHANGE_MEMBERPOS.prototype.build = function () {
 		var i, count;
 		var pkt_len = 2 + 2 + this.memberInfo.length * 12;
 		var pkt_buf = new BinaryWriter(pkt_len);
@@ -1320,7 +1313,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQ_OPEN_MEMBER_INFO = function PACKET_CZ_REQ_OPEN_MEMBER_INFO() {
 		this.AID = 0;
 	};
-	PACKET.CZ.REQ_OPEN_MEMBER_INFO.prototype.build = function() {
+	PACKET.CZ.REQ_OPEN_MEMBER_INFO.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1337,7 +1330,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.GID = 0;
 		this.reasonDesc = '';
 	};
-	PACKET.CZ.REQ_LEAVE_GUILD.prototype.build = function() {
+	PACKET.CZ.REQ_LEAVE_GUILD.prototype.build = function () {
 		var pkt_len = 2 + 4 + 4 + 4 + 40;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1357,7 +1350,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.GID = 0;
 		this.reasonDesc = '';
 	};
-	PACKET.CZ.REQ_BAN_GUILD.prototype.build = function() {
+	PACKET.CZ.REQ_BAN_GUILD.prototype.build = function () {
 		var pkt_len = 2 + 4 + 4 + 4 + 40;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1375,7 +1368,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQ_DISORGANIZE_GUILD = function PACKET_CZ_REQ_DISORGANIZE_GUILD() {
 		this.key = '';
 	};
-	PACKET.CZ.REQ_DISORGANIZE_GUILD.prototype.build = function() {
+	PACKET.CZ.REQ_DISORGANIZE_GUILD.prototype.build = function () {
 		var pkt_len = 2 + 40;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1389,7 +1382,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REG_CHANGE_GUILD_POSITIONINFO = function PACKET_CZ_REG_CHANGE_GUILD_POSITIONINFO() {
 		this.memberList = [];
 	};
-	PACKET.CZ.REG_CHANGE_GUILD_POSITIONINFO.prototype.build = function() {
+	PACKET.CZ.REG_CHANGE_GUILD_POSITIONINFO.prototype.build = function () {
 		var i, count;
 		var pkt_len = 2 + 2 + this.memberList.length * 40;
 		var pkt_buf = new BinaryWriter(pkt_len);
@@ -1414,7 +1407,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.GID = 0;
 		this.GName = '';
 	};
-	PACKET.CZ.REQ_MAKE_GUILD.prototype.build = function() {
+	PACKET.CZ.REQ_MAKE_GUILD.prototype.build = function () {
 		var pkt_len = 2 + 4 + 24;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1431,7 +1424,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.MyAID = 0;
 		this.MyGID = 0;
 	};
-	PACKET.CZ.REQ_JOIN_GUILD.prototype.build = function() {
+	PACKET.CZ.REQ_JOIN_GUILD.prototype.build = function () {
 		var pkt_len = 2 + 4 + 4 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1448,7 +1441,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.GDID = 0;
 		this.answer = 0;
 	};
-	PACKET.CZ.JOIN_GUILD.prototype.build = function() {
+	PACKET.CZ.JOIN_GUILD.prototype.build = function () {
 		var pkt_len = 2 + 4 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1466,7 +1459,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.subject = '';
 		this.notice = '';
 	};
-	PACKET.CZ.GUILD_NOTICE.prototype.build = function() {
+	PACKET.CZ.GUILD_NOTICE.prototype.build = function () {
 		var pkt_len = 2 + 4 + 60 + 120;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1484,7 +1477,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.MyAID = 0;
 		this.MyGID = 0;
 	};
-	PACKET.CZ.REQ_ALLY_GUILD.prototype.build = function() {
+	PACKET.CZ.REQ_ALLY_GUILD.prototype.build = function () {
 		var pkt_len = 2 + 4 + 4 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1501,7 +1494,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.otherAID = 0;
 		this.answer = 0;
 	};
-	PACKET.CZ.ALLY_GUILD.prototype.build = function() {
+	PACKET.CZ.ALLY_GUILD.prototype.build = function () {
 		var pkt_len = 2 + 4 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1516,7 +1509,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQ_GUILD_MEMBER_INFO = function PACKET_CZ_REQ_GUILD_MEMBER_INFO() {
 		this.GID = 0;
 	};
-	PACKET.CZ.REQ_GUILD_MEMBER_INFO.prototype.build = function() {
+	PACKET.CZ.REQ_GUILD_MEMBER_INFO.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1530,7 +1523,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQ_ITEMIDENTIFY = function PACKET_CZ_REQ_ITEMIDENTIFY() {
 		this.index = 0;
 	};
-	PACKET.CZ.REQ_ITEMIDENTIFY.prototype.build = function() {
+	PACKET.CZ.REQ_ITEMIDENTIFY.prototype.build = function () {
 		var pkt_len = 2 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1544,7 +1537,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQ_ITEMCOMPOSITION_LIST = function PACKET_CZ_REQ_ITEMCOMPOSITION_LIST() {
 		this.cardIndex = 0;
 	};
-	PACKET.CZ.REQ_ITEMCOMPOSITION_LIST.prototype.build = function() {
+	PACKET.CZ.REQ_ITEMCOMPOSITION_LIST.prototype.build = function () {
 		var pkt_len = 2 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1559,7 +1552,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.cardIndex = 0;
 		this.equipIndex = 0;
 	};
-	PACKET.CZ.REQ_ITEMCOMPOSITION.prototype.build = function() {
+	PACKET.CZ.REQ_ITEMCOMPOSITION.prototype.build = function () {
 		var pkt_len = 2 + 2 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1574,7 +1567,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.GUILD_CHAT = function PACKET_CZ_GUILD_CHAT() {
 		this.msg = '';
 	};
-	PACKET.CZ.GUILD_CHAT.prototype.build = function() {
+	PACKET.CZ.GUILD_CHAT.prototype.build = function () {
 		var pkt_len = 2 + 2 + this.msg.length + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1589,7 +1582,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQ_HOSTILE_GUILD = function PACKET_CZ_REQ_HOSTILE_GUILD() {
 		this.AID = 0;
 	};
-	PACKET.CZ.REQ_HOSTILE_GUILD.prototype.build = function() {
+	PACKET.CZ.REQ_HOSTILE_GUILD.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1604,7 +1597,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.OpponentGDID = 0;
 		this.Relation = 0;
 	};
-	PACKET.CZ.REQ_DELETE_RELATED_GUILD.prototype.build = function() {
+	PACKET.CZ.REQ_DELETE_RELATED_GUILD.prototype.build = function () {
 		var pkt_len = 2 + 4 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1619,7 +1612,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.PING = function PACKET_CZ_PING() {
 		this.AID = 0;
 	};
-	PACKET.CZ.PING.prototype.build = function() {
+	PACKET.CZ.PING.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1633,7 +1626,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQ_DISCONNECT = function PACKET_CZ_REQ_DISCONNECT() {
 		this.type = 0;
 	};
-	PACKET.CZ.REQ_DISCONNECT.prototype.build = function() {
+	PACKET.CZ.REQ_DISCONNECT.prototype.build = function () {
 		var pkt_len = 2 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1647,12 +1640,12 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQMAKINGITEM = function PACKET_CZ_REQMAKINGITEM() {
 		this.itemList = {};
 	};
-	PACKET.CZ.REQMAKINGITEM.prototype.build = function() {
+	PACKET.CZ.REQMAKINGITEM.prototype.build = function () {
 		var pkt_len = (PACKETVER.value >= 20181121) ? 18 : 10;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
 		pkt_buf.writeShort(0x18e);
-		if(PACKETVER.value >= 20181121) {
+		if (PACKETVER.value >= 20181121) {
 			pkt_buf.writeULong(this.itemList.ITID);
 			pkt_buf.writeULong(this.itemList.material_ID[0]);
 			pkt_buf.writeULong(this.itemList.material_ID[1]);
@@ -1675,7 +1668,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.yPos = 0;
 		this.contents = '';
 	};
-	PACKET.CZ.USE_SKILL_TOGROUNDMoreInfo.prototype.build = function() {
+	PACKET.CZ.USE_SKILL_TOGROUNDMoreInfo.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -1693,7 +1686,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQNAME_BYGID = function PACKET_CZ_REQNAME_BYGID() {
 		this.GID = 0;
 	};
-	PACKET.CZ.REQNAME_BYGID.prototype.build = function() {
+	PACKET.CZ.REQNAME_BYGID.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -1703,8 +1696,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	};
 
 	// 0x9d4
-	PACKET.CZ.NPC_TRADE_QUIT = function PACKET_CZ_NPC_TRADE_QUIT() {};
-	PACKET.CZ.NPC_TRADE_QUIT.prototype.build = function() {
+	PACKET.CZ.NPC_TRADE_QUIT = function PACKET_CZ_NPC_TRADE_QUIT() { };
+	PACKET.CZ.NPC_TRADE_QUIT.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1714,7 +1707,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x9d5
 	PACKET.ZC.NPC_MARKET_OPEN = function PACKET_ZC_NPC_MARKET_OPEN(fp, end) {
-		this.itemList = (function() {
+		this.itemList = (function () {
 			// Determine item size based on PACKETVER
 			const item_size = (PACKETVER.value >= 20181121) ? 15 : 13; // Adjust sizes based on nameid (4 or 2 bytes)
 			const count = (end - fp.tell()) / item_size | 0; // Calculate item count
@@ -1736,36 +1729,36 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x9d6
 	PACKET.CZ.NPC_MARKET_PURCHASE = function PACKET_CZ_NPC_MARKET_PURCHASE() {
-	    this.itemList = [];
+		this.itemList = [];
 	};
-	PACKET.CZ.NPC_MARKET_PURCHASE.prototype.build = function() {
-	    // Determine the item size based on PACKETVER
-	    const item_size = (PACKETVER.value >= 20181121) ? 8 : 6; // 8 bytes (4 + 4) or 6 bytes (2 + 4)
-	    const pkt_len = 4 + (this.itemList.length * item_size); // Total packet length
-	    const pkt_buf = new BinaryWriter(pkt_len); // Create a buffer with the required size
+	PACKET.CZ.NPC_MARKET_PURCHASE.prototype.build = function () {
+		// Determine the item size based on PACKETVER
+		const item_size = (PACKETVER.value >= 20181121) ? 8 : 6; // 8 bytes (4 + 4) or 6 bytes (2 + 4)
+		const pkt_len = 4 + (this.itemList.length * item_size); // Total packet length
+		const pkt_buf = new BinaryWriter(pkt_len); // Create a buffer with the required size
 
-	    pkt_buf.writeShort(0x9d6); // Packet type
-	    pkt_buf.writeShort(pkt_len); // Packet length
+		pkt_buf.writeShort(0x9d6); // Packet type
+		pkt_buf.writeShort(pkt_len); // Packet length
 
-	    for (let i = 0; i < this.itemList.length; ++i) {
-	        // Write ITID based on PACKETVER
-	        if (PACKETVER.value >= 20181121) {
-	            pkt_buf.writeULong(this.itemList[i].itemId); // uint32
-	        } else {
-	            pkt_buf.writeUShort(this.itemList[i].itemId); // uint16
-	        }
+		for (let i = 0; i < this.itemList.length; ++i) {
+			// Write ITID based on PACKETVER
+			if (PACKETVER.value >= 20181121) {
+				pkt_buf.writeULong(this.itemList[i].itemId); // uint32
+			} else {
+				pkt_buf.writeUShort(this.itemList[i].itemId); // uint16
+			}
 
-	        // Write quantity (int32)
-	        pkt_buf.writeLong(this.itemList[i].amount); // int32
-	    }
+			// Write quantity (int32)
+			pkt_buf.writeLong(this.itemList[i].amount); // int32
+		}
 
-	    return pkt_buf;
+		return pkt_buf;
 	};
 
 	// 0x9d7
 	PACKET.ZC.NPC_MARKET_PURCHASE_RESULT = function PACKET_ZC_NPC_MARKET_PURCHASE_RESULT(fp, end) {
 		this.result = fp.readUChar();
-		this.itemList = (function() {
+		this.itemList = (function () {
 			// Determine item size based on PACKETVER
 			const item_size = (PACKETVER.value >= 20181121) ? 10 : 8; // Adjust sizes based on nameid (4 or 2 bytes)
 			const count = (end - fp.tell()) / item_size | 0; // Calculate item count
@@ -1786,7 +1779,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0x9d8
 	PACKET.CZ.NPC_MARKET_CLOSE = function PACKET_CZ_NPC_MARKET_CLOSE() {
 	};
-	PACKET.CZ.NPC_MARKET_CLOSE.prototype.build = function() {
+	PACKET.CZ.NPC_MARKET_CLOSE.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1798,7 +1791,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.TRYCAPTURE_MONSTER = function PACKET_CZ_TRYCAPTURE_MONSTER() {
 		this.targetAID = 0;
 	};
-	PACKET.CZ.TRYCAPTURE_MONSTER.prototype.build = function() {
+	PACKET.CZ.TRYCAPTURE_MONSTER.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1812,7 +1805,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.COMMAND_PET = function PACKET_CZ_COMMAND_PET() {
 		this.cSub = 0;
 	};
-	PACKET.CZ.COMMAND_PET.prototype.build = function() {
+	PACKET.CZ.COMMAND_PET.prototype.build = function () {
 		var pkt_len = 2 + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1826,7 +1819,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.RENAME_PET = function PACKET_CZ_RENAME_PET() {
 		this.szName = '';
 	};
-	PACKET.CZ.RENAME_PET.prototype.build = function() {
+	PACKET.CZ.RENAME_PET.prototype.build = function () {
 		var pkt_len = 2 + 24;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1841,7 +1834,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.SELECT_PETEGG = function PACKET_CZ_SELECT_PETEGG() {
 		this.index = 0;
 	};
-	PACKET.CZ.SELECT_PETEGG.prototype.build = function() {
+	PACKET.CZ.SELECT_PETEGG.prototype.build = function () {
 		var pkt_len = 2 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1855,7 +1848,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.PETEGG_INFO = function PACKET_CZ_PETEGG_INFO() {
 		this.index = 0;
 	};
-	PACKET.CZ.PETEGG_INFO.prototype.build = function() {
+	PACKET.CZ.PETEGG_INFO.prototype.build = function () {
 		var pkt_len = 2 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1869,7 +1862,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.PET_ACT = function PACKET_CZ_PET_ACT() {
 		this.data = 0;
 	};
-	PACKET.CZ.PET_ACT.prototype.build = function() {
+	PACKET.CZ.PET_ACT.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1883,14 +1876,14 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQ_MAKINGARROW = function PACKET_CZ_REQ_MAKINGARROW() {
 		this.id = 0;
 	};
-	PACKET.CZ.REQ_MAKINGARROW.prototype.build = function() {
+	PACKET.CZ.REQ_MAKINGARROW.prototype.build = function () {
 		var pkt_len = 2 + 2;
-		if(PACKETVER.value >= 20181121)
-			pkt_len +=2;
+		if (PACKETVER.value >= 20181121)
+			pkt_len += 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
 		pkt_buf.writeShort(0x1ae);
-		if(PACKETVER.value >= 20181121) {
+		if (PACKETVER.value >= 20181121) {
 			pkt_buf.writeULong(this.id);
 		} else {
 			pkt_buf.writeUShort(this.id);
@@ -1903,7 +1896,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQ_CHANGECART = function PACKET_CZ_REQ_CHANGECART() {
 		this.num = 0;
 	};
-	PACKET.CZ.REQ_CHANGECART.prototype.build = function() {
+	PACKET.CZ.REQ_CHANGECART.prototype.build = function () {
 		var pkt_len = 2 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1919,7 +1912,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.result = 0;
 		this.storeList = [];
 	};
-	PACKET.CZ.REQ_OPENSTORE2.prototype.build = function() {
+	PACKET.CZ.REQ_OPENSTORE2.prototype.build = function () {
 		var pkt_len = 2 + 2 + 80 + 1 + this.storeList.length * 8;
 		var pkt_buf = new BinaryWriter(pkt_len);
 		var i, count;
@@ -1943,7 +1936,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.GUILD_ZENY = function PACKET_CZ_GUILD_ZENY() {
 		this.zeny = 0;
 	};
-	PACKET.CZ.GUILD_ZENY.prototype.build = function() {
+	PACKET.CZ.GUILD_ZENY.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1957,7 +1950,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.SHIFT = function PACKET_CZ_SHIFT() {
 		this.CharacterName = '';
 	};
-	PACKET.CZ.SHIFT.prototype.build = function() {
+	PACKET.CZ.SHIFT.prototype.build = function () {
 		var pkt_len = 2 + 24;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1971,7 +1964,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CA.REPLY_PNGAMEROOM = function PACKET_CA_REPLY_PNGAMEROOM() {
 		this.Permission = 0;
 	};
-	PACKET.CA.REPLY_PNGAMEROOM.prototype.build = function() {
+	PACKET.CA.REPLY_PNGAMEROOM.prototype.build = function () {
 		var pkt_len = 2 + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1982,8 +1975,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x1c0
-	PACKET.CZ.REQ_REMAINTIME = function PACKET_CZ_REQ_REMAINTIME() {};
-	PACKET.CZ.REQ_REMAINTIME.prototype.build = function() {
+	PACKET.CZ.REQ_REMAINTIME = function PACKET_CZ_REQ_REMAINTIME() { };
+	PACKET.CZ.REQ_REMAINTIME.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -1998,7 +1991,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.encCount = 0;
 		this.decCount = 0;
 	};
-	PACKET.CS.REQ_ENCRYPTION.prototype.build = function() {
+	PACKET.CS.REQ_ENCRYPTION.prototype.build = function () {
 		var pkt_len = 2 + 1 + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2013,7 +2006,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQMAKINGHOMUN = function PACKET_CZ_REQMAKINGHOMUN() {
 		this.result = 0;
 	};
-	PACKET.CZ.REQMAKINGHOMUN.prototype.build = function() {
+	PACKET.CZ.REQMAKINGHOMUN.prototype.build = function () {
 		var pkt_len = 2 + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2030,7 +2023,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.skillId = 0;
 		this.arg1 = 0;
 	};
-	PACKET.CZ.MONSTER_TALK.prototype.build = function() {
+	PACKET.CZ.MONSTER_TALK.prototype.build = function () {
 		var pkt_len = 2 + 4 + 1 + 1 + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2047,7 +2040,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.SELECTAUTOSPELL = function PACKET_CZ_SELECTAUTOSPELL() {
 		this.SKID = 0;
 	};
-	PACKET.CZ.SELECTAUTOSPELL.prototype.build = function() {
+	PACKET.CZ.SELECTAUTOSPELL.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2063,7 +2056,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.NAID = 0;
 		this.msg = '';
 	};
-	PACKET.CZ.INPUT_EDITDLGSTR.prototype.build = function() {
+	PACKET.CZ.INPUT_EDITDLGSTR.prototype.build = function () {
 		var pkt_len = 2 + 2 + 4 + this.msg.length + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2076,8 +2069,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x1db
-	PACKET.CA.REQ_HASH = function PACKET_CA_REQ_HASH() {};
-	PACKET.CA.REQ_HASH.prototype.build = function() {
+	PACKET.CA.REQ_HASH = function PACKET_CA_REQ_HASH() { };
+	PACKET.CA.REQ_HASH.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2094,7 +2087,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.PasswdMD5 = '';
 		this.clienttype = 0;
 	};
-	PACKET.CA.LOGIN2.prototype.build = function() {
+	PACKET.CA.LOGIN2.prototype.build = function () {
 		var pkt_len = 2 + 4 + 24 + 16 + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2134,7 +2127,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQ_ACCOUNTNAME = function PACKET_CZ_REQ_ACCOUNTNAME() {
 		this.AID = 0;
 	};
-	PACKET.CZ.REQ_ACCOUNTNAME.prototype.build = function() {
+	PACKET.CZ.REQ_ACCOUNTNAME.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -2150,7 +2143,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.GID = 0;
 		this.answer = 0;
 	};
-	PACKET.CZ.JOIN_COUPLE.prototype.build = function() {
+	PACKET.CZ.JOIN_COUPLE.prototype.build = function () {
 		var pkt_len = 2 + 4 + 4 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2167,7 +2160,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQ_JOIN_COUPLE = function PACKET_CZ_REQ_JOIN_COUPLE() {
 		this.AID = 0;
 	};
-	PACKET.CZ.REQ_JOIN_COUPLE.prototype.build = function() {
+	PACKET.CZ.REQ_JOIN_COUPLE.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2178,8 +2171,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x1e7
-	PACKET.CZ.DORIDORI = function PACKET_CZ_DORIDORI() {};
-	PACKET.CZ.DORIDORI.prototype.build = function() {
+	PACKET.CZ.DORIDORI = function PACKET_CZ_DORIDORI() { };
+	PACKET.CZ.DORIDORI.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2194,7 +2187,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.ItemPickupRule = 0;
 		this.ItemDivisionRule = 0;
 	};
-	PACKET.CZ.MAKE_GROUP2.prototype.build = function() {
+	PACKET.CZ.MAKE_GROUP2.prototype.build = function () {
 		var pkt_len = 2 + 24 + 1 + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2207,8 +2200,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x1ed
-	PACKET.CZ.CHOPOKGI = function PACKET_CZ_CHOPOKGI() {};
-	PACKET.CZ.CHOPOKGI.prototype.build = function() {
+	PACKET.CZ.CHOPOKGI = function PACKET_CZ_CHOPOKGI() { };
+	PACKET.CZ.CHOPOKGI.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2224,7 +2217,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.GID = 0;
 		this.answer = 0;
 	};
-	PACKET.CZ.JOIN_BABY.prototype.build = function() {
+	PACKET.CZ.JOIN_BABY.prototype.build = function () {
 		var pkt_len = 2 + 4 + 4 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2241,7 +2234,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQ_JOIN_BABY = function PACKET_CZ_REQ_JOIN_BABY() {
 		this.AID = 0;
 	};
-	PACKET.CZ.REQ_JOIN_BABY.prototype.build = function() {
+	PACKET.CZ.REQ_JOIN_BABY.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2260,7 +2253,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.clienttype = 0;
 		this.ClientInfo = 0;
 	};
-	PACKET.CA.LOGIN3.prototype.build = function() {
+	PACKET.CA.LOGIN3.prototype.build = function () {
 		var pkt_len = 2 + 4 + 24 + 16 + 1 + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2280,7 +2273,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.GID = 0;
 		this.key = '';
 	};
-	PACKET.CH.DELETE_CHAR2.prototype.build = function() {
+	PACKET.CH.DELETE_CHAR2.prototype.build = function () {
 		var pkt_len = 2 + 4 + 50;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2303,7 +2296,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 			card4: 0,
 		};
 	};
-	PACKET.CZ.REQ_ITEMREPAIR.prototype.build = function() {
+	PACKET.CZ.REQ_ITEMREPAIR.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -2311,20 +2304,20 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		pkt.writeShort(this.index);
 
 		if (ver[2] === 15) {
-			if(PACKETVER.value >= 20181121){
+			if (PACKETVER.value >= 20181121) {
 				pkt.writeULong(this.itemId);
-			}else{
+			} else {
 				pkt.writeUShort(this.itemId);
 			}
 
 			pkt.writeUByte(this.RefiningLevel);
 
-			if(PACKETVER.value >= 20181121){
+			if (PACKETVER.value >= 20181121) {
 				pkt.writeLong(this.slots.card1);
 				pkt.writeLong(this.slots.card2);
 				pkt.writeLong(this.slots.card3);
 				pkt.writeLong(this.slots.card4);
-			}else{
+			} else {
 				pkt.writeShort(this.slots.card1);
 				pkt.writeShort(this.slots.card2);
 				pkt.writeShort(this.slots.card3);
@@ -2340,7 +2333,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CA.CONNECT_INFO_CHANGED = function PACKET_CA_CONNECT_INFO_CHANGED() {
 		this.ID = '';
 	};
-	PACKET.CA.CONNECT_INFO_CHANGED.prototype.build = function() {
+	PACKET.CA.CONNECT_INFO_CHANGED.prototype.build = function () {
 		var pkt_len = 2 + 24;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2354,7 +2347,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.ADD_FRIENDS = function PACKET_CZ_ADD_FRIENDS() {
 		this.name = '';
 	};
-	PACKET.CZ.ADD_FRIENDS.prototype.build = function() {
+	PACKET.CZ.ADD_FRIENDS.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -2369,7 +2362,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.AID = 0;
 		this.GID = 0;
 	};
-	PACKET.CZ.DELETE_FRIENDS.prototype.build = function() {
+	PACKET.CZ.DELETE_FRIENDS.prototype.build = function () {
 		var pkt_len = 2 + 4 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2384,7 +2377,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CA.EXE_HASHCHECK = function PACKET_CA_EXE_HASHCHECK() {
 		this.HashValue = '';
 	};
-	PACKET.CA.EXE_HASHCHECK.prototype.build = function() {
+	PACKET.CA.EXE_HASHCHECK.prototype.build = function () {
 		var pkt_len = 2 + 16;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2400,7 +2393,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.ReqGID = 0;
 		this.Result = 0;
 	};
-	PACKET.CZ.ACK_REQ_ADD_FRIENDS.prototype.build = function() {
+	PACKET.CZ.ACK_REQ_ADD_FRIENDS.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -2423,7 +2416,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.ClientType = 0;
 		this.HashValue = '';
 	};
-	PACKET.CH.EXE_HASHCHECK.prototype.build = function() {
+	PACKET.CH.EXE_HASHCHECK.prototype.build = function () {
 		var pkt_len = 2 + 1 + 16;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2439,7 +2432,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.ClientType = 0;
 		this.HashValue = '';
 	};
-	PACKET.CZ.EXE_HASHCHECK.prototype.build = function() {
+	PACKET.CZ.EXE_HASHCHECK.prototype.build = function () {
 		var pkt_len = 2 + 1 + 16;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2456,7 +2449,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.AID = 0;
 		this.GID = 0;
 	};
-	PACKET.CZ.REQ_PVPPOINT.prototype.build = function() {
+	PACKET.CZ.REQ_PVPPOINT.prototype.build = function () {
 		var pkt_len = 2 + 4 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2472,7 +2465,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQ_GIVE_MANNER_BYNAME = function PACKET_CZ_REQ_GIVE_MANNER_BYNAME() {
 		this.CharName = '';
 	};
-	PACKET.CZ.REQ_GIVE_MANNER_BYNAME.prototype.build = function() {
+	PACKET.CZ.REQ_GIVE_MANNER_BYNAME.prototype.build = function () {
 		var pkt_len = 2 + 24;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2486,7 +2479,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQ_STATUS_GM = function PACKET_CZ_REQ_STATUS_GM() {
 		this.CharName = '';
 	};
-	PACKET.CZ.REQ_STATUS_GM.prototype.build = function() {
+	PACKET.CZ.REQ_STATUS_GM.prototype.build = function () {
 		var pkt_len = 2 + 24;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2497,8 +2490,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x217
-	PACKET.CZ.BLACKSMITH_RANK = function PACKET_CZ_BLACKSMITH_RANK() {};
-	PACKET.CZ.BLACKSMITH_RANK.prototype.build = function() {
+	PACKET.CZ.BLACKSMITH_RANK = function PACKET_CZ_BLACKSMITH_RANK() { };
+	PACKET.CZ.BLACKSMITH_RANK.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2508,8 +2501,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x218
-	PACKET.CZ.ALCHEMIST_RANK = function PACKET_CZ_ALCHEMIST_RANK() {};
-	PACKET.CZ.ALCHEMIST_RANK.prototype.build = function() {
+	PACKET.CZ.ALCHEMIST_RANK = function PACKET_CZ_ALCHEMIST_RANK() { };
+	PACKET.CZ.ALCHEMIST_RANK.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2522,7 +2515,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.LESSEFFECT = function PACKET_CZ_LESSEFFECT() {
 		this.isLess = 0;
 	};
-	PACKET.CZ.LESSEFFECT.prototype.build = function() {
+	PACKET.CZ.LESSEFFECT.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2536,7 +2529,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQ_WEAPONREFINE = function PACKET_CZ_REQ_WEAPONREFINE() {
 		this.Index = 0;
 	};
-	PACKET.CZ.REQ_WEAPONREFINE.prototype.build = function() {
+	PACKET.CZ.REQ_WEAPONREFINE.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2547,8 +2540,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x225
-	PACKET.CZ.TAEKWON_RANK = function PACKET_CZ_TAEKWON_RANK() {};
-	PACKET.CZ.TAEKWON_RANK.prototype.build = function() {
+	PACKET.CZ.TAEKWON_RANK = function PACKET_CZ_TAEKWON_RANK() { };
+	PACKET.CZ.TAEKWON_RANK.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2561,7 +2554,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.ACK_GAME_GUARD = function PACKET_CZ_ACK_GAME_GUARD() {
 		this.AuthData = 0;
 	};
-	PACKET.CZ.ACK_GAME_GUARD.prototype.build = function() {
+	PACKET.CZ.ACK_GAME_GUARD.prototype.build = function () {
 		var pkt_len = 2 + 16;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2579,7 +2572,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.type = 0;
 		this.command = 0;
 	};
-	PACKET.CZ.COMMAND_MER.prototype.build = function() {
+	PACKET.CZ.COMMAND_MER.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -2595,7 +2588,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.RENAME_MER = function PACKET_CZ_RENAME_MER() {
 		this.name = '';
 	};
-	PACKET.CZ.RENAME_MER.prototype.build = function() {
+	PACKET.CZ.RENAME_MER.prototype.build = function () {
 		var pkt_len = 2 + 24;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2610,7 +2603,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.GID = 0;
 		this.dest = [0, 0];
 	};
-	PACKET.CZ.REQUEST_MOVENPC.prototype.build = function() {
+	PACKET.CZ.REQUEST_MOVENPC.prototype.build = function () {
 		var pkt_len = 2 + 4 + 3;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2627,7 +2620,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.targetGID = 0;
 		this.action = 0;
 	};
-	PACKET.CZ.REQUEST_ACTNPC.prototype.build = function() {
+	PACKET.CZ.REQUEST_ACTNPC.prototype.build = function () {
 		var pkt_len = 2 + 4 + 4 + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2643,7 +2636,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQUEST_MOVETOOWNER = function PACKET_CZ_REQUEST_MOVETOOWNER() {
 		this.GID = 0;
 	};
-	PACKET.CZ.REQUEST_MOVETOOWNER.prototype.build = function() {
+	PACKET.CZ.REQUEST_MOVETOOWNER.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2654,8 +2647,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x235
 	PACKET.ZC.HOSKILLINFO_LIST = function PACKET_ZC_HOSKILLINFO_LIST(fp, end) {
-		this.skillList = (function() {
-			var i, count=(end-fp.tell())/37|0, out=new Array(count);
+		this.skillList = (function () {
+			var i, count = (end - fp.tell()) / 37 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].SKID = fp.readShort();
@@ -2673,8 +2666,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x237
-	PACKET.CZ.RANKING_PK = function PACKET_CZ_RANKING_PK() {};
-	PACKET.CZ.RANKING_PK.prototype.build = function() {
+	PACKET.CZ.RANKING_PK = function PACKET_CZ_RANKING_PK() { };
+	PACKET.CZ.RANKING_PK.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2699,7 +2692,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.Password = '';
 		this.NewPassword = '';
 	};
-	PACKET.CZ.ACK_STORE_PASSWORD.prototype.build = function() {
+	PACKET.CZ.ACK_STORE_PASSWORD.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -2712,8 +2705,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x23f
-	PACKET.CZ.MAIL_GET_LIST = function PACKET_CZ_MAIL_GET_LIST() {};
-	PACKET.CZ.MAIL_GET_LIST.prototype.build = function() {
+	PACKET.CZ.MAIL_GET_LIST = function PACKET_CZ_MAIL_GET_LIST() { };
+	PACKET.CZ.MAIL_GET_LIST.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2726,7 +2719,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.MAIL_OPEN = function PACKET_CZ_MAIL_OPEN() {
 		this.MailID = 0;
 	};
-	PACKET.CZ.MAIL_OPEN.prototype.build = function() {
+	PACKET.CZ.MAIL_OPEN.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2740,7 +2733,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.MAIL_DELETE = function PACKET_CZ_MAIL_DELETE() {
 		this.MailID = 0;
 	};
-	PACKET.CZ.MAIL_DELETE.prototype.build = function() {
+	PACKET.CZ.MAIL_DELETE.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2754,7 +2747,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.MAIL_GET_ITEM = function PACKET_CZ_MAIL_GET_ITEM() {
 		this.MailID = 0;
 	};
-	PACKET.CZ.MAIL_GET_ITEM.prototype.build = function() {
+	PACKET.CZ.MAIL_GET_ITEM.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2768,7 +2761,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.MAIL_RESET_ITEM = function PACKET_CZ_MAIL_RESET_ITEM() {
 		this.Type = 0;
 	};
-	PACKET.CZ.MAIL_RESET_ITEM.prototype.build = function() {
+	PACKET.CZ.MAIL_RESET_ITEM.prototype.build = function () {
 		var pkt_len = 2 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2784,7 +2777,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.index = 0;
 		this.count = 0;
 	};
-	PACKET.CZ.MAIL_ADD_ITEM.prototype.build = function() {
+	PACKET.CZ.MAIL_ADD_ITEM.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -2802,7 +2795,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.msg_len = 0;
 		this.msg = '';
 	};
-	PACKET.CZ.MAIL_SEND.prototype.build = function() {
+	PACKET.CZ.MAIL_SEND.prototype.build = function () {
 		var pkt_len = 2 + 2 + 24 + 40 + 1 + this.msg.length;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2820,7 +2813,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.AUCTION_CREATE = function PACKET_CZ_AUCTION_CREATE() {
 		this.Type = 0;
 	};
-	PACKET.CZ.AUCTION_CREATE.prototype.build = function() {
+	PACKET.CZ.AUCTION_CREATE.prototype.build = function () {
 		var pkt_len = 2 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2836,7 +2829,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.index = 0;
 		this.count = 0;
 	};
-	PACKET.CZ.AUCTION_ADD_ITEM.prototype.build = function() {
+	PACKET.CZ.AUCTION_ADD_ITEM.prototype.build = function () {
 		var pkt_len = 2 + 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2854,7 +2847,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.MaxMoney = 0;
 		this.DeleteHour = 0;
 	};
-	PACKET.CZ.AUCTION_ADD.prototype.build = function() {
+	PACKET.CZ.AUCTION_ADD.prototype.build = function () {
 		var pkt_len = 2 + 4 + 4 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2870,7 +2863,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.AUCTION_ADD_CANCEL = function PACKET_CZ_AUCTION_ADD_CANCEL() {
 		this.AuctionID = 0;
 	};
-	PACKET.CZ.AUCTION_ADD_CANCEL.prototype.build = function() {
+	PACKET.CZ.AUCTION_ADD_CANCEL.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2885,7 +2878,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.AuctionID = 0;
 		this.Money = 0;
 	};
-	PACKET.CZ.AUCTION_BUY.prototype.build = function() {
+	PACKET.CZ.AUCTION_BUY.prototype.build = function () {
 		var pkt_len = 2 + 4 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2903,7 +2896,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.Name = '';
 		this.Page = 0;
 	};
-	PACKET.CZ.AUCTION_ITEM_SEARCH.prototype.build = function() {
+	PACKET.CZ.AUCTION_ITEM_SEARCH.prototype.build = function () {
 		var pkt_len = 2 + 2 + 4 + 24 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2920,7 +2913,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.AGREE_STARPLACE = function PACKET_CZ_AGREE_STARPLACE() {
 		this.which = 0;
 	};
-	PACKET.CZ.AGREE_STARPLACE.prototype.build = function() {
+	PACKET.CZ.AGREE_STARPLACE.prototype.build = function () {
 		var pkt_len = 2 + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2931,8 +2924,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x258
-	PACKET.CA.REQ_GAME_GUARD_CHECK = function PACKET_CA_REQ_GAME_GUARD_CHECK() {};
-	PACKET.CA.REQ_GAME_GUARD_CHECK.prototype.build = function() {
+	PACKET.CA.REQ_GAME_GUARD_CHECK = function PACKET_CA_REQ_GAME_GUARD_CHECK() { };
+	PACKET.CA.REQ_GAME_GUARD_CHECK.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2946,13 +2939,13 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.mkType = 0;
 		this.id = 0;
 	};
-	PACKET.CZ.REQ_MAKINGITEM.prototype.build = function() {
+	PACKET.CZ.REQ_MAKINGITEM.prototype.build = function () {
 		var pkt_len = (PACKETVER.value >= 20181121) ? 8 : 6;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
 		pkt_buf.writeShort(0x25b);
 		pkt_buf.writeShort(this.mkType);
-		if(PACKETVER.value >= 20181121) {
+		if (PACKETVER.value >= 20181121) {
 			pkt_buf.writeUShort(this.id);
 		} else {
 			pkt_buf.writeULong(this.id);
@@ -2965,7 +2958,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.AUCTION_REQ_MY_INFO = function PACKET_CZ_AUCTION_REQ_MY_INFO() {
 		this.Type = 0;
 	};
-	PACKET.CZ.AUCTION_REQ_MY_INFO.prototype.build = function() {
+	PACKET.CZ.AUCTION_REQ_MY_INFO.prototype.build = function () {
 		var pkt_len = 2 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2980,7 +2973,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.AUCTION_REQ_MY_SELL_STOP = function PACKET_CZ_AUCTION_REQ_MY_SELL_STOP() {
 		this.AuctionID = 0;
 	};
-	PACKET.CZ.AUCTION_REQ_MY_SELL_STOP.prototype.build = function() {
+	PACKET.CZ.AUCTION_REQ_MY_SELL_STOP.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -2995,7 +2988,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.m_SeedValue = '';
 		this.m_EKey = '';
 	};
-	PACKET.CA.ACK_LOGIN_OLDEKEY.prototype.build = function() {
+	PACKET.CA.ACK_LOGIN_OLDEKEY.prototype.build = function () {
 		var pkt_len = 2 + 9 + 9;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3011,7 +3004,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.m_SeedValue = '';
 		this.m_EKey = '';
 	};
-	PACKET.CA.ACK_LOGIN_NEWEKEY.prototype.build = function() {
+	PACKET.CA.ACK_LOGIN_NEWEKEY.prototype.build = function () {
 		var pkt_len = 2 + 9 + 9;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3027,7 +3020,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CA.ACK_LOGIN_CARDPASS = function PACKET_CA_ACK_LOGIN_CARDPASS() {
 		this.m_cardPass = '';
 	};
-	PACKET.CA.ACK_LOGIN_CARDPASS.prototype.build = function() {
+	PACKET.CA.ACK_LOGIN_CARDPASS.prototype.build = function () {
 		var pkt_len = 2 + 28;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3043,7 +3036,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.bPoint = 0;
 		this.E_mail = '';
 	};
-	PACKET.CA.ACK_LOGIN_ACCOUNT_INFO.prototype.build = function() {
+	PACKET.CA.ACK_LOGIN_ACCOUNT_INFO.prototype.build = function () {
 		var pkt_len = 2 + 2 + 2 + 34;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3060,7 +3053,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.MailID = 0;
 		this.ReceiveName = '';
 	};
-	PACKET.CZ.REQ_MAIL_RETURN.prototype.build = function() {
+	PACKET.CZ.REQ_MAIL_RETURN.prototype.build = function () {
 		var pkt_len = 2 + 4 + 24;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3081,7 +3074,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.macData = '';
 		this.iAccountSID = 0;
 	};
-	PACKET.CH.ENTER2.prototype.build = function() {
+	PACKET.CH.ENTER2.prototype.build = function () {
 		var pkt_len = 2 + 4 + 4 + 4 + 2 + 1 + 16 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3106,7 +3099,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.IP = '';
 		this.MacAdress = '';
 	};
-	PACKET.CA.LOGIN_PCBANG.prototype.build = function() {
+	PACKET.CA.LOGIN_PCBANG.prototype.build = function () {
 		var pkt_len = 2 + 4 + 24 + 24 + 1 + 16 + 13;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3122,8 +3115,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x279
-	PACKET.CZ.HUNTINGLIST = function PACKET_CZ_HUNTINGLIST() {};
-	PACKET.CZ.HUNTINGLIST.prototype.build = function() {
+	PACKET.CZ.HUNTINGLIST = function PACKET_CZ_HUNTINGLIST() { };
+	PACKET.CZ.HUNTINGLIST.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3140,7 +3133,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.clienttype = 0;
 		this.macData = '';
 	};
-	PACKET.CA.LOGIN4.prototype.build = function() {
+	PACKET.CA.LOGIN4.prototype.build = function () {
 		var pkt_len = 2 + 4 + 24 + 16 + 1 + 13;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3159,7 +3152,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.ClientType = 0;
 		this.nVer = 0;
 	};
-	PACKET.CA.CLIENT_TYPE.prototype.build = function() {
+	PACKET.CA.CLIENT_TYPE.prototype.build = function () {
 		var pkt_len = 2 + 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3174,7 +3167,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.GANGSI_RANK = function PACKET_CZ_GANGSI_RANK() {
 		this.PacketSwitch = 0;
 	};
-	PACKET.CZ.GANGSI_RANK.prototype.build = function() {
+	PACKET.CZ.GANGSI_RANK.prototype.build = function () {
 		var pkt_len = 2 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3188,7 +3181,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.DEATH_QUESTION = function PACKET_CZ_DEATH_QUESTION() {
 		this.Qanswer = 0;
 	};
-	PACKET.CZ.DEATH_QUESTION.prototype.build = function() {
+	PACKET.CZ.DEATH_QUESTION.prototype.build = function () {
 		var pkt_len = 2 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3210,10 +3203,10 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		var len = 10 + this.list.length * itemSize;
 		var pkt = new BinaryWriter(len);
 		pkt.writeShort(ver[1]); // cmd
-		if(PACKETVER.value < 20100803) { // can only buy 1 item per packet
+		if (PACKETVER.value < 20100803) { // can only buy 1 item per packet
 			pkt.writeShort(this.list[0].ITID); // nameID
 			pkt.writeShort(this.list[0].count); // amount
-			if(PACKETVER.value >= 20070711)
+			if (PACKETVER.value >= 20070711)
 				pkt.writeShort(this.list[0].price); // amount
 			return pkt;
 		}
@@ -3241,7 +3234,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.nCountSelectedChar = 0;
 		this.ardwSelectedGID = 0;
 	};
-	PACKET.CH.SELECT_CHAR_GOINGTOBEUSED.prototype.build = function() {
+	PACKET.CH.SELECT_CHAR_GOINGTOBEUSED.prototype.build = function () {
 		var pkt_len = 2 + 4 + 4 + 36;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3262,7 +3255,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.dwGID = 0;
 		this.szCharName = '';
 	};
-	PACKET.CH.REQ_IS_VALID_CHARNAME.prototype.build = function() {
+	PACKET.CH.REQ_IS_VALID_CHARNAME.prototype.build = function () {
 		var pkt_len = 2 + 4 + 4 + 24;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3279,7 +3272,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CH.REQ_CHANGE_CHARNAME = function PACKET_CH_REQ_CHANGE_CHARNAME() {
 		this.dwGID = 0;
 	};
-	PACKET.CH.REQ_CHANGE_CHARNAME.prototype.build = function() {
+	PACKET.CH.REQ_CHANGE_CHARNAME.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3290,8 +3283,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x292
-	PACKET.CZ.STANDING_RESURRECTION = function PACKET_CZ_STANDING_RESURRECTION() {};
-	PACKET.CZ.STANDING_RESURRECTION.prototype.build = function() {
+	PACKET.CZ.STANDING_RESURRECTION = function PACKET_CZ_STANDING_RESURRECTION() { };
+	PACKET.CZ.STANDING_RESURRECTION.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3304,7 +3297,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.MER_COMMAND = function PACKET_CZ_MER_COMMAND() {
 		this.command = 0;
 	};
-	PACKET.CZ.MER_COMMAND.prototype.build = function() {
+	PACKET.CZ.MER_COMMAND.prototype.build = function () {
 		var pkt_len = 2 + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3320,7 +3313,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.SKID = 0;
 		this.targetID = 0;
 	};
-	UNUSED_PACKET.CZ.MER_USE_SKILL.prototype.build = function() {
+	UNUSED_PACKET.CZ.MER_USE_SKILL.prototype.build = function () {
 		var pkt_len = 2 + 2 + 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3337,7 +3330,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	UNUSED_PACKET.CZ.MER_UPGRADE_SKILLLEVEL = function UNUSED_PACKET_CZ_MER_UPGRADE_SKILLLEVEL() {
 		this.SKID = 0;
 	};
-	UNUSED_PACKET.CZ.MER_UPGRADE_SKILLLEVEL.prototype.build = function() {
+	UNUSED_PACKET.CZ.MER_UPGRADE_SKILLLEVEL.prototype.build = function () {
 		var pkt_len = 2 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3352,7 +3345,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.index = 0;
 		this.count = 0;
 	};
-	PACKET.CZ.KSY_EVENT.prototype.build = function() {
+	PACKET.CZ.KSY_EVENT.prototype.build = function () {
 		var pkt_len = 2 + 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3369,7 +3362,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.Password = '';
 		this.NewPassword = '';
 	};
-	PACKET.CZ.ACK_CASH_PASSWORD.prototype.build = function() {
+	PACKET.CZ.ACK_CASH_PASSWORD.prototype.build = function () {
 		var pkt_len = 2 + 2 + 16 + 16;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3391,7 +3384,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.m_szMacAddr = '';
 		this.isHanGameUser = 0;
 	};
-	PACKET.CA.LOGIN_HAN.prototype.build = function() {
+	PACKET.CA.LOGIN_HAN.prototype.build = function () {
 		var pkt_len = 2 + 4 + 24 + 24 + 1 + 16 + 13 + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3413,7 +3406,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.questID = 0;
 		this.active = 0;
 	};
-	PACKET.CZ.ACTIVE_QUEST.prototype.build = function() {
+	PACKET.CZ.ACTIVE_QUEST.prototype.build = function () {
 		var pkt_len = 2 + 4 + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3429,7 +3422,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.Index = 0;
 		this.ShortCutKey = {};
 	};
-	PACKET.CZ.SHORTCUT_KEY_CHANGE1.prototype.build = function() {
+	PACKET.CZ.SHORTCUT_KEY_CHANGE1.prototype.build = function () {
 		var pkt_len = 2 + 2 + 1 + 4 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3446,7 +3439,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.SRPACKETR2_START = function PACKET_CZ_SRPACKETR2_START() {
 		this.ProtectFactor = 0;
 	};
-	PACKET.CZ.SRPACKETR2_START.prototype.build = function() {
+	PACKET.CZ.SRPACKETR2_START.prototype.build = function () {
 		var pkt_len = 2 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3460,7 +3453,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.PARTY_JOIN_REQ = function PACKET_CZ_PARTY_JOIN_REQ() {
 		this.characterName = '';
 	};
-	PACKET.CZ.PARTY_JOIN_REQ.prototype.build = function() {
+	PACKET.CZ.PARTY_JOIN_REQ.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -3475,7 +3468,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.GRID = 0;
 		this.bAccept = 0;
 	};
-	PACKET.CZ.PARTY_JOIN_REQ_ACK.prototype.build = function() {
+	PACKET.CZ.PARTY_JOIN_REQ_ACK.prototype.build = function () {
 		var pkt_len = 2 + 4 + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3491,7 +3484,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.PARTY_CONFIG = function PACKET_CZ_PARTY_CONFIG() {
 		this.bRefuseJoinMsg = 0;
 	};
-	PACKET.CZ.PARTY_CONFIG.prototype.build = function() {
+	PACKET.CZ.PARTY_CONFIG.prototype.build = function () {
 		var pkt_len = 2 + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3505,7 +3498,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.MEMORIALDUNGEON_COMMAND = function PACKET_CZ_MEMORIALDUNGEON_COMMAND() {
 		this.Command = 0;
 	};
-	PACKET.CZ.MEMORIALDUNGEON_COMMAND.prototype.build = function() {
+	PACKET.CZ.MEMORIALDUNGEON_COMMAND.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3519,7 +3512,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.EQUIPWIN_MICROSCOPE = function PACKET_CZ_EQUIPWIN_MICROSCOPE() {
 		this.AID = 0;
 	};
-	PACKET.CZ.EQUIPWIN_MICROSCOPE.prototype.build = function() {
+	PACKET.CZ.EQUIPWIN_MICROSCOPE.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3534,7 +3527,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.Config = 0;
 		this.Value = 0;
 	};
-	PACKET.CZ.CONFIG.prototype.build = function() {
+	PACKET.CZ.CONFIG.prototype.build = function () {
 		var pkt_len = 2 + 4 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3549,7 +3542,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.BATTLEFIELD_CHAT = function PACKET_CZ_BATTLEFIELD_CHAT() {
 		this.msg = '';
 	};
-	PACKET.CZ.BATTLEFIELD_CHAT.prototype.build = function() {
+	PACKET.CZ.BATTLEFIELD_CHAT.prototype.build = function () {
 		var pkt_len = 2 + 2 + this.msg.length;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3564,7 +3557,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.BOT_CHECK = function PACKET_CZ_BOT_CHECK() {
 		this.IsBot = 0;
 	};
-	PACKET.CZ.BOT_CHECK.prototype.build = function() {
+	PACKET.CZ.BOT_CHECK.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3575,8 +3568,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x2f1
-	PACKET.CZ.PROGRESS = function PACKET_CZ_PROGRESS() {};
-	PACKET.CZ.PROGRESS.prototype.build = function() {
+	PACKET.CZ.PROGRESS = function PACKET_CZ_PROGRESS() { };
+	PACKET.CZ.PROGRESS.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3586,8 +3579,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x35c
-	PACKET.CZ.OPEN_SIMPLE_CASHSHOP_ITEMLIST = function PACKET_CZ_OPEN_SIMPLE_CASHSHOP_ITEMLIST() {};
-	PACKET.CZ.OPEN_SIMPLE_CASHSHOP_ITEMLIST.prototype.build = function() {
+	PACKET.CZ.OPEN_SIMPLE_CASHSHOP_ITEMLIST = function PACKET_CZ_OPEN_SIMPLE_CASHSHOP_ITEMLIST() { };
+	PACKET.CZ.OPEN_SIMPLE_CASHSHOP_ITEMLIST.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3597,8 +3590,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x35e
-	PACKET.CZ.CLOSE_WINDOW = function PACKET_CZ_CLOSE_WINDOW() {};
-	PACKET.CZ.CLOSE_WINDOW.prototype.build = function() {
+	PACKET.CZ.CLOSE_WINDOW = function PACKET_CZ_CLOSE_WINDOW() { };
+	PACKET.CZ.CLOSE_WINDOW.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3611,7 +3604,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQUEST_MOVE2 = function PACKET_CZ_REQUEST_MOVE2() {
 		this.dest = [0, 0];
 	};
-	PACKET.CZ.REQUEST_MOVE2.prototype.build = function() {
+	PACKET.CZ.REQUEST_MOVE2.prototype.build = function () {
 		var pkt_len = 2 + 3;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3624,7 +3617,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQUEST_TIME2 = function PACKET_CZ_REQUEST_TIME2() {
 		this.clientTime = 0;
 	};
-	PACKET.CZ.REQUEST_TIME2.prototype.build = function() {
+	PACKET.CZ.REQUEST_TIME2.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -3638,7 +3631,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.headDir = 0;
 		this.dir = 0;
 	};
-	PACKET.CZ.CHANGE_DIRECTION2.prototype.build = function() {
+	PACKET.CZ.CHANGE_DIRECTION2.prototype.build = function () {
 		var servDirection = [4, 3, 2, 1, 0, 7, 6, 5];
 
 		var ver = this.getPacketVersion();
@@ -3654,7 +3647,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.ITEM_PICKUP2 = function PACKET_CZ_ITEM_PICKUP2() {
 		this.ITAID = 0;
 	};
-	PACKET.CZ.ITEM_PICKUP2.prototype.build = function() {
+	PACKET.CZ.ITEM_PICKUP2.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -3668,7 +3661,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.Index = 0;
 		this.count = 0;
 	};
-	PACKET.CZ.ITEM_THROW2.prototype.build = function() {
+	PACKET.CZ.ITEM_THROW2.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -3683,7 +3676,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.index = 0;
 		this.count = 0;
 	};
-	PACKET.CZ.MOVE_ITEM_FROM_BODY_TO_STORE2.prototype.build = function() {
+	PACKET.CZ.MOVE_ITEM_FROM_BODY_TO_STORE2.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -3698,7 +3691,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.index = 0;
 		this.count = 0;
 	};
-	PACKET.CZ.MOVE_ITEM_FROM_STORE_TO_BODY2.prototype.build = function() {
+	PACKET.CZ.MOVE_ITEM_FROM_STORE_TO_BODY2.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -3715,7 +3708,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.xPos = 0;
 		this.yPos = 0;
 	};
-	PACKET.CZ.USE_SKILL_TOGROUND2.prototype.build = function() {
+	PACKET.CZ.USE_SKILL_TOGROUND2.prototype.build = function () {
 		var pkt = new BinaryWriter(10);
 
 		pkt.writeShort(0x0366);
@@ -3730,7 +3723,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQNAME2 = function PACKET_CZ_REQNAME2() {
 		this.AID = 0;
 	};
-	PACKET.CZ.REQNAME2.prototype.build = function() {
+	PACKET.CZ.REQNAME2.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -3743,7 +3736,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQNAME_BYGID2 = function PACKET_CZ_REQNAME_BYGID2() {
 		this.GID = 0;
 	};
-	PACKET.CZ.REQNAME_BYGID2.prototype.build = function() {
+	PACKET.CZ.REQNAME_BYGID2.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -3761,9 +3754,9 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.unknown = 0;
 		this.Sex = 0;
 	};
-	PACKET.CZ.ENTER2.prototype.build = function() {
+	PACKET.CZ.ENTER2.prototype.build = function () {
 		var pkt_len = 2 + 4 + 4 + 4 + 4 + 1;
-		if(PACKETVER.value >= 20211103) pkt_len += 4;
+		if (PACKETVER.value >= 20211103) pkt_len += 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
 		pkt_buf.writeShort(0x436);
@@ -3771,7 +3764,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		pkt_buf.writeULong(this.GID);
 		pkt_buf.writeULong(this.AuthCode);
 		pkt_buf.writeULong(this.clientTime);
-		if(PACKETVER.value >= 20211103) {
+		if (PACKETVER.value >= 20211103) {
 			pkt_buf.writeULong(this.unknown);
 		}
 		pkt_buf.writeUChar(this.Sex);
@@ -3784,7 +3777,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.targetGID = 0;
 		this.action = 0;
 	};
-	PACKET.CZ.REQUEST_ACT2.prototype.build = function() {
+	PACKET.CZ.REQUEST_ACT2.prototype.build = function () {
 		var pkt_len = 2 + 4 + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3801,7 +3794,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.SKID = 0;
 		this.targetID = 0;
 	};
-	PACKET.CZ.USE_SKILL2.prototype.build = function() {
+	PACKET.CZ.USE_SKILL2.prototype.build = function () {
 		var pkt_len = 2 + 2 + 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3818,7 +3811,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.index = 0;
 		this.AID = 0;
 	};
-	PACKET.CZ.USE_ITEM2.prototype.build = function() {
+	PACKET.CZ.USE_ITEM2.prototype.build = function () {
 		var pkt_len = 2 + 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3834,7 +3827,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.why = 0;
 		this.SKID = 0;
 	};
-	PACKET.CZ.SKILL_SELECT_RESPONSE.prototype.build = function() {
+	PACKET.CZ.SKILL_SELECT_RESPONSE.prototype.build = function () {
 		var pkt_len = 2 + 4 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3852,7 +3845,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	};
-	PACKET.CZ.SIMPLE_BUY_CASH_POINT_ITEM.prototype.build = function() {
+	PACKET.CZ.SIMPLE_BUY_CASH_POINT_ITEM.prototype.build = function () {
 		var pkt_len = 2 + 2 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3864,8 +3857,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x447
-	PACKET.CZ.BLOCKING_PLAY_CANCEL = function PACKET_CZ_BLOCKING_PLAY_CANCEL() {};
-	PACKET.CZ.BLOCKING_PLAY_CANCEL.prototype.build = function() {
+	PACKET.CZ.BLOCKING_PLAY_CANCEL = function PACKET_CZ_BLOCKING_PLAY_CANCEL() { };
+	PACKET.CZ.BLOCKING_PLAY_CANCEL.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3878,7 +3871,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.CLIENT_VERSION = function PACKET_CZ_CLIENT_VERSION() {
 		this.clientVer = 0;
 	};
-	PACKET.CZ.CLIENT_VERSION.prototype.build = function() {
+	PACKET.CZ.CLIENT_VERSION.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3889,8 +3882,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x44b
-	PACKET.CZ.CLOSE_SIMPLECASH_SHOP = function PACKET_CZ_CLOSE_SIMPLECASH_SHOP() {};
-	PACKET.CZ.CLOSE_SIMPLECASH_SHOP.prototype.build = function() {
+	PACKET.CZ.CLOSE_SIMPLECASH_SHOP = function PACKET_CZ_CLOSE_SIMPLECASH_SHOP() { };
+	PACKET.CZ.CLOSE_SIMPLECASH_SHOP.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3900,8 +3893,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x7d1
-	PACKET.CZ.ES_GET_LIST = function PACKET_CZ_ES_GET_LIST() {};
-	PACKET.CZ.ES_GET_LIST.prototype.build = function() {
+	PACKET.CZ.ES_GET_LIST = function PACKET_CZ_ES_GET_LIST() { };
+	PACKET.CZ.ES_GET_LIST.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3914,7 +3907,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.ES_CHOOSE = function PACKET_CZ_ES_CHOOSE() {
 		this.esNo = 0;
 	};
-	PACKET.CZ.ES_CHOOSE.prototype.build = function() {
+	PACKET.CZ.ES_CHOOSE.prototype.build = function () {
 		var pkt_len = 2 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3928,7 +3921,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.ES_CANCEL = function PACKET_CZ_ES_CANCEL() {
 		this.esNo = 0;
 	};
-	PACKET.CZ.ES_CANCEL.prototype.build = function() {
+	PACKET.CZ.ES_CANCEL.prototype.build = function () {
 		var pkt_len = 2 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3944,7 +3937,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.ItemPickupRule = 0;
 		this.ItemDivisionRule = 0;
 	};
-	PACKET.CZ.GROUPINFO_CHANGE_V2.prototype.build = function() {
+	PACKET.CZ.GROUPINFO_CHANGE_V2.prototype.build = function () {
 		var pkt_len = 2 + 4 + 1 + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3960,7 +3953,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.CHANGE_GROUP_MASTER = function PACKET_CZ_CHANGE_GROUP_MASTER() {
 		this.AID = 0;
 	};
-	PACKET.CZ.CHANGE_GROUP_MASTER.prototype.build = function() {
+	PACKET.CZ.CHANGE_GROUP_MASTER.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3974,7 +3967,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.SEEK_PARTY = function PACKET_CZ_SEEK_PARTY() {
 		this.Option = 0;
 	};
-	PACKET.CZ.SEEK_PARTY.prototype.build = function() {
+	PACKET.CZ.SEEK_PARTY.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -3991,7 +3984,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.mapName = '';
 		this.Option = 0;
 	};
-	PACKET.CZ.SEEK_PARTY_MEMBER.prototype.build = function() {
+	PACKET.CZ.SEEK_PARTY_MEMBER.prototype.build = function () {
 		var pkt_len = 2 + 4 + 4 + 16 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -4010,7 +4003,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.Action = 0;
 		this.MaterialList = [];
 	};
-	PACKET.CZ.ITEMLISTWIN_RES.prototype.build = function() {
+	PACKET.CZ.ITEMLISTWIN_RES.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt_len = 2 + 2 + 4 + 4 + this.MaterialList.length * 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
@@ -4036,7 +4029,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.dwAID = 0;
 		this.szStringInfo = '';
 	};
-	PACKET.CH.ENTER_CHECKBOT.prototype.build = function() {
+	PACKET.CH.ENTER_CHECKBOT.prototype.build = function () {
 		var pkt_len = 2 + 2 + 4 + this.szStringInfo.length;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -4053,7 +4046,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.dwAID = 0;
 		this.szStringInfo = '';
 	};
-	PACKET.CH.CHECKBOT.prototype.build = function() {
+	PACKET.CH.CHECKBOT.prototype.build = function () {
 		var pkt_len = 2 + 2 + 4 + 24;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -4066,8 +4059,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x7ea
-	PACKET.CZ.BATTLE_FIELD_LIST = function PACKET_CZ_BATTLE_FIELD_LIST() {};
-	PACKET.CZ.BATTLE_FIELD_LIST.prototype.build = function() {
+	PACKET.CZ.BATTLE_FIELD_LIST = function PACKET_CZ_BATTLE_FIELD_LIST() { };
+	PACKET.CZ.BATTLE_FIELD_LIST.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -4081,7 +4074,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.BFNO = 0;
 		this.JoinTeam = 0;
 	};
-	PACKET.CZ.JOIN_BATTLE_FIELD.prototype.build = function() {
+	PACKET.CZ.JOIN_BATTLE_FIELD.prototype.build = function () {
 		var pkt_len = 2 + 4 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -4096,7 +4089,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.CANCEL_BATTLE_FIELD = function PACKET_CZ_CANCEL_BATTLE_FIELD() {
 		this.BFNO = 0;
 	};
-	PACKET.CZ.CANCEL_BATTLE_FIELD.prototype.build = function() {
+	PACKET.CZ.CANCEL_BATTLE_FIELD.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -4111,7 +4104,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.BFNO = 0;
 		this.PowerSwitch = 0;
 	};
-	PACKET.CZ.REQ_BATTLE_STATE_MONITOR.prototype.build = function() {
+	PACKET.CZ.REQ_BATTLE_STATE_MONITOR.prototype.build = function () {
 		var pkt_len = 2 + 4 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -4126,7 +4119,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.GM_FULLSTRIP = function PACKET_CZ_GM_FULLSTRIP() {
 		this.TargetAID = 0;
 	};
-	PACKET.CZ.GM_FULLSTRIP.prototype.build = function() {
+	PACKET.CZ.GM_FULLSTRIP.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -4142,7 +4135,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.UniqueID = 0;
 		this.itemList = [];
 	};
-	PACKET.CZ.PC_PURCHASE_ITEMLIST_FROMMC2.prototype.build = function() {
+	PACKET.CZ.PC_PURCHASE_ITEMLIST_FROMMC2.prototype.build = function () {
 		var pkt_len = 2 + 2 + 4 + 4 + this.itemList.length * 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 		var i, count;
@@ -4164,7 +4157,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.PARTY_BOOKING_REQ_REGISTER = function PACKET_CZ_PARTY_BOOKING_REQ_REGISTER() {
 		this.RegisterInfo = {};
 	};
-	PACKET.CZ.PARTY_BOOKING_REQ_REGISTER.prototype.build = function() {
+	PACKET.CZ.PARTY_BOOKING_REQ_REGISTER.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -4193,7 +4186,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.LastIndex = 0;
 		this.ResultCount = 0;
 	};
-	PACKET.CZ.PARTY_BOOKING_REQ_SEARCH.prototype.build = function() {
+	PACKET.CZ.PARTY_BOOKING_REQ_SEARCH.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -4212,8 +4205,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x806
-	PACKET.CZ.PARTY_BOOKING_REQ_DELETE = function PACKET_CZ_PARTY_BOOKING_REQ_DELETE() {};
-	PACKET.CZ.PARTY_BOOKING_REQ_DELETE.prototype.build = function() {
+	PACKET.CZ.PARTY_BOOKING_REQ_DELETE = function PACKET_CZ_PARTY_BOOKING_REQ_DELETE() { };
+	PACKET.CZ.PARTY_BOOKING_REQ_DELETE.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -4227,7 +4220,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.PARTY_BOOKING_REQ_UPDATE = function PACKET_CZ_PARTY_BOOKING_REQ_UPDATE() {
 		this.Job = 0;
 	};
-	PACKET.CZ.PARTY_BOOKING_REQ_UPDATE.prototype.build = function() {
+	PACKET.CZ.PARTY_BOOKING_REQ_UPDATE.prototype.build = function () {
 		var pkt_len = 2 + 12;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -4239,8 +4232,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x80c
-	PACKET.CZ.SIMPLE_CASH_BTNSHOW = function PACKET_CZ_SIMPLE_CASH_BTNSHOW() {};
-	PACKET.CZ.SIMPLE_CASH_BTNSHOW.prototype.build = function() {
+	PACKET.CZ.SIMPLE_CASH_BTNSHOW = function PACKET_CZ_SIMPLE_CASH_BTNSHOW() { };
+	PACKET.CZ.SIMPLE_CASH_BTNSHOW.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -4256,7 +4249,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.storeName = '';
 		this.storeList = [];
 	};
-	PACKET.CZ.REQ_OPEN_BUYING_STORE.prototype.build = function() {
+	PACKET.CZ.REQ_OPEN_BUYING_STORE.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var item_len = (PACKETVER.value >= 20181121) ? 10 : 8;
 		var pkt_len = 2 + 2 + 4 + 1 + 80 + (this.storeList.length * item_len);
@@ -4270,7 +4263,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		pkt.writeString(this.storeName, 80);
 
 		for (i = 0, count = this.storeList.length; i < count; ++i) {
-			if(PACKETVER.value >= 20181121) {
+			if (PACKETVER.value >= 20181121) {
 				pkt.writeULong(this.storeList[i].ITID);
 			} else {
 				pkt.writeUShort(this.storeList[i].ITID);
@@ -4284,8 +4277,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x815
-	PACKET.CZ.REQ_CLOSE_BUYING_STORE = function PACKET_CZ_REQ_CLOSE_BUYING_STORE() {};
-	PACKET.CZ.REQ_CLOSE_BUYING_STORE.prototype.build = function() {
+	PACKET.CZ.REQ_CLOSE_BUYING_STORE = function PACKET_CZ_REQ_CLOSE_BUYING_STORE() { };
+	PACKET.CZ.REQ_CLOSE_BUYING_STORE.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -4298,7 +4291,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQ_CLICK_TO_BUYING_STORE = function PACKET_CZ_REQ_CLICK_TO_BUYING_STORE() {
 		this.makerAID = 0;
 	};
-	PACKET.CZ.REQ_CLICK_TO_BUYING_STORE.prototype.build = function() {
+	PACKET.CZ.REQ_CLICK_TO_BUYING_STORE.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -4315,7 +4308,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.UniqueID = 0;
 		this.itemList = [];
 	};
-	PACKET.CZ.REQ_TRADE_BUYING_STORE.prototype.build = function() {
+	PACKET.CZ.REQ_TRADE_BUYING_STORE.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var len = 2 + 2 + 4 + 4 + this.itemList.length * 6; // ver[2] = -1
 		var pkt = new BinaryWriter(len);
@@ -4337,51 +4330,51 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	//0xb6e
 	PACKET.ZC.SE_CASHSHOP_OPEN = function PACKET_ZC_SE_CASHSHOP_OPEN(fp, end) {
-        this.cashPoints = fp.readULong();
-        this.kafraPoints = fp.readULong();
+		this.cashPoints = fp.readULong();
+		this.kafraPoints = fp.readULong();
 		this.tab = fp.readULong();
-    };
-    PACKET.ZC.SE_CASHSHOP_OPEN.size = 14;
+	};
+	PACKET.ZC.SE_CASHSHOP_OPEN.size = 14;
 
 	//0x0a2b
 	PACKET.ZC.SE_CASHSHOP_OPEN2 = function PACKET_ZC_SE_CASHSHOP_OPEN2(fp, end) {
-        this.cashPoints = fp.readULong();
-        this.kafraPoints = fp.readULong();
+		this.cashPoints = fp.readULong();
+		this.kafraPoints = fp.readULong();
 		this.tab = fp.readULong();
-    };
-    PACKET.ZC.SE_CASHSHOP_OPEN2.size = 14;
+	};
+	PACKET.ZC.SE_CASHSHOP_OPEN2.size = 14;
 
 	//0x0845
 	PACKET.ZC.SE_CASHSHOP_OPEN3 = function PACKET_ZC_SE_CASHSHOP_OPEN3(fp, end) {
-        this.cashPoints = fp.readULong();
-        this.kafraPoints = fp.readULong();
-    };
-    PACKET.ZC.SE_CASHSHOP_OPEN3.size = 10;
+		this.cashPoints = fp.readULong();
+		this.kafraPoints = fp.readULong();
+	};
+	PACKET.ZC.SE_CASHSHOP_OPEN3.size = 10;
 
 	//0x08ca
 	PACKET.ZC.ACK_SCHEDULER_CASHITEM = function PACKET_ZC_ACK_SCHEDULER_CASHITEM(fp, end) {
-        this.count = fp.readUShort();
-        this.tabNum = fp.readUShort();
-        this.items = (function() {
-            var out = [];
+		this.count = fp.readUShort();
+		this.tabNum = fp.readUShort();
+		this.items = (function () {
+			var out = [];
 			var divider = 6; // original
 			if (PACKETVER.value >= 20181121 || PACKETVER.value >= 20180704 || PACKETVER.value >= 20181114) {
 				divider = 8;
 			}
 			var cnt = (end - fp.tell()) / divider;
-            for (var i = 0; i < cnt; ++i) {
-                out[i] = {};
+			for (var i = 0; i < cnt; ++i) {
+				out[i] = {};
 				if (PACKETVER.value >= 20181121 || PACKETVER.value >= 20180704 || PACKETVER.value >= 20181114) {
-                	out[i].itemId = fp.readULong();
+					out[i].itemId = fp.readULong();
 				} else {
 					out[i].itemId = fp.readUShort();
 				}
-                out[i].price = fp.readULong();
-            }
-            return out;
-        })();
-    };
-    PACKET.ZC.ACK_SCHEDULER_CASHITEM.size = -1;
+				out[i].price = fp.readULong();
+			}
+			return out;
+		})();
+	};
+	PACKET.ZC.ACK_SCHEDULER_CASHITEM.size = -1;
 
 	// 0x8cb
 	// <packet len>.W <exp>.L <death>.L <drop>.L <DETAIL_EXP_INFO>13B
@@ -4391,8 +4384,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.total_death = fp.readShort();
 		this.total_drop = fp.readShort();
 
-		this.info = (function() {
-			var i, count=(end-fp.tell())/7|0, out=new Array(count);
+		this.info = (function () {
+			var i, count = (end - fp.tell()) / 7 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].type = fp.readChar(); // ?
@@ -4407,27 +4400,27 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	//0x08c0
 	PACKET.ZC.ACK_SE_CASH_ITEM_LIST2 = function PACKET_ZC_ACK_SE_CASH_ITEM_LIST2(fp, end) {
-        this.len = fp.readULong();
-        this.openIdentity = fp.readULong();
+		this.len = fp.readULong();
+		this.openIdentity = fp.readULong();
 		this.itemcount = fp.readUShort();
-    };
-    PACKET.ZC.ACK_SE_CASH_ITEM_LIST2.size = 8;
+	};
+	PACKET.ZC.ACK_SE_CASH_ITEM_LIST2.size = 8;
 
 	//0x846
 	PACKET.CZ.REQ_SE_CASH_TAB_CODE = function PACKET_CZ_REQ_SE_CASH_TAB_CODE() {
 		this.tabid = 0;
 	};
-    PACKET.CZ.REQ_SE_CASH_TAB_CODE.prototype.build = function() {
-        var pkt_buf = new BinaryWriter(4);
+	PACKET.CZ.REQ_SE_CASH_TAB_CODE.prototype.build = function () {
+		var pkt_buf = new BinaryWriter(4);
 
-        pkt_buf.writeShort(0x846);
+		pkt_buf.writeShort(0x846);
 		pkt_buf.setUint16(2, this.tabid, true);
-        return pkt_buf;
-    };
+		return pkt_buf;
+	};
 
 	//0x0844
-	PACKET.CZ.SE_CASHSHOP_OPEN1 = function PACKET_CZ_SE_CASHSHOP_OPEN1() {};
-	PACKET.CZ.SE_CASHSHOP_OPEN1.prototype.build = function() {
+	PACKET.CZ.SE_CASHSHOP_OPEN1 = function PACKET_CZ_SE_CASHSHOP_OPEN1() { };
+	PACKET.CZ.SE_CASHSHOP_OPEN1.prototype.build = function () {
 		// var ver = this.getPacketVersion();
 		// var pkt_buf = new BinaryWriter(ver[2]);
 		var pkt_buf = new BinaryWriter(2);
@@ -4438,39 +4431,39 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	//0x0b6d
 	PACKET.CZ.SE_CASHSHOP_OPEN2 = function PACKET_CZ_SE_CASHSHOP_OPEN2() {
-        this.tab = 0;
-    };
-    PACKET.CZ.SE_CASHSHOP_OPEN2.prototype.build = function() {
-        var pkt_buf = new BinaryWriter(6);
+		this.tab = 0;
+	};
+	PACKET.CZ.SE_CASHSHOP_OPEN2.prototype.build = function () {
+		var pkt_buf = new BinaryWriter(6);
 
-        pkt_buf.writeShort(0xb6d);
-        pkt_buf.writeULong(this.tab);
-        return pkt_buf;
-    };
+		pkt_buf.writeShort(0xb6d);
+		pkt_buf.writeULong(this.tab);
+		return pkt_buf;
+	};
 
 	//0x08c9
-	PACKET.CZ.PC_CASH_POINT_ITEMLIST = function PACKET_CZ_PC_CASH_POINT_ITEMLIST() {};
-    PACKET.CZ.PC_CASH_POINT_ITEMLIST.prototype.build = function() {
-        var pkt_buf = new BinaryWriter(2);
+	PACKET.CZ.PC_CASH_POINT_ITEMLIST = function PACKET_CZ_PC_CASH_POINT_ITEMLIST() { };
+	PACKET.CZ.PC_CASH_POINT_ITEMLIST.prototype.build = function () {
+		var pkt_buf = new BinaryWriter(2);
 
-        pkt_buf.writeShort(0x08c9);
-        return pkt_buf;
-    };
+		pkt_buf.writeShort(0x08c9);
+		return pkt_buf;
+	};
 
 	//0x084a
-	PACKET.CZ.CASH_SHOP_CLOSE = function PACKET_CZ_CASH_SHOP_CLOSE() {};
-    PACKET.CZ.CASH_SHOP_CLOSE.prototype.build = function() {
-        var pkt_buf = new BinaryWriter(2);
+	PACKET.CZ.CASH_SHOP_CLOSE = function PACKET_CZ_CASH_SHOP_CLOSE() { };
+	PACKET.CZ.CASH_SHOP_CLOSE.prototype.build = function () {
+		var pkt_buf = new BinaryWriter(2);
 
-        pkt_buf.writeShort(0x84a);
-        return pkt_buf;
-    };
+		pkt_buf.writeShort(0x84a);
+		return pkt_buf;
+	};
 
 	// 0x822
 	PACKET.CA.OTP_AUTH_REQ = function PACKET_CA_OTP_AUTH_REQ() {
 		this.OTPCode = '';
 	};
-	PACKET.CA.OTP_AUTH_REQ.prototype.build = function() {
+	PACKET.CA.OTP_AUTH_REQ.prototype.build = function () {
 		var pkt_len = 2 + 7;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -4483,10 +4476,10 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.SE_PC_BUY_CASHITEM_LIST = function PACKET_CZ_SE_PC_BUY_CASHITEM_LIST() {
 		this.kafraPoints = 0;
 		this.item_list = [];
-    };
-    PACKET.CZ.SE_PC_BUY_CASHITEM_LIST.prototype.build = function() {
+	};
+	PACKET.CZ.SE_PC_BUY_CASHITEM_LIST.prototype.build = function () {
 		var pkt_len = 2 + 2 + 2 + 4 + this.item_list.length * 10;
-        var pkt = new BinaryWriter(pkt_len);
+		var pkt = new BinaryWriter(pkt_len);
 		var i, count;
 
 		pkt.writeShort(0x848);
@@ -4501,7 +4494,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		}
 
 		return pkt;
-    };
+	};
 
 	//0x0849
 	PACKET.ZC.SE_PC_BUY_CASHITEM_RESULT = function PACKET_ZC_SE_PC_BUY_CASHITEM_RESULT(fp, end) {
@@ -4510,8 +4503,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.result = fp.readShort();
 		this.cashPoints = fp.readUShort();
 
-    };
-    PACKET.ZC.SE_PC_BUY_CASHITEM_RESULT.size = 16;
+	};
+	PACKET.ZC.SE_PC_BUY_CASHITEM_RESULT.size = 16;
 
 
 	// 0x825a
@@ -4523,7 +4516,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.IpAddr = '';
 		this.t1 = '';
 	};
-	PACKET.CA.SSO_LOGIN_REQa.prototype.build = function() {
+	PACKET.CA.SSO_LOGIN_REQa.prototype.build = function () {
 		var pkt_len = 2 + 2 + 4 + 1 + 24 + 17 + 15 + this.t1.length;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -4549,7 +4542,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.IP = '';
 		this.t1 = '';
 	};
-	PACKET.CA.SSO_LOGIN_REQ.prototype.build = function() {
+	PACKET.CA.SSO_LOGIN_REQ.prototype.build = function () {
 		var pkt_len = 2 + 2 + 4 + 1 + 24 + 27 + 17 + 15 + this.t1.length;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -4570,7 +4563,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CH.DELETE_CHAR3_RESERVED = function PACKET_CH_DELETE_CHAR3_RESERVED() {
 		this.GID = 0;
 	};
-	PACKET.CH.DELETE_CHAR3_RESERVED.prototype.build = function() {
+	PACKET.CH.DELETE_CHAR3_RESERVED.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -4585,7 +4578,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.GID = 0;
 		this.Birth = '';
 	};
-	PACKET.CH.DELETE_CHAR3.prototype.build = function() {
+	PACKET.CH.DELETE_CHAR3.prototype.build = function () {
 		var pkt_len = 2 + 4 + 6;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -4600,7 +4593,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CH.DELETE_CHAR3_CANCEL = function PACKET_CH_DELETE_CHAR3_CANCEL() {
 		this.GID = 0;
 	};
-	PACKET.CH.DELETE_CHAR3_CANCEL.prototype.build = function() {
+	PACKET.CH.DELETE_CHAR3_CANCEL.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -4619,7 +4612,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.ItemIDList = 0;
 		this.CardIDList = 0;
 	};
-	PACKET.CZ.SEARCH_STORE_INFO.prototype.build = function() {
+	PACKET.CZ.SEARCH_STORE_INFO.prototype.build = function () {
 		var i, count, offset;
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
@@ -4653,7 +4646,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	};
-	PACKET.CZ.SEARCH_STORE_INFO_NEXT_PAGE.prototype.build = function() {
+	PACKET.CZ.SEARCH_STORE_INFO_NEXT_PAGE.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -4667,7 +4660,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	};
-	PACKET.CZ.CLOSE_SEARCH_STORE_INFO.prototype.build = function() {
+	PACKET.CZ.CLOSE_SEARCH_STORE_INFO.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -4684,7 +4677,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	};
-	PACKET.CZ.SSILIST_ITEM_CLICK.prototype.build = function() {
+	PACKET.CZ.SSILIST_ITEM_CLICK.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -4704,7 +4697,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	};
-	PACKET.CH.SELECT_ACCESSIBLE_MAPNAME.prototype.build = function() {
+	PACKET.CH.SELECT_ACCESSIBLE_MAPNAME.prototype.build = function () {
 		var pkt_len = 2 + 1 + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -4720,7 +4713,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	};
-	PACKET.CZ.REMOVE_AID_SSO.prototype.build = function() {
+	PACKET.CZ.REMOVE_AID_SSO.prototype.build = function () {
 		var ver = this.getPacketVersion();
 		var pkt = new BinaryWriter(ver[2]);
 
@@ -4797,7 +4790,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	};
-	PACKET.CH.MAKE_CHAR2.prototype.build = function() {
+	PACKET.CH.MAKE_CHAR2.prototype.build = function () {
 		var pkt_len = 2 + 24 + 1 + 2 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -4818,8 +4811,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.lastLoginIP = fp.readULong();
 		this.lastLoginTime = fp.readBinaryString(26);
 		this.Sex = fp.readUChar();
-		this.ServerList = (function() {
-			var i, count=(end-fp.tell())/32|0, out=new Array(count);
+		this.ServerList = (function () {
+			var i, count = (end - fp.tell()) / 32 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].ip = fp.readULong();
@@ -4882,7 +4875,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x6f
-	PACKET.HC.ACCEPT_DELETECHAR = function PACKET_HC_ACCEPT_DELETECHAR(fp, end) {};
+	PACKET.HC.ACCEPT_DELETECHAR = function PACKET_HC_ACCEPT_DELETECHAR(fp, end) { };
 	PACKET.HC.ACCEPT_DELETECHAR.size = 2;
 
 
@@ -5126,12 +5119,12 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x83
-	PACKET.ZC.ACCEPT_QUIT = function PACKET_ZC_ACCEPT_QUIT(fp, end) {};
+	PACKET.ZC.ACCEPT_QUIT = function PACKET_ZC_ACCEPT_QUIT(fp, end) { };
 	PACKET.ZC.ACCEPT_QUIT.size = 2;
 
 
 	// 0x84
-	PACKET.ZC.REFUSE_QUIT = function PACKET_ZC_REFUSE_QUIT(fp, end) {};
+	PACKET.ZC.REFUSE_QUIT = function PACKET_ZC_REFUSE_QUIT(fp, end) { };
 	PACKET.ZC.REFUSE_QUIT.size = 2;
 
 
@@ -5235,7 +5228,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x93
-	PACKET.ZC.NPCACK_ENABLE = function PACKET_ZC_NPCACK_ENABLE(fp, end) {};
+	PACKET.ZC.NPCACK_ENABLE = function PACKET_ZC_NPCACK_ENABLE(fp, end) { };
 	PACKET.ZC.NPCACK_ENABLE.size = 2;
 
 
@@ -5354,8 +5347,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0xa3
 	PACKET.ZC.NORMAL_ITEMLIST = function PACKET_ZC_NORMAL_ITEMLIST(fp, end) {
-		this.itemInfo = (function() {
-			var i, count=(end-fp.tell())/10|0, out=new Array(count);
+		this.itemInfo = (function () {
+			var i, count = (end - fp.tell()) / 10 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].index = fp.readShort();
@@ -5373,8 +5366,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0xa4
 	PACKET.ZC.EQUIPMENT_ITEMLIST = function PACKET_ZC_EQUIPMENT_ITEMLIST(fp, end) {
-		this.itemInfo = (function() {
-			var i, count=(end-fp.tell())/20|0, out=new Array(count);
+		this.itemInfo = (function () {
+			var i, count = (end - fp.tell()) / 20 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].index = fp.readShort();
@@ -5399,8 +5392,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0xa5
 	PACKET.ZC.STORE_NORMAL_ITEMLIST = function PACKET_ZC_STORE_NORMAL_ITEMLIST(fp, end) {
-		this.itemInfo = (function() {
-			var i, count=(end-fp.tell())/10|0, out=new Array(count);
+		this.itemInfo = (function () {
+			var i, count = (end - fp.tell()) / 10 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].index = fp.readShort();
@@ -5418,8 +5411,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0xa6
 	PACKET.ZC.STORE_EQUIPMENT_ITEMLIST = function PACKET_ZC_STORE_EQUIPMENT_ITEMLIST(fp, end) {
-		this.itemInfo = (function() {
-			var i, count=(end-fp.tell())/20|0, out=new Array(count);
+		this.itemInfo = (function () {
+			var i, count = (end - fp.tell()) / 20 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].index = fp.readShort();
@@ -5616,9 +5609,9 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0xc6
 	PACKET.ZC.PC_PURCHASE_ITEMLIST = function PACKET_ZC_PC_PURCHASE_ITEMLIST(fp, end) {
-		this.itemList = (function() {
+		this.itemList = (function () {
 			let item_size = (PACKETVER.value >= 20181121 ? 13 : 11);
-			var i, count=(end-fp.tell())/item_size|0, out=new Array(count);
+			var i, count = (end - fp.tell()) / item_size | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].price = fp.readLong();
@@ -5634,8 +5627,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0xc7
 	PACKET.ZC.PC_SELL_ITEMLIST = function PACKET_ZC_PC_SELL_ITEMLIST(fp, end) {
-		this.itemList = (function() {
-			var i, count=(end-fp.tell())/10|0, out=new Array(count);
+		this.itemList = (function () {
+			var i, count = (end - fp.tell()) / 10 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].index = fp.readShort();
@@ -5687,8 +5680,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0xd4
 	PACKET.ZC.WHISPER_LIST = function PACKET_ZC_WHISPER_LIST(fp, end) {
-		this.wisperList = (function() {
-			var i, count=(end-fp.tell())/24|0, out=new Array(count);
+		this.wisperList = (function () {
+			var i, count = (end - fp.tell()) / 24 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].name = fp.readString(NAME_LENGTH);
@@ -5735,8 +5728,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0xdb
 	PACKET.ZC.ENTER_ROOM = function PACKET_ZC_ENTER_ROOM(fp, end) {
 		this.roomID = fp.readULong();
-		this.memberList = (function() {
-			var i, count=(end-fp.tell())/28|0, out=new Array(count);
+		this.memberList = (function () {
+			var i, count = (end - fp.tell()) / 28 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].role = fp.readULong();
@@ -5831,7 +5824,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0xee
-	PACKET.ZC.CANCEL_EXCHANGE_ITEM = function PACKET_ZC_CANCEL_EXCHANGE_ITEM(fp, end) {};
+	PACKET.ZC.CANCEL_EXCHANGE_ITEM = function PACKET_ZC_CANCEL_EXCHANGE_ITEM(fp, end) { };
 	PACKET.ZC.CANCEL_EXCHANGE_ITEM.size = 2;
 
 
@@ -5843,7 +5836,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0xf1
-	PACKET.ZC.EXCHANGEITEM_UNDO = function PACKET_ZC_EXCHANGEITEM_UNDO(fp, end) {};
+	PACKET.ZC.EXCHANGEITEM_UNDO = function PACKET_ZC_EXCHANGEITEM_UNDO(fp, end) { };
 	PACKET.ZC.EXCHANGEITEM_UNDO.size = 2;
 
 
@@ -5881,7 +5874,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0xf8
-	PACKET.ZC.CLOSE_STORE = function PACKET_ZC_CLOSE_STORE(fp, end) {};
+	PACKET.ZC.CLOSE_STORE = function PACKET_ZC_CLOSE_STORE(fp, end) { };
 	PACKET.ZC.CLOSE_STORE.size = 2;
 
 
@@ -5895,8 +5888,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0xfb
 	PACKET.ZC.GROUP_LIST = function PACKET_ZC_GROUP_LIST(fp, end) {
 		this.groupName = fp.readString(NAME_LENGTH);
-		this.groupInfo = (function() {
-			var i, count=(end-fp.tell())/46|0, out=new Array(count);
+		this.groupInfo = (function () {
+			var i, count = (end - fp.tell()) / 46 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].AID = fp.readULong();
@@ -6005,7 +5998,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x10d
-	PACKET.ZC.THROW_MVPITEM = function PACKET_ZC_THROW_MVPITEM(fp, end) {};
+	PACKET.ZC.THROW_MVPITEM = function PACKET_ZC_THROW_MVPITEM(fp, end) { };
 	PACKET.ZC.THROW_MVPITEM.size = 2;
 
 
@@ -6022,8 +6015,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x10f
 	PACKET.ZC.SKILLINFO_LIST = function PACKET_ZC_SKILLINFO_LIST(fp, end) {
-		this.skillList = (function() {
-			var i, count=(end-fp.tell())/37|0, out=new Array(count);
+		this.skillList = (function () {
+			var i, count = (end - fp.tell()) / 37 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].SKID = fp.readShort();
@@ -6042,7 +6035,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0x0110
 	PACKET.ZC.ACK_TOUSESKILL = function PACKET_ZC_ACK_TOUSESKILL(fp, end) {
 		this.SKID = fp.readUShort();
-		if((CLASSIC && PACKETVER.value >= 20181121) || (RENEWAL && PACKETVER.value >= 20180704)){
+		if ((CLASSIC && PACKETVER.value >= 20181121) || (RENEWAL && PACKETVER.value >= 20180704)) {
 			this.NUM = fp.readLong();
 			this.itemId = fp.readULong();
 		} else {
@@ -6139,7 +6132,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0x11c
 	PACKET.ZC.WARPLIST = function PACKET_ZC_WARPLIST(fp, end) {
 		this.SKID = fp.readUShort();
-		this.mapName = (function() {
+		this.mapName = (function () {
 			var count = 4;
 			var out = new Array(count);
 			for (var i = 0; i < count; ++i) {
@@ -6189,8 +6182,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x122
 	PACKET.ZC.CART_EQUIPMENT_ITEMLIST = function PACKET_ZC_CART_EQUIPMENT_ITEMLIST(fp, end) {
-		this.itemInfo = (function() {
-			var i, count=(end-fp.tell())/20|0, out=new Array(count);
+		this.itemInfo = (function () {
+			var i, count = (end - fp.tell()) / 20 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].index = fp.readShort();
@@ -6215,8 +6208,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x123
 	PACKET.ZC.CART_NORMAL_ITEMLIST = function PACKET_ZC_CART_NORMAL_ITEMLIST(fp, end) {
-		this.itemInfo = (function() {
-			var i, count=(end-fp.tell())/10|0, out=new Array(count);
+		this.itemInfo = (function () {
+			var i, count = (end - fp.tell()) / 10 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].index = fp.readShort();
@@ -6258,7 +6251,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x12b
-	PACKET.ZC.CARTOFF = function PACKET_ZC_CARTOFF(fp, end) {};
+	PACKET.ZC.CARTOFF = function PACKET_ZC_CARTOFF(fp, end) { };
 	PACKET.ZC.CARTOFF.size = 2;
 
 
@@ -6294,8 +6287,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0x133
 	PACKET.ZC.PC_PURCHASE_ITEMLIST_FROMMC = function PACKET_ZC_PC_PURCHASE_ITEMLIST_FROMMC(fp, end) {
 		this.AID = fp.readULong();
-		this.itemList = (function() {
-			var i, count=(end-fp.tell())/22|0, out=new Array(count);
+		this.itemList = (function () {
+			var i, count = (end - fp.tell()) / 22 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].price = fp.readLong();
@@ -6336,11 +6329,11 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		);
 
 		this.AID = fp.readULong();
-		this.itemList = (function() {
+		this.itemList = (function () {
 			var len = 22;
 			if (PACKETVER.value >= 20150226) len = 47;
 
-			var i, count=(end-fp.tell())/len|0, out=new Array(count);
+			var i, count = (end - fp.tell()) / len | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].price = fp.readLong();
@@ -6509,8 +6502,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x14c
 	PACKET.ZC.MYGUILD_BASIC_INFO = function PACKET_ZC_MYGUILD_BASIC_INFO(fp, end) {
-		this.relatedGuildList = (function() {
-			var i, count=(end-fp.tell())/32|0, out=new Array(count);
+		this.relatedGuildList = (function () {
+			var i, count = (end - fp.tell()) / 32 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].relation = fp.readLong();
@@ -6561,8 +6554,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x154
 	PACKET.ZC.MEMBERMGR_INFO = function PACKET_ZC_MEMBERMGR_INFO(fp, end) {
-		this.memberInfo = (function() {
-			var i, count=(end-fp.tell())/104|0, out=new Array(count);
+		this.memberInfo = (function () {
+			var i, count = (end - fp.tell()) / 104 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].AID = fp.readULong();
@@ -6586,8 +6579,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x156
 	PACKET.ZC.ACK_REQ_CHANGE_MEMBERS = function PACKET_ZC_ACK_REQ_CHANGE_MEMBERS(fp, end) {
-		this.memberInfo = (function() {
-			var i, count=(end-fp.tell())/12|0, out=new Array(count);
+		this.memberInfo = (function () {
+			var i, count = (end - fp.tell()) / 12 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].AID = fp.readLong();
@@ -6601,7 +6594,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x158
-	PACKET.ZC.ACK_OPEN_MEMBER_INFO = function PACKET_ZC_ACK_OPEN_MEMBER_INFO(fp, end) {};
+	PACKET.ZC.ACK_OPEN_MEMBER_INFO = function PACKET_ZC_ACK_OPEN_MEMBER_INFO(fp, end) { };
 	PACKET.ZC.ACK_OPEN_MEMBER_INFO.size = 2;
 
 
@@ -6638,8 +6631,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x160
 	PACKET.ZC.POSITION_INFO = function PACKET_ZC_POSITION_INFO(fp, end) {
-		this.memberInfo = (function() {
-			var i, count=(end-fp.tell())/16|0, out=new Array(count);
+		this.memberInfo = (function () {
+			var i, count = (end - fp.tell()) / 16 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].positionID = fp.readLong();
@@ -6656,8 +6649,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0x162
 	PACKET.ZC.GUILD_SKILLINFO = function PACKET_ZC_GUILD_SKILLINFO(fp, end) {
 		this.skillPoint = fp.readShort();
-		this.skillList = (function() {
-			var i, count=(end-fp.tell())/37|0, out=new Array(count);
+		this.skillList = (function () {
+			var i, count = (end - fp.tell()) / 37 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].SKID = fp.readUShort();
@@ -6676,9 +6669,9 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x163
 	PACKET.ZC.BAN_LIST = function PACKET_ZC_BAN_LIST(fp, end) {
-		this.banList = (function() {
+		this.banList = (function () {
 			var size = (PACKETVER.max < 20100803) ? 88 : 64;
-			var i, count=(end-fp.tell())/size|0, out=new Array(count);
+			var i, count = (end - fp.tell()) / size | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].charname = fp.readString(NAME_LENGTH);
@@ -6697,8 +6690,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x164
 	PACKET.ZC.OTHER_GUILD_LIST = function PACKET_ZC_OTHER_GUILD_LIST(fp, end) {
-		this.guildList = (function() {
-			var i, count=(end-fp.tell())/36|0, out=new Array(count);
+		this.guildList = (function () {
+			var i, count = (end - fp.tell()) / 36 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].guildname = fp.readString(NAME_LENGTH);
@@ -6714,8 +6707,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x166
 	PACKET.ZC.POSITION_ID_NAME_INFO = function PACKET_ZC_POSITION_ID_NAME_INFO(fp, end) {
-		this.memberList = (function() {
-			var i, count=(end-fp.tell())/28|0, out=new Array(count);
+		this.memberList = (function () {
+			var i, count = (end - fp.tell()) / 28 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].positionID = fp.readLong();
@@ -6795,8 +6788,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x174
 	PACKET.ZC.ACK_CHANGE_GUILD_POSITIONINFO = function PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO(fp, end) {
-		this.memberList = (function() {
-			var i, count=(end-fp.tell())/40|0, out=new Array(count);
+		this.memberList = (function () {
+			var i, count = (end - fp.tell()) / 40 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].positionID = fp.readLong();
@@ -6832,8 +6825,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x177
 	PACKET.ZC.ITEMIDENTIFY_LIST = function PACKET_ZC_ITEMIDENTIFY_LIST(fp, end) {
-		this.ITIDList = (function() {
-			var count = (end-fp.tell())/2|0, out = new Array(count);
+		this.ITIDList = (function () {
+			var count = (end - fp.tell()) / 2 | 0, out = new Array(count);
 			for (var i = 0; i < count; ++i) {
 				out[i] = fp.readUShort();
 			}
@@ -6853,8 +6846,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x17b
 	PACKET.ZC.ITEMCOMPOSITION_LIST = function PACKET_ZC_ITEMCOMPOSITION_LIST(fp, end) {
-		this.ITIDList = (function() {
-			var count = (end-fp.tell())/2|0, out = new Array(count);
+		this.ITIDList = (function () {
+			var count = (end - fp.tell()) / 2 | 0, out = new Array(count);
 			for (var i = 0; i < count; ++i) {
 				out[i] = fp.readUShort();
 			}
@@ -6988,12 +6981,12 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0x18d
 	PACKET.ZC.MAKABLEITEMLIST = function PACKET_ZC_MAKABLEITEMLIST(fp, end) {
 		let size = (PACKETVER.value >= 20181121) ? 16 : 8;
-		this.itemList = (function(size) {
-			var i, count=(end-fp.tell())/size|0, out=new Array(count);
+		this.itemList = (function (size) {
+			var i, count = (end - fp.tell()) / size | 0, out = new Array(count);
 
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
-				if(size == 16) {
+				if (size == 16) {
 					out[i].ITID = fp.readULong();
 					out[i].material_ID = {};
 					out[i].material_ID[0] = fp.readULong();
@@ -7092,7 +7085,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x19e
-	PACKET.ZC.START_CAPTURE = function PACKET_ZC_START_CAPTURE(fp, end) {};
+	PACKET.ZC.START_CAPTURE = function PACKET_ZC_START_CAPTURE(fp, end) { };
 	PACKET.ZC.START_CAPTURE.size = 2;
 
 
@@ -7135,8 +7128,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x1a6
 	PACKET.ZC.PETEGG_LIST = function PACKET_ZC_PETEGG_LIST(fp, end) {
-		this.eggList = (function() {
-			var i, count=(end-fp.tell())/2|0, out=new Array(count);
+		this.eggList = (function () {
+			var i, count = (end - fp.tell()) / 2 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = fp.readShort();
 			}
@@ -7173,8 +7166,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0x1ad
 	PACKET.ZC.MAKINGARROW_LIST = function PACKET_ZC_MAKINGARROW_LIST(fp, end) {
 		let size = (PACKETVER.value >= 20181121) ? 4 : 2;
-		this.arrowList = (function(size) {
-			var i, count=(end-fp.tell())/size|0, out=new Array(count);
+		this.arrowList = (function (size) {
+			var i, count = (end - fp.tell()) / size | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].index = size == 2 ? fp.readShort() : fp.readLong();
@@ -7265,7 +7258,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x1be
-	PACKET.AC.ASK_PNGAMEROOM = function PACKET_AC_ASK_PNGAMEROOM(fp, end) {};
+	PACKET.AC.ASK_PNGAMEROOM = function PACKET_AC_ASK_PNGAMEROOM(fp, end) { };
 	PACKET.AC.ASK_PNGAMEROOM.size = 2;
 
 
@@ -7335,7 +7328,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x1c7
-	PACKET.SC.ACK_ENCRYPTION = function PACKET_SC_ACK_ENCRYPTION(fp, end) {};
+	PACKET.SC.ACK_ENCRYPTION = function PACKET_SC_ACK_ENCRYPTION(fp, end) { };
 	PACKET.SC.ACK_ENCRYPTION.size = 2;
 
 
@@ -7376,7 +7369,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x1cd
 	PACKET.ZC.AUTOSPELLLIST = function PACKET_ZC_AUTOSPELLLIST(fp, end) {
-		this.SKID = (function() {
+		this.SKID = (function () {
 			var count = 7,
 				out = new Array(count);
 			for (var i = 0; i < count; ++i) {
@@ -7391,7 +7384,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0x1cf
 	PACKET.ZC.DEVOTIONLIST = function PACKET_ZC_DEVOTIONLIST(fp, end) {
 		this.myAID = fp.readULong();
-		this.AID = (function() {
+		this.AID = (function () {
 			var count = 5,
 				out = new Array(count);
 			for (var i = 0; i < count; ++i) {
@@ -7609,7 +7602,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x1e4
-	PACKET.ZC.START_COUPLE = function PACKET_ZC_START_COUPLE(fp, end) {};
+	PACKET.ZC.START_COUPLE = function PACKET_ZC_START_COUPLE(fp, end) { };
 	PACKET.ZC.START_COUPLE.size = 2;
 
 
@@ -7663,8 +7656,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x1ee
 	PACKET.ZC.NORMAL_ITEMLIST2 = function PACKET_ZC_NORMAL_ITEMLIST2(fp, end) {
-		this.ItemInfo = (function() {
-			var i, count=(end-fp.tell())/18|0, out=new Array(count);
+		this.ItemInfo = (function () {
+			var i, count = (end - fp.tell()) / 18 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].index = fp.readShort();
@@ -7687,8 +7680,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x1ef
 	PACKET.ZC.CART_NORMAL_ITEMLIST2 = function PACKET_ZC_CART_NORMAL_ITEMLIST2(fp, end) {
-		this.ItemInfo = (function() {
-			var i, count=(end-fp.tell())/18|0, out=new Array(count);
+		this.ItemInfo = (function () {
+			var i, count = (end - fp.tell()) / 18 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].index = fp.readShort();
@@ -7711,8 +7704,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x1f0
 	PACKET.ZC.STORE_NORMAL_ITEMLIST2 = function PACKET_ZC_STORE_NORMAL_ITEMLIST2(fp, end) {
-		this.ItemInfo = (function() {
-			var i, count=(end-fp.tell())/18|0, out=new Array(count);
+		this.ItemInfo = (function () {
+			var i, count = (end - fp.tell()) / 18 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].index = fp.readShort();
@@ -7788,14 +7781,14 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x1f8
-	PACKET.ZC.START_BABY = function PACKET_ZC_START_BABY(fp, end) {};
+	PACKET.ZC.START_BABY = function PACKET_ZC_START_BABY(fp, end) { };
 	PACKET.ZC.START_BABY.size = 2;
 
 
 	// 0x1fc
 	PACKET.ZC.REPAIRITEMLIST = function PACKET_ZC_REPAIRITEMLIST(fp, end) {
-		this.itemList = (function() {
-			var i, count=(end-fp.tell())/13|0, out=new Array(count);
+		this.itemList = (function () {
+			var i, count = (end - fp.tell()) / 13 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].index = fp.readShort();
@@ -7832,8 +7825,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x201
 	PACKET.ZC.FRIENDS_LIST = function PACKET_ZC_FRIENDS_LIST(fp, end) {
-		this.friendList = (function() {
-			var i, count=(end-fp.tell())/32|0, out=new Array(count);
+		this.friendList = (function () {
+			var i, count = (end - fp.tell()) / 32 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].AID = fp.readULong();
@@ -7891,8 +7884,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x20d
 	PACKET.HC.BLOCK_CHARACTER = function PACKET_HC_BLOCK_CHARACTER(fp, end) {
-		this.characterList = (function() {
-			var i, count=(end-fp.tell())/24|0, out=new Array(count);
+		this.characterList = (function () {
+			var i, count = (end - fp.tell()) / 24 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].GID = fp.readULong();
@@ -7981,7 +7974,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x219
 	PACKET.ZC.BLACKSMITH_RANK = function PACKET_ZC_BLACKSMITH_RANK(fp, end) {
-		this.Name = (function() {
+		this.Name = (function () {
 			var count = 10,
 				out = new Array(count);
 			for (var i = 0; i < count; ++i) {
@@ -7989,7 +7982,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 			}
 			return out;
 		})();
-		this.Point = (function() {
+		this.Point = (function () {
 			var count = 10,
 				out = new Array(count);
 			for (var i = 0; i < count; ++i) {
@@ -8003,7 +7996,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x21a
 	PACKET.ZC.ALCHEMIST_RANK = function PACKET_ZC_ALCHEMIST_RANK(fp, end) {
-		this.Name = (function() {
+		this.Name = (function () {
 			var count = 10,
 				out = new Array(count);
 			for (var i = 0; i < count; ++i) {
@@ -8011,7 +8004,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 			}
 			return out;
 		})();
-		this.Point = (function() {
+		this.Point = (function () {
 			var count = 10,
 				out = new Array(count);
 			for (var i = 0; i < count; ++i) {
@@ -8069,8 +8062,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x221
 	PACKET.ZC.NOTIFY_WEAPONITEMLIST = function PACKET_ZC_NOTIFY_WEAPONITEMLIST(fp, end) {
-		this.itemList = (function() {
-			var i, count=(end-fp.tell())/13|0, out=new Array(count);
+		this.itemList = (function () {
+			var i, count = (end - fp.tell()) / 13 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].index = fp.readShort();
@@ -8106,7 +8099,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x226
 	PACKET.ZC.TAEKWON_RANK = function PACKET_ZC_TAEKWON_RANK(fp, end) {
-		this.Name = (function() {
+		this.Name = (function () {
 			var count = 10,
 				out = new Array(count);
 			for (var i = 0; i < count; ++i) {
@@ -8114,7 +8107,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 			}
 			return out;
 		})();
-		this.Point = (function() {
+		this.Point = (function () {
 			var count = 10,
 				out = new Array(count);
 			for (var i = 0; i < count; ++i) {
@@ -8128,7 +8121,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x227
 	PACKET.ZC.GAME_GUARD = function PACKET_ZC_GAME_GUARD(fp, end) {
-		this.AuthData = (function() {
+		this.AuthData = (function () {
 			var count = 4,
 				out = new Array(count);
 			for (var i = 0; i < count; ++i) {
@@ -8323,8 +8316,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0x240
 	PACKET.ZC.MAIL_REQ_GET_LIST = function PACKET_ZC_MAIL_REQ_GET_LIST(fp, end) {
 		this.MailNumber = fp.readLong();
-		this.mailList = (function() {
-			var i, count=(end-fp.tell())/73|0, out=new Array(count);
+		this.mailList = (function () {
+			var i, count = (end - fp.tell()) / 73 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].MailID = fp.readULong();
@@ -8397,8 +8390,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.ZC.AUCTION_ITEM_REQ_SEARCH = function PACKET_ZC_AUCTION_ITEM_REQ_SEARCH(fp, end) {
 		this.MaxPage = fp.readLong();
 		this.Number = fp.readLong();
-		this.auctionItemList = (function() {
-			var i, count=(end-fp.tell())/83|0, out=new Array(count);
+		this.auctionItemList = (function () {
+			var i, count = (end - fp.tell()) / 83 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].AuctionID = fp.readULong();
@@ -8468,8 +8461,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		if (PACKETVER.value >= 20211103) {
 			this.makeItem = fp.readShort();
 			let size = (PACKETVER.value >= 20181121) ? 4 : 2;
-			this.items = (function(size) {
-				var count = (end-fp.tell())/size|0, out = new Array(count);
+			this.items = (function (size) {
+				var count = (end - fp.tell()) / size | 0, out = new Array(count);
 				for (var i = 0; i < count; ++i) {
 					out[i] = {};
 					out[i].itemId = (size == 4) ? fp.readULong() : fp.readUShort();
@@ -8478,8 +8471,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 			})(size);
 		} else {
 			let size = (PACKETVER.value >= 20181121) ? 4 : 2;
-			this.idList = (function(size) {
-				var count = (end-fp.tell())/size|0, out = new Array(count);
+			this.idList = (function (size) {
+				var count = (end - fp.tell()) / size | 0, out = new Array(count);
 				for (var i = 0; i < count; ++i) {
 					out[i] = (size == 4) ? fp.readULong() : fp.readUShort();
 				}
@@ -8589,12 +8582,12 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x26f
-	PACKET.AC.ACK_FIRST_LOGIN = function PACKET_AC_ACK_FIRST_LOGIN(fp, end) {};
+	PACKET.AC.ACK_FIRST_LOGIN = function PACKET_AC_ACK_FIRST_LOGIN(fp, end) { };
 	PACKET.AC.ACK_FIRST_LOGIN.size = 2;
 
 
 	// 0x270
-	PACKET.AC.REQ_LOGIN_ACCOUNT_INFO = function PACKET_AC_REQ_LOGIN_ACCOUNT_INFO(fp, end) {};
+	PACKET.AC.REQ_LOGIN_ACCOUNT_INFO = function PACKET_AC_REQ_LOGIN_ACCOUNT_INFO(fp, end) { };
 	PACKET.AC.REQ_LOGIN_ACCOUNT_INFO.size = 2;
 
 
@@ -8628,14 +8621,14 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x278
-	PACKET.ZC.NOTIFY_PCBANG = function PACKET_ZC_NOTIFY_PCBANG(fp, end) {};
+	PACKET.ZC.NOTIFY_PCBANG = function PACKET_ZC_NOTIFY_PCBANG(fp, end) { };
 	PACKET.ZC.NOTIFY_PCBANG.size = 2;
 
 
 	// 0x27a
 	PACKET.ZC.HUNTINGLIST = function PACKET_ZC_HUNTINGLIST(fp, end) {
-		this.HuntingList = (function() {
-			var i, count=(end-fp.tell())/12|0, out=new Array(count);
+		this.HuntingList = (function () {
+			var i, count = (end - fp.tell()) / 12 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].questID = fp.readULong();
@@ -8701,7 +8694,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x282
 	PACKET.ZC.GANGSI_RANK = function PACKET_ZC_GANGSI_RANK(fp, end) {
-		this.Name = (function() {
+		this.Name = (function () {
 			var count = 10,
 				out = new Array(count);
 			for (var i = 0; i < count; ++i) {
@@ -8709,7 +8702,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 			}
 			return out;
 		})();
-		this.Point = (function() {
+		this.Point = (function () {
 			var count = 10,
 				out = new Array(count);
 			for (var i = 0; i < count; ++i) {
@@ -8748,39 +8741,39 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	/// 0287
 	PACKET.ZC.PC_CASH_POINT_ITEMLIST =
-	function PACKET_ZC_PC_CASH_POINT_ITEMLIST(fp, end) {
-		this.KafraPoint = fp.readULong();
-		this.CashPoint = fp.readULong();
-		this.itemList = (function () {
-			let div = PACKETVER.value >= 20181121 ? 13 : 11;
-			var itemListLen = end - fp.tell();
-			let itemLen =
-				itemListLen % 20 === 0
-					? 20
-					: itemListLen % 18 == 0
-					? 18
-					: div;
-			var i,
-				count = ((end - fp.tell()) / itemLen) | 0,
-				out = new Array(count);
-			for (i = 0; i < count; ++i) {
-				out[i] = {};
-				out[i].price = fp.readLong();
-				out[i].discountprice = fp.readLong();
-				out[i].type = fp.readUChar();
-				out[i].ITID =
-					PACKETVER.value >= 20181121
-						? fp.readULong()
-						: fp.readUShort();
-				if (itemLen >= 18) {
-					out[i].viewSprite = fp.readUShort();
-					out[i].location = fp.readLong();
-					out[i].unused = fp.readUChar();
+		function PACKET_ZC_PC_CASH_POINT_ITEMLIST(fp, end) {
+			this.KafraPoint = fp.readULong();
+			this.CashPoint = fp.readULong();
+			this.itemList = (function () {
+				let div = PACKETVER.value >= 20181121 ? 13 : 11;
+				var itemListLen = end - fp.tell();
+				let itemLen =
+					itemListLen % 20 === 0
+						? 20
+						: itemListLen % 18 == 0
+							? 18
+							: div;
+				var i,
+					count = ((end - fp.tell()) / itemLen) | 0,
+					out = new Array(count);
+				for (i = 0; i < count; ++i) {
+					out[i] = {};
+					out[i].price = fp.readLong();
+					out[i].discountprice = fp.readLong();
+					out[i].type = fp.readUChar();
+					out[i].ITID =
+						PACKETVER.value >= 20181121
+							? fp.readULong()
+							: fp.readUShort();
+					if (itemLen >= 18) {
+						out[i].viewSprite = fp.readUShort();
+						out[i].location = fp.readLong();
+						out[i].unused = fp.readUChar();
+					}
 				}
-			}
-			return out;
-		})();
-	};
+				return out;
+			})();
+		};
 	PACKET.ZC.PC_CASH_POINT_ITEMLIST.size = -1;
 
 
@@ -8855,8 +8848,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x295
 	PACKET.ZC.EQUIPMENT_ITEMLIST2 = function PACKET_ZC_EQUIPMENT_ITEMLIST2(fp, end) {
-		this.ItemInfo = (function() {
-			var i, count=(end-fp.tell())/24|0, out=new Array(count);
+		this.ItemInfo = (function () {
+			var i, count = (end - fp.tell()) / 24 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].index = fp.readShort();
@@ -8882,8 +8875,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x296
 	PACKET.ZC.STORE_EQUIPMENT_ITEMLIST2 = function PACKET_ZC_STORE_EQUIPMENT_ITEMLIST2(fp, end) {
-		this.ItemInfo = (function() {
-			var i, count=(end-fp.tell())/24|0, out=new Array(count);
+		this.ItemInfo = (function () {
+			var i, count = (end - fp.tell()) / 24 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].index = fp.readShort();
@@ -8909,8 +8902,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x297
 	PACKET.ZC.CART_EQUIPMENT_ITEMLIST2 = function PACKET_ZC_CART_EQUIPMENT_ITEMLIST2(fp, end) {
-		this.ItemInfo = (function() {
-			var i, count=(end-fp.tell())/24|0, out=new Array(count);
+		this.ItemInfo = (function () {
+			var i, count = (end - fp.tell()) / 24 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].index = fp.readShort();
@@ -9023,8 +9016,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x29d
 	PACKET.ZC.MER_SKILLINFO_LIST = function PACKET_ZC_MER_SKILLINFO_LIST(fp, end) {
-		this.skillList = (function() {
-			var i, count=(end-fp.tell())/37|0, out=new Array(count);
+		this.skillList = (function () {
+			var i, count = (end - fp.tell()) / 37 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].SKID = fp.readShort();
@@ -9048,8 +9041,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.total_death = fp.readLong();
 		this.total_drop = fp.readLong();
 
-		this.info = (function() {
-			var i, count=(end-fp.tell())/13|0, out=new Array(count);
+		this.info = (function () {
+			var i, count = (end - fp.tell()) / 13 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].type = fp.readChar(); // ?
@@ -9119,8 +9112,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0x2b1
 	PACKET.ZC.ALL_QUEST_LIST = function PACKET_ZC_ALL_QUEST_LIST(fp, end) {
 		this.questCount = fp.readLong();
-		this.QuestList = (function() {
-			var i, count=(end-fp.tell())/5|0, out=new Array(count);
+		this.QuestList = (function () {
+			var i, count = (end - fp.tell()) / 5 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].questID = fp.readULong();
@@ -9136,10 +9129,10 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0x2b2
 	PACKET.ZC.ALL_QUEST_MISSION = function PACKET_ZC_ALL_QUEST_MISSION(fp, end) {
 		this.questCount = fp.readLong();
-		this.QuestList = (function() {
-			var i, count=(end-fp.tell())/104|0, out=new Array(count);
+		this.QuestList = (function () {
+			var i, count = (end - fp.tell()) / 104 | 0, out = new Array(count);
 			for (i = 0; i < count; i++) {
-				fp.seek(end-((count-i)*104), SEEK_SET); // Position to the 104 long chunk start
+				fp.seek(end - ((count - i) * 104), SEEK_SET); // Position to the 104 long chunk start
 				out[i] = {};
 				out[i].questID = fp.readULong();
 				out[i].quest_svrTime = fp.readLong();
@@ -9166,7 +9159,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.quest_svrTime = fp.readLong();
 		this.quest_endTime = fp.readLong();
 		this.count = fp.readShort();
-		this.hunt = (function(count) {
+		this.hunt = (function (count) {
 			var i, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
@@ -9189,8 +9182,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0x2b5
 	PACKET.ZC.UPDATE_MISSION_HUNT = function PACKET_ZC_UPDATE_MISSION_HUNT(fp, end) {
 		this.questCount = fp.readShort();
-		this.hunt = (function() {
-			var i, count=(end-fp.tell())/12|0, out=new Array(count);
+		this.hunt = (function () {
+			var i, count = (end - fp.tell()) / 12 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].questID = fp.readULong();
@@ -9230,7 +9223,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x2b9
 	PACKET.ZC.SHORTCUT_KEY_LIST = function PACKET_ZC_SHORTCUT_KEY_LIST(fp, end) {
-		this.ShortCutKey = (function() {
+		this.ShortCutKey = (function () {
 			var i, count = 27,
 				out = new Array(count);
 			for (i = 0; i < count; ++i) {
@@ -9350,8 +9343,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x2d0
 	PACKET.ZC.EQUIPMENT_ITEMLIST3 = function PACKET_ZC_EQUIPMENT_ITEMLIST3(fp, end) {
-		this.ItemInfo = (function() {
-			var i, count=(end-fp.tell())/28|0, out=new Array(count);
+		this.ItemInfo = (function () {
+			var i, count = (end - fp.tell()) / 28 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].index = fp.readShort();
@@ -9379,8 +9372,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x2d1
 	PACKET.ZC.STORE_EQUIPMENT_ITEMLIST3 = function PACKET_ZC_STORE_EQUIPMENT_ITEMLIST3(fp, end) {
-		this.ItemInfo = (function() {
-			var i, count=(end-fp.tell())/28|0, out=new Array(count);
+		this.ItemInfo = (function () {
+			var i, count = (end - fp.tell()) / 28 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].index = fp.readShort();
@@ -9408,8 +9401,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x2d2
 	PACKET.ZC.CART_EQUIPMENT_ITEMLIST3 = function PACKET_ZC_CART_EQUIPMENT_ITEMLIST3(fp, end) {
-		this.ItemInfo = (function() {
-			var i, count=(end-fp.tell())/28|0, out=new Array(count);
+		this.ItemInfo = (function () {
+			var i, count = (end - fp.tell()) / 28 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].index = fp.readShort();
@@ -9465,7 +9458,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x2d5
-	PACKET.ZC.ISVR_DISCONNECT = function PACKET_ZC_ISVR_DISCONNECT(fp, end) {};
+	PACKET.ZC.ISVR_DISCONNECT = function PACKET_ZC_ISVR_DISCONNECT(fp, end) { };
 	PACKET.ZC.ISVR_DISCONNECT.size = 2;
 
 
@@ -9480,7 +9473,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.headpalette = fp.readShort();
 		this.bodypalette = fp.readShort();
 		this.sex = fp.readUChar();
-		this.ItemInfo = (function() {
+		this.ItemInfo = (function () {
 			var i, count = (end - fp.tell()) / 28 | 0,
 				out = new Array(count);
 			for (i = 0; i < count; ++i) {
@@ -9588,7 +9581,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0x2e7
 	PACKET.ZC.MAPPROPERTY = function PACKET_ZC_MAPPROPERTY(fp, end) {
 		this.type = fp.readShort();
-		this.mapInfoTable = (function() {
+		this.mapInfoTable = (function () {
 			var count = (end - fp.tell()) / 4 | 0,
 				out = new Array(count);
 			for (var i = 0; i < count; ++i)
@@ -9601,7 +9594,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x2e8
 	PACKET.ZC.NORMAL_ITEMLIST3 = function PACKET_ZC_NORMAL_ITEMLIST3(fp, end) {
-		this.ItemInfo = (function() {
+		this.ItemInfo = (function () {
 			var i, count = (end - fp.tell()) / 22 | 0,
 				out = new Array(count);
 			for (i = 0; i < count; ++i) {
@@ -9627,7 +9620,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x2e9
 	PACKET.ZC.CART_NORMAL_ITEMLIST3 = function PACKET_ZC_CART_NORMAL_ITEMLIST3(fp, end) {
-		this.ItemInfo = (function() {
+		this.ItemInfo = (function () {
 			var i, count = (end - fp.tell()) / 22 | 0,
 				out = new Array(count);
 			for (i = 0; i < count; ++i) {
@@ -9653,7 +9646,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x2ea
 	PACKET.ZC.STORE_NORMAL_ITEMLIST3 = function PACKET_ZC_STORE_NORMAL_ITEMLIST3(fp, end) {
-		this.ItemInfo = (function() {
+		this.ItemInfo = (function () {
 			var i, count = (end - fp.tell()) / 22 | 0,
 				out = new Array(count);
 			for (i = 0; i < count; ++i) {
@@ -9801,7 +9794,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x2f2
-	PACKET.ZC.PROGRESS_CANCEL = function PACKET_ZC_PROGRESS_CANCEL(fp, end) {};
+	PACKET.ZC.PROGRESS_CANCEL = function PACKET_ZC_PROGRESS_CANCEL(fp, end) { };
 	PACKET.ZC.PROGRESS_CANCEL.size = 2;
 
 
@@ -9812,7 +9805,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.md_itemSize = fp.readShort();
 		this.best_itemcount = fp.readShort();
 		this.best_itemsize = fp.readShort();
-		this.ItemList = (function() {
+		this.ItemList = (function () {
 			var i, count = (end - fp.tell()) / 11 | 0,
 				out = new Array(count);
 			for (i = 0; i < count; ++i) {
@@ -9830,7 +9823,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x3dd
 	PACKET.AHC.GAME_GUARD = function PACKET_AHC_GAME_GUARD(fp, end) {
-		this.AuthData = (function() {
+		this.AuthData = (function () {
 			var count = 4,
 				out = new Array(count);
 			for (var i = 0; i < count; ++i)
@@ -9843,7 +9836,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x3de
 	PACKET.CAH.ACK_GAME_GUARD = function PACKET_CAH_ACK_GAME_GUARD(fp, end) {
-		this.AuthData = (function() {
+		this.AuthData = (function () {
 			var count = 4,
 				out = new Array(count);
 			for (var i = 0; i < count; ++i)
@@ -9864,7 +9857,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x43e
 	PACKET.ZC.SKILL_POSTDELAY_LIST = function PACKET_ZC_SKILL_POSTDELAY_LIST(fp, end) {
-		this.delayList = (function() {
+		this.delayList = (function () {
 			var i, count = (end - fp.tell()) / 6 | 0,
 				out = new Array(count);
 			for (i = 0; i < count; ++i) {
@@ -9884,7 +9877,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.AID = fp.readULong();
 		this.state = fp.readUChar();
 		this.RemainMS = fp.readULong();
-		this.val = (function() {
+		this.val = (function () {
 			var count = 3,
 				out = new Array(count);
 			for (var i = 0; i < count; ++i)
@@ -9914,7 +9907,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0x442
 	PACKET.ZC.SKILL_SELECT_REQUEST = function PACKET_ZC_SKILL_SELECT_REQUEST(fp, end) {
 		this.why = fp.readLong();
-		this.SKID = (function() {
+		this.SKID = (function () {
 			var count = (end - fp.tell()) / 2 | 0,
 				out = new Array(count);
 			for (var i = 0; i < count; ++i)
@@ -9928,7 +9921,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0x444
 	PACKET.ZC.SIMPLE_CASH_POINT_ITEMLIST = function PACKET_ZC_SIMPLE_CASH_POINT_ITEMLIST(fp, end) {
 		this.CashPoint = fp.readULong();
-		this.ItemList = (function() {
+		this.ItemList = (function () {
 			var i, count = (end - fp.tell()) / 11 | 0,
 				out = new Array(count);
 			for (i = 0; i < count; ++i) {
@@ -9957,7 +9950,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x448
 	PACKET.HC.CHARACTER_LIST = function PACKET_HC_CHARACTER_LIST(fp, end) {
-		this.CharacterList = (function() {
+		this.CharacterList = (function () {
 			var i, count = (end - fp.tell()) / 5 | 0,
 				out = new Array(count);
 			for (i = 0; i < count; ++i) {
@@ -10018,7 +10011,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x7d9
 	PACKET.ZC.SHORTCUT_KEY_LIST_V2 = function PACKET_ZC_SHORTCUT_KEY_LIST_V2(fp, end) {
-		this.ShortCutKey = (function() {
+		this.ShortCutKey = (function () {
 			var i, count = 38,
 				out = new Array(count);
 			for (i = 0; i < count; ++i) {
@@ -10124,7 +10117,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.ZC.BATTLE_FIELD_LIST = function PACKET_ZC_BATTLE_FIELD_LIST(fp, end) {
 		this.Count = fp.readShort();
 		this.ack_type = fp.readShort();
-		this.InfoList = (function() {
+		this.InfoList = (function () {
 			var i, count = (end - fp.tell()) / 62 | 0,
 				out = new Array(count);
 			for (i = 0; i < count; ++i) {
@@ -10350,19 +10343,19 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.ZC.PC_PURCHASE_ITEMLIST_FROMMC2 = function PACKET_ZC_PC_PURCHASE_ITEMLIST_FROMMC2(fp, end) {
 		this.AID = fp.readULong();
 		this.UniqueID = fp.readULong();
-		this.itemList = (function() {
+		this.itemList = (function () {
 			var i, count = 0,
 				out = new Array(count);
 
-			if(PACKETVER.value >= 20200723){
+			if (PACKETVER.value >= 20200723) {
 				count = (end - fp.tell()) / (22 + 8 + 25 + 6 + 2 + 1); //Item options 25 bytes, (location viewSprite), itemId use Long now, grade
-			}else if(PACKETVER.value >= 20181121){
+			} else if (PACKETVER.value >= 20181121) {
 				count = (end - fp.tell()) / (22 + 8 + 25 + 6 + 2); //Item options 25 bytes, (location viewSprite), itemId use Long now
-			}else if(PACKETVER.value >= 20160921){
+			} else if (PACKETVER.value >= 20160921) {
 				count = (end - fp.tell()) / (22 + 25 + 6); //Item options 25 bytes, (location viewSprite)
-			}else if(PACKETVER.value >= 20150226){
+			} else if (PACKETVER.value >= 20150226) {
 				count = (end - fp.tell()) / (22 + 25); //Item options 25 bytes
-			}else{
+			} else {
 				count = (end - fp.tell()) / 22;
 			}
 
@@ -10372,27 +10365,27 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 				out[i].count = fp.readShort();
 				out[i].index = fp.readShort();
 				out[i].type = fp.readUChar();
-				if(PACKETVER.value >= 20181121){
+				if (PACKETVER.value >= 20181121) {
 					out[i].ITID = fp.readULong();
-				}else{
+				} else {
 					out[i].ITID = fp.readUShort();
 				}
 				out[i].IsIdentified = fp.readUChar();
 				out[i].IsDamaged = fp.readUChar();
 				out[i].RefiningLevel = fp.readUChar();
 				out[i].slot = {};
-				if(PACKETVER.value >= 20181121){
+				if (PACKETVER.value >= 20181121) {
 					out[i].slot.card1 = fp.readULong();
 					out[i].slot.card2 = fp.readULong();
 					out[i].slot.card3 = fp.readULong();
 					out[i].slot.card4 = fp.readULong();
-				}else{
+				} else {
 					out[i].slot.card1 = fp.readUShort();
 					out[i].slot.card2 = fp.readUShort();
 					out[i].slot.card3 = fp.readUShort();
 					out[i].slot.card4 = fp.readUShort();
 				}
-				if(PACKETVER.value >= 20150226){
+				if (PACKETVER.value >= 20150226) {
 					let option = new Struct(
 						"short index",
 						"short value",
@@ -10405,11 +10398,11 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 					out[i].Options[4] = fp.readStruct(option);
 					out[i].Options[5] = fp.readStruct(option);
 				}
-				if(PACKETVER.value >= 20160921){
+				if (PACKETVER.value >= 20160921) {
 					out[i].location = fp.readULong();
 					out[i].viewSprite = fp.readUShort();
 				}
-				if(PACKETVER.value >= 20200723){
+				if (PACKETVER.value >= 20200723) {
 					out[i].grade = fp.readUChar();
 				}
 
@@ -10430,7 +10423,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0x805
 	PACKET.ZC.PARTY_BOOKING_ACK_SEARCH = function PACKET_ZC_PARTY_BOOKING_ACK_SEARCH(fp, end) {
 		this.IsExistMoreResult = fp.readUChar();
-		this.Info = (function() {
+		this.Info = (function () {
 			var i, count = (end - fp.tell()) / 48 | 0,
 				out = new Array(count);
 			for (i = 0; i < count; ++i) {
@@ -10441,7 +10434,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 				out[i].Detail = {};
 				out[i].Detail.Level = fp.readShort();
 				out[i].Detail.MapID = fp.readShort();
-				out[i].Detail.Job = (function() {
+				out[i].Detail.Job = (function () {
 					var count = 6,
 						out = new Array(count);
 					for (var i = 0; i < count; ++i)
@@ -10554,7 +10547,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		let size = PACKETVER.value >= 20181121 ? 11 : 9;
 		this.AID = fp.readULong();
 		this.limitZeny = fp.readLong();
-		this.itemList = (function(size) {
+		this.itemList = (function (size) {
 			var i, count = (end - fp.tell()) / size | 0,
 				out = new Array(count);
 			for (i = 0; i < count; ++i) {
@@ -10591,7 +10584,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.AID = fp.readULong();
 		this.UniqueID = fp.readULong();
 		this.limitZeny = fp.readLong();
-		this.itemList = (function() {
+		this.itemList = (function () {
 			var i, count = (end - fp.tell()) / 9 | 0,
 				out = new Array(count);
 			for (i = 0; i < count; ++i) {
@@ -10671,7 +10664,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x821
-	PACKET.AC.OTP_USER = function PACKET_AC_OTP_USER(fp, end) {};
+	PACKET.AC.OTP_USER = function PACKET_AC_OTP_USER(fp, end) { };
 	PACKET.AC.OTP_USER.size = 2;
 
 
@@ -10751,7 +10744,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.IsFirstPage = fp.readUChar();
 		this.IsNexPage = fp.readUChar();
 		this.RemainedSearchCnt = fp.readUChar();
-		this.SSI_List = (function() {
+		this.SSI_List = (function () {
 			var i, count = (end - fp.tell()) / 106 | 0,
 				out = new Array(count);
 			for (i = 0; i < count; ++i) {
@@ -10952,7 +10945,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.headpalette = fp.readShort();
 		this.bodypalette = fp.readShort();
 		this.sex = fp.readUChar();
-		this.ItemInfo = (function() {
+		this.ItemInfo = (function () {
 			var i, count = (end - fp.tell()) / 28 | 0,
 				out = new Array(count);
 			for (i = 0; i < count; ++i) {
@@ -11061,9 +11054,9 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x8fe
 	PACKET.ZC.UPDATE_MISSION_HUNT2 = function PACKET_ZC_UPDATE_MISSION_HUNT2(fp, end) {
-		this.questCount = (end-fp.tell())/12|0; // workaround
-		this.hunt = (function(questCount) {
-			var i, count=questCount, out=new Array(count);
+		this.questCount = (end - fp.tell()) / 12 | 0; // workaround
+		this.hunt = (function (questCount) {
+			var i, count = questCount, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].huntID = fp.readULong();
@@ -11082,7 +11075,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.AID = fp.readULong();
 		this.index = fp.readShort();
 		this.RemainMS = fp.readULong();
-		this.val = (function() {
+		this.val = (function () {
 			var count = 3,
 				out = new Array(count);
 			for (var i = 0; i < count; ++i)
@@ -11104,7 +11097,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.headpalette = fp.readShort();
 		this.bodypalette = fp.readShort();
 		this.sex = fp.readUChar();
-		this.ItemInfo = (function() {
+		this.ItemInfo = (function () {
 			var i, count = (end - fp.tell()) / 28 | 0,
 				out = new Array(count);
 			for (i = 0; i < count; ++i) {
@@ -11136,7 +11129,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.item_index = 0;
 		this.favorite = 0;
 	};
-	PACKET.CZ.INVENTORY_TAB.prototype.build = function() {
+	PACKET.CZ.INVENTORY_TAB.prototype.build = function () {
 		var pkt_len = 5;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -11279,8 +11272,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0x97a
 	PACKET.ZC.ALL_QUEST_LIST_V2 = function PACKET_ZC_ALL_QUEST_LIST_V2(fp, end) {
 		this.questCount = fp.readLong();
-		this.QuestList = (function(questCount) {
-			var i, count=questCount, out=new Array(questCount);
+		this.QuestList = (function (questCount) {
+			var i, count = questCount, out = new Array(questCount);
 
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
@@ -11310,7 +11303,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.state = fp.readUChar();
 		this.TotalMS = fp.readULong();
 		this.RemainMS = fp.readULong();
-		this.val = (function() {
+		this.val = (function () {
 			var count = 3,
 				out = new Array(count);
 			for (var i = 0; i < count; ++i)
@@ -11327,7 +11320,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.index = fp.readShort();
 		this.TotalMS = fp.readULong();
 		this.RemainMS = fp.readULong();
-		this.val = (function() {
+		this.val = (function () {
 			var count = 3,
 				out = new Array(count);
 			for (var i = 0; i < count; ++i)
@@ -11376,7 +11369,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.CLAN_CHAT = function PACKET_CZ_CLAN_CHAT() {
 		this.msg = '';
 	};
-	PACKET.CZ.CLAN_CHAT.prototype.build = function() {
+	PACKET.CZ.CLAN_CHAT.prototype.build = function () {
 		var pkt_len = 2 + 2 + this.msg.length + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -11419,7 +11412,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x991
 	PACKET.ZC.NORMAL_ITEMLIST4 = function PACKET_ZC_NORMAL_ITEMLIST4(fp, end) {
-		this.ItemInfo = (function() {
+		this.ItemInfo = (function () {
 			var i, count = (end - fp.tell()) / 24 | 0,
 				out = new Array(count);
 			var flag;
@@ -11448,7 +11441,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x992
 	PACKET.ZC.EQUIPMENT_ITEMLIST4 = function PACKET_ZC_EQUIPMENT_ITEMLIST4(fp, end) {
-		this.ItemInfo = (function() {
+		this.ItemInfo = (function () {
 			var i, count = (end - fp.tell()) / 31 | 0,
 				out = new Array(count);
 			var flag;
@@ -11481,7 +11474,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x993
 	PACKET.ZC.CART_NORMAL_ITEMLIST4 = function PACKET_ZC_CART_NORMAL_ITEMLIST4(fp, end) {
-		this.ItemInfo = (function() {
+		this.ItemInfo = (function () {
 			var i, count = (end - fp.tell()) / 24 | 0,
 				out = new Array(count);
 			var flag;
@@ -11510,7 +11503,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0x994
 	PACKET.ZC.CART_EQUIPMENT_ITEMLIST4 = function PACKET_ZC_CART_EQUIPMENT_ITEMLIST4(fp, end) {
-		this.ItemInfo = (function() {
+		this.ItemInfo = (function () {
 			var i, count = (end - fp.tell()) / 31 | 0,
 				out = new Array(count);
 			var flag;
@@ -11544,7 +11537,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0x995
 	PACKET.ZC.STORE_NORMAL_ITEMLIST4 = function PACKET_ZC_STORE_NORMAL_ITEMLIST4(fp, end) {
 		this.Name = fp.readString(NAME_LENGTH);
-		this.ItemInfo = (function() {
+		this.ItemInfo = (function () {
 			var i, count = (end - fp.tell()) / 24 | 0,
 				out = new Array(count);
 			var flag;
@@ -11574,7 +11567,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0x996
 	PACKET.ZC.STORE_EQUIPMENT_ITEMLIST4 = function PACKET_ZC_STORE_EQUIPMENT_ITEMLIST4(fp, end) {
 		this.Name = fp.readString(NAME_LENGTH);
-		this.ItemInfo = (function() {
+		this.ItemInfo = (function () {
 			var i, count = (end - fp.tell()) / 31 | 0,
 				out = new Array(count);
 			var flag;
@@ -11617,7 +11610,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.headpalette = fp.readShort();
 		this.bodypalette = fp.readShort();
 		this.sex = fp.readUChar();
-		this.ItemInfo = (function() {
+		this.ItemInfo = (function () {
 			var i, count = (end - fp.tell()) / 31 | 0,
 				out = new Array(count);
 			var flag;
@@ -11716,7 +11709,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.AID = 0;
 		this.money = 0;
 	};
-	PACKET.CZ.REQ_BANKING_DEPOSIT.prototype.build = function() {
+	PACKET.CZ.REQ_BANKING_DEPOSIT.prototype.build = function () {
 		var pkt_len = 2 + 4 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -11741,7 +11734,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.AID = 0;
 		this.money = 0;
 	};
-	PACKET.CZ.REQ_BANKING_WITHDRAW.prototype.build = function() {
+	PACKET.CZ.REQ_BANKING_WITHDRAW.prototype.build = function () {
 		var pkt_len = 2 + 4 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -11765,28 +11758,28 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQ_BANKING_CHECK = function PACKET_CZ_REQ_BANKING_CHECK() {
 		this.AID = 0;
 	};
-	PACKET.CZ.REQ_BANKING_CHECK.prototype.build = function() {
+	PACKET.CZ.REQ_BANKING_CHECK.prototype.build = function () {
 		var pkt_len = 6;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
-    	pkt_buf.writeShort(0x9AB);
-   		pkt_buf.writeULong(this.AID); // Write the aid
+		pkt_buf.writeShort(0x9AB);
+		pkt_buf.writeULong(this.AID); // Write the aid
 
-    	return pkt_buf;
+		return pkt_buf;
 	}
 
 	// 0x9b6
 	PACKET.CZ.REQ_BANK_OPEN = function PACKET_CZ_REQ_BANK_OPEN() {
 		this.AID = 0;
 	};
-	PACKET.CZ.REQ_BANK_OPEN.prototype.build = function() {
+	PACKET.CZ.REQ_BANK_OPEN.prototype.build = function () {
 		var pkt_len = 6;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
-    	pkt_buf.writeShort(0x9b6);
-   		pkt_buf.writeULong(this.AID); // Write the aid
+		pkt_buf.writeShort(0x9b6);
+		pkt_buf.writeULong(this.AID); // Write the aid
 
-    	return pkt_buf;
+		return pkt_buf;
 	}
 
 	// 0x9b7
@@ -11799,14 +11792,14 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQ_BANK_CLOSE = function PACKET_CZ_REQ_BANK_CLOSE() {
 		this.AID = 0;
 	};
-	PACKET.CZ.REQ_BANK_CLOSE.prototype.build = function() {
+	PACKET.CZ.REQ_BANK_CLOSE.prototype.build = function () {
 		var pkt_len = 6;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
-    	pkt_buf.writeShort(0x9B8);
-   		pkt_buf.writeULong(this.AID); // Write the aid
+		pkt_buf.writeShort(0x9B8);
+		pkt_buf.writeULong(this.AID); // Write the aid
 
-    	return pkt_buf;
+		return pkt_buf;
 	}
 
 	// 0x9b9
@@ -11873,7 +11866,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.maxhp = fp.readLong();
 		this.hp = fp.readLong();
 		this.isBoss = fp.readUChar();
-		this.name = fp.readString(end-fp.tell());
+		this.name = fp.readString(end - fp.tell());
 	};
 	PACKET.ZC.NOTIFY_MOVEENTRY8.size = -1;
 
@@ -12009,7 +12002,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0xa70
 	PACKET.CZ.RANDOM_COMBINE_ITEM_UI_CLOSE = function PACKET_CZ_RANDOM_COMBINE_ITEM_UI_CLOSE() {
 	};
-	PACKET.CZ.RANDOM_COMBINE_ITEM_UI_CLOSE.prototype.build = function() {
+	PACKET.CZ.RANDOM_COMBINE_ITEM_UI_CLOSE.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -12044,8 +12037,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.ZC.ACK_RODEX_LIST3 = function PACKET_ZC_ACK_RODEX_LIST3(fp, end) {
 		this.IsEnd = fp.readUChar();
 		this.MailList = new Array();
-		var len = end-fp.tell();
-		for (var i = 0; i < len; i+=41) {
+		var len = end - fp.tell();
+		for (var i = 0; i < len; i += 41) {
 			let Mail = {};
 			Mail.openType = fp.readUChar();
 			Mail.MailID = fp.readUInt64();
@@ -12055,7 +12048,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 			Mail.expireDateTime = fp.readULong();
 			Mail.Titlelength = fp.readShort();
 			Mail.title = fp.readString(Mail.Titlelength);
-			i+=Mail.Titlelength;
+			i += Mail.Titlelength;
 			this.MailList.push(Mail);
 		}
 	};
@@ -12066,8 +12059,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.ZC.ACK_RODEX_LIST4 = function PACKET_ZC_ACK_RODEX_LIST4(fp, end) {
 		this.IsEnd = fp.readUChar();
 		this.MailList = new Array();
-		var len = end-fp.tell();
-		for (var i = 0; i < len; i+=45) {
+		var len = end - fp.tell();
+		for (var i = 0; i < len; i += 45) {
 			let Mail = {};
 			Mail.openType = fp.readUChar();
 			Mail.MailID = fp.readUInt64();
@@ -12078,7 +12071,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 			Mail.Titlelength = fp.readShort();
 			Mail.title = fp.readString(Mail.Titlelength);
 			Mail.unknown = fp.readULong();
-			i+=Mail.Titlelength;
+			i += Mail.Titlelength;
 			this.MailList.push(Mail);
 		}
 	};
@@ -12087,7 +12080,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	/** Failed to Retrieve Mail List **/
 
 	// 0xAC3
-	PACKET.ZC.ACK_FAILED_ALL_RODEX_LIST = function PACKET_ZC_ACK_FAILED_ALL_RODEX_LIST(fp, end) {};
+	PACKET.ZC.ACK_FAILED_ALL_RODEX_LIST = function PACKET_ZC_ACK_FAILED_ALL_RODEX_LIST(fp, end) { };
 	PACKET.ZC.ACK_FAILED_ALL_RODEX_LIST.size = 2;
 
 
@@ -12213,7 +12206,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0xa05
 	PACKET.ZC.ACK_ADD_ITEM_RODEX = function PACKET_ZC_ACK_ADD_ITEM_RODEX(fp, end) {
 		this.result = fp.readUChar();
-		let option = new Struct( "short index", "short value", "char param");
+		let option = new Struct("short index", "short value", "char param");
 
 		this.index = fp.readShort();
 		this.count = fp.readShort();
@@ -12243,7 +12236,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0xb3f
 	PACKET.ZC.ACK_ADD_ITEM_RODEX2 = function PACKET_ZC_ACK_ADD_ITEM_RODEX2(fp, end) {
 		this.result = fp.readUChar();
-		let option = new Struct( "short index", "short value", "char param");
+		let option = new Struct("short index", "short value", "char param");
 
 		this.index = fp.readShort();
 		this.count = fp.readShort();
@@ -12305,7 +12298,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.openType = 0;
 		this.MailID = 0;
 	};
-	PACKET.CZ.OPEN_RODEXBOX.prototype.build = function() {
+	PACKET.CZ.OPEN_RODEXBOX.prototype.build = function () {
 		var pkt_len = 2 + 9;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -12318,8 +12311,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0x9e9
-	PACKET.CZ.CLOSE_RODEXBOX = function PACKET_CZ_CLOSE_RODEXBOX() {};
-	PACKET.CZ.CLOSE_RODEXBOX.prototype.build = function() {
+	PACKET.CZ.CLOSE_RODEXBOX = function PACKET_CZ_CLOSE_RODEXBOX() { };
+	PACKET.CZ.CLOSE_RODEXBOX.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 		pkt_buf.writeShort(0x9e9);
@@ -12332,7 +12325,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.openType = 0;
 		this.MailID = 0;
 	};
-	PACKET.CZ.REQ_READ_RODEX.prototype.build = function() {
+	PACKET.CZ.REQ_READ_RODEX.prototype.build = function () {
 		var pkt_len = 2 + 9;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -12349,7 +12342,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.openType = 0;
 		this.MailID = 0;
 	};
-	PACKET.CZ.REQ_NEXT_RODEX.prototype.build = function() {
+	PACKET.CZ.REQ_NEXT_RODEX.prototype.build = function () {
 		var pkt_len = 2 + 9;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -12366,7 +12359,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.openType = 0;
 		this.MailID = 0;
 	};
-	PACKET.CZ.REQ_REFRESH_RODEX.prototype.build = function() {
+	PACKET.CZ.REQ_REFRESH_RODEX.prototype.build = function () {
 		var pkt_len = 2 + 9;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -12383,7 +12376,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.MailID = 0;
 		this.openType = 0;
 	};
-	PACKET.CZ.REQ_ZENY_FROM_RODEX.prototype.build = function() {
+	PACKET.CZ.REQ_ZENY_FROM_RODEX.prototype.build = function () {
 		var pkt_len = 2 + 9;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -12400,7 +12393,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.MailID = 0;
 		this.openType = 0;
 	};
-	PACKET.CZ.REQ_ITEM_FROM_RODEX.prototype.build = function() {
+	PACKET.CZ.REQ_ITEM_FROM_RODEX.prototype.build = function () {
 		var pkt_len = 2 + 9;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -12417,7 +12410,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.openType = 0;
 		this.MailID = 0;
 	};
-	PACKET.CZ.REQ_DELETE_RODEX.prototype.build = function() {
+	PACKET.CZ.REQ_DELETE_RODEX.prototype.build = function () {
 		var pkt_len = 2 + 9;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -12430,8 +12423,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 
 	// 0xa03
-	PACKET.CZ.REQ_CANCEL_WRITE_RODEX = function PACKET_CZ_REQ_CANCEL_WRITE_RODEX() {};
-	PACKET.CZ.REQ_CANCEL_WRITE_RODEX.prototype.build = function() {
+	PACKET.CZ.REQ_CANCEL_WRITE_RODEX = function PACKET_CZ_REQ_CANCEL_WRITE_RODEX() { };
+	PACKET.CZ.REQ_CANCEL_WRITE_RODEX.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 		pkt_buf.writeShort(0xa03);
@@ -12444,7 +12437,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.index = 0;
 		this.count = 0;
 	};
-	PACKET.CZ.REQ_ADD_ITEM_RODEX.prototype.build = function() {
+	PACKET.CZ.REQ_ADD_ITEM_RODEX.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 		pkt_buf.writeShort(0xa04);
@@ -12459,7 +12452,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.index = 0;
 		this.count = 0;
 	};
-	PACKET.CZ.REQ_REMOVE_RODEX_ITEM.prototype.build = function() {
+	PACKET.CZ.REQ_REMOVE_RODEX_ITEM.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 		pkt_buf.writeShort(0xa06);
@@ -12473,7 +12466,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQ_OPEN_WRITE_RODEX = function PACKET_CZ_REQ_OPEN_WRITE_RODEX() {
 		this.name = "";
 	};
-	PACKET.CZ.REQ_OPEN_WRITE_RODEX.prototype.build = function() {
+	PACKET.CZ.REQ_OPEN_WRITE_RODEX.prototype.build = function () {
 		var pkt_len = 2 + 24;
 		var pkt_buf = new BinaryWriter(pkt_len);
 		pkt_buf.writeShort(0xa08);
@@ -12488,7 +12481,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.MailReturnID = 0;
 		this.MailAccountID = 0;
 	};
-	PACKET.CZ.OPEN_ALL_RODEX.prototype.build = function() {
+	PACKET.CZ.OPEN_ALL_RODEX.prototype.build = function () {
 		var pkt_len = 2 + 24;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -12509,7 +12502,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.MailReturnID = 0;
 		this.MailAccountID = 0;
 	};
-	PACKET.CZ.UPDATE_ALL_RODEX.prototype.build = function() {
+	PACKET.CZ.UPDATE_ALL_RODEX.prototype.build = function () {
 		var pkt_len = 2 + 24;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -12533,7 +12526,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.title = "";
 		this.body = "";
 	};
-	PACKET.CZ.REQ_SEND_RODEX.prototype.build = function() {
+	PACKET.CZ.REQ_SEND_RODEX.prototype.build = function () {
 		var pkt_len = 2 + 66 + this.Titlelength + this.Bodylength;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -12561,7 +12554,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.title = "";
 		this.body = "";
 	};
-	PACKET.CZ.REQ_SEND_RODEX2.prototype.build = function() {
+	PACKET.CZ.REQ_SEND_RODEX2.prototype.build = function () {
 		var pkt_len = 2 + 66 + this.Titlelength + this.Bodylength;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -12584,7 +12577,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.CHECK_RECEIVE_CHARACTER_NAME = function PACKET_CZ_CHECK_RECEIVE_CHARACTER_NAME() {
 		this.name = "";
 	};
-	PACKET.CZ.CHECK_RECEIVE_CHARACTER_NAME.prototype.build = function() {
+	PACKET.CZ.CHECK_RECEIVE_CHARACTER_NAME.prototype.build = function () {
 		var pkt_len = 2 + 24;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -12599,7 +12592,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.name = "";
 		this.unknown = 1;
 	};
-	PACKET.CZ.CHECK_RODEX_RECEIVE.prototype.build = function() {
+	PACKET.CZ.CHECK_RODEX_RECEIVE.prototype.build = function () {
 		var pkt_len = 2 + 24 + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -12635,39 +12628,39 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0x9f7
 	PACKET.ZC.PROPERTY_HOMUN2 = function PACKET_ZC_PROPERTY_HOMUN2(fp, end) {
 
-		this.szName				= fp.readString(NAME_LENGTH);	// <name>.24B
-		this.bModified 			= fp.readUChar(); 			// <modified>.B
-		this.nLevel 			= fp.readShort(); 			// <level>.W
-		this.nFullness 			= fp.readShort(); 			// <hunger>.W
-		this.nRelationship 		= fp.readShort(); 			// <intimacy>.W
+		this.szName = fp.readString(NAME_LENGTH);	// <name>.24B
+		this.bModified = fp.readUChar(); 			// <modified>.B
+		this.nLevel = fp.readShort(); 			// <level>.W
+		this.nFullness = fp.readShort(); 			// <hunger>.W
+		this.nRelationship = fp.readShort(); 			// <intimacy>.W
 
-		this.ITID               = (PACKETVER.value >= 20181121 ? fp.readULong() : fp.readUShort()); 		// <equip id>.W
+		this.ITID = (PACKETVER.value >= 20181121 ? fp.readULong() : fp.readUShort()); 		// <equip id>.W
 
-		this.atk 		= fp.readShort(); 		// <atk>.W
-		this.Matk 		= fp.readShort();		// <matk>.W
-		this.hit 		= fp.readShort();		// <hit>.W
-		this.critical 	= fp.readShort();		// <crit>.W
-		this.def 		= fp.readShort();		// <def>.W
-		this.Mdef 		= fp.readShort();		// <mdef>.W
-		this.flee 		= fp.readShort();		// <flee>.W
-		this.aspd 		= fp.readShort();		// <aspd>.W // todo wrong
+		this.atk = fp.readShort(); 		// <atk>.W
+		this.Matk = fp.readShort();		// <matk>.W
+		this.hit = fp.readShort();		// <hit>.W
+		this.critical = fp.readShort();		// <crit>.W
+		this.def = fp.readShort();		// <def>.W
+		this.Mdef = fp.readShort();		// <mdef>.W
+		this.flee = fp.readShort();		// <flee>.W
+		this.aspd = fp.readShort();		// <aspd>.W // todo wrong
 
-		this.hp 		= fp.readLong();		// <hp>.L
-		this.maxHP 		= fp.readLong();		// <max hp>.L
-		this.sp 		= fp.readShort();		// <sp>.W
-		this.maxSP 		= fp.readShort();		// <max sp>.W
-		this.exp 		= fp.readLong(); 		// <exp>.L
-		this.maxEXP 	= fp.readLong();		// <max exp>.L
-		this.SKPoint 	= fp.readShort(); 		// <skill points>.W
-		this.ATKRange 	= fp.readShort();		// <atk range>.W
+		this.hp = fp.readLong();		// <hp>.L
+		this.maxHP = fp.readLong();		// <max hp>.L
+		this.sp = fp.readShort();		// <sp>.W
+		this.maxSP = fp.readShort();		// <max sp>.W
+		this.exp = fp.readLong(); 		// <exp>.L
+		this.maxEXP = fp.readLong();		// <max exp>.L
+		this.SKPoint = fp.readShort(); 		// <skill points>.W
+		this.ATKRange = fp.readShort();		// <atk range>.W
 	};
 	PACKET.ZC.PROPERTY_HOMUN2.size = 75;
 
 	// 0x9f8
 	PACKET.ZC.ALL_QUEST_LIST_V3 = function PACKET_ZC_ALL_QUEST_LIST_V3(fp, end) {
 		this.questCount = fp.readLong();
-		this.QuestList = (function(questCount) {
-			var i, count=questCount, out=new Array(questCount);
+		this.QuestList = (function (questCount) {
+			var i, count = questCount, out = new Array(questCount);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].questID = fp.readULong();
@@ -12700,7 +12693,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.quest_svrTime = fp.readLong();
 		this.quest_endTime = fp.readLong();
 		this.count = fp.readShort();
-		this.hunt = (function(count) {
+		this.hunt = (function (count) {
 			var i, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
@@ -12720,8 +12713,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0x9fa
 	PACKET.ZC.UPDATE_MISSION_HUNT3 = function PACKET_ZC_UPDATE_MISSION_HUNT3(fp, end) {
 		this.questCount = fp.readShort();
-		this.hunt = (function() {
-			var i, count=(end-fp.tell())/12|0, out=new Array(count);
+		this.hunt = (function () {
+			var i, count = (end - fp.tell()) / 12 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].questID = fp.readULong();
@@ -12746,7 +12739,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.job = fp.readShort();
 		this.head = fp.readUShort();
 		this.weapon = fp.readULong();
-		if(PACKETVER.value >= 20181121) this.shield = fp.readULong();
+		if (PACKETVER.value >= 20181121) this.shield = fp.readULong();
 		this.accessory = fp.readUShort();
 		this.moveStartTime = fp.readULong();
 		this.accessory2 = fp.readUShort();
@@ -12770,7 +12763,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.hp = fp.readLong();
 		this.isBoss = fp.readUChar();
 		this.body = fp.readUShort();
-		this.name = fp.readString(end-fp.tell());
+		this.name = fp.readString(end - fp.tell());
 	};
 	PACKET.ZC.NOTIFY_MOVEENTRY9.size = -1;
 
@@ -12787,7 +12780,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.job = fp.readShort();
 		this.head = fp.readShort();
 		this.weapon = fp.readLong();
-		if(PACKETVER.value >= 20181121) this.shield = fp.readLong();
+		if (PACKETVER.value >= 20181121) this.shield = fp.readLong();
 		this.accessory = fp.readShort();
 		this.accessory2 = fp.readShort();
 		this.accessory3 = fp.readShort();
@@ -12830,7 +12823,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.job = fp.readShort();
 		this.head = fp.readShort();
 		this.weapon = fp.readLong();
-		if(PACKETVER.value >= 20181121) this.shield = fp.readLong();
+		if (PACKETVER.value >= 20181121) this.shield = fp.readLong();
 		this.accessory = fp.readShort();
 		this.accessory2 = fp.readShort();
 		this.accessory3 = fp.readShort();
@@ -12862,7 +12855,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0xa00
 	PACKET.ZC.SHORTCUT_KEY_LIST_V3 = function PACKET_ZC_SHORTCUT_KEY_LIST_V3(fp, end) {
 		fp.seek(0x1, SEEK_CUR);
-		this.ShortCutKey = (function() {
+		this.ShortCutKey = (function () {
 			var i, count = 38,
 				out = new Array(count);
 			for (i = 0; i < count; ++i) {
@@ -12890,7 +12883,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REQ_OPEN_WRITE_MAIL = function PACKET_CZ_REQ_OPEN_WRITE_MAIL() {
 		this.receiver = '';
 	};
-	PACKET.CZ.REQ_OPEN_WRITE_MAIL.prototype.build = function() {
+	PACKET.CZ.REQ_OPEN_WRITE_MAIL.prototype.build = function () {
 		var pkt_len = 2 + 24;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -13030,7 +13023,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 			"short value",
 			"char param"
 		);
-		this.ItemInfo = (function() {
+		this.ItemInfo = (function () {
 			var i, count = (end - fp.tell()) / 57 | 0,
 				out = new Array(count);
 			var flag;
@@ -13075,7 +13068,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 			"short value",
 			"char param"
 		);
-		this.ItemInfo = (function() {
+		this.ItemInfo = (function () {
 			var i, count = (end - fp.tell()) / 57 | 0,
 				out = new Array(count);
 			var flag;
@@ -13122,7 +13115,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		);
 
 		this.Name = fp.readString(NAME_LENGTH);
-		this.ItemInfo = (function() {
+		this.ItemInfo = (function () {
 			var i, count = (end - fp.tell()) / 57 | 0,
 				out = new Array(count);
 			var flag;
@@ -13173,13 +13166,13 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0xa23
 	PACKET.ZC.ALL_ACH_LIST = function PACKET_ZC_ALL_ACH_LIST(fp, end) {
-		this.ID 					= fp.readShort();	// <ID>.W
-		this.Length 				= fp.readShort();	// <Length>.W
-		this.ach_count 				= fp.readLong();	// <ach_count>.L
-		this.total_points 			= fp.readLong();	// <total_points>.L
-		this.rank 					= fp.readShort();	// <rank>.W
-		this.current_rank_points 	= fp.readLong();	// <current_rank_points>.L
-		this.next_rank_points 		= fp.readBinaryString(); 	// <next_rank_points>.L // todo fix readLong to readBinaryString
+		this.ID = fp.readShort();	// <ID>.W
+		this.Length = fp.readShort();	// <Length>.W
+		this.ach_count = fp.readLong();	// <ach_count>.L
+		this.total_points = fp.readLong();	// <total_points>.L
+		this.rank = fp.readShort();	// <rank>.W
+		this.current_rank_points = fp.readLong();	// <current_rank_points>.L
+		this.next_rank_points = fp.readBinaryString(); 	// <next_rank_points>.L // todo fix readLong to readBinaryString
 
 		// todo struct
 		let option = new Struct(
@@ -13241,7 +13234,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 			"short value",
 			"char param"
 		);
-		this.ItemInfo = (function() {
+		this.ItemInfo = (function () {
 			var i, count = (end - fp.tell()) / 57 | 0,
 				out = new Array(count);
 			var flag;
@@ -13332,7 +13325,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.Job = 0;
 		this.Sex = 0;
 	};
-	PACKET.CH.MAKE_CHAR3.prototype.build = function() {
+	PACKET.CH.MAKE_CHAR3.prototype.build = function () {
 		var pkt_len = 2 + 24 + 1 + 2 + 2 + 2 + 2 + 1; // Total 36 bytes
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -13382,8 +13375,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0xa44
 	PACKET.ZC.GROUP_LIST2 = function PACKET_ZC_GROUP_LIST2(fp, end) {
 		this.groupName = fp.readBinaryString(NAME_LENGTH);
-		this.groupInfo = (function() {
-			var i, count=(end-fp.tell())/50|0, out=new Array(count);
+		this.groupInfo = (function () {
+			var i, count = (end - fp.tell()) / 50 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].AID = fp.readULong();
@@ -13410,7 +13403,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.itemId = 0;
 		this.items = [];
 	};
-	PACKET.CZ.REQ_RANDOM_COMBINE_ITEM.prototype.build = function() {
+	PACKET.CZ.REQ_RANDOM_COMBINE_ITEM.prototype.build = function () {
 		var pkt_len;
 		var pkt_itemIdSize = (PACKETVER.value >= 20181121) ? 4 : 2;
 		pkt_len = 2 + 2 + pkt_itemIdSize + this.items.length * 4;
@@ -13421,8 +13414,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		(PACKETVER.value >= 20181121) ? pkt_buf.writeLong(this.itemId) : pkt_buf.writeShort(this.itemId);
 		for (var i = 0; i < this.items.length; i++) {
 			pkt_buf.writeShort(this.items[i].index);
-        	pkt_buf.writeShort(this.items[i].count);
-    	}
+			pkt_buf.writeShort(this.items[i].count);
+		}
 
 		return pkt_buf;
 	};
@@ -13437,7 +13430,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.UI_OPEN = function PACKET_CZ_UI_OPEN() {
 		this.UIType = 0;
 	};
-	PACKET.CZ.UI_OPEN.prototype.build = function() {
+	PACKET.CZ.UI_OPEN.prototype.build = function () {
 		var pkt_buf = new BinaryWriter(3);
 		pkt_buf.writeShort(0xa68);
 		pkt_buf.writeUChar(this.UIType);
@@ -13495,7 +13488,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.IsDamaged = fp.readUChar();
 		this.RefiningLevel = fp.readUChar();
 		this.slot = {};
-		if(PACKETVER.value >= 20181121) {
+		if (PACKETVER.value >= 20181121) {
 			this.slot.card1 = fp.readULong();
 			this.slot.card2 = fp.readULong();
 			this.slot.card3 = fp.readULong();
@@ -13522,12 +13515,12 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.index = 0;
 		this.wearLocation = 0;
 	};
-	PACKET.CZ.REQ_WEAR_SWITCHEQUIP_ADD.prototype.build = function() {
+	PACKET.CZ.REQ_WEAR_SWITCHEQUIP_ADD.prototype.build = function () {
 		var pkt_buf = new BinaryWriter(8);
 
 		pkt_buf.writeShort(0xa97);
 		pkt_buf.writeUShort(this.index);
-    	pkt_buf.writeULong(this.wearLocation);
+		pkt_buf.writeULong(this.wearLocation);
 		return pkt_buf;
 	};
 
@@ -13544,7 +13537,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.index = 0;
 		this.wearLocation = 0;
 	};
-	PACKET.CZ.REQ_WEAR_SWITCHEQUIP_REMOVE.prototype.build = function() {
+	PACKET.CZ.REQ_WEAR_SWITCHEQUIP_REMOVE.prototype.build = function () {
 		var pkt_buf = new BinaryWriter(4);
 
 		pkt_buf.writeShort(0xa99);
@@ -13562,7 +13555,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	//0xa9b
 	PACKET.ZC.SEND_SWAP_EQUIPITEM_INFO = function PACKET_ZC_SEND_SWAP_EQUIPITEM_INFO(fp, end) {
-		this.ItemInfo = (function() {
+		this.ItemInfo = (function () {
 			var i, count = (end - fp.tell()) / 6 | 0,
 				out = new Array(count);
 			var flag;
@@ -13579,21 +13572,21 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0xa9c - Equip switch request packet
 	PACKET.CZ.REQ_FULLSWITCH = function PACKET_CZ_REQ_FULLSWITCH() {
 	};
-	PACKET.CZ.REQ_FULLSWITCH.prototype.build = function() {
-	    var pkt_buf = new BinaryWriter(2);
+	PACKET.CZ.REQ_FULLSWITCH.prototype.build = function () {
+		var pkt_buf = new BinaryWriter(2);
 
-	    pkt_buf.writeShort(0xa9c); // Packet ID for equip switch request
-	    return pkt_buf;
+		pkt_buf.writeShort(0xa9c); // Packet ID for equip switch request
+		return pkt_buf;
 	};
 
 	// 0xa9d - Equip switch reply packet
 	PACKET.ZC.REQ_FULLSWITCH_RESULT = function PACKET_ZC_REQ_FULLSWITCH_RESULT(fp, end) {
-	    this.failed = fp.readUShort();
+		this.failed = fp.readUShort();
 	};
 	PACKET.ZC.REQ_FULLSWITCH_RESULT.size = 4;
 
 	// 0xaa0
-	PACKET.ZC.OPEN_REFINING_UI = function  PACKET_ZC_OPEN_REFINING_UI(fp, end){
+	PACKET.ZC.OPEN_REFINING_UI = function PACKET_ZC_OPEN_REFINING_UI(fp, end) {
 	};
 	PACKET.ZC.OPEN_REFINING_UI.size = 2;
 
@@ -13601,21 +13594,21 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REFINING_SELECT_ITEM = function PACKET_CZ_REFINING_SELECT_ITEM() {
 		this.index = 0;
 	};
-	PACKET.CZ.REFINING_SELECT_ITEM.prototype.build = function() {
+	PACKET.CZ.REFINING_SELECT_ITEM.prototype.build = function () {
 		var pkt_buf = new BinaryWriter(4);
 
-	    pkt_buf.writeShort(0xaa1);
+		pkt_buf.writeShort(0xaa1);
 		pkt_buf.writeShort(this.index);
-	    return pkt_buf;
+		return pkt_buf;
 	};
 
 	// 0xaa2
 	PACKET.ZC.REFINING_MATERIAL_LIST = function PACKET_ZC_REFINING_MATERIAL_LIST(fp, end) {
 		this.itemIndex = fp.readShort();
 		this.blacksmithBlessing = fp.readChar();
-		this.MaterialInfo = (function() {
+		this.MaterialInfo = (function () {
 			var i, count, size, out;
-       		size = (PACKETVER.value >= 20181121) ? 9 : 7;
+			size = (PACKETVER.value >= 20181121) ? 9 : 7;
 			count = (end - fp.tell()) / size | 0;
 			out = new Array(count);
 			for (i = 0; i < count; ++i) {
@@ -13635,31 +13628,31 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.itemId = 0;
 		this.blacksmithBlessing = 0;
 	};
-	PACKET.CZ.REQ_REFINING.prototype.build = function() {
+	PACKET.CZ.REQ_REFINING.prototype.build = function () {
 		var pkt_len = (PACKETVER.value >= 20181121) ? 9 : 7;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
-	    pkt_buf.writeShort(0xaa3);
+		pkt_buf.writeShort(0xaa3);
 		pkt_buf.writeShort(this.index);
 		(PACKETVER.value >= 20181121) ? pkt_buf.writeULong(this.itemId) : pkt_buf.writeUShort(itemId);
 		pkt_buf.writeChar(this.blacksmithBlessing);
-	    return pkt_buf;
+		return pkt_buf;
 	};
 
 	// 0xaa4
 	PACKET.CZ.CLOSE_REFINING_UI = function PACKET_CZ_CLOSE_REFINING_UI() {
 	};
-	PACKET.CZ.CLOSE_REFINING_UI.prototype.build = function() {
+	PACKET.CZ.CLOSE_REFINING_UI.prototype.build = function () {
 		var pkt_buf = new BinaryWriter(2);
 
-	    pkt_buf.writeShort(0xaa4);
-	    return pkt_buf;
+		pkt_buf.writeShort(0xaa4);
+		return pkt_buf;
 	};
 
 	// 0xaa5
 	PACKET.ZC.MEMBERMGR_INFO2 = function PACKET_ZC_MEMBERMGR_INFO2(fp, end) {
-		this.memberInfo = (function() {
-			var i, count=(end-fp.tell())/34|0, out=new Array(count);
+		this.memberInfo = (function () {
+			var i, count = (end - fp.tell()) / 34 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].AID = fp.readULong();
@@ -13705,7 +13698,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0xab5
 	PACKET.CZ.RANDOM_UPGRADE_ITEM_UI_CLOSE = function PACKET_CZ_RANDOM_UPGRADE_ITEM_UI_CLOSE() {
 	};
-	PACKET.CZ.RANDOM_UPGRADE_ITEM_UI_CLOSE.prototype.build = function() {
+	PACKET.CZ.RANDOM_UPGRADE_ITEM_UI_CLOSE.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -13718,11 +13711,11 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.itemId = 0;
 		this.item_index = 0;
 	};
-	PACKET.CZ.REQ_RANDOM_UPGRADE_ITEM.prototype.build = function() {
+	PACKET.CZ.REQ_RANDOM_UPGRADE_ITEM.prototype.build = function () {
 		var pkt_len;
 		var pkt_itemIdSize = (PACKETVER.value >= 20181121) ? 4 : 2;
 		var pkt_index = 2;
-		pkt_len = 2 + pkt_itemIdSize +  pkt_index;
+		pkt_len = 2 + pkt_itemIdSize + pkt_index;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
 		pkt_buf.writeShort(0xab6);
@@ -13753,8 +13746,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		if (PACKETVER.value >= 20170315) {
 			pkt_len = 160;
 		}
-		this.ServerList = (function() {
-			var i, count=(end-fp.tell())/pkt_len|0, out=new Array(count);
+		this.ServerList = (function () {
+			var i, count = (end - fp.tell()) / pkt_len | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].ip = fp.readULong();
@@ -13804,8 +13797,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.ZC.HAT_EFFECT = function PACKET_ZC_HAT_EFFECT(fp, end) {
 		this.GID = fp.readULong();
 		this.enabled = fp.readChar(); // Always 1
-		this.hatEffectIDs = (function() {
-			var i, count=(end-fp.tell())/2|0, out=new Array(count);
+		this.hatEffectIDs = (function () {
+			var i, count = (end - fp.tell()) / 2 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = fp.readShort();
 			}
@@ -13884,8 +13877,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0xae5
 	PACKET.ZC.GROUP_LIST3 = function PACKET_ZC_GROUP_LIST3(fp, end) {
 		this.groupName = fp.readBinaryString(NAME_LENGTH);
-		this.groupInfo = (function() {
-			var i, count=(end-fp.tell())/54|0, out=new Array(count);
+		this.groupInfo = (function () {
+			var i, count = (end - fp.tell()) / 54 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].AID = fp.readULong();
@@ -13905,7 +13898,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0xaef
 	PACKET.CZ.REQ_CHECK_ATTENDANCE = function PACKET_CZ_REQ_CHECK_ATTENDANCE() {
 	};
-	PACKET.CZ.REQ_CHECK_ATTENDANCE.prototype.build = function() {
+	PACKET.CZ.REQ_CHECK_ATTENDANCE.prototype.build = function () {
 		var pkt_buf = new BinaryWriter(2);
 
 		pkt_buf.writeShort(0xaef);
@@ -13920,7 +13913,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.yPos = 0;
 		this.unknown = 0;
 	};
-	PACKET.CZ.USE_SKILL_TOGROUND3.prototype.build = function() {
+	PACKET.CZ.USE_SKILL_TOGROUND3.prototype.build = function () {
 		var pkt = new BinaryWriter(11);
 
 		pkt.writeShort(0x0AF4);
@@ -13943,8 +13936,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0xafe
 	PACKET.ZC.UPDATE_MISSION_HUNT4 = function PACKET_ZC_UPDATE_MISSION_HUNT4(fp, end) {
 		this.questCount = fp.readShort();
-		this.hunt = (function() {
-			var i, count=(end-fp.tell())/16|0, out=new Array(count);
+		this.hunt = (function () {
+			var i, count = (end - fp.tell()) / 16 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].questID = fp.readULong();
@@ -13961,8 +13954,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0xaff
 	PACKET.ZC.ALL_QUEST_LIST_V4 = function PACKET_ZC_ALL_QUEST_LIST_V4(fp, end) {
 		this.questCount = fp.readLong();
-		this.QuestList = (function(questCount) {
-			var i, count=questCount, out=new Array(questCount);
+		this.QuestList = (function (questCount) {
+			var i, count = questCount, out = new Array(questCount);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].questID = fp.readULong();
@@ -14008,7 +14001,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 			"char param"
 		);
 		let item_size = 67;
-		this.ItemInfo = (function() {
+		this.ItemInfo = (function () {
 			var i, count = (end - fp.tell()) / item_size | 0,
 				out = new Array(count);
 			var flag;
@@ -14057,7 +14050,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.invType = fp.readUChar();
 
 		let item_size = (PACKETVER.value >= 20181121 ? 34 : 24);
-		this.ItemInfo = (function() {
+		this.ItemInfo = (function () {
 			var i, count = (end - fp.tell()) / item_size | 0,
 				out = new Array(count);
 			var flag;
@@ -14092,7 +14085,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 			"char param"
 		);
 		let item_size = (PACKETVER.value >= 20181121 ? 67 : 57);
-		this.ItemInfo = (function() {
+		this.ItemInfo = (function () {
 			var i, count = (end - fp.tell()) / item_size | 0,
 				out = new Array(count);
 			var flag;
@@ -14144,7 +14137,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.quest_svrTime = fp.readLong();
 		this.quest_endTime = fp.readLong();
 		this.count = fp.readShort();
-		this.hunt = (function(count) {
+		this.hunt = (function (count) {
 			var i, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
@@ -14166,10 +14159,10 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.NPC_BARTER_MARKET_PURCHASE = function PACKET_CZ_NPC_BARTER_MARKET_PURCHASE() {
 		this.itemList = [];
 	};
-	PACKET.CZ.NPC_BARTER_MARKET_PURCHASE.prototype.build = function() {
+	PACKET.CZ.NPC_BARTER_MARKET_PURCHASE.prototype.build = function () {
 		var item_size = (PACKETVER.value >= 20181121) ? 14 : 12;
-    	var pkt_len = 4 + (this.itemList.length * item_size);
-    	var pkt_buf = new BinaryWriter(pkt_len);
+		var pkt_len = 4 + (this.itemList.length * item_size);
+		var pkt_buf = new BinaryWriter(pkt_len);
 
 		pkt_buf.writeShort(0xb0f);
 		pkt_buf.writeShort(pkt_len);
@@ -14187,13 +14180,13 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0xb1b
 	// this means that player is allowed to do actions
 	PACKET.ZC.NOTIFY_ACTORINIT2 = function PACKET_ZC_NOTIFY_ACTORINIT2(fp, end) {
-    };
-    PACKET.ZC.NOTIFY_ACTORINIT2.size = 2;
+	};
+	PACKET.ZC.NOTIFY_ACTORINIT2.size = 2;
 
 	// 0xb12
 	PACKET.CZ.NPC_BARTER_MARKET_CLOSE = function PACKET_CZ_NPC_BARTER_MARKET_CLOSE() {
 	};
-	PACKET.CZ.NPC_BARTER_MARKET_CLOSE.prototype.build = function() {
+	PACKET.CZ.NPC_BARTER_MARKET_CLOSE.prototype.build = function () {
 		var pkt_buf = new BinaryWriter(2);
 		pkt_buf.writeShort(0xb12);
 		return pkt_buf;
@@ -14202,7 +14195,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0xb14
 	PACKET.CZ.REQ_OPEN_MSGBOX_EXTEND_BODYITEM_SIZE = function PACKET_CZ_REQ_OPEN_MSGBOX_EXTEND_BODYITEM_SIZE() {
 	};
-	PACKET.CZ.REQ_OPEN_MSGBOX_EXTEND_BODYITEM_SIZE.prototype.build = function() {
+	PACKET.CZ.REQ_OPEN_MSGBOX_EXTEND_BODYITEM_SIZE.prototype.build = function () {
 		var pkt_buf = new BinaryWriter(2);
 		pkt_buf.writeShort(0xb14);
 		return pkt_buf;
@@ -14218,7 +14211,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0xb16
 	PACKET.CZ.REQ_EXTEND_BODYITEM_SIZE = function PACKET_CZ_REQ_EXTEND_BODYITEM_SIZE() {
 	};
-	PACKET.CZ.REQ_EXTEND_BODYITEM_SIZE.prototype.build = function() {
+	PACKET.CZ.REQ_EXTEND_BODYITEM_SIZE.prototype.build = function () {
 		var pkt_buf = new BinaryWriter(2);
 		pkt_buf.writeShort(0xb16);
 		return pkt_buf;
@@ -14232,14 +14225,14 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0xb18
 	PACKET.ZC.EXTEND_BODYITEM_SIZE = function PACKET_ZC_EXTEND_BODYITEM_SIZE(fp, end) {
-        this.type = fp.readUShort();
-    };
-    PACKET.ZC.EXTEND_BODYITEM_SIZE.size = 4;
+		this.type = fp.readUShort();
+	};
+	PACKET.ZC.EXTEND_BODYITEM_SIZE.size = 4;
 
 	// 0xb19
 	PACKET.CZ.CLOSE_MSGBOX_EXTEND_BODYITEM_SIZE = function PACKET_CZ_CLOSE_MSGBOX_EXTEND_BODYITEM_SIZE() {
 	};
-	PACKET.CZ.CLOSE_MSGBOX_EXTEND_BODYITEM_SIZE.prototype.build = function() {
+	PACKET.CZ.CLOSE_MSGBOX_EXTEND_BODYITEM_SIZE.prototype.build = function () {
 		var pkt_buf = new BinaryWriter(2);
 		pkt_buf.writeShort(0xb19);
 		return pkt_buf;
@@ -14248,7 +14241,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0xb1c
 	PACKET.CZ.PING_LIVE = function PACKET_CZ_PING_LIVE() {
 	};
-	PACKET.CZ.PING_LIVE.prototype.build = function() {
+	PACKET.CZ.PING_LIVE.prototype.build = function () {
 		var pkt_buf = new BinaryWriter(2);
 		pkt_buf.writeShort(0xb1c);
 		return pkt_buf;
@@ -14263,7 +14256,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.ZC.SHORTCUT_KEY_LIST_V4 = function PACKET_ZC_SHORTCUT_KEY_LIST_V4(fp, end) {
 		this.rotate = fp.readUChar();
 		this.tab = fp.readUShort();
-		this.ShortCutKey = (function() {
+		this.ShortCutKey = (function () {
 			var i, count = 38,
 				out = new Array(count);
 			for (i = 0; i < count; ++i) {
@@ -14283,7 +14276,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.ShortCutKey = {};
 		this.tab = 0;
 	};
-	PACKET.CZ.SHORTCUT_KEY_CHANGE2.prototype.build = function() {
+	PACKET.CZ.SHORTCUT_KEY_CHANGE2.prototype.build = function () {
 		var pkt_len = 2 + 2 + 2 + 1 + 4 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -14305,29 +14298,29 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0xb2f
 	PACKET.ZC.PROPERTY_HOMUN3 = function PACKET_ZC_PROPERTY_HOMUN3(fp, end) {
 
-		this.szName				= fp.readString(NAME_LENGTH);	// <name>.24B
-		this.bModified 			= fp.readUChar(); 			// <modified>.B
-		this.nLevel 			= fp.readShort(); 			// <level>.W
-		this.nFullness 			= fp.readShort(); 			// <hunger>.W
-		this.nRelationship 		= fp.readShort(); 			// <intimacy>.W
+		this.szName = fp.readString(NAME_LENGTH);	// <name>.24B
+		this.bModified = fp.readUChar(); 			// <modified>.B
+		this.nLevel = fp.readShort(); 			// <level>.W
+		this.nFullness = fp.readShort(); 			// <hunger>.W
+		this.nRelationship = fp.readShort(); 			// <intimacy>.W
 
-		this.atk 		= fp.readShort(); 		// <atk>.W
-		this.Matk 		= fp.readShort();		// <matk>.W
-		this.hit 		= fp.readShort();		// <hit>.W
-		this.critical 	= fp.readShort();		// <crit>.W
-		this.def 		= fp.readShort();		// <def>.W
-		this.Mdef 		= fp.readShort();		// <mdef>.W
-		this.flee 		= fp.readShort();		// <flee>.W
-		this.aspd 		= fp.readShort();		// <aspd>.W // todo wrong
+		this.atk = fp.readShort(); 		// <atk>.W
+		this.Matk = fp.readShort();		// <matk>.W
+		this.hit = fp.readShort();		// <hit>.W
+		this.critical = fp.readShort();		// <crit>.W
+		this.def = fp.readShort();		// <def>.W
+		this.Mdef = fp.readShort();		// <mdef>.W
+		this.flee = fp.readShort();		// <flee>.W
+		this.aspd = fp.readShort();		// <aspd>.W // todo wrong
 
-		this.hp 		= fp.readLong();		// <hp>.L
-		this.maxHP 		= fp.readLong();		// <max hp>.L
-		this.sp 		= fp.readShort();		// <sp>.W
-		this.maxSP 		= fp.readShort();		// <max sp>.W
-		this.exp 		= fp.readLong(); 		// <exp>.L
-		this.maxEXP 	= fp.readLong();		// <max exp>.L
-		this.SKPoint 	= fp.readShort(); 		// <skill points>.W
-		this.ATKRange 	= fp.readShort();		// <atk range>.W
+		this.hp = fp.readLong();		// <hp>.L
+		this.maxHP = fp.readLong();		// <max hp>.L
+		this.sp = fp.readShort();		// <sp>.W
+		this.maxSP = fp.readShort();		// <max sp>.W
+		this.exp = fp.readLong(); 		// <exp>.L
+		this.maxEXP = fp.readLong();		// <max exp>.L
+		this.SKPoint = fp.readShort(); 		// <skill points>.W
+		this.ATKRange = fp.readShort();		// <atk range>.W
 	};
 	PACKET.ZC.PROPERTY_HOMUN3.size = 73;
 
@@ -14350,7 +14343,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 			"char param"
 		);
 		let item_size = 68;
-		this.ItemInfo = (function() {
+		this.ItemInfo = (function () {
 			var i, count = (end - fp.tell()) / item_size | 0,
 				out = new Array(count);
 			var flag;
@@ -14397,7 +14390,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 			"char param"
 		);
 		let item_size = 68;
-		this.ItemInfo = (function() {
+		this.ItemInfo = (function () {
 			var i, count = (end - fp.tell()) / item_size | 0,
 				out = new Array(count);
 			var flag;
@@ -14446,10 +14439,10 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.ZC.PC_PURCHASE_ITEMLIST_FROMMC3 = function PACKET_ZC_PC_PURCHASE_ITEMLIST_FROMMC3(fp, end) {
 		this.AID = fp.readULong();
 		this.UniqueID = fp.readULong();
-		this.itemList = (function() {
+		this.itemList = (function () {
 			var i, count = 0,
-			out = new Array(count);
-			count = (end - fp.tell()) / (4+2+2+1+4+1+1+16+25+4+2+1+1); //Item options 25 bytes, (location viewSprite), itemId use Long now, grade
+				out = new Array(count);
+			count = (end - fp.tell()) / (4 + 2 + 2 + 1 + 4 + 1 + 1 + 16 + 25 + 4 + 2 + 1 + 1); //Item options 25 bytes, (location viewSprite), itemId use Long now, grade
 
 			let option = new Struct(
 				"short index",
@@ -14496,10 +14489,10 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		);
 
 		this.AID = fp.readULong();
-		this.itemList = (function() {
-			var len = 4 + 2 + 2 + 1 + 4 + 1 + 1 + 16 + 25 + 1 +1;
+		this.itemList = (function () {
+			var len = 4 + 2 + 2 + 1 + 4 + 1 + 1 + 16 + 25 + 1 + 1;
 
-			var i, count=(end-fp.tell())/len|0, out=new Array(count);
+			var i, count = (end - fp.tell()) / len | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].price = fp.readLong();
@@ -14605,10 +14598,10 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.index = fp.readShort();
 		this.isDamaged = fp.readChar();
 		this.slot = {};
-		this.slot.card1 = (PACKETVER.value >= 20181121) ? fp.readULong() : fp.readUShort() ;
-		this.slot.card2 = (PACKETVER.value >= 20181121) ? fp.readULong() : fp.readUShort() ;
-		this.slot.card3 = (PACKETVER.value >= 20181121) ? fp.readULong() : fp.readUShort() ;
-		this.slot.card4 = (PACKETVER.value >= 20181121) ? fp.readULong() : fp.readUShort() ;
+		this.slot.card1 = (PACKETVER.value >= 20181121) ? fp.readULong() : fp.readUShort();
+		this.slot.card2 = (PACKETVER.value >= 20181121) ? fp.readULong() : fp.readUShort();
+		this.slot.card3 = (PACKETVER.value >= 20181121) ? fp.readULong() : fp.readUShort();
+		this.slot.card4 = (PACKETVER.value >= 20181121) ? fp.readULong() : fp.readUShort();
 		this.Options = [];
 		this.Options[1] = fp.readStruct(option);
 		this.Options[2] = fp.readStruct(option);
@@ -14683,7 +14676,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0xb4e
 	PACKET.ZC.NPC_MARKET_PURCHASE_RESULT2 = function PACKET_ZC_NPC_MARKET_PURCHASE_RESULT2(fp, end) {
 		this.result = fp.readUShort();
-		this.itemList = (function() {
+		this.itemList = (function () {
 			// Determine item size based on PACKETVER
 			const item_size = (PACKETVER.value >= 20181121) ? 10 : 8; // Adjust sizes based on nameid (4 or 2 bytes)
 			const count = (end - fp.tell()) / item_size | 0; // Calculate item count
@@ -14705,7 +14698,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.NPC_EXPANDED_BARTER_MARKET_PURCHASE = function PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_PURCHASE() {
 		this.itemList = [];
 	};
-	PACKET.CZ.NPC_EXPANDED_BARTER_MARKET_PURCHASE.prototype.build = function() {
+	PACKET.CZ.NPC_EXPANDED_BARTER_MARKET_PURCHASE.prototype.build = function () {
 		var item_size = (PACKETVER.value >= 20181121) ? 12 : 10;
 		var pkt_len = 4 + (this.itemList.length * item_size);
 		var pkt_buf = new BinaryWriter(pkt_len);
@@ -14727,7 +14720,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0xb58
 	PACKET.CZ.NPC_EXPANDED_BARTER_MARKET_CLOSE = function PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_CLOSE() {
 	};
-	PACKET.CZ.NPC_EXPANDED_BARTER_MARKET_CLOSE.prototype.build = function() {
+	PACKET.CZ.NPC_EXPANDED_BARTER_MARKET_CLOSE.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -14737,8 +14730,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0xb65
 	PACKET.ZC.REPAIRITEMLIST2 = function PACKET_ZC_REPAIRITEMLIST2(fp, end) {
-		this.itemList = (function() {
-			var i, count=(end-fp.tell())/13|0, out=new Array(count);
+		this.itemList = (function () {
+			var i, count = (end - fp.tell()) / 13 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].index = fp.readShort();
@@ -14775,7 +14768,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0b7a
 	PACKET.ZC.NPC_MARKET_OPEN2 = function PACKET_ZC_NPC_MARKET_OPEN2(fp, end) {
-		this.itemList = (function() {
+		this.itemList = (function () {
 			// Determine item size based on PACKETVER
 			const item_size = (PACKETVER.value >= 20181121) ? 19 : 17; // Adjust sizes based on nameid (4 or 2 bytes)
 			const count = (end - fp.tell()) / item_size | 0; // Calculate item count
@@ -14805,37 +14798,37 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0xb76
 	PACKET.ZC.PROPERTY_HOMUN4 = function PACKET_ZC_PROPERTY_HOMUN4(fp, end) {
 
-		this.szName				= fp.readString(NAME_LENGTH);	// <name>.24B
-		this.bModified 			= fp.readUChar(); 			// <modified>.B
-		this.nLevel 			= fp.readShort(); 			// <level>.W
-		this.nFullness 			= fp.readShort(); 			// <hunger>.W
-		this.nRelationship 		= fp.readShort(); 			// <intimacy>.W
+		this.szName = fp.readString(NAME_LENGTH);	// <name>.24B
+		this.bModified = fp.readUChar(); 			// <modified>.B
+		this.nLevel = fp.readShort(); 			// <level>.W
+		this.nFullness = fp.readShort(); 			// <hunger>.W
+		this.nRelationship = fp.readShort(); 			// <intimacy>.W
 
-		this.atk 		= fp.readShort(); 		// <atk>.W
-		this.Matk 		= fp.readShort();		// <matk>.W
-		this.hit 		= fp.readShort();		// <hit>.W
-		this.critical 	= fp.readShort();		// <crit>.W
-		this.def 		= fp.readShort();		// <def>.W
-		this.Mdef 		= fp.readShort();		// <mdef>.W
-		this.flee 		= fp.readShort();		// <flee>.W
-		this.aspd 		= fp.readShort();		// <aspd>.W // todo wrong
+		this.atk = fp.readShort(); 		// <atk>.W
+		this.Matk = fp.readShort();		// <matk>.W
+		this.hit = fp.readShort();		// <hit>.W
+		this.critical = fp.readShort();		// <crit>.W
+		this.def = fp.readShort();		// <def>.W
+		this.Mdef = fp.readShort();		// <mdef>.W
+		this.flee = fp.readShort();		// <flee>.W
+		this.aspd = fp.readShort();		// <aspd>.W // todo wrong
 
-		this.hp 		= fp.readLong();		// <hp>.L
-		this.maxHP 		= fp.readLong();		// <max hp>.L
-		this.sp 		= fp.readLong();		// <sp>.L
-		this.maxSP 		= fp.readLong();		// <max sp>.L
-		this.exp 		= fp.readLong(); 		// <exp>.L
-		this.maxEXP 	= fp.readLong();		// <max exp>.L
-		this.SKPoint 	= fp.readShort(); 		// <skill points>.W
-		this.ATKRange 	= fp.readShort();		// <atk range>.W
+		this.hp = fp.readLong();		// <hp>.L
+		this.maxHP = fp.readLong();		// <max hp>.L
+		this.sp = fp.readLong();		// <sp>.L
+		this.maxSP = fp.readLong();		// <max sp>.L
+		this.exp = fp.readLong(); 		// <exp>.L
+		this.maxEXP = fp.readLong();		// <max exp>.L
+		this.SKPoint = fp.readShort(); 		// <skill points>.W
+		this.ATKRange = fp.readShort();		// <atk range>.W
 	};
 	PACKET.ZC.PROPERTY_HOMUN4.size = 77;
 
 	// 0xb77
 	PACKET.ZC.PC_PURCHASE_ITEMLIST2 = function PACKET_ZC_PC_PURCHASE_ITEMLIST2(fp, end) {
-		this.itemList = (function() {
+		this.itemList = (function () {
 			let item_size = 19;
-			var i, count=(end-fp.tell())/item_size|0, out=new Array(count);
+			var i, count = (end - fp.tell()) / item_size | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].ITID = fp.readULong();
@@ -14852,9 +14845,9 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0xb78
 	PACKET.ZC.NPC_BARTER_MARKET_ITEMINFO = function PACKET_ZC_NPC_BARTER_MARKET_ITEMINFO(fp, end) {
-		this.itemList = (function() {
-			let item_size = (PACKETVER.value >= 20181121) ? 31: 27;
-			var i, count=(end-fp.tell())/item_size|0, out=new Array(count);
+		this.itemList = (function () {
+			let item_size = (PACKETVER.value >= 20181121) ? 31 : 27;
+			var i, count = (end - fp.tell()) / item_size | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].ITID = (PACKETVER.value >= 20181121) ? fp.readULong() : fp.readUShort();
@@ -14878,7 +14871,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		let self = this;
 
 		self.items_count = fp.readLong(); // Assign items_count to 'self' properly
-		self.itemList = (function() {
+		self.itemList = (function () {
 			let item_size = (PACKETVER.value >= 20181121) ? 32 : 30;	// size of the `sub` structure
 			let sub2_size = (PACKETVER.value >= 20181121) ? 12 : 10;	// size of the `sub2` structure
 			let items = [];
@@ -14946,8 +14939,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	// 0xb7d
 	PACKET.ZC.MEMBERMGR_INFO3 = function PACKET_ZC_MEMBERMGR_INFO3(fp, end) {
-		this.memberInfo = (function() {
-			var i, count=(end-fp.tell())/58|0, out=new Array(count);
+		this.memberInfo = (function () {
+			var i, count = (end - fp.tell()) / 58 | 0, out = new Array(count);
 			for (i = 0; i < count; ++i) {
 				out[i] = {};
 				out[i].AID = fp.readULong();
@@ -14979,7 +14972,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.ZC.REPUTE_INFO = function PACKET_ZC_REPUTE_INFO(fp, end) {
 		this.success = fp.readUChar();
 		let repute_size = 16;
-		this.reputeInfo = (function() {
+		this.reputeInfo = (function () {
 			var i, count = (end - fp.tell()) / repute_size | 0,
 				out = new Array(count);
 			for (i = 0; i < count; ++i) {
@@ -15003,7 +14996,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0xb90
 	PACKET.CZ.CLOSE_REFORM_UI = function PACKET_CZ_CLOSE_REFORM_UI() {
 	};
-	PACKET.CZ.CLOSE_REFORM_UI.prototype.build = function() {
+	PACKET.CZ.CLOSE_REFORM_UI.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -15016,7 +15009,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.ITID = 0;
 		this.index = 0;
 	};
-	PACKET.CZ.ITEM_REFORM.prototype.build = function() {
+	PACKET.CZ.ITEM_REFORM.prototype.build = function () {
 		var pkt_len = 2 + 4 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -15036,29 +15029,29 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	// 0xba4
 	PACKET.ZC.PROPERTY_HOMUN5 = function PACKET_ZC_PROPERTY_HOMUN5(fp, end) {
 
-		this.szName				= fp.readString(NAME_LENGTH);	// <name>.24B
-		this.bModified 			= fp.readUChar(); 			// <modified>.B
-		this.nLevel 			= fp.readShort(); 			// <level>.W
-		this.nFullness 			= fp.readShort(); 			// <hunger>.W
-		this.nRelationship 		= fp.readShort(); 			// <intimacy>.W
+		this.szName = fp.readString(NAME_LENGTH);	// <name>.24B
+		this.bModified = fp.readUChar(); 			// <modified>.B
+		this.nLevel = fp.readShort(); 			// <level>.W
+		this.nFullness = fp.readShort(); 			// <hunger>.W
+		this.nRelationship = fp.readShort(); 			// <intimacy>.W
 
-		this.atk 		= fp.readShort(); 		// <atk>.W
-		this.Matk 		= fp.readShort();		// <matk>.W
-		this.hit 		= fp.readShort();		// <hit>.W
-		this.critical 	= fp.readShort();		// <crit>.W
-		this.def 		= fp.readShort();		// <def>.W
-		this.Mdef 		= fp.readShort();		// <mdef>.W
-		this.flee 		= fp.readShort();		// <flee>.W
-		this.aspd 		= fp.readShort();		// <aspd>.W // todo wrong
+		this.atk = fp.readShort(); 		// <atk>.W
+		this.Matk = fp.readShort();		// <matk>.W
+		this.hit = fp.readShort();		// <hit>.W
+		this.critical = fp.readShort();		// <crit>.W
+		this.def = fp.readShort();		// <def>.W
+		this.Mdef = fp.readShort();		// <mdef>.W
+		this.flee = fp.readShort();		// <flee>.W
+		this.aspd = fp.readShort();		// <aspd>.W // todo wrong
 
-		this.hp 		= fp.readLong();		// <hp>.L
-		this.maxHP 		= fp.readLong();		// <max hp>.L
-		this.sp 		= fp.readLong();		// <sp>.L
-		this.maxSP 		= fp.readLong();		// <max sp>.L
-		this.exp 		= fp.readUInt64(); 		// <exp>.L
-		this.maxEXP 	= fp.readUInt64();		// <max exp>.L
-		this.SKPoint 	= fp.readShort(); 		// <skill points>.W
-		this.ATKRange 	= fp.readShort();		// <atk range>.W
+		this.hp = fp.readLong();		// <hp>.L
+		this.maxHP = fp.readLong();		// <max hp>.L
+		this.sp = fp.readLong();		// <sp>.L
+		this.maxSP = fp.readLong();		// <max sp>.L
+		this.exp = fp.readUInt64(); 		// <exp>.L
+		this.maxEXP = fp.readUInt64();		// <max exp>.L
+		this.SKPoint = fp.readShort(); 		// <skill points>.W
+		this.ATKRange = fp.readShort();		// <atk range>.W
 	};
 	PACKET.ZC.PROPERTY_HOMUN5.size = 85;
 
@@ -15070,7 +15063,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.BROADCAST = function PACKET_CZ_BROADCAST() {
 		this.msg = '';
 	};
-	PACKET.CZ.BROADCAST.prototype.build = function() {
+	PACKET.CZ.BROADCAST.prototype.build = function () {
 		var pkt_len = 2 + 2 + this.msg.length + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -15084,7 +15077,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.LOCALBROADCAST = function PACKET_CZ_LOCALBROADCAST() {
 		this.msg = '';
 	};
-	PACKET.CZ.LOCALBROADCAST.prototype.build = function() {
+	PACKET.CZ.LOCALBROADCAST.prototype.build = function () {
 		var pkt_len = 2 + 2 + this.msg.length + 1;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -15100,7 +15093,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.xPos = 0;
 		this.yPos = 0;
 	};
-	PACKET.CZ.MOVETO_MAP.prototype.build = function() {
+	PACKET.CZ.MOVETO_MAP.prototype.build = function () {
 		var pkt_len = 2 + 16 + 2 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -15115,7 +15108,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.RECALL_GID = function PACKET_CZ_RECALL_GID() {
 		this.CharacterName = '';
 	};
-	PACKET.CZ.RECALL_GID.prototype.build = function() {
+	PACKET.CZ.RECALL_GID.prototype.build = function () {
 		var pkt_len = 2 + 24;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -15128,7 +15121,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.RECALL = function PACKET_CZ_RECALL() {
 		this.AccountName = '';
 	};
-	PACKET.CZ.RECALL.prototype.build = function() {
+	PACKET.CZ.RECALL.prototype.build = function () {
 		var pkt_len = 2 + 24;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -15141,7 +15134,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.CHANGE_EFFECTSTATE = function PACKET_CZ_CHANGE_EFFECTSTATE() {
 		this.EffectState = 0;
 	};
-	PACKET.CZ.CHANGE_EFFECTSTATE.prototype.build = function() {
+	PACKET.CZ.CHANGE_EFFECTSTATE.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -15155,7 +15148,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.DISCONNECT_CHARACTER = function PACKET_CZ_DISCONNECT_CHARACTER() {
 		this.AID = 0;
 	};
-	PACKET.CZ.DISCONNECT_CHARACTER.prototype.build = function() {
+	PACKET.CZ.DISCONNECT_CHARACTER.prototype.build = function () {
 		var pkt_len = 2 + 4;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -15165,8 +15158,8 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	};
 
 	// 0xce
-	PACKET.CZ.DISCONNECT_ALL_CHARACTER = function PACKET_CZ_DISCONNECT_ALL_CHARACTER() {};
-	PACKET.CZ.DISCONNECT_ALL_CHARACTER.prototype.build = function() {
+	PACKET.CZ.DISCONNECT_ALL_CHARACTER = function PACKET_CZ_DISCONNECT_ALL_CHARACTER() { };
+	PACKET.CZ.DISCONNECT_ALL_CHARACTER.prototype.build = function () {
 		var pkt_len = 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -15178,7 +15171,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.ITEM_CREATE = function PACKET_CZ_ITEM_CREATE() {
 		this.itemName = '';
 	};
-	PACKET.CZ.ITEM_CREATE.prototype.build = function() {
+	PACKET.CZ.ITEM_CREATE.prototype.build = function () {
 		var pkt_len = 2 + 24;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -15191,7 +15184,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.RESET = function PACKET_CZ_RESET() {
 		this.type = 0;
 	};
-	PACKET.CZ.RESET.prototype.build = function() {
+	PACKET.CZ.RESET.prototype.build = function () {
 		var pkt_len = 2 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -15204,7 +15197,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 	PACKET.CZ.REMOVE_AID = function PACKET_CZ_REMOVE_AID() {
 		this.AccountName = '';
 	};
-	PACKET.CZ.REMOVE_AID.prototype.build = function() {
+	PACKET.CZ.REMOVE_AID.prototype.build = function () {
 		var pkt_len = 2 + 24;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -15219,7 +15212,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 		this.yPos = 0;
 		this.type = 0;
 	};
-	PACKET.CZ.CHANGE_MAPTYPE.prototype.build = function() {
+	PACKET.CZ.CHANGE_MAPTYPE.prototype.build = function () {
 		var pkt_len = 2 + 2 + 2 + 2;
 		var pkt_buf = new BinaryWriter(pkt_len);
 
@@ -15233,6 +15226,7 @@ define(['Utils/BinaryWriter', './PacketVerManager', 'Utils/Struct', 'Core/Config
 
 	/**
 	 * Export
+	 * @type {Network.PacketStructure}
 	 */
 	return PACKET;
 

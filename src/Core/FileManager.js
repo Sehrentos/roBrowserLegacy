@@ -7,24 +7,23 @@
  *
  * @author Vincent Thibault
  */
-
-define(function( require )
-{
+define(function (
+	/** @type {Require} */require
+) {
 	'use strict';
 
-
 	// Load dependencies
-	var GameFile   = require('Loaders/GameFile');
-	var World      = require('Loaders/World');
-	var Ground     = require('Loaders/Ground');
-	var Altitude   = require('Loaders/Altitude');
-	var Model      = require('Loaders/Model');
-	var Sprite     = require('Loaders/Sprite');
-	var Action     = require('Loaders/Action');
-	var Str        = require('Loaders/Str');
-	var FileSystem = require('Core/FileSystem');
-	//@ts-ignore
-	var fs         = self.requireNode && self.requireNode('fs');
+	/** @type {Loaders.GameFile} */var GameFile = require('Loaders/GameFile');
+	/** @type {Loaders.World} */var World = require('Loaders/World');
+	/** @type {Loaders.Ground} */var Ground = require('Loaders/Ground');
+	/** @type {Loaders.Altitude} */var Altitude = require('Loaders/Altitude');
+	/** @type {Loaders.Model} */var Model = require('Loaders/Model');
+	/** @type {Loaders.Sprite} */var Sprite = require('Loaders/Sprite');
+	/** @type {Loaders.Action} */var Action = require('Loaders/Action');
+	/** @type {Loaders.Str} */var Str = require('Loaders/Str');
+	/** @type {Core.FileSystem} */var FileSystem = require('Core/FileSystem');
+	//@ts-ignore (NodeJS specific)
+	var fs = self.requireNode && self.requireNode('fs');
 
 
 	/**
@@ -60,8 +59,7 @@ define(function( require )
 	 *
 	 * @param {*} grfList mixed grf list
 	 */
-	FileManager.init = function Init( grfList )
-	{
+	FileManager.init = function Init(grfList) {
 		var content, files, result, regex;
 		var i, count, sortBySize = true;
 		var list = [];
@@ -79,15 +77,15 @@ define(function( require )
 			}
 
 			if (content) {
-				regex   = /(\d+)=([^\s]+)/g;
+				regex = /(\d+)=([^\s]+)/g;
 
 				// Get a list of GRF
 				while ((result = regex.exec(content))) {
-					list[ parseInt(result[1]) ] = result[2];
+					list[parseInt(result[1])] = result[2];
 				}
 
 				// Remove empty slot from list
-				for (i = 0, count = list.length; i < count; ) {
+				for (i = 0, count = list.length; i < count;) {
 					if (list[i] === undefined) {
 						list.splice(i, 1);
 						count--;
@@ -96,7 +94,7 @@ define(function( require )
 					i++;
 				}
 
-				grfList    = list;
+				grfList = list;
 				sortBySize = false;
 			}
 		}
@@ -109,21 +107,21 @@ define(function( require )
 					list[i] = {
 						name: list[i],
 						size: fs.statSync(list[i]).size,
-						fd:   fs.openSync(list[i], 'r')
+						fd: fs.openSync(list[i], 'r')
 					};
 					continue;
 				}
-				list[i] = FileSystem.getFileSync( list[i] );
+				list[i] = FileSystem.getFileSync(list[i]);
 			}
 		}
 
 		// Search GRF from a regex
 		if (grfList instanceof RegExp) {
-			list = FileSystem.search( grfList );
+			list = FileSystem.search(grfList);
 		}
 
 		if (sortBySize) {
-			list.sort(function(a,b){
+			list.sort(function (a, b) {
 				return a.size - b.size;
 			});
 		}
@@ -140,8 +138,7 @@ define(function( require )
 	 *
 	 * @param {File} file to load
 	 */
-	FileManager.addGameFile = function AddGameFile( file )
-	{
+	FileManager.addGameFile = function AddGameFile(file) {
 		try {
 			var grf = new GameFile();
 			grf.load(file);
@@ -149,12 +146,12 @@ define(function( require )
 			this.gameFiles.push(grf);
 
 			if (this.onGameFileLoaded) {
-				this.onGameFileLoaded( file.name );
+				this.onGameFileLoaded(file.name);
 			}
 		}
-		catch(e) {
+		catch (e) {
 			if (this.onGameFileError) {
-				this.onGameFileError( file.name, e.message );
+				this.onGameFileError(file.name, e.message);
 			}
 		}
 	};
@@ -163,8 +160,7 @@ define(function( require )
 	/**
 	 * Clean up Game files
 	 */
-	FileManager.clean = function Clean()
-	{
+	FileManager.clean = function Clean() {
 		this.gameFiles.length = 0;
 	};
 
@@ -175,13 +171,12 @@ define(function( require )
 	 * @param {RegExp} regex
 	 * @return {Array} filename list
 	 */
-	FileManager.search = function Search( regex )
-	{
+	FileManager.search = function Search(regex) {
 		// Use hosted client (only one to be async ?)
 		if (!this.gameFiles.length && this.remoteClient) {
-			var req    = new XMLHttpRequest();
+			var req = new XMLHttpRequest();
 			req.open('POST', this.remoteClient, false);
-			req.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+			req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 			req.overrideMimeType('text/plain; charset=ISO-8859-1');
 			req.send('filter=' + encodeURIComponent(regex.source));
 			return req.responseText.split('\n');
@@ -191,8 +186,8 @@ define(function( require )
 		var fileList, out, matches;
 
 		fileList = this.gameFiles;
-		count    = fileList.length;
-		out      = {};
+		count = fileList.length;
+		out = {};
 
 		for (i = 0; i < count; ++i) {
 			matches = fileList[i].table.data.match(regex);
@@ -200,7 +195,7 @@ define(function( require )
 			if (matches !== null) {
 				// Remove duplicates
 				for (j = 0, size = matches.length; j < size; ++j) {
-					out[ matches[j] ] = 1;
+					out[matches[j]] = 1;
 				}
 			}
 		}
@@ -215,8 +210,7 @@ define(function( require )
 	 * @param {string} filename
 	 * @param {function} callback
 	 */
-	FileManager.get = function Get( filename, callback )
-	{
+	FileManager.get = function Get(filename, callback) {
 		// Trim the path
 		filename = filename.replace(/^\s+|\s+$/g, '');
 
@@ -232,8 +226,8 @@ define(function( require )
 			// Found in file system, youhou !
 			function onFound(file) {
 				var reader = new FileReader();
-				reader.onloadend = function onLoad(event){
-					callback( event.target.result );
+				reader.onloadend = function onLoad(event) {
+					callback(event.target.result);
 				};
 				reader.readAsArrayBuffer(file);
 			},
@@ -244,19 +238,19 @@ define(function( require )
 				var fileList;
 				var path;
 
-				path     = filename.replace( /\//g, '\\');
+				path = filename.replace(/\//g, '\\');
 				fileList = FileManager.gameFiles;
-				count    = fileList.length;
+				count = fileList.length;
 
 				for (i = 0; i < count; ++i) {
-					if (fileList[i].getFile( path, callback)) {
+					if (fileList[i].getFile(path, callback)) {
 						return;
 					}
 				}
 
 				// Not in GRFs ? Try to load it from
 				// remote client host
-				FileManager.getHTTP( filename, callback);
+				FileManager.getHTTP(filename, callback);
 			}
 		);
 	};
@@ -268,11 +262,10 @@ define(function( require )
 	 * @param {string} filename
 	 * @param {function} callback
 	 */
-	FileManager.getHTTP = function GetHTTP( filename, callback )
-	{
+	FileManager.getHTTP = function GetHTTP(filename, callback) {
 
-		filename = filename.replace( /\\/g, '/');
-		var url  = filename.replace(/[^//]+/g, function(a){return encodeURIComponent(a);});
+		filename = filename.replace(/\\/g, '/');
+		var url = filename.replace(/[^//]+/g, function (a) { return encodeURIComponent(a); });
 
 		// Use http request here (ajax)
 		if (!this.remoteClient) {
@@ -291,25 +284,25 @@ define(function( require )
 		var xhr = new XMLHttpRequest();
 		xhr.open('GET', url, true);
 		xhr.responseType = 'arraybuffer';
-		xhr.onload = function(){
+		xhr.onload = function () {
 			if (xhr.status == 200) {
-				callback( xhr.response );
-				FileSystem.saveFile( filename, xhr.response );
+				callback(xhr.response);
+				FileSystem.saveFile(filename, xhr.response);
 			}
 			else {
-				callback( null, 'Can\'t get file');
+				callback(null, 'Can\'t get file');
 			}
 		};
-		xhr.onerror = function(){
-			callback( null, 'Can\'t get file');
+		xhr.onerror = function () {
+			callback(null, 'Can\'t get file');
 		};
 
 		// Can throw an error if not connected to internet
 		try {
 			xhr.send(null);
 		}
-		catch(e) {
-			callback( null, 'Can\'t get file');
+		catch (e) {
+			callback(null, 'Can\'t get file');
 		}
 	};
 
@@ -321,8 +314,7 @@ define(function( require )
 	 * @param {function} callback
 	 * @return {string|object}
 	 */
-	FileManager.load = function Load( filename, callback, args )
-	{
+	FileManager.load = function Load(filename, callback, args) {
 		if (!filename) {
 			callback(null, 'undefined ?');
 			return;
@@ -330,8 +322,8 @@ define(function( require )
 
 		filename = filename.replace(/^\s+|\s+$/g, '');
 
-		this.get( filename, function(buffer, error){
-			var ext    = filename.match(/.[^\.]+$/).toString().substr(1).toLowerCase();
+		this.get(filename, function (buffer, error) {
+			var ext = filename.match(/.[^\.]+$/).toString().substr(1).toLowerCase();
 			var result = null;
 
 			if (!buffer || buffer.byteLength === 0) {
@@ -339,7 +331,7 @@ define(function( require )
 				return;
 			}
 
-			error  = null;
+			error = null;
 
 			try {
 				switch (ext) {
@@ -351,7 +343,7 @@ define(function( require )
 					case 'gif':
 					case 'png':
 						result = URL.createObjectURL(
-							new Blob( [buffer], { type: 'image/' + ext })
+							new Blob([buffer], { type: 'image/' + ext })
 						);
 						break;
 
@@ -362,7 +354,7 @@ define(function( require )
 						// From GRF : change the data to an URI
 						if (buffer instanceof ArrayBuffer) {
 							result = URL.createObjectURL(
-								new Blob( [buffer], { type: 'audio/' + ext })
+								new Blob([buffer], { type: 'audio/' + ext })
 							);
 							break;
 						}
@@ -380,13 +372,13 @@ define(function( require )
 						var i, count, str, uint8;
 						uint8 = new Uint8Array(buffer);
 						count = uint8.length;
-						str   = '';
+						str = '';
 
 						for (i = 0; i < count; ++i) {
 							if (uint8[i] === 0) {
 								break;
 							}
-							str += String.fromCharCode( uint8[i] );
+							str += String.fromCharCode(uint8[i]);
 						}
 
 						result = str;
@@ -434,11 +426,11 @@ define(function( require )
 				}
 			}
 
-			catch(e) {
+			catch (e) {
 				error = e.message;
 			}
 
-			callback( result, error );
+			callback(result, error);
 		});
 	};
 

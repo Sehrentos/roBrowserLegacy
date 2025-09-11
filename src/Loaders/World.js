@@ -7,23 +7,23 @@
  *
  * @author Vincent Thibault
  */
-
-define( ['Utils/BinaryReader', 'Utils/gl-matrix'], function( BinaryReader, glMatrix )
-{
+define(['Utils/BinaryReader', 'Utils/gl-matrix'], function (
+	/** @type {Utils.BinaryReader} */BinaryReader,
+	/** @type {Utils.glMatrix} */glMatrix
+) {
 	'use strict';
-
 
 	/**
 	 * World class loader
 	 *
 	 * @param {ArrayBuffer} data - optional
+	 * @type {Loaders.World}
 	 */
-	function RSW( data )
-	{
-		this.sounds  = [];
-		this.lights  = [];
+	function RSW(data) {
+		this.sounds = [];
+		this.lights = [];
 		this.effects = [];
-		this.models  = [];
+		this.models = [];
 
 		if (data) {
 			this.load(data);
@@ -47,26 +47,26 @@ define( ['Utils/BinaryReader', 'Utils/gl-matrix'], function( BinaryReader, glMat
 	 * Ground frustum culling
 	 */
 	RSW.prototype.ground = {
-		top:   -500,
+		top: -500,
 		bottom: 500,
-		left:  -500,
-		right:  500
+		left: -500,
+		right: 500
 	};
 
 
 	/**
 	 * Water informations
 	 */
-	RSW.prototype.water    = {
-		level:       0,
-		type:        0,
-		waveHeight:  0,
-		waveSpeed:   0,
-		wavePitch:   0,
-		animSpeed:   0,
-		splitWidth:  0,
+	RSW.prototype.water = {
+		level: 0,
+		type: 0,
+		waveHeight: 0,
+		waveSpeed: 0,
+		wavePitch: 0,
+		animSpeed: 0,
+		splitWidth: 0,
 		splitHeight: 0,
-		images:     new Array(32)
+		images: new Array(32)
 	};
 
 
@@ -75,10 +75,10 @@ define( ['Utils/BinaryReader', 'Utils/gl-matrix'], function( BinaryReader, glMat
 	 */
 	RSW.prototype.light = {
 		longitude: 45,
-		latitude:  45,
-		diffuse:   [ 1.0, 1.0, 1.0 ],
-		ambient:   [ 0.0, 0.0, 0.0 ],
-		opacity:   1.0,
+		latitude: 45,
+		diffuse: [1.0, 1.0, 1.0],
+		ambient: [0.0, 0.0, 0.0],
+		opacity: 1.0,
 		direction: glMatrix.vec3.create()
 	};
 
@@ -88,16 +88,15 @@ define( ['Utils/BinaryReader', 'Utils/gl-matrix'], function( BinaryReader, glMat
 	 *
 	 * @param {ArrayBuffer} data
 	 */
-	RSW.prototype.load = function Load( data )
-	{
+	RSW.prototype.load = function Load(data) {
 		var header, version;
 		var i, count;
 		var fp;
 
 		// Read header.
-		fp      = new BinaryReader(data);
-		header  = fp.readBinaryString(4);
-		version = fp.readByte() + fp.readByte()/10;
+		fp = new BinaryReader(data);
+		header = fp.readBinaryString(4);
+		version = fp.readByte() + fp.readByte() / 10;
 
 		if (header != 'GRSW') {
 			throw new Error('RSW::load() - Invalid header "' + header + '", must be "GRSW"');
@@ -122,7 +121,7 @@ define( ['Utils/BinaryReader', 'Utils/gl-matrix'], function( BinaryReader, glMat
 
 		// Reset water to prototype values
 		// A little hack, as changing maps, doesn't reset the water properties
-    	this.water = Object.assign({}, RSW.prototype.water);
+		this.water = Object.assign({}, RSW.prototype.water);
 
 		// Read water info.
 		if (version < 2.6) {
@@ -133,19 +132,19 @@ define( ['Utils/BinaryReader', 'Utils/gl-matrix'], function( BinaryReader, glMat
 			}
 
 			if (version >= 1.8) {
-				this.water.type       = fp.readLong();
-				this.water.waveHeight = fp.readFloat()/5;
-				this.water.waveSpeed  = fp.readFloat();
-				this.water.wavePitch  = fp.readFloat();
+				this.water.type = fp.readLong();
+				this.water.waveHeight = fp.readFloat() / 5;
+				this.water.waveSpeed = fp.readFloat();
+				this.water.wavePitch = fp.readFloat();
 			} else {
 				this.water.type = 0;
 				this.water.waveHeight = 1.0;
-				this.water.waveSpeed  = 2.0;
-				this.water.wavePitch  = 50.0;
+				this.water.waveSpeed = 2.0;
+				this.water.wavePitch = 50.0;
 			}
 
 			if (version >= 1.9) {
-					this.water.animSpeed = fp.readLong();
+				this.water.animSpeed = fp.readLong();
 			} else {
 				this.water.animSpeed = 3;
 			}
@@ -154,9 +153,9 @@ define( ['Utils/BinaryReader', 'Utils/gl-matrix'], function( BinaryReader, glMat
 		// Read lightmap.
 		if (version >= 1.5) {
 			this.light.longitude = fp.readLong();
-			this.light.latitude  = fp.readLong();
-			this.light.diffuse   = [ fp.readFloat(), fp.readFloat(), fp.readFloat() ];
-			this.light.ambient   = [ fp.readFloat(), fp.readFloat(), fp.readFloat() ];
+			this.light.latitude = fp.readLong();
+			this.light.diffuse = [fp.readFloat(), fp.readFloat(), fp.readFloat()];
+			this.light.ambient = [fp.readFloat(), fp.readFloat(), fp.readFloat()];
 
 			if (version >= 1.7) {
 				this.light.opacity = fp.readFloat();
@@ -165,23 +164,23 @@ define( ['Utils/BinaryReader', 'Utils/gl-matrix'], function( BinaryReader, glMat
 
 		// Read ground
 		if (version >= 1.6) {
-			this.ground.top    =  fp.readLong();
-			this.ground.bottom =  fp.readLong();
-			this.ground.left   =  fp.readLong();
-			this.ground.right  =  fp.readLong();
+			this.ground.top = fp.readLong();
+			this.ground.bottom = fp.readLong();
+			this.ground.left = fp.readLong();
+			this.ground.right = fp.readLong();
 		}
 
 		if (version >= 2.7) {
-			const count = fp.readLong(); 
+			const count = fp.readLong();
 			fp.seek(4 * count, SEEK_CUR); // Moves the file pointer forward by 4 * count bytes
 		}
 
 		// Read Object
-		var models  = this.models;
-		var lights  = this.lights;
-		var sounds  = this.sounds;
+		var models = this.models;
+		var lights = this.lights;
+		var sounds = this.sounds;
 		var effects = this.effects;
-		var m=0, l=0, s=0, e=0;
+		var m = 0, l = 0, s = 0, e = 0;
 
 		// Allocate array (faster)
 		count = fp.readLong();
@@ -193,57 +192,57 @@ define( ['Utils/BinaryReader', 'Utils/gl-matrix'], function( BinaryReader, glMat
 
 				case 1:
 					models[m++] = {
-						name:      version >= 1.3 ? fp.readBinaryString(40) : null,
-						animType:  version >= 1.3 ? fp.readLong()  : 0,
+						name: version >= 1.3 ? fp.readBinaryString(40) : null,
+						animType: version >= 1.3 ? fp.readLong() : 0,
 						animSpeed: version >= 1.3 ? fp.readFloat() : 1.0,
-						blockType: version >= 1.3 ? fp.readLong()  : 0,
+						blockType: version >= 1.3 ? fp.readLong() : 0,
 						UnknownByte: (version >= 2.6 && this.files.buildnumber >= 186) ? fp.readByte() : 0,
 						UnknownByte2: (version >= 2.7) ? fp.readLong() : 0,
-						filename:  fp.readBinaryString(80),
-						nodename:  fp.readBinaryString(80),
-						position:[ fp.readFloat()/5, fp.readFloat()/5, fp.readFloat()/5 ],
-						rotation:[ fp.readFloat(),   fp.readFloat(),   fp.readFloat() ],
-						scale:   [ fp.readFloat()/5, fp.readFloat()/5, fp.readFloat()/5 ]
+						filename: fp.readBinaryString(80),
+						nodename: fp.readBinaryString(80),
+						position: [fp.readFloat() / 5, fp.readFloat() / 5, fp.readFloat() / 5],
+						rotation: [fp.readFloat(), fp.readFloat(), fp.readFloat()],
+						scale: [fp.readFloat() / 5, fp.readFloat() / 5, fp.readFloat() / 5]
 					};
 					continue;
 
 				case 2:
 					lights[l++] = {
-						name:    fp.readBinaryString(80),
-						pos:   [ fp.readFloat()/5, fp.readFloat()/5, fp.readFloat()/5 ],
-						color: [ fp.readLong(),    fp.readLong(),    fp.readLong()  ],
-						range:   fp.readFloat()
+						name: fp.readBinaryString(80),
+						pos: [fp.readFloat() / 5, fp.readFloat() / 5, fp.readFloat() / 5],
+						color: [fp.readLong(), fp.readLong(), fp.readLong()],
+						range: fp.readFloat()
 					};
 					continue;
 
 				case 3:
 					sounds[s++] = {
-						name:     fp.readBinaryString(80),
-						file:     fp.readBinaryString(80),
-						pos:    [ fp.readFloat()/5, fp.readFloat()/5, fp.readFloat()/5 ],
-						vol:      fp.readFloat(),
-						width:    fp.readLong(),
-						height:   fp.readLong(),
-						range:    fp.readFloat(),
-						cycle:    version >= 2.0 ? fp.readFloat() : 0.0
+						name: fp.readBinaryString(80),
+						file: fp.readBinaryString(80),
+						pos: [fp.readFloat() / 5, fp.readFloat() / 5, fp.readFloat() / 5],
+						vol: fp.readFloat(),
+						width: fp.readLong(),
+						height: fp.readLong(),
+						range: fp.readFloat(),
+						cycle: version >= 2.0 ? fp.readFloat() : 0.0
 					};
 					continue;
 
 				case 4:
 					effects[e++] = {
-						name:   fp.readBinaryString(80),
-						pos:  [ fp.readFloat()/5, fp.readFloat()/5, fp.readFloat()/5 ],
-						id:     fp.readLong(),
-						delay:  fp.readFloat() * 10,
-						param: [ fp.readFloat(), fp.readFloat(), fp.readFloat(), fp.readFloat() ] // effectClass.apply(effect, effect.param) ?
+						name: fp.readBinaryString(80),
+						pos: [fp.readFloat() / 5, fp.readFloat() / 5, fp.readFloat() / 5],
+						id: fp.readLong(),
+						delay: fp.readFloat() * 10,
+						param: [fp.readFloat(), fp.readFloat(), fp.readFloat(), fp.readFloat()] // effectClass.apply(effect, effect.param) ?
 					};
 			}
 		}
 
 		// Remove empty content
-		models.length  = m;
-		sounds.length  = s;
-		lights.length  = l;
+		models.length = m;
+		sounds.length = s;
+		lights.length = l;
 		effects.length = e;
 
 		// skip quadtree (not used)
@@ -254,8 +253,7 @@ define( ['Utils/BinaryReader', 'Utils/gl-matrix'], function( BinaryReader, glMat
 	/**
 	 * Compile RSW file
 	 */
-	RSW.prototype.compile = function Compile()
-	{
+	RSW.prototype.compile = function Compile() {
 		return {
 			water: this.water,
 			light: this.light,
@@ -267,6 +265,7 @@ define( ['Utils/BinaryReader', 'Utils/gl-matrix'], function( BinaryReader, glMat
 
 	/**
 	 * Export
+	 * @type {Loaders.World}
 	 */
 	return RSW;
 });

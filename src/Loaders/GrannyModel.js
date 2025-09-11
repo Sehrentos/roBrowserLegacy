@@ -13,10 +13,11 @@
 //Figure out how to decompress.
 //Figure out how to use this structure tree that granny has by default for each sections information.
 
-define( ['Utils/BinaryReader', 'Utils/gl-matrix', 'Utils/CRC32'], function( BinaryReader, glMatrix )
-{
+define( ['Utils/BinaryReader', 'Utils/gl-matrix', 'Utils/CRC32'], function(
+	/** @type {Utils.BinaryReader} */BinaryReader,
+	/** @type {Utils.glMatrix} */glMatrix
+) {
 	'use strict';
-
 
 	/**
 	 * Import
@@ -30,6 +31,7 @@ define( ['Utils/BinaryReader', 'Utils/gl-matrix', 'Utils/CRC32'], function( Bina
 	 * Model class loader
 	 *
 	 * @param {ArrayBuffer} data - optional
+	 * @type {Loaders.GrannyModel}
 	 */
 	function GR2( data )
 	{
@@ -1334,6 +1336,7 @@ GR2.File.prototype.CRCIsVaild = function(FileName) {
 
 	/**
 	 * Export
+	 * @type {Loaders.GrannyModel}
 	 */
 	return GR2;
 });

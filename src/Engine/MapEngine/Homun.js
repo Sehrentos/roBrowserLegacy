@@ -31,12 +31,12 @@
  * @prop {number} nRelationship
  * @prop {number} sp
  * @prop {string} szName Homun name
- * 
+ *
  * @typedef {Object} TLife
  * @prop {number} ap
  * @prop {number} ap_max
  * @prop {HTMLCanvasElement} canvas
- * @prop {CanvasRenderingContext2D} ctx 
+ * @prop {CanvasRenderingContext2D} ctx
  * @prop {boolean} display
  * @prop {Entity} entity
  * @prop {number} hp
@@ -46,22 +46,19 @@
  * @prop {number} sp
  * @prop {number} sp_max
  */
-define(function (require) {
+define(/** @type {(require: Require)=>Engine.MapEngine.Homun} */function (require) {
 	'use strict';
 
-	/**
-	 * Load dependencies
-	 */
-	var DB = require('DB/DBManager');
-	var Network = require('Network/NetworkManager');
-	var PACKET = require('Network/PacketStructure');
-	var Session = require('Engine/SessionStorage');
-	var EntityManager = require('Renderer/EntityManager');
-	var UIManager = require('UI/UIManager');
-	var ChatBox = require('UI/Components/ChatBox/ChatBox');
-	var HomunInformations = require('UI/Components/HomunInformations/HomunInformations');
-	var SkillListMH = require('UI/Components/SkillListMH/SkillListMH');
-	var Mouse = require('Controls/MouseEventHandler');
+	/** @type {DB.DBManager} */var DB = require('DB/DBManager');
+	/** @type {Network.NetworkManager} */var Network = require('Network/NetworkManager');
+	/** @type {Network.PacketStructure} */var PACKET = require('Network/PacketStructure');
+	/** @type {Engine.SessionStorage} */var Session = require('Engine/SessionStorage');
+	/** @type {Renderer.EntityManager} */var EntityManager = require('Renderer/EntityManager');
+	/** @type {UI.UIManager} */var UIManager = require('UI/UIManager');
+	/** @type {UI.Component.ChatBox} */var ChatBox = require('UI/Components/ChatBox/ChatBox');
+	/** @type {UI.Component.HomunInformations} */var HomunInformations = require('UI/Components/HomunInformations/HomunInformations');
+	/** @type {UI.Component.SkillListMH} */var SkillListMH = require('UI/Components/SkillListMH/SkillListMH');
+	/** @type {Controls.MouseEventHandler} */var Mouse = require('Controls/MouseEventHandler');
 
 	/**
 	 * @type {THomunPacket} cached homunculus information
@@ -265,7 +262,7 @@ define(function (require) {
 
 	/**
 	 * Update homunculus parameters e.g. hp/sp recovery
-	 * 
+	 *
 	 * @param {object} pkt - PACKET.ZC.HO_PAR_CHANGE
 	 */
 	function onParamsUpdate(pkt) {
@@ -310,6 +307,7 @@ define(function (require) {
 
 	/**
 	 * Initialize
+	 * @type {Engine.MapEngine.Homun}
 	 */
 	return function NPCEngine() {
 		Network.hookPacket(PACKET.ZC.PROPERTY_HOMUN, onHomunInformation);

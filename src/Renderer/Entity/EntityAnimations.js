@@ -7,31 +7,26 @@
  *
  * @author Vincent Thibault
  */
-define(['Renderer/Renderer'], function( Renderer )
-{
+define(['Renderer/Renderer'], function (/** @type {Renderer.Renderer} */Renderer) {
 	'use strict';
-
 
 	/**
 	 * @Constructor
-	 * @param {object} Entity
+	 * @param {object} entity
 	 */
-	function Animations(entity)
-	{
+	function Animations(entity) {
 		this.entity = entity;
-		this.list   = [];
+		this.list = [];
 	}
-
 
 	/**
 	 * Add an animation to the list
 	 *
 	 * @param {function} callback
 	 */
-	Animations.prototype.add = function add(callback)
-	{
+	Animations.prototype.add = function add(callback) {
 		this.list.push({
-			tick:     Renderer.tick,
+			tick: Renderer.tick,
 			callback: callback
 		});
 	};
@@ -40,8 +35,7 @@ define(['Renderer/Renderer'], function( Renderer )
 	/**
 	 * Process events
 	 */
-	Animations.prototype.process = function process()
-	{
+	Animations.prototype.process = function process() {
 		var i, count;
 
 		for (i = 0, count = this.list.length; i < count; ++i) {
@@ -57,8 +51,7 @@ define(['Renderer/Renderer'], function( Renderer )
 	/**
 	 * Clean up events
 	 */
-	Animations.prototype.free = function free()
-	{
+	Animations.prototype.free = function free() {
 		this.list.length = 0;
 	};
 

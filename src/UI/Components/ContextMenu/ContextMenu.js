@@ -17,7 +17,7 @@ define(function(require)
 	var Renderer     = require('Renderer/Renderer');
 	var Mouse        = require('Controls/MouseEventHandler');
 	var UIManager    = require('UI/UIManager');
-	var UIComponent  = require('UI/UIComponent');
+	/** @type {UI.UIComponent<UI.Component.ContextMenu>} */var UIComponent = require('UI/UIComponent');
 	var cssText      = require('text!./ContextMenu.css');
 
 

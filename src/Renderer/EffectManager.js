@@ -5,33 +5,29 @@
  *
  * @author Vincent Thibault
  */
-define(function (require) {
+define(function (/** @type {Require} */require) {
 	'use strict';
 
-
-	/**
-	 * Load dependencies
-	 */
-	const EffectDB    = require('DB/Effects/EffectTable');
-	const SkillEffect   = require('DB/Skills/SkillEffect');
-	const SkillUnit     = require('DB/Skills/SkillUnit');
-	const SU            = require('DB/Skills/SkillUnitConst');
-	const ItemEffect    = require('DB/Items/ItemEffect');
-	const Commands      = require('Controls/ProcessCommand');
-	const Events        = require('Core/Events');
-	const Configs       = require('Core/Configs');
-	const Cylinder      = require('Renderer/Effects/Cylinder');
-	const StrEffect     = require('Renderer/Effects/StrEffect');
-	const RsmEffect     = require('Renderer/Effects/RsmEffect');
-	const TwoDEffect    = require('Renderer/Effects/TwoDEffect');
-	const ThreeDEffect  = require('Renderer/Effects/ThreeDEffect');
-	const Entity        = require('Renderer/Entity/Entity');
-	const EntityManager = require('Renderer/EntityManager');
-	const Renderer      = require('Renderer/Renderer');
-	const Altitude      = require('Renderer/Map/Altitude');
-	const Sound         = require('Audio/SoundManager');
-	const Preferences   = require('Preferences/Map');
-	const QuadHorn      = require('Renderer/Effects/QuadHorn');
+	/** @type {DB.DBManager} */const EffectDB = require('DB/Effects/EffectTable');
+	/** @type {DB.Skills.SkillEffect} */const SkillEffect = require('DB/Skills/SkillEffect');
+	/** @type {DB.Skills.SkillUnit} */const SkillUnit = require('DB/Skills/SkillUnit');
+	/** @type {DB.Skills.SkillUnitConst} */const SU = require('DB/Skills/SkillUnitConst');
+	/** @type {DB.Items.ItemEffect} */const ItemEffect = require('DB/Items/ItemEffect');
+	/** @type {Controls.ProcessCommand} */const Commands = require('Controls/ProcessCommand');
+	/** @type {Core.Events} */const Events = require('Core/Events');
+	/** @type {Core.Configs} */const Configs = require('Core/Configs');
+	/** @type {Renderer.Effects.Cylinder} */const Cylinder = require('Renderer/Effects/Cylinder');
+	/** @type {Renderer.Effects.StrEffect} */const StrEffect = require('Renderer/Effects/StrEffect');
+	/** @type {Renderer.Effects.RsmEffect} */const RsmEffect = require('Renderer/Effects/RsmEffect');
+	/** @type {Renderer.Effects.TwoDEffect} */const TwoDEffect = require('Renderer/Effects/TwoDEffect');
+	/** @type {Renderer.Effects.ThreeDEffect} */const ThreeDEffect = require('Renderer/Effects/ThreeDEffect');
+	/** @type {Renderer.Entity} */const Entity = require('Renderer/Entity/Entity');
+	/** @type {Renderer.EntityManager} */const EntityManager = require('Renderer/EntityManager');
+	/** @type {Renderer.Renderer} */const Renderer = require('Renderer/Renderer');
+	/** @type {Renderer.Map.Altitude} */const Altitude = require('Renderer/Map/Altitude');
+	/** @type {Audio.SoundManager} */const Sound = require('Audio/SoundManager');
+	/** @type {Preferences.Map} */const Preferences = require('Preferences/Map');
+	/** @type {Renderer.Effects.QuadHorn} */const QuadHorn = require('Renderer/Effects/QuadHorn');
 
 	/**
 	 * @type {object} saved webgl context
@@ -62,23 +58,23 @@ define(function (require) {
 	 */
 	EffectManager.init = function init(gl) {
 		_gl = gl;
-		
-		if(Configs.get('development')){
+
+		if (Configs.get('development')) {
 			Commands.add(
 				'd_effectmanager',
 				'Print EffectManager list to console.',
-				function(){
+				function () {
 					EffectManager.debug();
 				},
 				['d_em'],
 				true
 			);
 		} else {
-			if(Commands.isEnabled('d_effectmanager')){
+			if (Commands.isEnabled('d_effectmanager')) {
 				Commands.remove('d_effectmanager');
 			}
 		}
-		
+
 	};
 
 
@@ -87,16 +83,16 @@ define(function (require) {
 	 */
 	function PrepareInit(callParams) {
 		const Params = {
-			effectId:      -1,
-			skillId:       null,
-			ownerAID:      null,
-			position:      null,
-			startTick:     null,
-			duration:      null,
-			persistent:    false,
-			repeatEnd:     null,
-			repeatDelay:   0,
-			otherAID:      null,
+			effectId: -1,
+			skillId: null,
+			ownerAID: null,
+			position: null,
+			startTick: null,
+			duration: null,
+			persistent: false,
+			repeatEnd: null,
+			repeatDelay: 0,
+			otherAID: null,
 			otherPosition: null
 		};
 		Object.assign(Params, callParams);
@@ -153,7 +149,7 @@ define(function (require) {
 			const effectIdList = Array.isArray(effectID) ? effectID : [effectID];
 			let list, i, count;
 
-			list  = _list[name];
+			list = _list[name];
 			count = list.length;
 
 			for (i = 0; i < count; ++i) {
@@ -211,7 +207,7 @@ define(function (require) {
 		let i, j, size, count, list, constructor;
 
 		for (i = 0, count = keys.length; i < count; ++i) {
-			list        = _list[keys[i]];
+			list = _list[keys[i]];
 			constructor = list[0].constructor;
 
 			for (j = 0, size = list.length; j < size; ++j) {
@@ -242,7 +238,7 @@ define(function (require) {
 	 * @param {boolean} render before entities ?
 	 */
 	EffectManager.render = function render(gl, modelView, projection, fog, tick, renderBeforeEntities) {
-		const keys  = Object.keys(_list);
+		const keys = Object.keys(_list);
 		const count = keys.length;
 		let i, j, size, list, constructor;
 
@@ -312,7 +308,7 @@ define(function (require) {
 	 * @param {object} effect
 	 */
 	function repeatEffect(effect) {
-		const Params    = effect._Params;
+		const Params = effect._Params;
 		let restartTick = false, RepeatParams, EF_Inst_Par
 
 		if ((Params.Inst.persistent || Params.Inst.repeatEnd) && !(effect._AlreadyRepeated)) {
@@ -336,16 +332,16 @@ define(function (require) {
 
 				// Re-spam effect if needed to repeat
 				EF_Inst_Par = {
-					effectID:    Params.Inst.effectID,
+					effectID: Params.Inst.effectID,
 					duplicateID: Params.Inst.duplicateID,
-					startTick:   restartTick,
-					noDelay:     true // Offsets and delays are no longer used
+					startTick: restartTick,
+					noDelay: true // Offsets and delays are no longer used
 				}
 
 				RepeatParams = {
 					effect: Params.effect,
-					Inst:   EF_Inst_Par,
-					Init:   Params.Init
+					Inst: EF_Inst_Par,
+					Init: Params.Init
 				}
 
 				EffectManager.spamEffect(RepeatParams);
@@ -371,7 +367,7 @@ define(function (require) {
 			let list, i, count;
 			const effectIdList = Array.isArray(effectID) ? effectID : [effectID];
 
-			list  = _list[name];
+			list = _list[name];
 			count = list.length;
 
 			for (i = 0; i < count; ++i) {
@@ -451,15 +447,15 @@ define(function (require) {
 
 			for (j = 0; j < effects[i].duplicate; ++j) {
 				EF_Inst_Par = {
-					effectID:    EF_Init_Par.effectId,
+					effectID: EF_Init_Par.effectId,
 					duplicateID: j,
-					startTick:   EF_Init_Par.startTick + (effects[i].timeBetweenDupli * j)
+					startTick: EF_Init_Par.startTick + (effects[i].timeBetweenDupli * j)
 				}
 
 				Params = {
 					effect: effects[i],
-					Inst:   EF_Inst_Par,
-					Init:   EF_Init_Par
+					Inst: EF_Inst_Par,
+					Init: EF_Init_Par
 				}
 
 				EffectManager.spamEffect(Params);
@@ -476,7 +472,7 @@ define(function (require) {
 	EffectManager.spamEffect = function spamEffect(Params) {
 		let filename;
 
-		Params.Inst.position      = Params.Init.position;
+		Params.Inst.position = Params.Init.position;
 		Params.Inst.otherPosition = Params.Init.otherPosition;
 
 		if (!Params.Inst.position) {
@@ -507,7 +503,7 @@ define(function (require) {
 			Params.Inst.persistent = Params.effect.repeat; // Effect conf overrides. We can selecively enable/disable repeat on parts using this.
 		}
 
-		Params.Inst.repeatEnd   = Params.Init.repeatEnd ? Params.Init.repeatEnd : Params.effect.repeatEnd || 0; // Main has priority
+		Params.Inst.repeatEnd = Params.Init.repeatEnd ? Params.Init.repeatEnd : Params.effect.repeatEnd || 0; // Main has priority
 		Params.Inst.repeatDelay = Params.effect.repeatDelay ? Params.effect.repeatDelay : Params.Init.repeatDelay; // Instance has priority
 
 		// Play sound
@@ -530,14 +526,14 @@ define(function (require) {
 		Params.Inst.duration = !isNaN(Params.effect.duration) ? Params.effect.duration : Params.Init.duration;
 
 		Params.Inst.delayOffsetDelta = !isNaN(Params.effect.delayOffsetDelta) ? Params.effect.delayOffsetDelta * Params.Inst.duplicateID : 0;
-		Params.Inst.delayLateDelta   = !isNaN(Params.effect.delayLateDelta) ? Params.effect.delayLateDelta * Params.Inst.duplicateID : 0;
+		Params.Inst.delayLateDelta = !isNaN(Params.effect.delayLateDelta) ? Params.effect.delayLateDelta * Params.Inst.duplicateID : 0;
 
 		Params.Inst.delayOffset = !isNaN(Params.effect.delayOffset) ? Params.effect.delayOffset + Params.Inst.delayOffsetDelta : 0;
-		Params.Inst.delayLate   = !isNaN(Params.effect.delayLate) ? Params.effect.delayLate + Params.Inst.delayLateDelta : 0;
+		Params.Inst.delayLate = !isNaN(Params.effect.delayLate) ? Params.effect.delayLate + Params.Inst.delayLateDelta : 0;
 
 		//Start and End
 		Params.Inst.startTick = Params.Inst.startTick + (Params.Inst.noDelay ? Params.Inst.delayOffset + Params.Inst.delayLate : 0);
-		Params.Inst.endTick   = Params.Inst.duration > 0 ? Params.Inst.startTick + (Params.Inst.noDelay ? Params.Inst.delayOffset : 0) + Params.Inst.duration : -1;
+		Params.Inst.endTick = Params.Inst.duration > 0 ? Params.Inst.startTick + (Params.Inst.noDelay ? Params.Inst.delayOffset : 0) + Params.Inst.duration : -1;
 
 		switch (Params.effect.type) {
 			case 'SPR':
@@ -616,37 +612,37 @@ define(function (require) {
 	 * @param {object} effect prams
 	 */
 	function spamSprite(Params) {
-		let entity      = Params.Init.ownerEntity;
+		let entity = Params.Init.ownerEntity;
 		let isNewEntity = false;
 
 		if (!entity) {
-			entity            = new Entity();
-			entity.GID        = Params.Init.ownerAID;
-			entity.position   = Params.Inst.position;
+			entity = new Entity();
+			entity.GID = Params.Init.ownerAID;
+			entity.position = Params.Inst.position;
 			entity.objecttype = entity.constructor.TYPE_EFFECT;
-			isNewEntity       = true;
+			isNewEntity = true;
 		} else if (!Params.effect.attachedEntity) {
-			entity            = new Entity();
-			entity.GID        = -1;
-			entity.position   = Params.Inst.position;
+			entity = new Entity();
+			entity.GID = -1;
+			entity.position = Params.Inst.position;
 			entity.objecttype = entity.constructor.TYPE_EFFECT;
-			isNewEntity       = true;
+			isNewEntity = true;
 		}
 
 
 		// Sprite effect
 		entity.attachments.add({
-			uid:       Params.effect.effectID,
-			file:      Params.effect.file,
-			head:      !!Params.effect.head,
+			uid: Params.effect.effectID,
+			file: Params.effect.file,
+			head: !!Params.effect.head,
 			direction: !!Params.effect.direction,
-			repeat:    Params.effect.repeat || Params.Inst.persistent,
+			repeat: Params.effect.repeat || Params.Inst.persistent,
 			duplicate: Params.effect.duplicate,
 			stopAtEnd: Params.effect.stopAtEnd,
-			xOffset:   Params.effect.xOffset,
-			yOffset:   Params.effect.yOffset,
-			frame:     Params.effect.frame,
-			delay:     Params.effect.delayFrame
+			xOffset: Params.effect.xOffset,
+			yOffset: Params.effect.yOffset,
+			frame: Params.effect.frame,
+			delay: Params.effect.delayFrame
 		});
 
 		if (isNewEntity) {
@@ -715,9 +711,9 @@ define(function (require) {
 		EffectManager.remove(null, uid);
 
 		// New Entity
-		entity            = new Entity();
-		entity.GID        = uid;
-		entity.position   = [xPos, yPos, Altitude.getCellHeight(xPos, yPos)];
+		entity = new Entity();
+		entity.GID = uid;
+		entity.position = [xPos, yPos, Altitude.getCellHeight(xPos, yPos)];
 		entity.hideShadow = true;
 		entity.objecttype = traps.includes(unit_id) ? entity.constructor.TYPE_TRAP : (targetableUnits.includes(unit_id) ? entity.constructor.TYPE_UNIT : entity.constructor.TYPE_EFFECT);
 		entity.creatorGID = creatorUid;
@@ -726,13 +722,13 @@ define(function (require) {
 
 		// Effect
 		EF_Init_Par = {
-			effectId:   effectId,
-			ownerAID:   uid,
-			position:   [xPos, yPos, Altitude.getCellHeight(xPos, yPos)],
-			startTick:  Renderer.tick,
+			effectId: effectId,
+			ownerAID: uid,
+			position: [xPos, yPos, Altitude.getCellHeight(xPos, yPos)],
+			startTick: Renderer.tick,
 			persistent: true,
-			duration:   -1, // Infinite by default but the effect param can have a duration that overrides this
-			otherAID:   creatorUid
+			duration: -1, // Infinite by default but the effect param can have a duration that overrides this
+			otherAID: creatorUid
 		};
 
 		EffectManager.spam(EF_Init_Par);
@@ -758,11 +754,11 @@ define(function (require) {
 
 			effects.forEach(effectId => {
 				EF_Init_Par = {
-					effectId:  effectId,
-					ownerAID:  destAID,
-					position:  position,
+					effectId: effectId,
+					ownerAID: destAID,
+					position: position,
 					startTick: tick,
-					otherAID:  srcAID
+					otherAID: srcAID
 				};
 
 				EffectManager.spam(EF_Init_Par);
@@ -774,11 +770,11 @@ define(function (require) {
 
 			effects.forEach(effectId => {
 				EF_Init_Par = {
-					effectId:  effectId,
-					ownerAID:  srcAID,
-					position:  position,
+					effectId: effectId,
+					ownerAID: srcAID,
+					position: position,
 					startTick: tick,
-					otherAID:  destAID
+					otherAID: destAID
 				};
 
 				EffectManager.spam(EF_Init_Par);
@@ -804,10 +800,10 @@ define(function (require) {
 
 			effects.forEach(effectId => {
 				EF_Init_Par = {
-					effectId:  effectId,
-					ownerAID:  destAID,
+					effectId: effectId,
+					ownerAID: destAID,
 					startTick: tick,
-					otherAID:  srcAID
+					otherAID: srcAID
 				};
 
 				EffectManager.spam(EF_Init_Par);
@@ -819,10 +815,10 @@ define(function (require) {
 
 			effects.forEach(effectId => {
 				EF_Init_Par = {
-					effectId:  effectId,
-					ownerAID:  srcAID,
+					effectId: effectId,
+					ownerAID: srcAID,
 					startTick: tick,
-					otherAID:  destAID
+					otherAID: destAID
 				};
 
 				EffectManager.spam(EF_Init_Par);
@@ -848,10 +844,10 @@ define(function (require) {
 
 			effects.forEach(effectId => {
 				EF_Init_Par = {
-					effectId:  effectId,
-					ownerAID:  destAID,
+					effectId: effectId,
+					ownerAID: destAID,
 					startTick: tick,
-					otherAID:  srcAID
+					otherAID: srcAID
 				};
 
 				EffectManager.spam(EF_Init_Par);
@@ -877,10 +873,10 @@ define(function (require) {
 
 			effects.forEach(effectId => {
 				EF_Init_Par = {
-					effectId:  effectId,
-					ownerAID:  destAID,
+					effectId: effectId,
+					ownerAID: destAID,
 					startTick: tick,
-					otherAID:  srcAID
+					otherAID: srcAID
 				};
 
 				EffectManager.spam(EF_Init_Par);
@@ -899,10 +895,10 @@ define(function (require) {
 
 			effects.forEach(effectId => {
 				EF_Init_Par = {
-					effectId:  effectId,
-					ownerAID:  srcAID,
+					effectId: effectId,
+					ownerAID: srcAID,
 					startTick: tick,
-					otherAID:  destAID
+					otherAID: destAID
 				};
 
 				EffectManager.spam(EF_Init_Par);
@@ -928,10 +924,10 @@ define(function (require) {
 
 			effects.forEach(effectId => {
 				EF_Init_Par = {
-					effectId:  effectId,
-					ownerAID:  destAID,
+					effectId: effectId,
+					ownerAID: destAID,
 					startTick: tick,
-					otherAID:  srcAID
+					otherAID: srcAID
 				};
 
 				EffectManager.spam(EF_Init_Par);
@@ -958,11 +954,11 @@ define(function (require) {
 
 			effects.forEach(effectId => {
 				EF_Init_Par = {
-					effectId:  effectId,
-					ownerAID:  destAID,
-					position:  position,
+					effectId: effectId,
+					ownerAID: destAID,
+					position: position,
 					startTick: tick,
-					otherAID:  srcAID
+					otherAID: srcAID
 				};
 
 				EffectManager.spam(EF_Init_Par);
@@ -974,24 +970,25 @@ define(function (require) {
 
 			effects.forEach(effectId => {
 				EF_Init_Par = {
-					effectId:  effectId,
-					ownerAID:  srcAID,
-					position:  position,
+					effectId: effectId,
+					ownerAID: srcAID,
+					position: position,
 					startTick: tick,
-					otherAID:  destAID
+					otherAID: destAID
 				};
 
 				EffectManager.spam(EF_Init_Par);
 			});
 		}
 	};
-	
-	EffectManager.debug = function(){
-		console.log( '%c[DEBUG] EffectManager _list: ', 'color:#F5B342', _list );
+
+	EffectManager.debug = function () {
+		console.log('%c[DEBUG] EffectManager _list: ', 'color:#F5B342', _list);
 	};
 
 	/**
 	 * Export
+	 * @type {Renderer.EffectManager}
 	 */
 	return EffectManager;
 });

@@ -5,58 +5,52 @@
  *
  * @author Vincent Thibault
  */
-
-define(function (require) {
+define(/** @type {(require: Require)=>Engine.MapEngine.ChatRoom} */function (require) {
 	'use strict';
 
-
-	/**
-	 * Load dependencies
-	 */
-	var Client = require('Core/Client');
-	var DB = require('DB/DBManager');
-	var SkillId = require('DB/Skills/SkillConst');
-	var SkillInfo = require('DB/Skills/SkillInfo');
-	var StatusConst = require('DB/Status/StatusConst');
-	var StatusState = require('DB/Status/StatusState');
-	var Emotions = require('DB/Emotions');
-	var SkillEffect = require('DB/Skills/SkillEffect');
-	var SkillActionTable = require('DB/Skills/SkillAction');
-	var EffectConst = require('DB/Effects/EffectConst');
-	var PetMessageConst = require('DB/Pets/PetMessageConst');
-	var JobId = require('DB/Jobs/JobConst');
-	var WeaponType = require('DB/Items/WeaponType');
-	var Sound = require('Audio/SoundManager');
-	var Events = require('Core/Events');
-	var Guild = require('Engine/MapEngine/Guild');
-	var Session = require('Engine/SessionStorage');
-	var Network = require('Network/NetworkManager');
-	var PACKETVER = require('Network/PacketVerManager');
-	var PACKET = require('Network/PacketStructure');
-	var Altitude = require('Renderer/Map/Altitude');
-	var Renderer = require('Renderer/Renderer');
-	var EntityManager = require('Renderer/EntityManager');
-	var Entity = require('Renderer/Entity/Entity');
-	var EffectManager = require('Renderer/EffectManager');
-	var Damage = require('Renderer/Effects/Damage');
-	var MagicTarget = require('Renderer/Effects/MagicTarget');
-	var LockOnTarget = require('Renderer/Effects/LockOnTarget');
-	var MagicRing = require('Renderer/Effects/MagicRing');
-
-	var BasicInfo = require('UI/Components/BasicInfo/BasicInfo');
-	var ChatBox = require('UI/Components/ChatBox/ChatBox');
-	var ChatRoom = require('UI/Components/ChatRoom/ChatRoom');
-	var Escape = require('UI/Components/Escape/Escape');
-	var HomunInformations = require('UI/Components/HomunInformations/HomunInformations');
-	var MercenaryInformations = require('UI/Components/MercenaryInformations/MercenaryInformations');
-	var Inventory = require('UI/Components/Inventory/Inventory');
-	var ShortCut = require('UI/Components/ShortCut/ShortCut');
-	var StatusIcons = require('UI/Components/StatusIcons/StatusIcons');
+	/** @type {Core.Client} */var Client = require('Core/Client');
+	/** @type {DB.DBManager} */var DB = require('DB/DBManager');
+	/** @type {DB.Skills.SkillConst} */var SkillId = require('DB/Skills/SkillConst');
+	/** @type {DB.Skills.SkillInfo} */var SkillInfo = require('DB/Skills/SkillInfo');
+	/** @type {DB.Status.StatusConst} */var StatusConst = require('DB/Status/StatusConst');
+	/** @type {DB.Status.StatusState} */var StatusState = require('DB/Status/StatusState');
+	/** @type {DB.Emotions} */var Emotions = require('DB/Emotions');
+	/** @type {DB.Skills.SkillEffect} */var SkillEffect = require('DB/Skills/SkillEffect');
+	/** @type {DB.Skills.SkillAction} */var SkillActionTable = require('DB/Skills/SkillAction');
+	/** @type {DB.Effects.Const} */var EffectConst = require('DB/Effects/EffectConst');
+	/** @type {DB.Pets.PetMessageConst} */var PetMessageConst = require('DB/Pets/PetMessageConst');
+	/** @type {DB.Jobs.JobConst} */var JobId = require('DB/Jobs/JobConst');
+	/** @type {DB.Items.WeaponType} */var WeaponType = require('DB/Items/WeaponType');
+	/** @type {Audio.AudioManager} */var Sound = require('Audio/SoundManager');
+	/** @type {Core.Events} */var Events = require('Core/Events');
+	/** @type {Engine.MapEngine.Guild} */var Guild = require('Engine/MapEngine/Guild');
+	/** @type {Engine.SessionStorage} */var Session = require('Engine/SessionStorage');
+	/** @type {Network.NetworkManager} */var Network = require('Network/NetworkManager');
+	/** @type {Network.PacketVerManager} */var PACKETVER = require('Network/PacketVerManager');
+	/** @type {Network.PacketStructure} */var PACKET = require('Network/PacketStructure');
+	/** @type {Renderer.Map.Altitude} */var Altitude = require('Renderer/Map/Altitude');
+	/** @type {Renderer.Renderer} */var Renderer = require('Renderer/Renderer');
+	/** @type {Renderer.EntityManager} */var EntityManager = require('Renderer/EntityManager');
+	/** @type {Renderer.Entity.Entity} */var Entity = require('Renderer/Entity/Entity');
+	/** @type {Renderer.EffectManager} */var EffectManager = require('Renderer/EffectManager');
+	/** @type {Renderer.Effects.Damage} */var Damage = require('Renderer/Effects/Damage');
+	/** @type {Renderer.Effects.MagicTarget} */var MagicTarget = require('Renderer/Effects/MagicTarget');
+	/** @type {Renderer.Effects.LockOnTarget} */var LockOnTarget = require('Renderer/Effects/LockOnTarget');
+	/** @type {Renderer.Effects.MagicRing} */var MagicRing = require('Renderer/Effects/MagicRing');
+	/** @type {UI.Component.BasicInfo} */var BasicInfo = require('UI/Components/BasicInfo/BasicInfo');
+	/** @type {UI.Component.ChatBox} */var ChatBox = require('UI/Components/ChatBox/ChatBox');
+	/** @type {UI.Component.ChatRoom} */var ChatRoom = require('UI/Components/ChatRoom/ChatRoom');
+	/** @type {UI.Component.Escape} */var Escape = require('UI/Components/Escape/Escape');
+	/** @type {UI.Component.HomunInformations} */var HomunInformations = require('UI/Components/HomunInformations/HomunInformations');
+	/** @type {UI.Component.MercenaryInformations} */var MercenaryInformations = require('UI/Components/MercenaryInformations/MercenaryInformations');
+	/** @type {UI.Component.Inventory} */var Inventory = require('UI/Components/Inventory/Inventory');
+	/** @type {UI.Component.ShortCut} */var ShortCut = require('UI/Components/ShortCut/ShortCut');
+	/** @type {UI.Component.StatusIcons} */var StatusIcons = require('UI/Components/StatusIcons/StatusIcons');
 	var getModule = require;
 
 	// Version Dependent UIs
-	var BasicInfo = require('UI/Components/BasicInfo/BasicInfo');
-	var MiniMap = require('UI/Components/MiniMap/MiniMap');
+	/** @type {UI.Component.BasicInfo} */var BasicInfo = require('UI/Components/BasicInfo/BasicInfo');
+	/** @type {UI.Component.MiniMap} */var MiniMap = require('UI/Components/MiniMap/MiniMap');
 
 	// Excludes for skill name display
 	var SkillNameDisplayExclude = [
@@ -401,7 +395,7 @@ define(function (require) {
 					play: true
 				});
 			}
-			
+
 			entity.resetRoute();
 			entity.position[0] = pkt.xPos;
 			entity.position[1] = pkt.yPos;
@@ -2450,6 +2444,7 @@ define(function (require) {
 
 	/**
 	 * Initialize
+	 * @type {Engine.MapEngine.Entity}
 	 */
 	return function EntityEngine() {
 		Network.hookPacket(PACKET.ZC.NOTIFY_STANDENTRY, onEntitySpam);

@@ -7,25 +7,20 @@
  *
  * @author Vincent Thibault
  */
-
-define(function( require )
-{
+define(/** @type {(require: Require)=>Engine.MapEngine.Friends} */function (require) {
 	'use strict';
 
-
-	/**
-	 * Load dependencies
-	 */
-	var DB            = require('DB/DBManager');
-	var Network       = require('Network/NetworkManager');
-	var PACKET        = require('Network/PacketStructure');
-	var UIManager     = require('UI/UIManager');
-	var ChatBox       = require('UI/Components/ChatBox/ChatBox');
-	var FriendUI      = require('UI/Components/PartyFriends/PartyFriends');
+	/** @type {DB.DBManager} */var DB = require('DB/DBManager');
+	/** @type {Network.NetworkManager} */var Network = require('Network/NetworkManager');
+	/** @type {Network.PacketStructure} */var PACKET = require('Network/PacketStructure');
+	/** @type {UI.UIManager} */var UIManager = require('UI/UIManager');
+	/** @type {UI.Component.ChatBox} */var ChatBox = require('UI/Components/ChatBox/ChatBox');
+	/** @type {UI.Component.PartyFriends} */var FriendUI = require('UI/Components/PartyFriends/PartyFriends');
 
 
 	/**
 	 * Create namespace
+	 * @type {Engine.MapEngine.Friends}
 	 */
 	var FriendEngine = {};
 
@@ -40,18 +35,17 @@ define(function( require )
 	 * Initialzing engine
 	 * (Hook Packets)
 	 */
-	FriendEngine.init = function init()
-	{
+	FriendEngine.init = function init() {
 		// Hook Packets
-		Network.hookPacket( PACKET.ZC.FRIENDS_LIST,     onFriendList);
-		Network.hookPacket( PACKET.ZC.FRIENDS_STATE,    onFriendUpdate);
-		Network.hookPacket( PACKET.ZC.REQ_ADD_FRIENDS,  onFriendRequest);
-		Network.hookPacket( PACKET.ZC.ADD_FRIENDS_LIST, onFriendAdded);
-		Network.hookPacket( PACKET.ZC.DELETE_FRIENDS,   onFriendRemoved);
+		Network.hookPacket(PACKET.ZC.FRIENDS_LIST, onFriendList);
+		Network.hookPacket(PACKET.ZC.FRIENDS_STATE, onFriendUpdate);
+		Network.hookPacket(PACKET.ZC.REQ_ADD_FRIENDS, onFriendRequest);
+		Network.hookPacket(PACKET.ZC.ADD_FRIENDS_LIST, onFriendAdded);
+		Network.hookPacket(PACKET.ZC.DELETE_FRIENDS, onFriendRemoved);
 
 		// Hook UI
 		FriendUI.onRequestNewFriend = FriendEngine.addFriend;
-		FriendUI.onRemoveFriend     = FriendEngine.removeFriend;
+		FriendUI.onRemoveFriend = FriendEngine.removeFriend;
 	};
 
 
@@ -59,8 +53,7 @@ define(function( require )
 	 * Clean up from memory
 	 *
 	 */
-	FriendEngine.free = function free()
-	{
+	FriendEngine.free = function free() {
 		_friends.length = 0;
 	};
 
@@ -70,9 +63,8 @@ define(function( require )
 	 *
 	 * @param {string} name
 	 */
-	FriendEngine.addFriend = function addFriend( name )
-	{
-		var pkt  = new PACKET.CZ.ADD_FRIENDS();
+	FriendEngine.addFriend = function addFriend(name) {
+		var pkt = new PACKET.CZ.ADD_FRIENDS();
 		pkt.name = name;
 
 		Network.sendPacket(pkt);
@@ -84,8 +76,7 @@ define(function( require )
 	 *
 	 * @param {number} index
 	 */
-	FriendEngine.removeFriend = function removeFriend( index )
-	{
+	FriendEngine.removeFriend = function removeFriend(index) {
 		var pkt = new PACKET.CZ.DELETE_FRIENDS();
 		pkt.AID = _friends[index].AID;
 		pkt.GID = _friends[index].GID;
@@ -101,9 +92,8 @@ define(function( require )
 	 * @param {number} character id
 	 * @param {number} answer
 	 */
-	FriendEngine.answerFriendRequest = function answerFriendRequest( AID, GID, result )
-	{
-		var pkt    = new PACKET.CZ.ACK_REQ_ADD_FRIENDS();
+	FriendEngine.answerFriendRequest = function answerFriendRequest(AID, GID, result) {
+		var pkt = new PACKET.CZ.ACK_REQ_ADD_FRIENDS();
 		pkt.ReqAID = AID;
 		pkt.ReqGID = GID;
 		pkt.Result = result;
@@ -118,8 +108,7 @@ define(function( require )
 	 * @param {string} player name
 	 * @return {boolean} is friend
 	 */
-	FriendEngine.isFriend = function isFriend(name)
-	{
+	FriendEngine.isFriend = function isFriend(name) {
 		var i, count = _friends.length;
 
 		for (i = 0; i < count; ++i) {
@@ -135,8 +124,7 @@ define(function( require )
 	/**
 	 * Say hi to all your friends
 	 */
-	FriendEngine.sayHi = function sayHi()
-	{
+	FriendEngine.sayHi = function sayHi() {
 		var i, count = _friends.length;
 		var pkt = new PACKET.CZ.WHISPER();
 
@@ -149,7 +137,7 @@ define(function( require )
 			}
 		}
 
-		ChatBox.addText( '[ To Friends ] : ' + pkt.msg, ChatBox.TYPE.PRIVATE, ChatBox.FILTER.WHISPER );
+		ChatBox.addText('[ To Friends ] : ' + pkt.msg, ChatBox.TYPE.PRIVATE, ChatBox.FILTER.WHISPER);
 	};
 
 
@@ -158,8 +146,7 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.FRIENDS_LIST
 	 */
-	function onFriendList( pkt )
-	{
+	function onFriendList(pkt) {
 		_friends = pkt.friendList;
 
 		FriendUI.setFriends(_friends);
@@ -171,9 +158,8 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.FRIENDS_STATE
 	 */
-	function onFriendUpdate( pkt )
-	{
-		var idx = getFriendIndex( pkt.AID, pkt.GID);
+	function onFriendUpdate(pkt) {
+		var idx = getFriendIndex(pkt.AID, pkt.GID);
 
 		if (idx > -1) {
 			_friends[idx].State = pkt.State;
@@ -188,18 +174,17 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.REQ_ADD_FRIENDS
 	 */
-	function onFriendRequest( pkt )
-	{
+	function onFriendRequest(pkt) {
 		function answer(result) {
-			return function() {
-				FriendEngine.answerFriendRequest( pkt.ReqAID, pkt.ReqGID, result);
+			return function () {
+				FriendEngine.answerFriendRequest(pkt.ReqAID, pkt.ReqGID, result);
 			};
 		}
 
 		UIManager.showPromptBox(
 			// (%s) wishes to be friends with you. Would you like to accept?
 			DB.getMessage(818).replace('%s', pkt.Name),
-			'ok',     'cancel',
+			'ok', 'cancel',
 			answer(1), answer(0)
 		);
 	}
@@ -210,15 +195,14 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.ADD_FRIENDS_LIST
 	 */
-	function onFriendAdded( pkt )
-	{
+	function onFriendAdded(pkt) {
 		var idx;
 
 		switch (pkt.Result) {
 			case 0: // "You have become friends with (%s)."
-				ChatBox.addText( DB.getMessage(821).replace('%s', pkt.Name), ChatBox.TYPE.BLUE, ChatBox.FILTER.PUBLIC_LOG);
+				ChatBox.addText(DB.getMessage(821).replace('%s', pkt.Name), ChatBox.TYPE.BLUE, ChatBox.FILTER.PUBLIC_LOG);
 
-				idx = getFriendIndex( pkt.AID, pkt.GID);
+				idx = getFriendIndex(pkt.AID, pkt.GID);
 
 				// Not found, create slot (else just update)
 				if (idx < 0) {
@@ -226,24 +210,24 @@ define(function( require )
 					_friends[idx] = {};
 				}
 
-				_friends[idx].AID   = pkt.AID;
-				_friends[idx].GID   = pkt.GID;
-				_friends[idx].Name  = pkt.Name;
+				_friends[idx].AID = pkt.AID;
+				_friends[idx].GID = pkt.GID;
+				_friends[idx].Name = pkt.Name;
 				_friends[idx].State = 0;
 
 				FriendUI.updateFriend(idx, _friends[idx]);
 				break;
 
 			case 1: // "(%s) does not want to be friends with you."
-				ChatBox.addText( DB.getMessage(822).replace('%s', pkt.Name), ChatBox.TYPE.ERROR, ChatBox.FILTER.PUBLIC_LOG);
+				ChatBox.addText(DB.getMessage(822).replace('%s', pkt.Name), ChatBox.TYPE.ERROR, ChatBox.FILTER.PUBLIC_LOG);
 				break;
 
 			case 2: // "Your Friend List is full."
-				ChatBox.addText( DB.getMessage(819), ChatBox.TYPE.ERROR, ChatBox.FILTER.PUBLIC_LOG);
+				ChatBox.addText(DB.getMessage(819), ChatBox.TYPE.ERROR, ChatBox.FILTER.PUBLIC_LOG);
 				break;
 
 			case 3: // "(%s)'s Friend List is full."
-				ChatBox.addText( DB.getMessage(820).replace('%s', pkt.Name), ChatBox.TYPE.ERROR, ChatBox.FILTER.PUBLIC_LOG);
+				ChatBox.addText(DB.getMessage(820).replace('%s', pkt.Name), ChatBox.TYPE.ERROR, ChatBox.FILTER.PUBLIC_LOG);
 				break;
 		}
 	}
@@ -254,12 +238,11 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.DELETE_FRIENDS
 	 */
-	function onFriendRemoved( pkt )
-	{
-		var idx = getFriendIndex( pkt.AID, pkt.GID);
+	function onFriendRemoved(pkt) {
+		var idx = getFriendIndex(pkt.AID, pkt.GID);
 
 		if (idx > -1) {
-			_friends.splice( idx, 1);
+			_friends.splice(idx, 1);
 			FriendUI.removeFriend(idx);
 		}
 	}
@@ -268,12 +251,11 @@ define(function( require )
 	/**
 	 * Search a friend in our list, get back it's index in array
 	 *
-	 * @param {number} account id
-	 * @param {number} character id
+	 * @param {number} AID account id
+	 * @param {number} GID character id
 	 * @returns {number} index in array
 	 */
-	function getFriendIndex( AID, GID)
-	{
+	function getFriendIndex(AID, GID) {
 		var i, count;
 
 		for (i = 0, count = _friends.length; i < count; ++i) {

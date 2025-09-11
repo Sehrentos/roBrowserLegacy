@@ -7,47 +7,39 @@
  *
  * @author Vincent Thibault
  */
-
-define(function( require )
-{
+define(/** @type {(require: Require)=>Engine.MapEngine.Pet} */function (require) {
 	'use strict';
 
-
-	/**
-	 * Load dependencies
-	 */
-	var DB                   = require('DB/DBManager');
-	var Network              = require('Network/NetworkManager');
-	var PACKET               = require('Network/PacketStructure');
-	var Client               = require('Core/Client');
-	var Session              = require('Engine/SessionStorage');
-	var EntityManager        = require('Renderer/EntityManager');
-	var UIManager            = require('UI/UIManager');
-	var SlotMachine          = require('UI/Components/SlotMachine/SlotMachine');
-	var SkillTargetSelection = require('UI/Components/SkillTargetSelection/SkillTargetSelection');
-	var ItemSelection        = require('UI/Components/ItemSelection/ItemSelection');
-	var ChatBox              = require('UI/Components/ChatBox/ChatBox');
-	var PetInformations      = require('UI/Components/PetInformations/PetInformations');
-	var Inventory			= require('UI/Components/Inventory/Inventory');
-	var Emotions           	= require('DB/Emotions');
-	var PetMessageConst		= require('DB/Pets/PetMessageConst');
-
+	/** @type {DB.DBManager} */var DB = require('DB/DBManager');
+	/** @type {Network.NetworkManager} */var Network = require('Network/NetworkManager');
+	/** @type {Network.PacketStructure} */var PACKET = require('Network/PacketStructure');
+	/** @type {Core.Client} */var Client = require('Core/Client');
+	/** @type {Engine.SessionStorage} */var Session = require('Engine/SessionStorage');
+	/** @type {Renderer.EntityManager} */var EntityManager = require('Renderer/EntityManager');
+	/** @type {UI.UIManager} */var UIManager = require('UI/UIManager');
+	/** @type {UI.Component.SlotMachine} */var SlotMachine = require('UI/Components/SlotMachine/SlotMachine');
+	/** @type {UI.Component.SkillTargetSelection} */var SkillTargetSelection = require('UI/Components/SkillTargetSelection/SkillTargetSelection');
+	/** @type {UI.Component.ItemSelection} */var ItemSelection = require('UI/Components/ItemSelection/ItemSelection');
+	/** @type {UI.Component.ChatBox} */var ChatBox = require('UI/Components/ChatBox/ChatBox');
+	/** @type {UI.Component.PetInformations} */var PetInformations = require('UI/Components/PetInformations/PetInformations');
+	/** @type {UI.Component.Inventory} */var Inventory = require('UI/Components/Inventory/Inventory');
+	/** @type {DB.Emotions} */var Emotions = require('DB/Emotions');
+	/** @type {DB.Pets.PetMessageConst} */var PetMessageConst = require('DB/Pets/PetMessageConst');
 
 	/**
 	 * Server ask to select a monster
 	 *
 	 * @param {object} pkt - PACKET.ZC.START_CAPTURE
 	 */
-	function onStartCapture( pkt )
-	{
-		var fakeSkill = { SKID:-10, level:0 };
+	function onStartCapture(pkt) {
+		var fakeSkill = { SKID: -10, level: 0 };
 
 		SkillTargetSelection.append();
-		SkillTargetSelection.set( fakeSkill, SkillTargetSelection.TYPE.PET, 'Capture Monster');
-		SkillTargetSelection.onPetSelected = function onPetSelected(gid){
+		SkillTargetSelection.set(fakeSkill, SkillTargetSelection.TYPE.PET, 'Capture Monster');
+		SkillTargetSelection.onPetSelected = function onPetSelected(gid) {
 			SlotMachine.append();
-			SlotMachine.onTry = function onTry(){
-				var pkt       = new PACKET.CZ.TRYCAPTURE_MONSTER();
+			SlotMachine.onTry = function onTry() {
+				var pkt = new PACKET.CZ.TRYCAPTURE_MONSTER();
 				pkt.targetAID = gid;
 				Network.sendPacket(pkt);
 			};
@@ -60,9 +52,8 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.TRYCAPTURE_MONSTER
 	 */
-	function onCaptureResult( pkt )
-	{
-		SlotMachine.setResult( pkt.result );
+	function onCaptureResult(pkt) {
+		SlotMachine.setResult(pkt.result);
 	}
 
 
@@ -71,8 +62,7 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.PETEGG_LIST
 	 */
-	function onPetList( pkt )
-	{
+	function onPetList(pkt) {
 		if (!pkt.eggList.length) {
 			return;
 		}
@@ -80,9 +70,9 @@ define(function( require )
 		ItemSelection.append();
 		ItemSelection.setList(pkt.eggList);
 		ItemSelection.setTitle(DB.getMessage(599));
-		ItemSelection.onIndexSelected = function(index) {
+		ItemSelection.onIndexSelected = function (index) {
 			if (index > -1) {
-				var pkt   = new PACKET.CZ.SELECT_PETEGG();
+				var pkt = new PACKET.CZ.SELECT_PETEGG();
 				pkt.index = index;
 				Network.sendPacket(pkt);
 			}
@@ -95,10 +85,9 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.PROPERTY_PET
 	 */
-	function onPetInformation( pkt )
-	{
+	function onPetInformation(pkt) {
 		PetInformations.append();
-		PetInformations.setInformations( pkt );
+		PetInformations.setInformations(pkt);
 
 		if (Session.petId) {
 			var entity = EntityManager.get(Session.petId);
@@ -113,7 +102,7 @@ define(function( require )
 
 				entity.display.name = pkt.szName;
 				entity.life.intimacy = pkt.nRelationship;
-				entity.life.hp     = pkt.nFullness;
+				entity.life.hp = pkt.nFullness;
 				entity.life.hp_max = 100;
 				entity.life.update();
 			}
@@ -126,25 +115,24 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.FEED_PET
 	 */
-	function onFeedResult( pkt )
-	{
+	function onFeedResult(pkt) {
 		// Fail to feed
 		if (!pkt.cRet) {
-			ChatBox.addText( DB.getMessage(591).replace('%s', DB.getItemInfo(pkt.ITID).identifiedDisplayName), ChatBox.TYPE.ERROR, ChatBox.FILTER.PUBLIC_LOG);
+			ChatBox.addText(DB.getMessage(591).replace('%s', DB.getItemInfo(pkt.ITID).identifiedDisplayName), ChatBox.TYPE.ERROR, ChatBox.FILTER.PUBLIC_LOG);
 			return;
-		}else{
+		} else {
 			const friendly = DB.getPetFriendlyState(Session.pet.friendly);
 			const hunger = DB.getPetHungryState(Session.pet.oldHungry);
 			const talk = DB.getPetTalkNumber(Session.pet.job, PetMessageConst.PM_FEEDING, hunger, Session.Sex);
 			const emotion = DB.getPetEmotion(hunger, friendly, PetMessageConst.PM_FEEDING);
 
-			if(emotion > 0){
-				var pkt    = new PACKET.CZ.PET_ACT();
+			if (emotion > 0) {
+				var pkt = new PACKET.CZ.PET_ACT();
 				pkt.data = emotion + '2'; // don't know what is the last digit but it needed. @MrUnzO
 				Network.sendPacket(pkt);
 			}
-			if(Session.pet.friendly > 900){
-				var pkt    = new PACKET.CZ.PET_ACT();
+			if (Session.pet.friendly > 900) {
+				var pkt = new PACKET.CZ.PET_ACT();
 				pkt.data = talk;
 				Network.sendPacket(pkt);
 			}
@@ -154,13 +142,13 @@ define(function( require )
 
 
 	/**
-	 * Pet talk (don't know where to put this) (MrUnzO) 
+	 * Pet talk (don't know where to put this) (MrUnzO)
 	 *
 	 */
-	function petTalk( GID, msg ){
+	function petTalk(GID, msg) {
 		var entity = EntityManager.get(GID);
-		ChatBox.addText(entity.display.name + " : " +msg, ChatBox.TYPE.PUBLIC, ChatBox.FILTER.PUBLIC_CHAT);
-		entity.dialog.set( msg );
+		ChatBox.addText(entity.display.name + " : " + msg, ChatBox.TYPE.PUBLIC, ChatBox.FILTER.PUBLIC_CHAT);
+		entity.dialog.set(msg);
 	}
 
 	/**
@@ -168,8 +156,7 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.CHANGESTATE_PET
 	 */
-	function onPetInformationUpdate( pkt )
-	{
+	function onPetInformationUpdate(pkt) {
 		var entity = EntityManager.get(pkt.GID);
 		var path;
 
@@ -180,28 +167,28 @@ define(function( require )
 		switch (pkt.type) {
 			case 0: // know what our pet is //PET_PRE_INIT
 				Session.petId = pkt.GID; // should we delete it later ?
-				Session.pet.GID =  pkt.GID;
-				if(entity){
+				Session.pet.GID = pkt.GID;
+				if (entity) {
 					Session.pet.job = entity._job;
 				}
 				break;
 
 			case 1: //
 				PetInformations.setIntimacy(pkt.data);
-				Session.pet.friendly     = pkt.data;
+				Session.pet.friendly = pkt.data;
 				break;
 
 			case 2:
 				PetInformations.setHunger(pkt.data);
-				entity.life.hp     = pkt.data;
+				entity.life.hp = pkt.data;
 				entity.life.hp_max = 100;
 				entity.life.update();
-				
+
 				const oldHungry = Session.pet.hungry;
 				Session.pet.oldHungry = oldHungry;
 				Session.pet.hungry = pkt.data;
 
-				
+
 
 				break;
 
@@ -215,23 +202,23 @@ define(function( require )
 				}
 
 				if (path) {
-					Client.loadFile( path, function(){ entity.files.body.act = path; });
+					Client.loadFile(path, function () { entity.files.body.act = path; });
 				}
 				break;
 
 			case 4: /// 4 = performance (data = 1~3: normal, 4: special)
-				var action = [ entity.ACTION.PERF1, entity.ACTION.PERF2, entity.ACTION.PERF3, entity.ACTION.SPECIAL ];
+				var action = [entity.ACTION.PERF1, entity.ACTION.PERF2, entity.ACTION.PERF3, entity.ACTION.SPECIAL];
 				entity.setAction({
-					action: action[ (pkt.data-1 + action.length) % action.length ],
-					frame:  0,
+					action: action[(pkt.data - 1 + action.length) % action.length],
+					frame: 0,
 					repeat: false,
-					play:   true,
+					play: true,
 					next: {
 						action: entity.ACTION.IDLE,
-						frame:  0,
+						frame: 0,
 						repeat: true,
-						play:   true,
-						next:   false
+						play: true,
+						next: false
 					}
 				});
 				break;
@@ -247,25 +234,24 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.PET_ACT
 	 */
-	function onPetAction( pkt )
-	{
+	function onPetAction(pkt) {
 		var entity = EntityManager.get(pkt.GID);
 		if (!entity) {
 			return;
 		}
-		if(pkt.data < 5000){
+		if (pkt.data < 5000) {
 			const emotionId = parseInt(pkt.data / 10);
 			entity.attachments.add({
 				frame: Emotions.indexes[emotionId],
-				file:  'emotion',
-				play:   true,
-				head:   true,
+				file: 'emotion',
+				play: true,
+				head: true,
 				repeat: false,
-				depth:  5.0
+				depth: 5.0
 			});
-		}else{
+		} else {
 			const text = DB.getPetTalk(pkt.data);
-			if(text){
+			if (text) {
 				petTalk(pkt.GID, text)
 			}
 		}
@@ -275,11 +261,10 @@ define(function( require )
 	/**
 	 * Client request to feed QPet.
 	 */
-	PetInformations.reqPetFeed = function reqPetFeed()
-	{
+	PetInformations.reqPetFeed = function reqPetFeed() {
 		// Are you sure you want to feed your pet ?
-		UIManager.showPromptBox(DB.getMessage(601), 'ok', 'cancel', function(){
-			var pkt  = new PACKET.CZ.COMMAND_PET();
+		UIManager.showPromptBox(DB.getMessage(601), 'ok', 'cancel', function () {
+			var pkt = new PACKET.CZ.COMMAND_PET();
 			pkt.cSub = 1;
 			Network.sendPacket(pkt);
 		});
@@ -289,9 +274,8 @@ define(function( require )
 	/**
 	 * Client request to do a performance
 	 */
-	PetInformations.reqPetAction = function reqPetAction()
-	{
-		var pkt  = new PACKET.CZ.COMMAND_PET();
+	PetInformations.reqPetAction = function reqPetAction() {
+		var pkt = new PACKET.CZ.COMMAND_PET();
 		pkt.cSub = 2;
 		Network.sendPacket(pkt);
 	};
@@ -300,9 +284,8 @@ define(function( require )
 	/**
 	 * Qpet -> Egg
 	 */
-	PetInformations.reqBackToEgg = function reqBackToEgg()
-	{
-		var pkt  = new PACKET.CZ.COMMAND_PET();
+	PetInformations.reqBackToEgg = function reqBackToEgg() {
+		var pkt = new PACKET.CZ.COMMAND_PET();
 		pkt.cSub = 3;
 		Network.sendPacket(pkt);
 
@@ -313,9 +296,8 @@ define(function( require )
 	/**
 	 * UnEquip pet accessory
 	 */
-	PetInformations.reqUnEquipPet = function reqUnEquipPet()
-	{
-		var pkt  = new PACKET.CZ.COMMAND_PET();
+	PetInformations.reqUnEquipPet = function reqUnEquipPet() {
+		var pkt = new PACKET.CZ.COMMAND_PET();
 		pkt.cSub = 4;
 		Network.sendPacket(pkt);
 	};
@@ -327,9 +309,8 @@ define(function( require )
 	 *
 	 * @param {string} new pet name
 	 */
-	PetInformations.reqNameEdit   = function reqNameEdit(name)
-	{
-		var pkt    = new PACKET.CZ.RENAME_PET();
+	PetInformations.reqNameEdit = function reqNameEdit(name) {
+		var pkt = new PACKET.CZ.RENAME_PET();
 		pkt.szName = name;
 		Network.sendPacket(pkt);
 	};
@@ -342,15 +323,15 @@ define(function( require )
 
 	/**
 	 * Initialize
+	 * @type {Engine.MapEngine.Pet}
 	 */
-	return function NPCEngine()
-	{
-		Network.hookPacket( PACKET.ZC.START_CAPTURE,      onStartCapture);
-		Network.hookPacket( PACKET.ZC.TRYCAPTURE_MONSTER, onCaptureResult);
-		Network.hookPacket( PACKET.ZC.PETEGG_LIST,        onPetList);
-		Network.hookPacket( PACKET.ZC.PROPERTY_PET,       onPetInformation);
-		Network.hookPacket( PACKET.ZC.FEED_PET,           onFeedResult);
-		Network.hookPacket( PACKET.ZC.CHANGESTATE_PET,    onPetInformationUpdate);
-		Network.hookPacket( PACKET.ZC.PET_ACT,            onPetAction);
+	return function NPCEngine() {
+		Network.hookPacket(PACKET.ZC.START_CAPTURE, onStartCapture);
+		Network.hookPacket(PACKET.ZC.TRYCAPTURE_MONSTER, onCaptureResult);
+		Network.hookPacket(PACKET.ZC.PETEGG_LIST, onPetList);
+		Network.hookPacket(PACKET.ZC.PROPERTY_PET, onPetInformation);
+		Network.hookPacket(PACKET.ZC.FEED_PET, onFeedResult);
+		Network.hookPacket(PACKET.ZC.CHANGESTATE_PET, onPetInformationUpdate);
+		Network.hookPacket(PACKET.ZC.PET_ACT, onPetAction);
 	};
 });

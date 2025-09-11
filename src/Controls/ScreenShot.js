@@ -7,26 +7,20 @@
  *
  * @author Vincent Thibault
  */
-define(function(/** @type {Require} */require)
-{
+define(function (/** @type {Require} */require) {
 	'use strict';
 
-
-	/**
-	 * Dependencies
-	 */
-	/** @type {Core.Client} */var Client        = require('Core/Client');
-	/** @type {JQueryStatic} */var jQuery        = require('Utils/jquery');
-	/** @type {Utils.html2canvas} */var html2canvas   = require('Utils/html2canvas');
-	/** @type {Controls.KeyEventHandler} */var KEYS          = require('Controls/KeyEventHandler');
-	/** @type {UI.TUIComponent<{test:boolean}>} */var ChatBox       = require('UI/Components/ChatBox/ChatBox');
+	/** @type {Core.Client} */var Client = require('Core/Client');
+	/** @type {JQueryStatic} */var jQuery = require('Utils/jquery');
+	/** @type {Utils.HTML2Canvas} */var html2canvas = require('Utils/html2canvas');
+	/** @type {Controls.KeyEventHandler} */var KEYS = require('Controls/KeyEventHandler');
+	/** @type {UI.Component.ChatBox} */var ChatBox = require('UI/Components/ChatBox/ChatBox');
 
 
 	/**
 	 * Key Listener
 	 */
-	jQuery(window).keydown(function( event )
-	{
+	jQuery(window).keydown(function (event) {
 		if (KEYS.ALT && event.which === KEYS.P) {
 			ScreenShot.take();
 			event.stopImmediatePropagation();
@@ -46,13 +40,12 @@ define(function(/** @type {Require} */require)
 	/**
 	 * Take a ScreenShot
 	 */
-	ScreenShot.take = function takeScreenShot()
-	{
+	ScreenShot.take = function takeScreenShot() {
 		if (!ChatBox.ui) {
 			return; //UI not loaded yet, cant display screenshot
 		}
 
-		html2canvas( [document.body], {
+		html2canvas([document.body], {
 			onrendered: this.process
 		});
 	};
@@ -63,22 +56,21 @@ define(function(/** @type {Require} */require)
 	 *
 	 * @param {HTMLCanvasElement} canvas
 	 */
-	ScreenShot.process = function processScreenShot(canvas)
-	{
+	ScreenShot.process = function processScreenShot(canvas) {
 		var context, date, timezone;
 		var x, y;
 
 		// Create a date to add to canvas
 		var tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
-    	var localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
+		var localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
 		localISOTime = localISOTime.replace('T', ' ');
 		timezone = (new Date().getTimezoneOffset() / 60);
-		date     = localISOTime + ' (GMT ' + (timezone > 0 ? '-' : '+') + Math.abs(timezone).toString() + ')'; //GMT
+		date = localISOTime + ' (GMT ' + (timezone > 0 ? '-' : '+') + Math.abs(timezone).toString() + ')'; //GMT
 
 		context = canvas.getContext('2d');
 
 		// Input the timestamp on screenshot
-		context.fillStyle   = 'white';
+		context.fillStyle = 'white';
 		context.strokeStyle = 'black';
 
 		x = 20;
@@ -89,16 +81,16 @@ define(function(/** @type {Require} */require)
 		context.strokeText(date, x, y);
 
 		// Get and draw src_logo to canvas
-		Client.loadFile( 'data/texture/scr_logo.bmp', function(url) {
+		Client.loadFile('data/texture/scr_logo.bmp', function (url) {
 			var img = new Image();
 			img.src = url;
-			img.onload = function() {
-				x = canvas.width  - img.width - 20;
+			img.onload = function () {
+				x = canvas.width - img.width - 20;
 				y = canvas.height - img.height - 5;
 				context.drawImage(img, x, y);
 				ScreenShot.display(canvas, date);
 			};
-		}, function(){
+		}, function () {
 			ScreenShot.display(canvas, date);
 		});
 	};
@@ -115,9 +107,9 @@ define(function(/** @type {Require} */require)
 		var i, count;
 
 		// We decode the base64 to get the binary of the png
-		binary = atob( canvas.toDataURL('image/png').replace(/^data[^,]+,/,'') );
-		count  = binary.length;
-		data   = new Uint8Array(count);
+		binary = atob(canvas.toDataURL('image/png').replace(/^data[^,]+,/, ''));
+		count = binary.length;
+		data = new Uint8Array(count);
 
 		// We store the content in a buffer
 		for (i = 0; i < count; ++i) {
@@ -125,9 +117,9 @@ define(function(/** @type {Require} */require)
 		}
 
 		// We create a local image with the buffer
-		url = window.URL.createObjectURL(new Blob([data], {type: 'image/png'}));
+		url = window.URL.createObjectURL(new Blob([data], { type: 'image/png' }));
 
-		ChatBox.addText('Screenshot ' + date + ' can be saved by <a style="color:#F88" download="ScreenShot (' + date.replace('/', '-') + ').png" href="'+ url +'" target="_blank">clicking here</a>.', ChatBox.TYPE.PUBLIC, ChatBox.FILTER.PUBLIC_LOG, null, true);
+		ChatBox.addText('Screenshot ' + date + ' can be saved by <a style="color:#F88" download="ScreenShot (' + date.replace('/', '-') + ').png" href="' + url + '" target="_blank">clicking here</a>.', ChatBox.TYPE.PUBLIC, ChatBox.FILTER.PUBLIC_LOG, null, true);
 	};
 
 

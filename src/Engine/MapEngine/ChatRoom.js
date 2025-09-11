@@ -7,36 +7,30 @@
  *
  * @author Vincent Thibault
  */
-define(function( require )
-{
+define(/** @type {(require: Require)=>Engine.MapEngine.ChatRoom} */function (require) {
 	'use strict';
 
-
-	/**
-	 * Load dependencies
-	 */
-	var DB              = require('DB/DBManager');
-	var Network			= require('Network/NetworkManager');
-	var PACKET			= require('Network/PacketStructure');
-	var EntityManager   = require('Renderer/EntityManager');
-	var ChatRoomCreate	= require('UI/Components/ChatRoomCreate/ChatRoomCreate');
-	var ChatRoom		= require('UI/Components/ChatRoom/ChatRoom');
-	var ChatBox         = require('UI/Components/ChatBox/ChatBox');
-	var Session         = require('Engine/SessionStorage');
+	/** @type {DB.DBManager} */var DB = require('DB/DBManager');
+	/** @type {Network.NetworkManager} */var Network = require('Network/NetworkManager');
+	/** @type {Network.PacketStructure} */var PACKET = require('Network/PacketStructure');
+	/** @type {Renderer.EntityManager} */var EntityManager = require('Renderer/EntityManager');
+	/** @type {UI.Component.ChatRoomCreate} */var ChatRoomCreate = require('UI/Components/ChatRoomCreate/ChatRoomCreate');
+	/** @type {UI.Component.ChatRoom} */var ChatRoom = require('UI/Components/ChatRoom/ChatRoom');
+	/** @type {UI.Component.ChatBox} */var ChatBox = require('UI/Components/ChatBox/ChatBox');
+	var Session = require('Engine/SessionStorage');
 
 
 	/**
 	 * Request a chat room
 	 * PACKET.CZ.CREATE_CHATROOM
 	 */
-	ChatRoomCreate.requestRoom = function requestRoom()
-	{
-		var pkt    = new PACKET.CZ.CREATE_CHATROOM();
-		pkt.size   = this.limit;
-		pkt.type   = this.type;
+	ChatRoomCreate.requestRoom = function requestRoom() {
+		var pkt = new PACKET.CZ.CREATE_CHATROOM();
+		pkt.size = this.limit;
+		pkt.type = this.type;
 		pkt.passwd = this.password;
-		pkt.title  = this.title;
-		Network.sendPacket( pkt );
+		pkt.title = this.title;
+		Network.sendPacket(pkt);
 	};
 
 
@@ -44,8 +38,7 @@ define(function( require )
 	 * Request a change in the chat room
 	 * PACKET.CZ.CHANGE_CHATROOM
 	 */
-	ChatRoom.changeChatRoom = function changeChatRoom()
-	{
+	ChatRoom.changeChatRoom = function changeChatRoom() {
 		var pkt = new PACKET.CZ.CHANGE_CHATROOM();
 		/*
 		this.size         = 0;
@@ -53,7 +46,7 @@ define(function( require )
 		this.passwd       = '';
 		this.title        = '';
 		*/
-		Network.sendPacket( pkt );
+		Network.sendPacket(pkt);
 	};
 
 
@@ -61,9 +54,8 @@ define(function( require )
 	 * Request to change the role from a member in your chatroom
 	 * PACKET.CZ.REQ_ROLE_CHANGE
 	 */
-	ChatRoom.requestRoleChange = function requestRoleChange()
-	{
-		var pkt   = new PACKET.CZ.REQ_ROLE_CHANGE();
+	ChatRoom.requestRoleChange = function requestRoleChange() {
+		var pkt = new PACKET.CZ.REQ_ROLE_CHANGE();
 		/*
 			this.role       = 0;
 			this.name       = '';
@@ -76,13 +68,12 @@ define(function( require )
 	 * Request to expel a member from current chatroom
 	 * PACKET.CZ.REQ_EXPEL_MEMBER
 	 */
-	ChatRoom.requestExpelMember = function requestExpelMember()
-	{
-		var pkt   = new PACKET.CZ.REQ_EXPEL_MEMBER();
+	ChatRoom.requestExpelMember = function requestExpelMember() {
+		var pkt = new PACKET.CZ.REQ_EXPEL_MEMBER();
 		/*
 			this.name       = '';
 		*/
-		Network.sendPacket( pkt );
+		Network.sendPacket(pkt);
 	};
 
 
@@ -90,10 +81,9 @@ define(function( require )
 	 * Request exit from current chatroom
 	 * PACKET.CZ.EXIT_ROOM
 	 */
-	ChatRoom.exitRoom = function exitRoom()
-	{
-		var pkt   = new PACKET.CZ.EXIT_ROOM();
-		Network.sendPacket( pkt );
+	ChatRoom.exitRoom = function exitRoom() {
+		var pkt = new PACKET.CZ.EXIT_ROOM();
+		Network.sendPacket(pkt);
 	};
 
 
@@ -101,30 +91,29 @@ define(function( require )
 	 * Response from the server if the chat creating was succesful or not.
 	 * @param {object} pkt - PACKET.ZC.ACK_CREATE_CHATROOM
 	 */
-	function onCreateRoomResult( pkt )
-	{
+	function onCreateRoomResult(pkt) {
 		switch (pkt.result) {
 			// Success
 			case 0:
-				ChatRoom.title   = ChatRoomCreate.title;
-				ChatRoom.limit   = ChatRoomCreate.limit;
-				ChatRoom.type    = ChatRoomCreate.type;
-				ChatRoom.count   = 1;
+				ChatRoom.title = ChatRoomCreate.title;
+				ChatRoom.limit = ChatRoomCreate.limit;
+				ChatRoom.type = ChatRoomCreate.type;
+				ChatRoom.count = 1;
 				ChatRoom.members = [Session.Entity.display.name];
-				ChatRoom.owner   = Session.Entity.display.name;
+				ChatRoom.owner = Session.Entity.display.name;
 				ChatRoom.append();
 
-				ChatBox.addText( DB.getMessage(64), ChatBox.TYPE.BLUE, ChatBox.FILTER.PUBLIC_LOG );
+				ChatBox.addText(DB.getMessage(64), ChatBox.TYPE.BLUE, ChatBox.FILTER.PUBLIC_LOG);
 				break;
 
 			// Room limit exceeded
 			case 1:
-				ChatBox.addText( DB.getMessage(65), ChatBox.TYPE.ERROR, ChatBox.FILTER.PUBLIC_LOG );
+				ChatBox.addText(DB.getMessage(65), ChatBox.TYPE.ERROR, ChatBox.FILTER.PUBLIC_LOG);
 				break;
 
 			// Same room already exists
 			case 2:
-				ChatBox.addText( DB.getMessage(66), ChatBox.TYPE.ERROR, ChatBox.FILTER.PUBLIC_LOG );
+				ChatBox.addText(DB.getMessage(66), ChatBox.TYPE.ERROR, ChatBox.FILTER.PUBLIC_LOG);
 				break;
 		}
 	}
@@ -142,22 +131,21 @@ define(function( require )
 	 *  6 = too high level
 	 *  7 = unsuitable job class
 	 */
-	function onEnterRoomResult( pkt )
-	{
+	function onEnterRoomResult(pkt) {
 		var error = 67;
 		switch (pkt.result) {
 			// full
 			case 0: error = 67; break;
-			case 1: error =  7; break;
+			case 1: error = 7; break;
 			case 2: error = 68; break;
 			case 3: return; //don't show anything!
-			case 4:	error = 55; break;
+			case 4: error = 55; break;
 			case 5: error = 432; break;
 			case 6: error = 433; break;
 			case 7: error = 434; break;
 		}
 
-		ChatBox.addText( DB.getMessage(error), ChatBox.TYPE.ERROR, ChatBox.FILTER.PUBLIC_LOG );
+		ChatBox.addText(DB.getMessage(error), ChatBox.TYPE.ERROR, ChatBox.FILTER.PUBLIC_LOG);
 
 	}
 
@@ -166,10 +154,9 @@ define(function( require )
 	 * Notify a entry of a new member
 	 * @param {object} pkt - PACKET_ZC_MEMBER_NEWENTRY
 	 */
-	function onMemberJoin( pkt )
-	{
+	function onMemberJoin(pkt) {
 		ChatRoom.count = pkt.curcount;
-		ChatRoom.members.push( pkt.name );
+		ChatRoom.members.push(pkt.name);
 
 		ChatRoom.updateChat();
 		ChatRoom.message(DB.getMessage(179).replace('%s', pkt.name), 'join');
@@ -180,8 +167,7 @@ define(function( require )
 	 * Change room owner
 	 * @param {object} pkt - PACKET.ZC.ROLE_CHANGE
 	 */
-	function onRoleChange( pkt )
-	{
+	function onRoleChange(pkt) {
 		// The server will send two of this packets!
 		// One to remove the ownership and one to add ownership, we dont need the first packet !
 
@@ -196,8 +182,7 @@ define(function( require )
 	 * Member exit
 	 * @param {object} pkt - PACKET.ZC.MEMBER_EXIT
 	 */
-	function onMemberLeave( pkt )
-	{
+	function onMemberLeave(pkt) {
 		// Seems like the server send us we are disconnect,
 		// we do not care.
 		if (!ChatRoom.isOpen) {
@@ -205,7 +190,7 @@ define(function( require )
 		}
 
 		ChatRoom.count = pkt.curcount;
-		ChatRoom.removeMember( pkt.name );
+		ChatRoom.removeMember(pkt.name);
 		ChatRoom.updateChat();
 
 		// Leave the room
@@ -224,12 +209,11 @@ define(function( require )
 	 * Change chat room properties
 	 * @param {object} pkt - PACKET.ZC.CHANGE_CHATROOM
 	 */
-	function onRoomUpdate( pkt )
-	{
+	function onRoomUpdate(pkt) {
 		// TODO: switch chat owner (AID-roomID).
 		ChatRoom.limit = pkt.maxcount;
 		ChatRoom.count = pkt.curcount;
-		ChatRoom.type  = pkt.type;
+		ChatRoom.type = pkt.type;
 		ChatRoom.title = pkt.title;
 		ChatRoom.updateChat();
 	}
@@ -239,8 +223,7 @@ define(function( require )
 	 * Enter a room
 	 * @param {object} pkt - PACKET.ZC.ENTER_ROOM
 	 */
-	function onRoomEnter( pkt )
-	{
+	function onRoomEnter(pkt) {
 		//this.roomID       = fp.readULong();
 		var i, count = pkt.memberList.length;
 		ChatRoom.members = new Array(count);
@@ -253,7 +236,7 @@ define(function( require )
 		}
 
 		// Remove room
-		EntityManager.forEach(function(entity){
+		EntityManager.forEach(function (entity) {
 			if (entity.room.id === pkt.roomID) {
 				entity.room.remove();
 				return false;
@@ -268,17 +251,17 @@ define(function( require )
 
 	/**
 	 * Initialize
+	 * @type {Engine.MapEngine.ChatRoom}
 	 */
-	return function MainEngine()
-	{
+	return function MainEngine() {
 		Network.hookPacket(PACKET.ZC.ACK_CREATE_CHATROOM, onCreateRoomResult);
 		//Network.hookPacket(PACKET.ZC.ROOM_NEWENTRY,     Display); //This is holded up at Entity.js
-		Network.hookPacket(PACKET.ZC.CHANGE_CHATROOM,     onRoomUpdate);
+		Network.hookPacket(PACKET.ZC.CHANGE_CHATROOM, onRoomUpdate);
 		//Network.hookPacket(PACKET.ZC.DESTROY_ROOM,      Destroy); //This is holded up at Entity.js
-		Network.hookPacket(PACKET.ZC.ENTER_ROOM,          onRoomEnter);
-		Network.hookPacket(PACKET.ZC.MEMBER_NEWENTRY,     onMemberJoin);
-		Network.hookPacket(PACKET.ZC.ROLE_CHANGE,         onRoleChange);
-		Network.hookPacket(PACKET.ZC.MEMBER_EXIT,         onMemberLeave);
-		Network.hookPacket(PACKET.ZC.REFUSE_ENTER_ROOM,   onEnterRoomResult);
+		Network.hookPacket(PACKET.ZC.ENTER_ROOM, onRoomEnter);
+		Network.hookPacket(PACKET.ZC.MEMBER_NEWENTRY, onMemberJoin);
+		Network.hookPacket(PACKET.ZC.ROLE_CHANGE, onRoleChange);
+		Network.hookPacket(PACKET.ZC.MEMBER_EXIT, onMemberLeave);
+		Network.hookPacket(PACKET.ZC.REFUSE_ENTER_ROOM, onEnterRoomResult);
 	};
 });

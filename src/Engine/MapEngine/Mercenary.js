@@ -5,40 +5,34 @@
  *
  * This file is part of ROBrowser, (http://www.robrowser.com/).
  */
-
-define(function( require )
-{
+define(/** @type {(require: Require)=>Engine.MapEngine.Mercenary} */function (require) {
 	'use strict';
 
-	/**
-	 * Load dependencies
-	 */
-	var DB                   = require('DB/DBManager');
-	var Network              = require('Network/NetworkManager');
-	var PACKET               = require('Network/PacketStructure');
-	var Session              = require('Engine/SessionStorage');
-	var EntityManager        = require('Renderer/EntityManager');
-	var UIManager            = require('UI/UIManager');
-	var MercenaryInformations = require('UI/Components/MercenaryInformations/MercenaryInformations');
-	var SkillListMH          = require('UI/Components/SkillListMH/SkillListMH');
-	var Mouse                = require('Controls/MouseEventHandler');
+	/** @type {DB.DBManager} */var DB = require('DB/DBManager');
+	/** @type {Network.NetworkManager} */var Network = require('Network/NetworkManager');
+	/** @type {Network.PacketStructure} */var PACKET = require('Network/PacketStructure');
+	/** @type {Engine.SessionStorage} */var Session = require('Engine/SessionStorage');
+	/** @type {Renderer.EntityManager} */var EntityManager = require('Renderer/EntityManager');
+	/** @type {UI.UIManager} */var UIManager = require('UI/UIManager');
+	/** @type {UI.Component.MercenaryInformations} */var MercenaryInformations = require('UI/Components/MercenaryInformations/MercenaryInformations');
+	/** @type {UI.Component.SkillListMH} */var SkillListMH = require('UI/Components/SkillListMH/SkillListMH');
+	/** @type {Controls.MouseEventHandler} */var Mouse = require('Controls/MouseEventHandler');
 
 	/**
 	 * Initialize Mercenary information
 	 *
 	 * @param {object} pkt - PACKET.ZC.MER_INIT
 	 */
-	function onMercenaryInit( pkt )
-	{
+	function onMercenaryInit(pkt) {
 		Session.mercId = pkt.AID;
 		var entity = EntityManager.get(pkt.AID);
 
 		if (entity) {
 			entity.attack_range = pkt.ATKRange;
-			entity.life.hp      = pkt.hp;
-			entity.life.hp_max  = pkt.maxHP;
-			entity.life.sp      = pkt.sp;
-			entity.life.sp_max  = pkt.maxSP;
+			entity.life.hp = pkt.hp;
+			entity.life.hp_max = pkt.maxHP;
+			entity.life.sp = pkt.sp;
+			entity.life.sp_max = pkt.maxSP;
 			entity.life.update();
 		}
 
@@ -59,15 +53,14 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.MER_PROPERTY
 	 */
-	function onMercenaryProperty( pkt )
-	{
+	function onMercenaryProperty(pkt) {
 		var entity = EntityManager.get(Session.mercId);
 
 		if (entity) {
-			entity.life.hp      = pkt.hp;
-			entity.life.hp_max  = pkt.maxHP;
-			entity.life.sp      = pkt.sp;
-			entity.life.sp_max  = pkt.maxSP;
+			entity.life.hp = pkt.hp;
+			entity.life.hp_max = pkt.maxHP;
+			entity.life.sp = pkt.sp;
+			entity.life.sp_max = pkt.maxSP;
 			entity.life.update();
 		}
 
@@ -83,8 +76,7 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.MER_PAR_CHANGE
 	 */
-	function onParameterChange( pkt )
-	{
+	function onParameterChange(pkt) {
 		var entity = EntityManager.get(Session.mercId);
 		if (!entity) {
 			return;
@@ -118,9 +110,8 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.MER_SKILLINFO_LIST
 	 */
-	function onSkillList( pkt )
-	{
-		SkillListMH.mercenary.setSkills( pkt.skillList );
+	function onSkillList(pkt) {
+		SkillListMH.mercenary.setSkills(pkt.skillList);
 	}
 
 	/**
@@ -128,18 +119,16 @@ define(function( require )
 	 *
 	 * @param {object} pkt - PACKET.ZC.MER_SKILLINFO_UPDATE
 	 */
-	function onSkillUpdate( pkt )
-	{
-		SkillListMH.mercenary.updateSkill( pkt );
+	function onSkillUpdate(pkt) {
+		SkillListMH.mercenary.updateSkill(pkt);
 	}
 
 	/**
 	 * Request to delete mercenary
 	 */
-	MercenaryInformations.reqDeleteMercenary = function reqDeleteMercenary()
-	{
-		UIManager.showPromptBox(DB.getMessage(356), 'ok', 'cancel', function(){
-			var pkt  = new PACKET.CZ.MER_COMMAND();
+	MercenaryInformations.reqDeleteMercenary = function reqDeleteMercenary() {
+		UIManager.showPromptBox(DB.getMessage(356), 'ok', 'cancel', function () {
+			var pkt = new PACKET.CZ.MER_COMMAND();
 			pkt.command = 2;
 			Network.sendPacket(pkt);
 		});
@@ -148,9 +137,8 @@ define(function( require )
 	/**
 	 * Request to move mercenary to owner
 	 */
-	MercenaryInformations.reqMoveToOwner = function reqMoveToOwner(gid)
-	{
-		var pkt  = new PACKET.CZ.REQUEST_MOVETOOWNER();
+	MercenaryInformations.reqMoveToOwner = function reqMoveToOwner(gid) {
+		var pkt = new PACKET.CZ.REQUEST_MOVETOOWNER();
 		pkt.GID = gid;
 		Network.sendPacket(pkt);
 	};
@@ -158,9 +146,8 @@ define(function( require )
 	/**
 	 * Request mercenary to attack target
 	 */
-	MercenaryInformations.reqAttack = function reqAttack(GID, targetGID)
-	{
-		var pkt  = new PACKET.CZ.REQUEST_ACTNPC();
+	MercenaryInformations.reqAttack = function reqAttack(GID, targetGID) {
+		var pkt = new PACKET.CZ.REQUEST_ACTNPC();
 		pkt.GID = GID;
 		pkt.targetGID = targetGID;
 		pkt.action = 0;
@@ -170,9 +157,8 @@ define(function( require )
 	/**
 	 * Request mercenary to move to location
 	 */
-	MercenaryInformations.reqMoveTo = function reqMoveTo(GID)
-	{
-		var pkt  = new PACKET.CZ.REQUEST_MOVENPC();
+	MercenaryInformations.reqMoveTo = function reqMoveTo(GID) {
+		var pkt = new PACKET.CZ.REQUEST_MOVENPC();
 		pkt.GID = GID;
 		pkt.dest[0] = Mouse.world.x;
 		pkt.dest[1] = Mouse.world.y;
@@ -181,13 +167,13 @@ define(function( require )
 
 	/**
 	 * Initialize
+	 * @type {Engine.MapEngine.Mercenary}
 	 */
-	return function MercenaryEngine()
-	{
-		Network.hookPacket( PACKET.ZC.MER_INIT,              onMercenaryInit);
-		Network.hookPacket( PACKET.ZC.MER_PROPERTY,          onMercenaryProperty);
-		Network.hookPacket( PACKET.ZC.MER_PAR_CHANGE,        onParameterChange);
-		Network.hookPacket( PACKET.ZC.MER_SKILLINFO_LIST,    onSkillList);
-		Network.hookPacket( PACKET.ZC.MER_SKILLINFO_UPDATE,  onSkillUpdate);
+	return function MercenaryEngine() {
+		Network.hookPacket(PACKET.ZC.MER_INIT, onMercenaryInit);
+		Network.hookPacket(PACKET.ZC.MER_PROPERTY, onMercenaryProperty);
+		Network.hookPacket(PACKET.ZC.MER_PAR_CHANGE, onParameterChange);
+		Network.hookPacket(PACKET.ZC.MER_SKILLINFO_LIST, onSkillList);
+		Network.hookPacket(PACKET.ZC.MER_SKILLINFO_UPDATE, onSkillUpdate);
 	};
 });

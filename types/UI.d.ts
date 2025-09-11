@@ -37,7 +37,7 @@ declare namespace UI {
 		magnetism: boolean;
 		blockMagnetism: boolean;
 		init(): void;
-		setType(type: number, norRepeat: boolean, animation: number): void;
+		setType(type: number, norRepeat?: boolean, animation?: number): void;
 		getActualType(): number;
 		render(tick: number): void;
 	}
@@ -105,8 +105,6 @@ declare namespace UI {
 	 * UIComponent types / properties
 	 */
 	type TUIComponent = {
-		// new(name: string, htmlText?: string, cssText?: string): UIComponent;
-		// constructor(name: string, htmlText?: string, cssText?: string);
 		/** component name */
 		name: string;
 		/** component html text */
@@ -182,12 +180,12 @@ declare namespace UI {
 		type Announce = {
 			set(text: string, color: string): void;
 			timeEnd(): void;
-		};
+		} & TUIComponent;
 
 		type Bank = {
 			onShortCut(key: any): void;
 			toggle(): void;
-		};
+		} & TUIComponent;
 
 		type BasicInfo = {
 			base_exp: number;
@@ -204,11 +202,11 @@ declare namespace UI {
 			update(type: string, val1: number, val2?: number): void;
 			getWinStatsVersion(): 0 | 1;
 			getInventoryVersion(): 0 | 1;
-		};
+		} & TUIComponent;
 
 		type CardIllustration = {
 			setCard(card: any): void;
-		}
+		} & TUIComponent;
 
 		type CartItems = {
 			list: any[];
@@ -224,7 +222,7 @@ declare namespace UI {
 			removeItem(index: number, count: number): any;
 			updateItem(index: number, count: number): void;
 			reqRemoveItem(...args): void;
-		}
+		} & TUIComponent;
 
 		type CashShop = {
 			list: any[];
@@ -263,82 +261,86 @@ declare namespace UI {
 			initPagination(items): void;
 			paginate(items, offset, end): any[];
 			paginationOffsetLimit(): void;
-		}
+		} & TUIComponent;
 
 		// TODO below:
-		type ChangeCart = {}
-		type CharCreate = {}
-		type CharSelect = {}
-		type ChatBox = {}
-		type ChatBoxSettings = {}
-		type ChatRoom = {}
-		type ChatRoomCreate = {}
-		type CheckAttendance = {}
-		type ContextMenu = {}
-		type EffectViewer = {}
-		type Emoticons = {}
-		type EntityRoom = {}
-		type EntitySignboard = {}
-		type Equipment = {}
-		type Error = {}
-		type Escape = {}
-		type FPS = {}
-		type GrannyModelViewer = {}
-		type GraphicsOption = {}
-		type GrfViewer = {}
-		type Guild = {}
-		type HomunInformations = {}
-		type InputBox = {}
-		type Intro = {}
-		type Inventory = {}
-		type ItemCompare = {}
-		type ItemInfo = {}
-		type ItemObtain = {}
-		type ItemReform = {}
-		type ItemSelection = {}
-		type LaphineSys = {}
-		type LaphineUpg = {}
-		type Mail = {}
-		type MakeArrowSelection = {}
-		type MakeReadBook = {}
-		type MapName = {}
-		type MercenaryInformations = {}
-		type MiniMap = {}
-		type MobileUI = {}
-		type ModelViewer = {}
-		type Navigation = {}
-		type NpcBox = {}
-		type NpcMenu = {}
-		type NpcStore = {}
-		type PartyFriends = {}
-		type PetInformations = {}
-		type PincodeWindow = {}
-		type PlayerViewEquip = {}
-		type Quest = {}
-		type Refine = {}
-		type RefineWeaponSelection = {}
-		type Rodex = {}
-		type Sense = {}
-		type ShortCut = {}
-		type ShortCutOption = {}
-		type ShortCuts = {}
-		type SkillDescription = {}
-		type SkillList = {}
-		type SkillListMH = {}
-		type SkillTargetSelection = {}
-		type SlotMachine = {}
-		type SoundOption = {}
-		type StatusIcons = {}
-		type Storage = {}
-		type StrViewer = {}
-		type SwitchEquip = {}
-		type Trade = {}
-		type Vending = {}
-		type VendingShop = {}
-		type WinList = {}
-		type WinLogin = {}
-		type WinPrompt = {}
-		type WinStats = {}
-		type WorldMap = {}
+		type ChangeCart = {} & TUIComponent;
+		type CharCreate = {} & TUIComponent;
+		type CharSelect = {} & TUIComponent;
+		type ChatBox = {} & TUIComponent;
+		type ChatBoxSettings = {} & TUIComponent;
+		type ChatRoom = {} & TUIComponent;
+		type ChatRoomCreate = {} & TUIComponent;
+		type CheckAttendance = {} & TUIComponent;
+		type ContextMenu = {
+			addElement(name: string, func: Function): void;
+			nextGroup(): void;
+		} & TUIComponent;
+		type EffectViewer = {} & TUIComponent;
+		type Emoticons = {} & TUIComponent;
+		type EntityRoom = {} & TUIComponent;
+		type EntitySignboard = {} & TUIComponent;
+		type Equipment = {} & TUIComponent;
+		type Error = {} & TUIComponent;
+		type Escape = {} & TUIComponent;
+		type FPS = {} & TUIComponent;
+		type GrannyModelViewer = {} & TUIComponent;
+		type GraphicsOption = {} & TUIComponent;
+		type GrfViewer = {} & TUIComponent;
+		type Guild = {} & TUIComponent;
+		type HomunInformations = {} & TUIComponent;
+		type InputBox = {} & TUIComponent;
+		type Intro = {} & TUIComponent;
+		type Inventory = {} & TUIComponent;
+		type ItemCompare = {} & TUIComponent;
+		type ItemInfo = {} & TUIComponent;
+		type ItemObtain = {} & TUIComponent;
+		type ItemReform = {} & TUIComponent;
+		type ItemSelection = {} & TUIComponent;
+		type LaphineSys = {} & TUIComponent;
+		type LaphineUpg = {} & TUIComponent;
+		type Mail = {} & TUIComponent;
+		type MakeArrowSelection = {} & TUIComponent;
+		type MakeReadBook = {} & TUIComponent;
+		type MapName = {} & TUIComponent;
+		type MercenaryInformations = {} & TUIComponent;
+		type MiniMap = {} & TUIComponent;
+		type MobileUI = {} & TUIComponent;
+		type ModelViewer = {} & TUIComponent;
+		type Navigation = {} & TUIComponent;
+		type NpcBox = {} & TUIComponent;
+		type NpcMenu = {} & TUIComponent;
+		type NpcStore = {} & TUIComponent;
+		type PartyFriends = {} & TUIComponent;
+		type PetInformations = {} & TUIComponent;
+		type PincodeWindow = {} & TUIComponent;
+		type PlayerViewEquip = {} & TUIComponent;
+		type Quest = {} & TUIComponent;
+		type Refine = {} & TUIComponent;
+		type RefineWeaponSelection = {} & TUIComponent;
+		type Rodex = {} & TUIComponent;
+		type RodexIcon = {} & TUIComponent;
+		type Sense = {} & TUIComponent;
+		type ShortCut = {} & TUIComponent;
+		type ShortCutOption = {} & TUIComponent;
+		type ShortCuts = {} & TUIComponent;
+		type SkillDescription = {} & TUIComponent;
+		type SkillList = {} & TUIComponent;
+		type SkillListMH = {} & TUIComponent;
+		type SkillTargetSelection = {} & TUIComponent;
+		type SlotMachine = {} & TUIComponent;
+		type SoundOption = {} & TUIComponent;
+		type StatusIcons = {} & TUIComponent;
+		type Storage = {} & TUIComponent;
+		type StrViewer = {} & TUIComponent;
+		type SwitchEquip = {} & TUIComponent;
+		type Trade = {} & TUIComponent;
+		type Vending = {} & TUIComponent;
+		type VendingShop = {} & TUIComponent;
+		type WinList = {} & TUIComponent;
+		type WinLogin = {} & TUIComponent;
+		type WinPrompt = {} & TUIComponent;
+		type WinStats = {} & TUIComponent;
+		type WorldMap = {} & TUIComponent;
 	}
 }

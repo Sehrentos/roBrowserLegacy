@@ -7,8 +7,11 @@
  *
  * @author Vincent Thibault
  */
-define(["Core/Preferences",	"Controls/KeyEventHandler"],	function (Preferences,	KEYS) {
-
+define(["Core/Preferences",	"Controls/KeyEventHandler"], function (
+	/** @type {Core.Preferences<Preferences.ShortCutControls>} */Preferences,
+	/** @type {Controls.KeyEventHandler} */KEYS
+) {
+	/** @type {Preferences.ShortCuts} */
 	var ShortCuts = {};
 	ShortCuts.F1_1 =			{	init:{key: KEYS.F1,		alt: false,	ctrl: false,	shift: false},	cust: false,	component:'ShortCut',			cmd:'EXECUTE0'				};
 	ShortCuts.F1_2 =			{	init:{key: KEYS.F2,		alt: false,	ctrl: false,	shift: false},	cust: false,	component:'ShortCut',			cmd:'EXECUTE1'				};
@@ -69,15 +72,15 @@ define(["Core/Preferences",	"Controls/KeyEventHandler"],	function (Preferences,	
 	ShortCuts.ChatSize =		{	init:{key: KEYS.F10,	alt: false,	ctrl: false,	shift: false},	cust: false,	component:'ChatBox', 			cmd:'updateHeight'			};
 	ShortCuts.SkillBarSize =	{	init:{key: KEYS.F12,	alt: false,	ctrl: false,	shift: false},	cust: false,	component:'ShortCut',			cmd:'EXTEND'				};
 	ShortCuts.Bank =			{	init:{key: KEYS.B,		alt: false,	ctrl: true,		shift: false},	cust: false,	component:'Bank',				cmd:'TOGGLE'				};
-			
-	//Custom		
+
+	//Custom
 	/*ShortCuts.M_UI =			{	init:{key: KEYS[9],		alt: false,	ctrl: true,		shift: false},	cust: false,	component:'MobileUI',			cmd:'SHOW'					};
 	ShortCuts.M_Toggle =		{	init:{key: KEYS[8],		alt: false,	ctrl: true,		shift: false},	cust: false,	component:'MobileUI',			cmd:'TOGGLE'				};
 	ShortCuts.M_Targeting =		{	init:{key: KEYS[2],		alt: false,	ctrl: true,		shift: false},	cust: false,	component:'MobileUI',			cmd:'TG'					};
 	ShortCuts.M_AutoTarget =	{	init:{key: KEYS[3],		alt: false,	ctrl: true,		shift: false},	cust: false,	component:'MobileUI',			cmd:'AT'					};
 	ShortCuts.M_Attack =		{	init:{key: KEYS[1],		alt: false,	ctrl: true,		shift: false},	cust: false,	component:'MobileUI',			cmd:'ATK'					};*/
-	
-	
+
+
 	ShortCuts.Macro1 =			{	init:{key: KEYS[1],		alt: true,	ctrl: false,	shift: false},	cust: false,	component:'ShortCuts',			cmd:'EXECUTE_MACRO_1'		};
 	ShortCuts.Macro2 =			{	init:{key: KEYS[2],		alt: true,	ctrl: false,	shift: false},	cust: false,	component:'ShortCuts',			cmd:'EXECUTE_MACRO_2'		};
 	ShortCuts.Macro3 =			{	init:{key: KEYS[3],		alt: true,	ctrl: false,	shift: false},	cust: false,	component:'ShortCuts',			cmd:'EXECUTE_MACRO_3'		};
@@ -88,8 +91,8 @@ define(["Core/Preferences",	"Controls/KeyEventHandler"],	function (Preferences,	
 	ShortCuts.Macro8 =			{	init:{key: KEYS[8],		alt: true,	ctrl: false,	shift: false},	cust: false,	component:'ShortCuts',			cmd:'EXECUTE_MACRO_8'		};
 	ShortCuts.Macro9 =			{	init:{key: KEYS[9],		alt: true,	ctrl: false,	shift: false},	cust: false,	component:'ShortCuts',			cmd:'EXECUTE_MACRO_9'		};
 	ShortCuts.Macro10 =			{	init:{key: KEYS[0],		alt: true,	ctrl: false,	shift: false},	cust: false,	component:'ShortCuts',			cmd:'EXECUTE_MACRO_0'		};
-	
-	
+
+
 	ShortCuts.Flag1 =			{	init:{key: KEYS[1],		alt: false,	ctrl: true,		shift: false},	cust: false,	component:'ShortCuts',			cmd:'EXECUTE_FLAG_1'		};
 	ShortCuts.Flag2 =			{	init:{key: KEYS[2],		alt: false,	ctrl: true,		shift: false},	cust: false,	component:'ShortCuts',			cmd:'EXECUTE_FLAG_2'		};
 	ShortCuts.Flag3 =			{	init:{key: KEYS[3],		alt: false,	ctrl: true,		shift: false},	cust: false,	component:'ShortCuts',			cmd:'EXECUTE_FLAG_3'		};
@@ -99,8 +102,8 @@ define(["Core/Preferences",	"Controls/KeyEventHandler"],	function (Preferences,	
 	ShortCuts.Flag7 =			{	init:{key: KEYS[7],		alt: false,	ctrl: true,		shift: false},	cust: false,	component:'ShortCuts',			cmd:'EXECUTE_FLAG_7'		};
 	ShortCuts.Flag8 =			{	init:{key: KEYS[8],		alt: false,	ctrl: true,		shift: false},	cust: false,	component:'ShortCuts',			cmd:'EXECUTE_FLAG_8'		};
 	ShortCuts.Flag9 =			{	init:{key: KEYS[9],		alt: false,	ctrl: true,		shift: false},	cust: false,	component:'ShortCuts',			cmd:'EXECUTE_FLAG_9'		};
-	
+	/** @type {Preferences.ShortCutControls} */
 	var ShortCutControls = { ShortCuts: ShortCuts };
-	
+
 	return Preferences.get("ShortCutControls",	ShortCutControls, 1.2);
 });

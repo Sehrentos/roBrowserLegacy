@@ -22,7 +22,7 @@ define(function( /** @type {Require} */require )
 	/** @type {Network.PacketRegister} */var PacketRegister = require('./PacketRegister');
 	/** @type {Network.PacketCrypt} */var PacketCrypt = require('./PacketCrypt');
 	/** @type {Network.PacketLength} */var PacketLength = require('./PacketLength');
-	/** @type {Network.WebSocket} */var WebSocket = require('./SocketHelpers/WebSocket');
+	/** @type {Network.Socket} */var WebSocket = require('./SocketHelpers/WebSocket');
 	/** @type {Network.NodeSocket} */var NodeSocket = require('./SocketHelpers/NodeSocket');
 	var getModule = require;
 

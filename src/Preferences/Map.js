@@ -7,15 +7,13 @@
  *
  * @author Vincent Thibault
  */
-define( ['Core/Preferences'], function( Preferences )
-{
+define(['Core/Preferences'], function (/** @type {Core.Preferences<Preferences.Map>} */Preferences) {
 	'use strict';
-
 
 	/**
 	 * Export
 	 */
-	return Preferences.get( 'Map', {
+	return Preferences.get('Map', {
 
 		/**
 		 * Display the fog ?
@@ -77,5 +75,5 @@ define( ['Core/Preferences'], function( Preferences )
 		 */
 		showname: true
 
-	}, 1.1 );
+	}, 1.1);
 });

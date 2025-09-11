@@ -7,11 +7,8 @@
  *
  * @author Vincent Thibault
  */
-
-define( ['Vendors/gl-matrix'], function( glMatrix )
-{
+define(['Vendors/gl-matrix'], function ( /** @type {Utils.glMatrix} */ glMatrix) {
 	'use strict';
-
 
 	/**
 	 * Calculate a normal from the three givens vectors
@@ -23,7 +20,7 @@ define( ['Vendors/gl-matrix'], function( glMatrix )
 	 *
 	 * @return {vec3} out
 	 */
-	glMatrix.vec3.calcNormal = function( a, b, c, out ) {
+	glMatrix.vec3.calcNormal = function (a, b, c, out) {
 		var x1, y1, z1, x2, y2, z2, x3, y3, z3, len;
 
 		// vec3.sub( c, b );
@@ -42,7 +39,7 @@ define( ['Vendors/gl-matrix'], function( glMatrix )
 		z3 = x1 * y2 - y1 * x2;
 
 		// vec3.normalize()
-		len = 1 / Math.sqrt(x3*x3 + y3*y3 + z3*z3);
+		len = 1 / Math.sqrt(x3 * x3 + y3 * y3 + z3 * z3);
 
 		out[0] = x3 * len;
 		out[1] = y3 * len;
@@ -63,47 +60,47 @@ define( ['Vendors/gl-matrix'], function( glMatrix )
 	 *
 	 * @returns {vec3} out
 	 */
-	glMatrix.vec4.calcNormal = function( a, b, c, d, out ) {
-		var x,  y,  z,
+	glMatrix.vec4.calcNormal = function (a, b, c, d, out) {
+		var x, y, z,
 			x1, y1, z1,
 			x2, y2, z2,
 			x3, y3, z3,
 			len;
 
 		//vec3.calcNormal( a, b, c, out );
-			//vec3.subtract( c, b, v1 );
-			x1  = c[0] - b[0];  y1 = c[1] - b[1];  z1 = c[2] - b[2];
-			//vec3.subtract( a, b, v2 );
-			x2  = a[0] - b[0];  y2 = a[1] - b[1];  z2 = a[2] - b[2];
-			//vec3.cross( v1, v2 );
-			x3  = y1 * z2 - z1 * y2;
-			y3  = z1 * x2 - x1 * z2;
-			z3  = x1 * y2 - y1 * x2;
-			//vec3.normalize(v1);
-			len = 1 / Math.sqrt(x3*x3 + y3*y3 + z3*z3);
-			x   = x3 * len;
-			y   = y3 * len;
-			z   = z3 * len;
+		//vec3.subtract( c, b, v1 );
+		x1 = c[0] - b[0]; y1 = c[1] - b[1]; z1 = c[2] - b[2];
+		//vec3.subtract( a, b, v2 );
+		x2 = a[0] - b[0]; y2 = a[1] - b[1]; z2 = a[2] - b[2];
+		//vec3.cross( v1, v2 );
+		x3 = y1 * z2 - z1 * y2;
+		y3 = z1 * x2 - x1 * z2;
+		z3 = x1 * y2 - y1 * x2;
+		//vec3.normalize(v1);
+		len = 1 / Math.sqrt(x3 * x3 + y3 * y3 + z3 * z3);
+		x = x3 * len;
+		y = y3 * len;
+		z = z3 * len;
 
 		//vec3.calcNormal( c, d, a, tmp );
-			//vec3.subtract( a, d, v1 );
-			x1  = a[0] - d[0];  y1 = a[1] - d[1];  z1 = a[2] - d[2];
-			//vec3.subtract( c, d, v2 );
-			x2  = c[0] - d[0];  y2 = c[1] - d[1];  z2 = c[2] - d[2];
-			//vec3.cross( v1, v2 );
-			x3  = y1 * z2 - z1 * y2;
-			y3  = z1 * x2 - x1 * z2;
-			z3  = x1 * y2 - y1 * x2;
-			//vec3.normalize(v1);
-			len = 1 / Math.sqrt(x3*x3 + y3*y3 + z3*z3);
+		//vec3.subtract( a, d, v1 );
+		x1 = a[0] - d[0]; y1 = a[1] - d[1]; z1 = a[2] - d[2];
+		//vec3.subtract( c, d, v2 );
+		x2 = c[0] - d[0]; y2 = c[1] - d[1]; z2 = c[2] - d[2];
+		//vec3.cross( v1, v2 );
+		x3 = y1 * z2 - z1 * y2;
+		y3 = z1 * x2 - x1 * z2;
+		z3 = x1 * y2 - y1 * x2;
+		//vec3.normalize(v1);
+		len = 1 / Math.sqrt(x3 * x3 + y3 * y3 + z3 * z3);
 
 		//vec3.add( out, tmp); (apply the normalize at the same time)
-		x  += x3 * len;
-		y  += y3 * len;
-		z  += z3 * len;
+		x += x3 * len;
+		y += y3 * len;
+		z += z3 * len;
 
 		//vec3.normalize(out);
-		len    = 1 / Math.sqrt(x*x + y*y + z*z);
+		len = 1 / Math.sqrt(x * x + y * y + z * z);
 		out[0] = x * len;
 		out[1] = y * len;
 		out[2] = z * len;
@@ -127,8 +124,8 @@ define( ['Vendors/gl-matrix'], function( glMatrix )
 			a20, a21, a22, a23;
 
 		if (!dest || mat === dest) {
-			mat[12] += mat[8]  * z;
-			mat[13] += mat[9]  * z;
+			mat[12] += mat[8] * z;
+			mat[13] += mat[9] * z;
 			mat[14] += mat[10] * z;
 			mat[15] += mat[11] * z;
 			return mat;
@@ -158,24 +155,24 @@ define( ['Vendors/gl-matrix'], function( glMatrix )
 	 *
 	 * @returns {mat4} dest if specified, mat otherwise
 	 */
-	glMatrix.mat4.rotateQuat = function(out, mat, w) {
-		var a,b,c,d;
+	glMatrix.mat4.rotateQuat = function (out, mat, w) {
+		var a, b, c, d;
 		a = w[0];
 		b = w[1];
 		c = w[2];
 		d = w[3];
 
-		var norm = Math.sqrt(a*a+b*b+c*c+d*d);
+		var norm = Math.sqrt(a * a + b * b + c * c + d * d);
 		a /= norm;
 		b /= norm;
 		c /= norm;
 		d /= norm;
 
-		return glMatrix.mat4.multiply( out, mat,[
-			1.0 - 2.0 * ( b * b + c * c ),     2.0 * (a * b + c * d),            2.0 * (a * c - b * d),           0.0,
-			2.0 * ( a * b - c * d ),           1.0 - 2.0 * ( a * a + c * c ),    2.0 * (c * b + a * d ),          0.0,
-			2.0 * ( a * c + b * d ),           2.0 * ( b * c - a * d ),          1.0 - 2.0 * ( a * a + b * b ),   0.0,
-			0.0,                               0.0,                              0.0,                             1.0
+		return glMatrix.mat4.multiply(out, mat, [
+			1.0 - 2.0 * (b * b + c * c), 2.0 * (a * b + c * d), 2.0 * (a * c - b * d), 0.0,
+			2.0 * (a * b - c * d), 1.0 - 2.0 * (a * a + c * c), 2.0 * (c * b + a * d), 0.0,
+			2.0 * (a * c + b * d), 2.0 * (b * c - a * d), 1.0 - 2.0 * (a * a + b * b), 0.0,
+			0.0, 0.0, 0.0, 1.0
 		]);
 	};
 
@@ -188,20 +185,20 @@ define( ['Vendors/gl-matrix'], function( glMatrix )
 	 *
 	 * @returns {mat4} dest
 	 */
-	glMatrix.mat4.extractRotation = function( out, mat ) {
+	glMatrix.mat4.extractRotation = function (out, mat) {
 
-		var scale_x = 1.0 / glMatrix.vec3.length([ mat[0], mat[1], mat[2]  ]);
-		var scale_y = 1.0 / glMatrix.vec3.length([ mat[4], mat[5], mat[6]  ]);
-		var scale_z = 1.0 / glMatrix.vec3.length([ mat[8], mat[9], mat[10] ]);
+		var scale_x = 1.0 / glMatrix.vec3.length([mat[0], mat[1], mat[2]]);
+		var scale_y = 1.0 / glMatrix.vec3.length([mat[4], mat[5], mat[6]]);
+		var scale_z = 1.0 / glMatrix.vec3.length([mat[8], mat[9], mat[10]]);
 
-		out[0]  = mat[0]  * scale_x;
-		out[1]  = mat[1]  * scale_x;
-		out[2]  = mat[2]  * scale_x;
-		out[4]  = mat[4]  * scale_y;
-		out[5]  = mat[5]  * scale_y;
-		out[6]  = mat[6]  * scale_y;
-		out[8]  = mat[8]  * scale_z;
-		out[9]  = mat[9]  * scale_z;
+		out[0] = mat[0] * scale_x;
+		out[1] = mat[1] * scale_x;
+		out[2] = mat[2] * scale_x;
+		out[4] = mat[4] * scale_y;
+		out[5] = mat[5] * scale_y;
+		out[6] = mat[6] * scale_y;
+		out[8] = mat[8] * scale_z;
+		out[9] = mat[9] * scale_z;
 		out[10] = mat[10] * scale_z;
 
 		return out;
@@ -307,13 +304,13 @@ define( ['Vendors/gl-matrix'], function( glMatrix )
 	/**
 	 * Multiplies a vec3 by a mat4
 	 * The last component of the vec3 is assumed to be 1.0
-	 * 
+	 *
 	 * @param {vec3} vec 3 position vector
 	 * @param {mat4} mat 4x4 matrix
-	 * 
+	 *
 	 * @returns {vec3} resulting vector
 	 */
-	glMatrix.mat4.multiplyVec3 = function(vec, mat) {
+	glMatrix.mat4.multiplyVec3 = function (vec, mat) {
 		const out = new Float32Array(3);
 		const x = vec[0], y = vec[1], z = vec[2];
 
@@ -326,6 +323,7 @@ define( ['Vendors/gl-matrix'], function( glMatrix )
 
 	/**
 	 * Export
+	 * @type {Utils.glMatrix}
 	 */
 	return glMatrix;
 });
